@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Fragmenta</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        // Unified "Warm Paper" Palette
+                        "primary": "rgb(205, 133, 63)",    // Warm Brown / Gold
+                        "primary-dark": "rgb(160, 82, 45)",
+                        "accent": "rgb(102, 205, 170)",    // Muted Teal
+                        "paper": "rgb(250, 240, 230)",     // Main Background
+                        "surface": "rgb(230, 215, 177)",   // Cards / Inputs
+                        "surface-highlight": "rgba(255, 255, 255, 0.4)",
+                        "ink": "rgb(51, 34, 0)",           // Main Text
+                        "ink-muted": "rgba(51, 34, 0, 0.6)",
+                        "ink-border": "rgba(51, 34, 0, 0.1)",
+                        "white": "#ffffff",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "body": ["Manrope", "sans-serif"],
+                        "mono": ["Courier New", "monospace"],
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "3xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 20px -5px rgba(51, 34, 0, 0.05)',
+                        'paper': '0 2px 8px -2px rgba(51, 34, 0, 0.1)',
+                        'paper-lg': '0 10px 25px -3px rgba(51, 34, 0, 0.1), 0 4px 6px -2px rgba(51, 34, 0, 0.05)',
+                        'glow': '0 0 15px rgba(205, 133, 63, 0.2)',
+                        'inner-soft': 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.05)',
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .bg-grid-pattern {
+            background-image: radial-gradient(rgba(51, 34, 0, 0.1) 1px, transparent 1px);
+            background-size: 16px 16px;
+        }
+        body {
+            min-height: max(884px, 100dvh);
+            background-color: rgb(250, 240, 230); /* paper */
+            color: rgb(51, 34, 0); /* ink */
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.filled {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        /* Custom Range Slider Styling */
+        input[type=range] {
+            -webkit-appearance: none; 
+            background: transparent; 
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            background: rgb(250, 240, 230);
+            border: 2px solid rgb(205, 133, 63);
+            cursor: pointer;
+            margin-top: -6px; 
+            box-shadow: 0 1px 3px rgba(51, 34, 0, 0.2);
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: rgba(51, 34, 0, 0.1);
+            border-radius: 2px;
+        }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react-router-dom": "https://esm.sh/react-router-dom@^7.12.0"
+  }
+}
+</script>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+</html>
