@@ -1,20 +1,55 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Fragmenta
 
-# Run and deploy your AI Studio app
+**A live gallery of reusable web UI patterns, with copy-ready code and AI prompts.**
 
-This contains everything you need to run your app locally.
+Fragmenta began as a CSS and JavaScript animation gallery. Its direction is expanding to cover practical web UI patterns more broadly: motion, microinteractions, visual styles, component treatments, layouts, and text or visual effects.
 
-View your app in AI Studio: https://ai.studio/apps/drive/1uJLAuPEgNAGCtksgP7BBwyuN_sue_Ee2
+The project is intentionally more than an inspiration board. Each gallery item should become a reproducible browser implementation that users can preview, inspect, adapt, and take away as code or an AI-ready prompt.
 
-## Run Locally
+## Current capabilities
 
-**Prerequisites:**  Node.js
+The current app already supports:
 
+- live animation previews
+- category browsing and search
+- adjustable parameters
+- generated implementation code
+- generated AI prompts
+- performance and accessibility information
+- collections and best-practice guidance
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+Existing examples include elastic buttons, loading skeletons, glass tilt, fluid toggles, glitch text, and morphing action buttons.
+
+## Product direction
+
+The canonical product direction is documented in [`docs/PRODUCT_DIRECTION.md`](./docs/PRODUCT_DIRECTION.md).
+
+The next major step is to preserve the existing animation gallery while generalizing the data model and detail view so Fragmenta can also represent static visual styles and layout patterns.
+
+## Run locally
+
+**Prerequisite:** Node.js
+
+```bash
+npm install
+npm run dev
+```
+
+Production build:
+
+```bash
+npm run build
+```
+
+## Current stack
+
+- React
+- TypeScript
+- Vite
+- React Router
+
+## Original AI Studio project
+
+The original AI Studio version remains available here:
+
+https://ai.studio/apps/drive/1uJLAuPEgNAGCtksgP7BBwyuN_sue_Ee2
