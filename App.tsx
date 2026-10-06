@@ -3,19 +3,18 @@ import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Layout from './components/Layout';
 import Home from './pages/Home';
 import Browse from './pages/Browse';
-import AnimationDetail from './pages/AnimationDetail';
+import PatternDetail from './pages/AnimationDetail';
 import Collections from './pages/Collections';
 import CollectionDetail from './pages/CollectionDetail';
 import Licenses from './pages/Licenses';
 import SearchResults from './pages/SearchResults';
 import BestPractices from './pages/BestPractices';
 
-// Placeholder components for routes defined in the Architecture but not yet implemented
 const Placeholder = ({ title }: { title: string }) => (
-    <div className="p-6">
-        <h1 className="text-2xl font-bold mb-4">{title}</h1>
-        <p className="text-ink/60">This section is coming soon.</p>
-    </div>
+  <div className="p-6">
+    <h1 className="text-2xl font-bold mb-4">{title}</h1>
+    <p className="text-ink/60">This section is coming soon.</p>
+  </div>
 );
 
 const App: React.FC = () => {
@@ -25,7 +24,8 @@ const App: React.FC = () => {
         <Route path="/" element={<Layout><Home /></Layout>} />
         <Route path="/browse" element={<Layout><Browse /></Layout>} />
         <Route path="/search" element={<Layout><SearchResults /></Layout>} />
-        <Route path="/a/:id" element={<Layout showNav={false}><AnimationDetail /></Layout>} />
+        <Route path="/p/:id" element={<Layout showNav={false}><PatternDetail /></Layout>} />
+        <Route path="/a/:id" element={<Layout showNav={false}><PatternDetail /></Layout>} />
         <Route path="/collections" element={<Layout><Collections /></Layout>} />
         <Route path="/collections/:id" element={<Layout showNav={false}><CollectionDetail /></Layout>} />
         <Route path="/saved" element={<Layout><Placeholder title="Saved Items" /></Layout>} />
