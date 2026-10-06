@@ -31,7 +31,7 @@ const Collections: React.FC = () => {
             </div>
             <input 
               className="flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-ink focus:outline-0 bg-transparent border-none h-full placeholder:text-ink-muted/70 px-4 text-base font-normal leading-normal font-body" 
-              placeholder="Find animations..." 
+              placeholder="Find patterns..." 
               defaultValue=""
             />
           </div>
@@ -41,9 +41,9 @@ const Collections: React.FC = () => {
       {/* Hero Text */}
       <div className="px-4 pb-2 pt-2">
         <h1 className="text-ink tracking-tight text-[32px] font-bold leading-tight text-left font-display">
-          Curated<br/><span className="text-primary italic">Masterpieces</span>
+          Curated<br/><span className="text-primary italic">Pattern Sets</span>
         </h1>
-        <p className="text-ink-muted text-base font-normal leading-normal pt-2 font-body">Hand-picked high-performance motion kits.</p>
+        <p className="text-ink-muted text-base font-normal leading-normal pt-2 font-body">Reusable sets that combine motion, components, styles, and layout.</p>
       </div>
 
       {/* Main Content - Cards */}
@@ -108,7 +108,7 @@ const Collections: React.FC = () => {
             <div className="flex justify-between items-start">
               <div>
                 <h3 className="text-ink text-xl font-bold leading-tight tracking-tight mb-1 font-display">Form Validation Suite</h3>
-                <p className="text-ink-muted text-sm font-normal leading-relaxed">Feedback animations for better user guidance.</p>
+                <p className="text-ink-muted text-sm font-normal leading-relaxed">Feedback patterns for clear validation and recovery.</p>
               </div>
               <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-white/40 text-ink group-hover:bg-primary group-hover:text-white transition-colors">
                 <span className="material-symbols-outlined">arrow_forward</span>

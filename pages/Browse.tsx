@@ -1,23 +1,44 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { definitions } from '../data/definitions';
-import AnimationCard from '../components/AnimationCard';
+import React from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
+import { definitions, getPatternKind } from '../data/definitions';
+import PatternCard from '../components/PatternCard';
+import { PatternKind } from '../types';
+
+type Filter = 'all' | PatternKind;
+
+const categories: Array<{ id: Filter; label: string }> = [
+  { id: 'all', label: 'All' },
+  { id: 'motion', label: 'Motion' },
+  { id: 'interaction', label: 'Interaction' },
+  { id: 'style', label: 'Styles' },
+  { id: 'component', label: 'Components' },
+  { id: 'layout', label: 'Layouts' },
+  { id: 'text-effect', label: 'Text & Effects' },
+];
+
+const validFilters = new Set<Filter>(categories.map(category => category.id));
 
 const Browse: React.FC = () => {
-  const [filter, setFilter] = useState<'all' | 'button' | 'loader' | 'text' | 'card' | 'input'>('all');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const requestedFilter = searchParams.get('kind') as Filter | null;
+  const filter: Filter = requestedFilter && validFilters.has(requestedFilter) ? requestedFilter : 'all';
 
-  const animations = Object.values(definitions).filter(def => 
-    filter === 'all' ? true : def.category === filter
+  const patterns = Object.values(definitions).filter(definition =>
+    filter === 'all' ? true : getPatternKind(definition) === filter
   );
 
-  const categories = [
-    { id: 'all', label: 'All' },
-    { id: 'button', label: 'Buttons' },
-    { id: 'loader', label: 'Loaders' },
-    { id: 'text', label: 'Text FX' },
-    { id: 'card', label: 'Cards' },
-    { id: 'input', label: 'Inputs' },
-  ];
+  const setFilter = (nextFilter: Filter) => {
+    if (nextFilter === 'all') {
+      setSearchParams({});
+    } else {
+      setSearchParams({ kind: nextFilter });
+    }
+  };
+
+  const heading =
+    filter === 'all'
+      ? 'All patterns'
+      : categories.find(category => category.id === filter)?.label ?? 'Patterns';
 
   return (
     <>
@@ -29,56 +50,55 @@ const Browse: React.FC = () => {
             </Link>
             <h1 className="text-xl font-bold tracking-tight text-ink font-display">Browse</h1>
           </div>
-          <button className="flex items-center justify-center size-10 rounded-full bg-surface text-ink hover:bg-primary hover:text-white transition-colors">
-            <span className="material-symbols-outlined text-[20px]">tune</span>
-          </button>
         </div>
+
         <div className="px-5 mb-4">
           <Link to="/search" className="relative group block">
             <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
               <span className="material-symbols-outlined text-ink/40 group-focus-within:text-primary transition-colors">search</span>
             </div>
             <div className="block w-full p-3.5 pl-11 text-sm bg-surface-highlight border border-ink-border rounded-xl text-ink/40 cursor-text shadow-sm hover:border-primary/50 transition-colors">
-              Search motions, triggers...
+              Search styles, layouts, motion...
             </div>
           </Link>
         </div>
+
         <div className="flex gap-2 px-5 overflow-x-auto no-scrollbar pb-2">
-          {categories.map(cat => (
-             <button 
-                key={cat.id}
-                onClick={() => setFilter(cat.id as any)}
-                className={`flex-shrink-0 px-4 py-2 rounded-full font-medium text-sm transition-colors ${
-                    filter === cat.id 
-                    ? 'bg-primary text-white border border-primary shadow-sm font-bold' 
-                    : 'bg-transparent border border-ink-border text-ink-muted hover:border-primary hover:bg-surface hover:text-primary'
-                }`}
-             >
-                {cat.label}
-             </button>
+          {categories.map(category => (
+            <button
+              key={category.id}
+              onClick={() => setFilter(category.id)}
+              className={`flex-shrink-0 px-4 py-2 rounded-full font-medium text-sm transition-colors ${
+                filter === category.id
+                  ? 'bg-primary text-white border border-primary shadow-sm font-bold'
+                  : 'bg-transparent border border-ink-border text-ink-muted hover:border-primary hover:bg-surface hover:text-primary'
+              }`}
+            >
+              {category.label}
+            </button>
           ))}
         </div>
       </header>
-      
+
       <main className="flex-1 px-5 py-6">
         <div className="flex items-end justify-between mb-5">
           <h2 className="text-sm font-bold uppercase tracking-widest text-ink/50 font-display">
-            {filter === 'all' ? 'New Arrivals' : `${filter}s`}
+            {heading}
           </h2>
-          <span className="text-xs text-primary font-bold">{animations.length} results</span>
+          <span className="text-xs text-primary font-bold">{patterns.length} results</span>
         </div>
-        
-        {animations.length === 0 ? (
-            <div className="py-12 text-center text-ink-muted">
-                <span className="material-symbols-outlined text-4xl mb-2 opacity-50">search_off</span>
-                <p>No animations found in this category.</p>
-            </div>
+
+        {patterns.length === 0 ? (
+          <div className="py-12 text-center text-ink-muted">
+            <span className="material-symbols-outlined text-4xl mb-2 opacity-50">search_off</span>
+            <p>No patterns found in this category.</p>
+          </div>
         ) : (
-            <div className="grid grid-cols-2 gap-4 pb-24">
-            {animations.map((def) => (
-                <AnimationCard key={def.id} definition={def} />
+          <div className="grid grid-cols-2 gap-4 pb-24">
+            {patterns.map(definition => (
+              <PatternCard key={definition.id} definition={definition} />
             ))}
-            </div>
+          </div>
         )}
       </main>
     </>
