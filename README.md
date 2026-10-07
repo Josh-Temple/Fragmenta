@@ -6,6 +6,24 @@ Fragmenta began as a CSS and JavaScript animation gallery. It now uses the same 
 
 The project is intentionally more than an inspiration board. Each gallery item should become a reproducible browser implementation that users can preview, inspect, adapt, and take away as code or an AI-ready prompt.
 
+## Production
+
+Fragmenta is deployed to Vercel from the GitHub repository.
+
+- Production: https://fragmenta-brown.vercel.app
+- Production branch: `main`
+- Pull requests: Vercel Preview Deployments
+- Production is public; previews require Vercel authentication
+- Framework: Vite
+- Node.js: 22.x
+- Install: `npm install`
+- Build: `npm run build`
+- Output: `dist`
+
+GitHub remains the source of truth. Vercel is the deployment and preview environment. The app intentionally remains a standard Vite build rather than depending on Vercel-specific runtime features, so it can be moved to another static host if needed.
+
+See [`docs/DEPLOYMENT.md`](./docs/DEPLOYMENT.md) for the deployment policy and workflow.
+
 ## Current capabilities
 
 The app supports:
@@ -48,7 +66,7 @@ The guiding question is:
 
 ## Run locally
 
-**Prerequisite:** Node.js
+**Prerequisite:** Node.js 22
 
 ```bash
 npm install
