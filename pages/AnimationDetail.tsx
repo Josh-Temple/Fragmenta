@@ -15,7 +15,13 @@ const PatternDetail: React.FC = () => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const [activeTab, setActiveTab] = useState<'code' | 'prompt' | 'parameters'>('parameters');
-  const [copied, setCopied] = useState(false);
+  const [copyStatus, setCopyStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
+  useEffect(() => {
+    if (copyStatus === 'idle') return;
+    const timeout = window.setTimeout(() => setCopyStatus('idle'), 3000);
+    return () => window.clearTimeout(timeout);
+  }, [copyStatus]);
 
   const def = id ? definitions[id] : null;
   const [paramValues, setParamValues] = useState<Record<string, number>>({});
@@ -46,10 +52,15 @@ const PatternDetail: React.FC = () => {
     setParamValues(prev => ({ ...prev, [key]: value }));
   };
 
-  const handleCopy = (text: string) => {
-    navigator.clipboard.writeText(text);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+  const handleCopy = async (text: string) => {
+    setCopyStatus('idle');
+    try {
+      if (!navigator.clipboard?.writeText) throw new Error('Clipboard access unavailable');
+      await navigator.clipboard.writeText(text);
+      setCopyStatus('success');
+    } catch {
+      setCopyStatus('error');
+    }
   };
 
   const handleBack = () => {
@@ -60,8 +71,9 @@ const PatternDetail: React.FC = () => {
     }
   };
 
-  const code = def.generateCode(paramValues);
-  const prompt = def.generatePrompt(paramValues);
+  const values = { ...Object.fromEntries(def.params.map(param => [param.key, param.default])), ...paramValues };
+  const code = def.generateCode(values);
+  const prompt = def.generatePrompt(values);
   const activeCopyText = activeTab === 'prompt' ? prompt : code;
 
   return (
@@ -151,7 +163,7 @@ const PatternDetail: React.FC = () => {
                 return (
                   <div key={param.key} className="space-y-4">
                     <div className="flex justify-between items-center">
-                      <label className="text-sm font-semibold text-ink flex items-center gap-2">
+                      <label htmlFor={`pattern-param-${param.key}`} className="text-sm font-semibold text-ink flex items-center gap-2">
                         <span className="material-symbols-outlined text-primary text-base">tune</span>
                         {param.label}
                       </label>
@@ -159,11 +171,12 @@ const PatternDetail: React.FC = () => {
                         {value}{param.unit}
                       </span>
                     </div>
-                    <div className="relative h-6 flex items-center">
+                    <div className="relative h-6 flex items-center focus-within:ring-2 focus-within:ring-primary rounded">
                       <div className="absolute left-0 right-0 h-1 bg-ink-border rounded-full overflow-hidden">
                         <div className="h-full bg-primary" style={{ width: `${percent}%` }}></div>
                       </div>
                       <input
+                        id={`pattern-param-${param.key}`}
                         className="absolute w-full h-full opacity-0 cursor-pointer z-10"
                         max={param.max}
                         min={param.min}
@@ -198,7 +211,7 @@ const PatternDetail: React.FC = () => {
                   <span className="material-symbols-outlined text-sm">speed</span>
                   Performance
                 </div>
-                <span className="text-lg font-bold text-accent">{def.performanceScore}/100</span>
+                <span className="text-sm font-semibold text-ink">Not measured</span>
                 <p className="text-[10px] text-ink-muted leading-tight">
                   {def.performanceNotes ?? 'Designed to keep rendering work lightweight.'}
                 </p>
@@ -208,7 +221,7 @@ const PatternDetail: React.FC = () => {
                   <span className="material-symbols-outlined text-sm">accessibility_new</span>
                   Accessibility
                 </div>
-                <span className="text-lg font-bold text-primary">{def.a11yScore}</span>
+                <span className="text-sm font-semibold text-ink">Not audited</span>
                 <p className="text-[10px] text-ink-muted leading-tight">
                   {def.a11yNotes ?? 'Check motion preferences, focus visibility, and contrast in context.'}
                 </p>
@@ -239,7 +252,7 @@ const PatternDetail: React.FC = () => {
               </div>
             )}
 
-            <p className="text-xs text-ink-muted">License: MIT</p>
+            <p className="text-xs text-ink-muted">License not specified. Confirm permission before reusing code.</p>
           </section>
         )}
 
@@ -250,8 +263,9 @@ const PatternDetail: React.FC = () => {
                 onClick={() => handleCopy(code)}
                 className="absolute top-3 right-3 p-2 bg-white/10 hover:bg-white/20 rounded-lg text-white/70 transition-colors"
                 title="Copy code"
+                aria-label="Copy code"
               >
-                <span className="material-symbols-outlined text-lg">{copied ? 'check' : 'content_copy'}</span>
+                <span className="material-symbols-outlined text-lg">{copyStatus === 'success' ? 'check' : 'content_copy'}</span>
               </button>
               <pre className="text-xs font-mono text-[#fbf2e5] overflow-x-auto whitespace-pre-wrap leading-relaxed pr-8">
                 {code}
@@ -267,8 +281,9 @@ const PatternDetail: React.FC = () => {
                 onClick={() => handleCopy(prompt)}
                 className="absolute top-3 right-3 p-2 bg-primary/10 hover:bg-primary/20 rounded-lg text-primary transition-colors"
                 title="Copy AI prompt"
+                aria-label="Copy AI prompt"
               >
-                <span className="material-symbols-outlined text-lg">{copied ? 'check' : 'content_copy'}</span>
+                <span className="material-symbols-outlined text-lg">{copyStatus === 'success' ? 'check' : 'content_copy'}</span>
               </button>
               <h3 className="text-xs font-bold text-ink uppercase tracking-wider mb-2 font-display">ChatGPT / Codex / Claude / v0</h3>
               <p className="text-sm text-ink leading-relaxed font-mono whitespace-pre-wrap pr-8">{prompt}</p>
@@ -278,12 +293,15 @@ const PatternDetail: React.FC = () => {
       </main>
 
       <div className="fixed bottom-0 left-0 right-0 max-w-md mx-auto p-4 bg-gradient-to-t from-paper via-paper to-transparent z-50">
+        <p role="status" aria-live="polite" className={`text-xs font-semibold mb-2 text-center ${copyStatus === 'error' ? 'text-red-700' : 'text-ink-muted'}`}>
+          {copyStatus === 'error' ? 'Copy failed. Check clipboard permissions or select and copy the text manually.' : copyStatus === 'success' ? 'Copied to clipboard.' : ''}
+        </p>
         <button
           onClick={() => handleCopy(activeCopyText)}
           className="w-full bg-primary hover:bg-primary/90 text-white font-bold text-base py-3.5 px-6 rounded-xl shadow-lg shadow-primary/20 flex items-center justify-center gap-2 transition-transform active:scale-95 border-b-4 border-[rgba(0,0,0,0.2)] active:border-b-0 active:translate-y-[4px]"
         >
           <span className="material-symbols-outlined">content_copy</span>
-          {copied ? 'Copied!' : activeTab === 'prompt' ? 'Copy AI prompt' : 'Copy code'}
+          {copyStatus === 'success' ? 'Copied!' : activeTab === 'prompt' ? 'Copy AI prompt' : 'Copy code'}
         </button>
       </div>
     </div>
