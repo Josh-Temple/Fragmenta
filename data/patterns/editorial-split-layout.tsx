@@ -95,6 +95,7 @@ export const editorialSplitLayout: PatternDefinition = {
   </article>
 </section>
 
+<style>
 /* CSS */
 .editorial-split {
   display: grid;
@@ -109,7 +110,7 @@ export const editorialSplitLayout: PatternDefinition = {
 }
 
 .editorial-split__rail,
-.meta {
+.editorial-split .meta {
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
@@ -124,7 +125,8 @@ export const editorialSplitLayout: PatternDefinition = {
     border-left: 0;
     border-top: ${rule}px solid currentColor;
   }
-}`;
+}
+</style>`;
   },
   generatePrompt: (values) => {
     const rail = values.rail ?? defaults.rail;
