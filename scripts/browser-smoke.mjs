@@ -246,6 +246,49 @@ try {
     throw new Error('Clipboard states not truthful: ' + JSON.stringify(states));
   }
   console.log('PASS clipboard success and failure states');
+
+  // Load the generated artifacts as standalone HTML files, not inside the
+  // Fragmenta Preview component. React JSX is compiled and server-rendered
+  // by the fixture builder; browser checks here cover the exported markup/CSS.
+  const fixtureIds = [
+    'elastic-button', 'smart-skeleton', 'glass-tilt', 'fluid-toggle',
+    'glitch-text', 'morph-fab', 'warm-neo-brutalist-editorial', 'editorial-split-layout'
+  ];
+  for (const id of fixtureIds) {
+    for (const variant of ['default', 'changed']) {
+      errors.length = 0;
+      const url = baseUrl + '/pattern-fixtures/' + id + '-' + variant + '.html';
+      const navigation = await page.send('Page.navigate', { url });
+      if (navigation.errorText) throw new Error('Cannot load standalone fixture ' + url + ': ' + navigation.errorText);
+      await poll(async () => {
+        const result = await page.send('Runtime.evaluate', {
+          expression: "JSON.stringify({url:location.pathname, complete:document.readyState==='complete', count:document.querySelector('#artifact-fixture')?.children.length||0, styles:document.querySelectorAll('style').length})",
+          returnByValue: true,
+        });
+        const observed = JSON.parse(result.result?.value || '{}');
+        if (observed.url !== '/pattern-fixtures/' + id + '-' + variant + '.html' || !observed.complete) return false;
+        if (observed.count === 0 || observed.styles === 0) throw new Error('Fixture missing HTML/CSS: ' + JSON.stringify(observed));
+        return true;
+      }, 'standalone fixture ' + id + '/' + variant);
+      if (errors.length) throw new Error('Standalone fixture JS error: ' + errors.join('; '));
+      if (id === 'fluid-toggle') {
+        const r = await page.send('Runtime.evaluate', {
+          expression: "(()=>{const checkbox=document.querySelector('input[type=checkbox]'); if(!checkbox) return false; checkbox.click(); return checkbox.checked===true;})()",
+          returnByValue: true,
+        });
+        if (!r.result?.value) throw new Error('Standalone toggle did not toggle checked state');
+      }
+      if (id === 'morph-fab') {
+        const r = await page.send('Runtime.evaluate', {
+          expression: "(()=>{const b=document.querySelector('button.morph-fab'); if(!b)return false;b.click();return b.getAttribute('aria-expanded')==='true';})()",
+          returnByValue: true,
+        });
+        if (!r.result?.value) throw new Error('Standalone Morph FAB did not expand');
+      }
+      console.log('PASS standalone fixture in Chromium ' + id + ' / ' + variant);
+    }
+  }
+
 } finally {
   page?.close();
   control?.close();
