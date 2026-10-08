@@ -16,62 +16,42 @@ export const fluidToggle: AnimationDefinition = {
   Preview: ({ values }) => {
     const [isOn, setIsOn] = useState(false);
     const [isPressed, setIsPressed] = useState(false);
-
-    const baseWidth = 24;
-    const stretchWidth = values['stretch'];
-    // Container 56px (w-14). 
-    // Padding x-1 (4px left, 4px right).
-    // Inner space = 56 - 8 = 48px.
-    // To be safe and prevent any sub-pixel overflow, we use 46px as available travel space visually.
-    const availableWidth = 46; 
-    
-    const width = (isOn || isPressed) ? stretchWidth : baseWidth;
-    
-    // X = AvailableSpace - CurrentWidth.
-    // If X is calculated as 46 - width, and width is 28, X=18. 
-    // Total right edge = 4px (padding-left) + 18 (x) + 28 (width) = 50px.
-    // Container width is 56px. Right padding starts at 52px. So 50px fits well inside.
-    const x = isOn ? (availableWidth - width) : 0;
-
+    const stretch = Number.isFinite(values['stretch']) ? values['stretch'] : 28;
+    const duration = Number.isFinite(values['duration']) ? values['duration'] : 0.3;
+    const width = (isOn || isPressed) ? stretch : 24;
+    const x = isOn ? 46 - width : 0;
     return (
-      <div 
-          onClick={() => setIsOn(!isOn)}
-          onMouseDown={() => setIsPressed(true)}
-          onMouseUp={() => setIsPressed(false)}
-          onMouseLeave={() => setIsPressed(false)}
-          onTouchStart={() => setIsPressed(true)}
-          onTouchEnd={() => setIsPressed(false)}
-          className={`w-14 h-8 rounded-full flex items-center px-1 cursor-pointer transition-colors duration-300 ${isOn ? 'bg-primary' : 'bg-ink/20'}`}
-      >
-        <div 
-          className="h-6 bg-white rounded-full shadow-sm transition-all"
-          style={{
-             width: `${width}px`,
-             transform: `translateX(${x}px)`,
-             transitionDuration: `${values['duration']}s`,
-             transitionTimingFunction: 'cubic-bezier(0.4, 0.0, 0.2, 1)'
-          }}
-        ></div>
-      </div>
+      <button type="button" role="switch" aria-checked={isOn} aria-label="Fluid toggle"
+        onClick={() => setIsOn(value => !value)}
+        onPointerDown={() => setIsPressed(true)} onPointerUp={() => setIsPressed(false)}
+        onPointerCancel={() => setIsPressed(false)} onPointerLeave={() => setIsPressed(false)}
+        className={`w-14 h-8 rounded-full flex items-center px-1 cursor-pointer transition-colors motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${isOn ? 'bg-primary' : 'bg-ink/20'}`}>
+        <span aria-hidden="true" className="h-6 bg-white rounded-full shadow-sm transition-all motion-reduce:transition-none"
+          style={{ width: `${width}px`, transform: `translateX(${x}px)`, transitionDuration: `${duration}s` }} />
+      </button>
     );
   },
-  generateCode: (values) => `/* CSS */
-.toggle-handle {
-  width: 24px;
-  height: 24px;
-  background: white;
-  border-radius: 50%;
-  transition: all ${values['duration']}s cubic-bezier(0.4, 0.0, 0.2, 1);
-}
-/* When Checked: Width expands to ${values['stretch']}px (Pill) */
-.toggle-input:checked + .toggle-bg .toggle-handle {
-  width: ${values['stretch']}px;
-  /* Adjust transform to keep it inside container */
-  transform: translateX(${46 - values['stretch']}px);
-}
-/* Active/Pressed state */
-.toggle-handle:active {
-  width: ${values['stretch']}px;
-}`,
+  generateCode: (values) => {
+    const stretch = Number.isFinite(values['stretch']) ? Math.max(20, Math.min(32, values['stretch'])) : 28;
+    const duration = Number.isFinite(values['duration']) ? Math.max(0.1, Math.min(0.8, values['duration'])) : 0.3;
+    return `<!-- Standalone semantic toggle: no JavaScript dependency -->
+<label class="fluid-toggle">
+  <input class="fluid-toggle__input" type="checkbox" role="switch" aria-label="Fluid toggle">
+  <span class="fluid-toggle__track" aria-hidden="true"><span class="fluid-toggle__thumb"></span></span>
+</label>
+<style>
+.fluid-toggle { display: inline-flex; position: relative; cursor: pointer; }
+.fluid-toggle__input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.fluid-toggle__track { display: flex; align-items: center; box-sizing: border-box; width: 56px; height: 32px;
+  padding: 4px; border-radius: 9999px; background: #44330033; transition: background ${duration}s; }
+.fluid-toggle__thumb { display: block; width: 24px; height: 24px; border-radius: 9999px;
+  background: white; box-shadow: 0 1px 3px #0002; transition: width ${duration}s, transform ${duration}s; }
+.fluid-toggle__input:checked + .fluid-toggle__track { background: #cd853f; }
+.fluid-toggle__input:checked + .fluid-toggle__track .fluid-toggle__thumb {
+  width: ${stretch}px; transform: translateX(${46 - stretch}px); }
+.fluid-toggle__input:focus-visible + .fluid-toggle__track { outline: 3px solid #332200; outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { .fluid-toggle__track, .fluid-toggle__thumb { transition: none; } }
+</style>`;
+  },
   generatePrompt: (values) => `Create a toggle switch. The handle is a circle (24px) when off. When on, it stretches to a pill shape (${values['stretch']}px width) and aligns to the right. Transition duration: ${values['duration']}s.`
 };
