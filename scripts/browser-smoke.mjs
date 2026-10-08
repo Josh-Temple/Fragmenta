@@ -112,11 +112,21 @@ try {
     }
   });
 
-  for (const [route, expected] of routes) {
+  for (const [index, [route, expected]] of routes.entries()) {
     errors.length = 0;
     const url = baseUrl + '/#' + route;
-    const navigation = await page.send('Page.navigate', { url });
-    if (navigation.errorText) throw new Error('Cannot navigate to ' + url + ': ' + navigation.errorText);
+    if (index === 0) {
+      const navigation = await page.send('Page.navigate', { url });
+      if (navigation.errorText) throw new Error('Cannot navigate to ' + url + ': ' + navigation.errorText);
+    } else {
+      // Keep the same document; HashRouter must respond to each hashchange.
+      // Avoid downloading the external prototype Tailwind CDN afresh on every route.
+      const navigation = await page.send('Runtime.evaluate', {
+        expression: 'location.hash = ' + JSON.stringify('#' + route),
+        returnByValue: true,
+      });
+      if (navigation.exceptionDetails) throw new Error('Cannot change route: ' + navigation.exceptionDetails.text);
+    }
 
     await poll(async () => {
       if (errors.length) throw new Error(errors.join('; '));
@@ -125,7 +135,10 @@ try {
         returnByValue: true,
       });
       const state = JSON.parse(response.result?.value || '{}');
-      return state.hash === '#' + route && state.count > 0 && state.text.includes(expected);
+      if (state.hash === '#' + route && state.count > 0 && state.text.includes(expected)) return true;
+      throw new Error('Observed ' + JSON.stringify({
+        hash: state.hash, rootChildren: state.count, text: String(state.text || '').slice(0, 280),
+      }));
     }, route + " to render '" + expected + "'");
     await sleep(300);
     if (errors.length) throw new Error(route + ': ' + errors.join('; '));
