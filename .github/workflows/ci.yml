@@ -26,3 +26,15 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      - name: Browser startup smoke test
+        run: |
+          chrome="$(command -v google-chrome || command -v chromium || true)"
+          if [ -z "$chrome" ]; then
+            echo "Chromium/Chrome is required for the browser startup check" >&2
+            exit 1
+          fi
+          npm run preview -- --host 127.0.0.1 --port 4173 --strictPort &
+          preview_pid=$!
+          trap 'kill "$preview_pid" 2>/dev/null || true' EXIT
+          CHROME_BIN="$chrome" node scripts/browser-smoke.mjs
