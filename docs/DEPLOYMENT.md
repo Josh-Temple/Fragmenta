@@ -30,7 +30,7 @@ Vercel is configured with:
 
 - Framework: Vite
 - Node.js: 22.x
-- Install command: `npm ci` (after the committed lockfile is incorporated)
+- Install command: `npm install` (current Vercel project setting; switch to `npm ci` before release after merging the committed lockfile)
 - Build command: `npm run build`
 - Output directory: `dist`
 
