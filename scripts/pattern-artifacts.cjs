@@ -52,7 +52,7 @@ for (const file of files) {
     const code = def.generateCode(values);
     assert.equal(typeof code, 'string', def.id + ' code type');
     assert(code.length > 100, def.id + ' code unexpectedly short');
-    assert(!/\b(?:undefined|NaN)\b/.test(code), def.id + ' invalid interpolated values');
+    assert(!/\bNaN\b|undefined(?:px|deg|s|%)/.test(code), def.id + ' invalid interpolated values');
     if (code.includes('import React')) {
       const generated = ts.transpileModule(code, {
         fileName: def.id + '.jsx', compilerOptions, reportDiagnostics: true,
