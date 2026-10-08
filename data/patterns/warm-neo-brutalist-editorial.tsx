@@ -112,8 +112,9 @@ export const warmNeoBrutalistEditorial: PatternDefinition = {
   <p>Use large hierarchy and generous whitespace; reserve accents for meaning.</p>
 </article>
 
+<style>
 /* CSS */
-:root {
+.editorial-card {
   --paper: #fff3d9;
   --surface: #fffdf7;
   --ink: #211b17;
@@ -121,13 +122,9 @@ export const warmNeoBrutalistEditorial: PatternDefinition = {
   --accent-green: #b8e6a3;
 }
 
-body {
-  background: var(--paper);
-  color: var(--ink);
-}
-
 .editorial-card {
   padding: ${spacing}px;
+  color: var(--ink);
   background: var(--surface);
   border: ${border}px solid var(--ink);
   border-radius: ${radius}px;
@@ -154,7 +151,8 @@ body {
     padding: ${Math.max(12, spacing - 4)}px;
     box-shadow: ${Math.max(3, shadow - 3)}px ${Math.max(3, shadow - 3)}px 0 var(--ink);
   }
-}`;
+}
+</style>`;
   },
   generatePrompt: (values) => {
     const radius = values.radius ?? defaults.radius;

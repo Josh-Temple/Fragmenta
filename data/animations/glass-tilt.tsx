@@ -19,6 +19,7 @@ export const glassTilt: AnimationDefinition = {
     const [isHovering, setIsHovering] = useState(false);
     
     const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+      if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
       setIsHovering(true);
       const rect = e.currentTarget.getBoundingClientRect();
       const x = (e.clientX - rect.left) / rect.width; // 0 to 1
@@ -45,6 +46,7 @@ export const glassTilt: AnimationDefinition = {
     return (
       <div className="perspective-1000 flex items-center justify-center p-8 w-full h-full" style={{ perspective: '1000px' }}>
            <style>{`
+              @media (prefers-reduced-motion: reduce) { .fragmenta-glass-preview { animation: none !important; transform: none !important; transition: none !important; } }
               @keyframes idle-tilt {
                   0%, 100% { transform: rotateX(0deg) rotateY(0deg); }
                   25% { transform: rotateX(5deg) rotateY(5deg); }
@@ -55,7 +57,7 @@ export const glassTilt: AnimationDefinition = {
         <div 
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
-          className="w-56 h-36 rounded-2xl relative transition-all duration-200 ease-out cursor-pointer group"
+          className="fragmenta-glass-preview w-56 h-36 rounded-2xl relative transition-all duration-200 motion-reduce:transition-none ease-out cursor-pointer group"
           style={{
             transform: isHovering 
               ? `rotateX(${-rotate.x}deg) rotateY(${-rotate.y}deg) scale(1.05)` 
@@ -102,34 +104,53 @@ export const glassTilt: AnimationDefinition = {
       </div>
     );
   },
-  generateCode: (values) => `// React Component
-const GlassCard = () => {
-  const [rotate, setRotate] = useState({ x: 0, y: 0 });
+  generateCode: (values) => {
+    const intensity = Number.isFinite(values['intensity']) ? Math.max(5, Math.min(45, values['intensity'])) : 20;
+    const blur = Number.isFinite(values['blur']) ? Math.max(0, Math.min(20, values['blur'])) : 12;
+    return `// Standalone React JSX: save as GlassCard.jsx; requires react and react-dom.
+import React, { useState } from 'react';
 
-  const onMove = (e) => {
-    const box = e.currentTarget.getBoundingClientRect();
-    const x = (e.clientX - box.left) / box.width - 0.5;
-    const y = (e.clientY - box.top) / box.height - 0.5;
-    setRotate({ x: y * ${values['intensity']}, y: -x * ${values['intensity']} });
+export default function GlassCard() {
+  const [active, setActive] = useState(false);
+  const [tilt, setTilt] = useState({ x: 0, y: 0, gx: 50, gy: 50 });
+  const handleMove = (event) => {
+    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
+    const bounds = event.currentTarget.getBoundingClientRect();
+    const x = (event.clientX - bounds.left) / bounds.width;
+    const y = (event.clientY - bounds.top) / bounds.height;
+    setTilt({ x: -(y - 0.5) * ${intensity}, y: (x - 0.5) * ${intensity}, gx: x * 100, gy: y * 100 });
+    setActive(true);
   };
-
+  const reset = () => { setActive(false); setTilt({ x: 0, y: 0, gx: 50, gy: 50 }); };
   return (
-    <div className="perspective-container" style={{ perspective: '1000px' }}>
-      <div 
-        onMouseMove={onMove}
-        onMouseLeave={() => setRotate({x:0, y:0})}
-        style={{
-          transform: \`rotateX(\${-rotate.x}deg) rotateY(\${-rotate.y}deg)\`,
-          transition: 'transform 0.1s ease-out'
-        }}
-        className="glass-card"
-      >
-        <div className="content" style={{ backdropFilter: 'blur(${values['blur']}px)' }}>
-            {/* Content here */}
+    <div style={{ perspective: '1000px', padding: 32, display: 'inline-block' }}>
+      <div className="glass-card-example" onPointerMove={handleMove} onPointerLeave={reset}
+        role="img" aria-label="Decorative translucent glass card"
+        style={{ transform: active ? \`rotateX(\${tilt.x}deg) rotateY(\${tilt.y}deg) scale(1.05)\` : undefined,
+          animation: active ? 'none' : undefined, transformStyle: 'preserve-3d' }}>
+        <div className="glass-card-example__surface" style={{ backdropFilter: 'blur(${blur}px)' }}>
+          <div className="glass-card-example__glare"
+            style={{ background: \`radial-gradient(circle at \${tilt.gx}% \${tilt.gy}%, #fff9, transparent 60%)\` }} />
+          <span aria-hidden="true" style={{ fontSize: 32 }}>◈</span>
+          <span style={{ fontSize: 13, fontWeight: 700 }}>Glass card</span>
         </div>
       </div>
+      <style>{\`
+        .glass-card-example { width: 224px; height: 144px; border-radius: 16px; position: relative;
+          box-shadow: 0 14px 32px #32220030; transition: transform 200ms ease-out;
+          animation: glass-card-idle 8s ease-in-out infinite; }
+        .glass-card-example__surface { position: absolute; inset: 0; border: 1px solid #ffffff88;
+          border-radius: inherit; background: linear-gradient(140deg, #ffffff77, #ffffff20);
+          display: flex; align-items: center; justify-content: center; flex-direction: column; overflow: hidden; }
+        .glass-card-example__glare { position: absolute; inset: 0; pointer-events: none; }
+        @keyframes glass-card-idle { 0%,100% { transform: rotateX(0) rotateY(0); }
+          25% { transform: rotateX(5deg) rotateY(5deg); } 75% { transform: rotateX(-5deg) rotateY(-5deg); } }
+        @media (prefers-reduced-motion: reduce) { .glass-card-example { animation: none !important;
+          transform: none !important; transition: none !important; } }
+      \`}</style>
     </div>
   );
-}`,
+}`;
+  },
   generatePrompt: (values) => `Create a React component for a Glassmorphism card. It should have a gentle floating animation when idle. On hover, track mouse movement to tilt the card in 3D (up to ${values['intensity']} degrees) and show a glare effect.`
 };
