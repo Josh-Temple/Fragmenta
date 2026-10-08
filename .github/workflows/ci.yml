@@ -19,11 +19,7 @@ jobs:
           node-version: 22
 
       - name: Install dependencies
-        run: npm install
-
-      - name: Transport generated lockfile for reproducibility review
-        run: |
-          node -e "const fs=require('fs'); const lock=fs.readFileSync('package-lock.json').toString('base64'); console.log('LOCKFILE_FRAGMENTA_BEGIN'); for(let i=0;i<lock.length;i+=2000) console.log('LOCKFILE_FRAGMENTA_CHUNK:'+lock.slice(i,i+2000)); console.log('LOCKFILE_FRAGMENTA_END');"
+        run: npm ci
 
       - name: Type-check
         run: npx tsc --noEmit
