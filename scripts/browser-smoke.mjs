@@ -67,6 +67,13 @@ const routes = [
   ['/p/glitch-text', 'Glitch Text'],
   ['/a/glitch-text', 'Glitch Text'],
   ['/p/warm-neo-brutalist-editorial', 'Warm Neo-Brutalist'],
+  ['/search', 'Search'],
+  ['/collections', 'Collections'],
+  ['/collections/motion-essentials', 'Motion Essentials'],
+  ['/licenses', 'Licensing information'],
+  ['/p/fluid-toggle', 'Fluid Toggle'],
+  ['/p/morph-fab', 'Morph FAB'],
+  ['/p/editorial-split-layout', 'Editorial Split Layout'],
 ];
 
 await poll(async () => (await fetch(baseUrl)).ok, 'built Vite preview server');
@@ -167,6 +174,78 @@ try {
     }
     console.log('PASS ' + route + ": React mounted and '" + expected + "' rendered");
   }
+
+  // Representative responsive and interaction checks on the same built artifact.
+  for (const width of [360, 768, 1280]) {
+    await page.send('Emulation.setDeviceMetricsOverride', { width, height: 850, deviceScaleFactor: 1, mobile: false });
+    await page.send('Runtime.evaluate', { expression: "location.hash = '#/p/fluid-toggle'" });
+    await poll(async () => {
+      const r = await page.send('Runtime.evaluate', {
+        expression: "JSON.stringify({ ready:!!document.querySelector('button[role=switch]'), scrollWidth:document.documentElement.scrollWidth, viewport:innerWidth })",
+        returnByValue: true,
+      });
+      const state = JSON.parse(r.result?.value || '{}');
+      if (!state.ready) return false;
+      if (state.scrollWidth > state.viewport + 1) throw new Error('Horizontal overflow at ' + width + 'px: ' + JSON.stringify(state));
+      return true;
+    }, 'fluid toggle at ' + width + 'px');
+    console.log('PASS responsive route at ' + width + 'px');
+  }
+  await page.send('Emulation.clearDeviceMetricsOverride');
+
+  // Native button semantics must respond to keyboard Space and announce switch state.
+  await page.send('Runtime.evaluate', { expression: "document.querySelector('button[role=switch]').focus()" });
+  const stateBefore = await page.send('Runtime.evaluate', { expression: "document.querySelector('button[role=switch]').getAttribute('aria-checked')", returnByValue: true });
+  await page.send('Input.dispatchKeyEvent', { type: 'keyDown', key: ' ', code: 'Space', windowsVirtualKeyCode: 32 });
+  await page.send('Input.dispatchKeyEvent', { type: 'keyUp', key: ' ', code: 'Space', windowsVirtualKeyCode: 32 });
+  await poll(async () => {
+    const response = await page.send('Runtime.evaluate', { expression: "document.querySelector('button[role=switch]').getAttribute('aria-checked')", returnByValue: true });
+    return response.result?.value !== stateBefore.result?.value;
+  }, 'semantic switch keyboard toggle');
+  console.log('PASS switch supports keyboard and aria-checked');
+
+  await page.send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: 'reduce' }] });
+  const reduced = await page.send('Runtime.evaluate', {
+    expression: "getComputedStyle(document.querySelector('button[role=switch]')).transitionDuration",
+    returnByValue: true,
+  });
+  if (reduced.result?.value !== '0s') throw new Error('Reduced-motion switch retains transition: ' + reduced.result?.value);
+  console.log('PASS reduced-motion switch transition');
+  await page.send('Emulation.setEmulatedMedia', { features: [] });
+
+  await page.send('Runtime.evaluate', { expression: "location.hash = '#/p/glitch-text'" });
+  await poll(async () => {
+    const result = await page.send('Runtime.evaluate', {
+      expression: "Boolean([...document.querySelectorAll('button')].find(x => x.textContent.trim() === 'Code'))",
+      returnByValue: true,
+    });
+    return result.result?.value;
+  }, 'code tab control');
+  const clipboard = await page.send('Runtime.evaluate', {
+    expression: `(async () => {
+      const tab = [...document.querySelectorAll('button')].find(x => x.textContent.trim() === 'Code');
+      tab.click();
+      await new Promise(r => setTimeout(r, 100));
+      const copy = document.querySelector('button[title="Copy code"]');
+      if (!copy) throw new Error('Copy button missing');
+      Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText: async () => { throw new Error('Denied'); } } });
+      copy.click();
+      await new Promise(r => setTimeout(r, 100));
+      const failed = document.querySelector('[role="status"]')?.textContent || '';
+      Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText: async () => {} } });
+      copy.click();
+      await new Promise(r => setTimeout(r, 100));
+      const succeeded = document.querySelector('[role="status"]')?.textContent || '';
+      return { failed, succeeded };
+    })()`,
+    awaitPromise: true,
+    returnByValue: true,
+  });
+  const states = clipboard.result?.value;
+  if (!states?.failed.includes('Copy failed') || !states?.succeeded.includes('Copied to clipboard')) {
+    throw new Error('Clipboard states not truthful: ' + JSON.stringify(states));
+  }
+  console.log('PASS clipboard success and failure states');
 } finally {
   page?.close();
   control?.close();
