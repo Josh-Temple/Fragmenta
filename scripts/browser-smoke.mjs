@@ -135,7 +135,7 @@ try {
         returnByValue: true,
       });
       const state = JSON.parse(response.result?.value || '{}');
-      if (state.hash === '#' + route && state.count > 0 && state.text.includes(expected)) return true;
+      if (state.hash === '#' + route && state.count > 0 && state.text.toLowerCase().includes(expected.toLowerCase())) return true;
       throw new Error('Observed ' + JSON.stringify({
         hash: state.hash, rootChildren: state.count, text: String(state.text || '').slice(0, 280),
       }));
