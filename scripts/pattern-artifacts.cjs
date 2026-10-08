@@ -39,6 +39,8 @@ function loadTsx(file) {
   new Function('require', 'exports', 'module', compiled.outputText)(localRequire, module.exports, module);
   return module.exports;
 }
+const fixtureDir = path.join(repo, 'dist', 'pattern-fixtures');
+fs.mkdirSync(fixtureDir, { recursive: true });
 const ids = new Set();
 for (const file of files) {
   const exports = loadTsx(path.join(repo, file));
@@ -50,6 +52,7 @@ for (const file of files) {
   const changed = Object.fromEntries(def.params.map(p => [p.key, p.max ?? p.default + 1]));
   for (const [variant, values] of [['default', initial], ['changed', changed]]) {
     const code = def.generateCode(values);
+    let markup = code;
     assert.equal(typeof code, 'string', def.id + ' code type');
     assert(code.length > 100, def.id + ' code unexpectedly short');
     assert(!/\bNaN\b|undefined(?:px|deg|s|%)/.test(code), def.id + ' invalid interpolated values');
@@ -63,6 +66,7 @@ for (const file of files) {
       new Function('require', 'exports', 'module', generated.outputText)(require, component.exports, component);
       assert.equal(typeof component.exports.default, 'function', def.id + ' missing React export');
       const html = ReactDOMServer.renderToStaticMarkup(React.createElement(component.exports.default));
+      markup = html;
       assert(html.includes('glass-card-example'), def.id + ' missing rendered content');
     } else {
       assert(code.includes('<style>') && code.includes('</style>'), def.id + ' missing standalone CSS');
@@ -88,6 +92,9 @@ for (const file of files) {
     if (['elastic-button', 'smart-skeleton', 'glass-tilt', 'fluid-toggle', 'glitch-text', 'morph-fab'].includes(def.id)) {
       assert(code.includes('prefers-reduced-motion'), def.id + ' missing reduced-motion CSS');
     }
+    fs.writeFileSync(path.join(fixtureDir, def.id + '-' + variant + '.html'),
+      '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body>' +
+      '<main id="artifact-fixture">' + markup + '</main></body></html>');
     console.log('PASS ' + def.id + ' / ' + variant + ': isolated generated artifact checked');
   }
 }
