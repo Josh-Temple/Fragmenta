@@ -27,6 +27,9 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Verify generated pattern artifacts independently
+        run: node scripts/pattern-artifacts.cjs
+
       - name: Browser startup smoke test
         run: |
           chrome="$(command -v google-chrome || command -v chromium || true)"
