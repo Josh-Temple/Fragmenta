@@ -30,14 +30,14 @@ Vercel is configured with:
 
 - Framework: Vite
 - Node.js: 22.x
-- Install command: `npm install`
+- Install command: `npm ci` (after the committed lockfile is incorporated)
 - Build command: `npm run build`
 - Output directory: `dist`
 
 GitHub Actions independently runs:
 
 ```bash
-npm install
+npm ci
 npx tsc --noEmit
 npm run build
 ```
