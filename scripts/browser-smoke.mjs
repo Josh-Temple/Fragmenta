@@ -147,6 +147,24 @@ try {
     }, route + " to render '" + expected + "'");
     await sleep(300);
     if (errors.length) throw new Error(route + ': ' + errors.join('; '));
+    if (index === 0 && !process.env.SMOKE_BASE_URL) {
+      // Build-time Tailwind must preserve the original warm palette and typography.
+      const result = await page.send('Runtime.evaluate', {
+        expression: `JSON.stringify({
+          background: getComputedStyle(document.querySelector('#root .bg-paper')).backgroundColor,
+          fontFamily: getComputedStyle(document.querySelector('#root .bg-paper')).fontFamily,
+          cssAssets: performance.getEntriesByType('resource').filter(entry => entry.name.includes('/assets/') && entry.name.endsWith('.css')).length,
+          tailwindCdn: performance.getEntriesByType('resource').filter(entry => entry.name.includes('cdn.tailwindcss.com')).length
+        })`,
+        returnByValue: true,
+      });
+      const style = JSON.parse(result.result?.value || '{}');
+      if (style.background !== 'rgb(250, 240, 230)' || !style.fontFamily?.includes('Space Grotesk')
+          || style.cssAssets === 0 || style.tailwindCdn !== 0) {
+        throw new Error('Build-time Tailwind style contract failed: ' + JSON.stringify(style));
+      }
+      console.log('PASS build-time Tailwind style contract', style);
+    }
     console.log('PASS ' + route + ": React mounted and '" + expected + "' rendered");
   }
 } finally {
