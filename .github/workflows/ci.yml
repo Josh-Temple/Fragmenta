@@ -38,3 +38,23 @@ jobs:
           preview_pid=$!
           trap 'kill "$preview_pid" 2>/dev/null || true' EXIT
           CHROME_BIN="$chrome" node scripts/browser-smoke.mjs
+
+      - name: Verify deployed production in Chromium
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          chrome="$(command -v google-chrome || command -v chromium || true)"
+          if [ -z "$chrome" ]; then
+            echo "Chromium/Chrome is required for production verification" >&2
+            exit 1
+          fi
+          # Vercel may still be promoting the main deployment when Actions finishes.
+          # Verify the public origin in a real browser, not merely a 200 response.
+          for attempt in 1 2 3 4 5; do
+            echo "Production browser verification attempt $attempt/5"
+            if CHROME_BIN="$chrome" SMOKE_BASE_URL="https://fragmenta-brown.vercel.app" node scripts/browser-smoke.mjs; then
+              exit 0
+            fi
+            if [ "$attempt" -lt 5 ]; then sleep 15; fi
+          done
+          echo "Production browser smoke did not pass" >&2
+          exit 1
