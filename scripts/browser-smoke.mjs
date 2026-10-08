@@ -74,14 +74,19 @@ const profile = await mkdtemp(join(tmpdir(), 'fragmenta-browser-smoke-'));
 const browser = spawn(chrome, [
   '--headless=new', '--no-sandbox', '--disable-gpu', '--no-first-run',
   '--remote-debugging-port=0', '--user-data-dir=' + profile, 'about:blank',
-], { stdio: 'ignore' });
-browser.on('error', error => console.error('Chromium launch failed:', error.message));
+], { stdio: ['ignore', 'ignore', 'pipe'] });
+let chromeErrors = '';
+browser.stderr.on('data', chunk => { chromeErrors = (chromeErrors + chunk.toString()).slice(-3000); });
+browser.on('error', error => { chromeErrors += '\nChromium spawn error: ' + error.message; });
 let control;
 let page;
 
 try {
   const portFile = join(profile, 'DevToolsActivePort');
-  const raw = await poll(async () => await readFile(portFile, 'utf8'), 'Chromium DevTools port');
+  const raw = await poll(async () => {
+    if (browser.exitCode !== null) throw new Error('Chrome exited (' + browser.exitCode + '): ' + chromeErrors);
+    return await readFile(portFile, 'utf8');
+  }, 'Chromium DevTools port', 25000);
   const [port, browserPath] = raw.trim().split('\n');
   control = new DevTools('ws://127.0.0.1:' + port + browserPath);
   await control.ready();
