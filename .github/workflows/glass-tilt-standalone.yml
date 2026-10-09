@@ -1,0 +1,34 @@
+name: Glass Tilt standalone React browser validation
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - test/glass-tilt-hydrated-on-reconciled-20261009
+
+jobs:
+  glass-tilt:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install exact dependencies
+        run: npm ci
+      - name: Type-check
+        run: npx tsc --noEmit
+      - name: Build existing app
+        run: npm run build
+      - name: Preserve all sixteen standalone HTML fixture checks
+        run: node scripts/pattern-artifacts.cjs
+      - name: Verify generated React default and changed fixtures in Chromium
+        run: |
+          chrome="$(command -v google-chrome || command -v chromium || true)"
+          if [ -z "$chrome" ]; then
+            echo "Chromium/Chrome is required, cannot claim browser PASS" >&2
+            exit 1
+          fi
+          CHROME_BIN="$chrome" node scripts/glass-tilt-hydrated.mjs
