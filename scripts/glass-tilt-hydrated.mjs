@@ -196,6 +196,9 @@ async function run() {
         type: 'mouseMoved', x: r.x + r.width * fx, y: r.y + r.height * fy, pointerType: 'mouse'
       });
       await move(0.8, 0.3);
+      await delay(450);
+      console.log('DEBUG pointer initial', variant, JSON.stringify(initial));
+      console.log('DEBUG pointer observed', variant, JSON.stringify(await state(page)), 'errors', JSON.stringify(errors));
       const active = await poll(async () => {
         const v = await state(page);
         return v && v.inlineTransform.includes('rotateX(') && v.inlineTransform.includes('rotateY(') &&
