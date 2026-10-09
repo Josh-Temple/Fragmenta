@@ -196,13 +196,10 @@ async function run() {
         type: 'mouseMoved', x: r.x + r.width * fx, y: r.y + r.height * fy, pointerType: 'mouse'
       });
       await move(0.8, 0.3);
-      await delay(450);
-      console.log('DEBUG pointer initial', variant, JSON.stringify(initial));
-      console.log('DEBUG pointer observed', variant, JSON.stringify(await state(page)), 'errors', JSON.stringify(errors));
       const active = await poll(async () => {
         const v = await state(page);
         return v && v.inlineTransform.includes('rotateX(') && v.inlineTransform.includes('rotateY(') &&
-          v.inlineAnimation === 'none' && v.glare.includes('radial-gradient') ? v : false;
+          v.animation === 'none' && v.glare.includes('radial-gradient') ? v : false;
       }, variant + ' pointer tilt and glare');
       assert.notEqual(active.inlineTransform, initial.inlineTransform);
       await move(0.2, 0.7);
