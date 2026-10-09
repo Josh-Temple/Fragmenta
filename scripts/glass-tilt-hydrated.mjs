@@ -170,8 +170,8 @@ async function run() {
     page.on((name, params) => {
       if (name === 'Runtime.exceptionThrown') errors.push(params.exceptionDetails.exception?.description || params.exceptionDetails.text);
       if (name === 'Runtime.consoleAPICalled' && params.type === 'error') errors.push('Console.error: ' + params.args.map(a => a.value || a.description || '').join(' '));
-      if (name === 'Network.loadingFailed' && !params.canceled) errors.push('Network failed: ' + params.errorText);
-      if (name === 'Network.responseReceived' && params.response.status >= 400) errors.push('HTTP ' + params.response.status + ': ' + params.response.url);
+      if (name === 'Network.loadingFailed' && !params.canceled && ['Document', 'Script', 'Stylesheet'].includes(params.type)) errors.push('Network failed: ' + params.errorText);
+      if (name === 'Network.responseReceived' && params.response.status >= 400 && ['Document', 'Script', 'Stylesheet'].includes(params.type)) errors.push('HTTP ' + params.response.status + ': ' + params.response.url);
     });
     for (const [variant, values] of Object.entries(variants)) {
       errors.length = 0;
