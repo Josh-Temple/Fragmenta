@@ -114,6 +114,8 @@ export default function GlassCard() {
   const [active, setActive] = useState(false);
   const [tilt, setTilt] = useState({ x: 0, y: 0, gx: 50, gy: 50 });
   const handleMove = (event) => {
+    // Touch is not hover: keep the card readable without starting a transient tilt.
+    if (event.pointerType === 'touch') return;
     if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
     const bounds = event.currentTarget.getBoundingClientRect();
     const x = (event.clientX - bounds.left) / bounds.width;
