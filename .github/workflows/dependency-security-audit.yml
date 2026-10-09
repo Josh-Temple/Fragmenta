@@ -1,0 +1,81 @@
+name: Locked dependency security audit
+
+on:
+  push:
+    branches:
+      - fix/postcss-advisories-20261010
+  pull_request:
+    paths:
+      - package.json
+      - package-lock.json
+      - .github/workflows/dependency-security-audit.yml
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out exact commit
+        uses: actions/checkout@v4
+      - name: Use Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Reproduce locked dependency install
+        run: npm ci
+      - name: Capture full and runtime-only npm audit verdicts
+        shell: bash
+        run: |
+          set +e
+          npm audit --json > audit-all.json 2> audit-all.err
+          audit_all_exit=$?
+          npm audit --omit=dev --json > audit-runtime.json 2> audit-runtime.err
+          audit_runtime_exit=$?
+          set -e
+          export AUDIT_ALL_EXIT="$audit_all_exit"
+          export AUDIT_RUNTIME_EXIT="$audit_runtime_exit"
+          node --input-type=module <<'JS'
+          import fs from 'node:fs';
+
+          let failedToParse = false;
+          for (const [kind, file, exitCode] of [
+            ['all', 'audit-all.json', process.env.AUDIT_ALL_EXIT],
+            ['omit-dev', 'audit-runtime.json', process.env.AUDIT_RUNTIME_EXIT],
+          ]) {
+            let audit;
+            try {
+              audit = JSON.parse(fs.readFileSync(file, 'utf8'));
+            } catch {
+              failedToParse = true;
+              console.log(JSON.stringify({kind, exitCode, status: 'AUDIT_JSON_UNAVAILABLE'}));
+              continue;
+            }
+            const findings = Object.entries(audit.vulnerabilities ?? {}).map(([name, info]) => ({
+              package: name,
+              severity: info.severity,
+              isDirect: info.isDirect,
+              affectedRange: info.range,
+              via: (info.via ?? []).map(v => typeof v === 'string' ? v : ({
+                name: v.name,
+                url: v.url,
+                severity: v.severity,
+                affectedRange: v.range,
+              })),
+              effects: info.effects,
+              fixAvailable: info.fixAvailable,
+            }));
+            console.log(JSON.stringify({
+              kind,
+              exitCode,
+              metadata: audit.metadata?.vulnerabilities,
+              auditError: audit.error ? {code: audit.error.code, summary: audit.error.summary} : null,
+              findings,
+            }, null, 2));
+            if (audit.error) failedToParse = true;
+          }
+          if (failedToParse) process.exitCode = 2;
+          JS
+          test "$audit_all_exit" -eq 0 && test "$audit_runtime_exit" -eq 0
