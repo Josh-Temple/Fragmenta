@@ -54,10 +54,12 @@ const SearchResults: React.FC = () => {
         </div>
 
         <div className="relative group">
+          <label htmlFor="pattern-search" className="sr-only">Search patterns</label>
           <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
             <span className="material-symbols-outlined text-primary">search</span>
           </div>
           <input
+            id="pattern-search"
             className="block w-full pl-12 pr-12 py-3.5 bg-surface border-none rounded-xl text-ink font-semibold placeholder-ink/40 focus:ring-2 focus:ring-primary/20 shadow-inner"
             placeholder="Search patterns..."
             type="text"
