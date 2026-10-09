@@ -175,23 +175,53 @@ try {
     console.log('PASS ' + route + ": React mounted and '" + expected + "' rendered");
   }
 
-  // Representative responsive and interaction checks on the same built artifact.
+  // Cross-route responsive matrix. Check the rendered page, not only its HTTP status.
+  // Routes cover Home, Browse, Search, Collection index/detail, Licenses,
+  // representative pattern details and the legacy /a/:id URL.
   for (const width of [360, 768, 1280]) {
     await page.send('Emulation.setDeviceMetricsOverride', { width, height: 850, deviceScaleFactor: 1, mobile: false });
-    await page.send('Runtime.evaluate', { expression: "location.hash = '#/p/fluid-toggle'" });
-    await poll(async () => {
-      const r = await page.send('Runtime.evaluate', {
-        expression: "JSON.stringify({ ready:!!document.querySelector('button[role=switch]'), scrollWidth:document.documentElement.scrollWidth, viewport:innerWidth })",
-        returnByValue: true,
+    for (const [route, expected] of routes) {
+      await page.send('Runtime.evaluate', {
+        expression: 'location.hash = ' + JSON.stringify('#' + route),
       });
-      const state = JSON.parse(r.result?.value || '{}');
-      if (!state.ready) return false;
-      if (state.scrollWidth > state.viewport + 1) throw new Error('Horizontal overflow at ' + width + 'px: ' + JSON.stringify(state));
-      return true;
-    }, 'fluid toggle at ' + width + 'px');
-    console.log('PASS responsive route at ' + width + 'px');
+      await poll(async () => {
+        const response = await page.send('Runtime.evaluate', {
+          expression: "JSON.stringify({hash:location.hash,text:document.querySelector('#root')?.innerText || '',ready:!!document.querySelector('#root')?.children.length,scrollWidth:document.documentElement.scrollWidth,viewport:innerWidth})",
+          returnByValue: true,
+        });
+        const state = JSON.parse(response.result?.value || '{}');
+        if (!state.ready || state.hash !== '#' + route ||
+            !state.text.toLowerCase().includes(expected.toLowerCase())) return false;
+        if (state.scrollWidth > state.viewport + 1) {
+          throw new Error('Horizontal overflow on ' + route + ' at ' + width + 'px: ' + JSON.stringify(state));
+        }
+        return true;
+      }, route + ' responsive render at ' + width + 'px');
+      if (errors.length) throw new Error(route + ': ' + errors.join('; '));
+      console.log('PASS responsive ' + width + 'px ' + route);
+    }
   }
   await page.send('Emulation.clearDeviceMetricsOverride');
+
+  // Search input must have an explicit accessible name, not placeholder-only text.
+  await page.send('Runtime.evaluate', { expression: "location.hash = '#/search'" });
+  await poll(async () => {
+    const result = await page.send('Runtime.evaluate', {
+      expression: "(()=>{const input=document.querySelector('input#pattern-search');return !!input && [...input.labels].some(label=>label.textContent.trim()==='Search patterns');})()",
+      returnByValue: true,
+    });
+    return result.result?.value;
+  }, 'Search field accessible label');
+  console.log('PASS Search field explicit accessible label');
+
+  await page.send('Runtime.evaluate', { expression: "location.hash = '#/p/fluid-toggle'" });
+  await poll(async () => {
+    const result = await page.send('Runtime.evaluate', {
+      expression: "Boolean(document.querySelector('button[role=switch]'))",
+      returnByValue: true,
+    });
+    return result.result?.value;
+  }, 'Fluid Toggle for keyboard validation');
 
   // Native button semantics must respond to keyboard Space and announce switch state.
   await page.send('Runtime.evaluate', { expression: "document.querySelector('button[role=switch]').focus()" });
