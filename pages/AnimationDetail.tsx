@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { definitions, getPatternKind } from '../data/definitions';
+import { patternGuides } from '../data/pattern-guides';
+import PatternUsage from '../components/PatternUsage';
 
 const kindLabels = {
   motion: 'Motion',
@@ -200,6 +202,14 @@ const PatternDetail: React.FC = () => {
             ) : (
               <div className="rounded-xl border border-ink-border bg-surface/30 p-4 text-sm text-ink-muted">
                 This pattern has no adjustable parameters yet.
+              </div>
+            )}
+
+            {patternGuides[def.id] && (
+              <div className="border-t border-ink-border pt-6 space-y-4">
+                <h2 className="text-lg font-bold font-display">Using this pattern</h2>
+                <PatternUsage guide={patternGuides[def.id]} />
+                <Link to="/guide" className="inline-block text-sm text-ink underline underline-offset-4 py-2 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink">Read the reuse guide</Link>
               </div>
             )}
 

@@ -74,6 +74,7 @@ const routes = [
   ['/p/fluid-toggle', 'Fluid Toggle'],
   ['/p/morph-fab', 'Morph FAB'],
   ['/p/editorial-split-layout', 'Editorial Split Layout'],
+  ['/guide', 'Choose and use a UI pattern'],
 ];
 
 await poll(async () => (await fetch(baseUrl)).ok, 'built Vite preview server');
@@ -276,6 +277,123 @@ try {
     throw new Error('Clipboard states not truthful: ' + JSON.stringify(states));
   }
   console.log('PASS clipboard success and failure states');
+
+  // The reuse guide is product content with real disclosure and copy actions.
+  // Verify the copied bytes and failure feedback, not just the button label.
+  await page.send('Runtime.evaluate', { expression: "location.hash = '#/guide'" });
+  await poll(async () => {
+    const result = await page.send('Runtime.evaluate', {
+      expression: "document.querySelector('h1')?.textContent === 'Choose and use a UI pattern'",
+      returnByValue: true,
+    });
+    return result.result?.value;
+  }, 'reuse guide');
+  const guideLinks = await page.send('Runtime.evaluate', {
+    expression: `(() => ({
+      disclosures: document.querySelectorAll('details').length,
+      targets: [...document.querySelectorAll('details a')].map(link => link.getAttribute('href')),
+      firstClosed: !document.querySelector('details')?.open
+    }))()`,
+    returnByValue: true,
+  });
+  const guide = guideLinks.result?.value;
+  const currentIds = ['elastic-button', 'smart-skeleton', 'glass-tilt', 'fluid-toggle',
+    'glitch-text', 'morph-fab', 'warm-neo-brutalist-editorial', 'editorial-split-layout'];
+  if (guide?.disclosures !== 8 || !guide.firstClosed ||
+      currentIds.some(id => !guide.targets?.includes('#/p/' + id))) {
+    throw new Error('Reuse guide does not cover the registered patterns: ' + JSON.stringify(guide));
+  }
+  await page.send('Runtime.evaluate', { expression: "document.querySelector('summary').focus()" });
+  await page.send('Input.dispatchKeyEvent', { type: 'keyDown', key: ' ', code: 'Space', windowsVirtualKeyCode: 32 });
+  await page.send('Input.dispatchKeyEvent', { type: 'keyUp', key: ' ', code: 'Space', windowsVirtualKeyCode: 32 });
+  await poll(async () => {
+    const result = await page.send('Runtime.evaluate', {
+      expression: "document.querySelector('details').open",
+      returnByValue: true,
+    });
+    return result.result?.value;
+  }, 'guide disclosure keyboard activation');
+  console.log('PASS reuse guide: eight linked patterns and keyboard disclosure');
+
+  const guideCopy = await page.send('Runtime.evaluate', {
+    expression: `(async () => {
+      const button = [...document.querySelectorAll('button')].find(b => b.textContent.includes('Copy reduced-motion example'));
+      const code = document.querySelector('pre code')?.textContent;
+      if (!button || !code) throw new Error('Guide copy action missing');
+      let copied;
+      Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText: async text => { copied = text; } } });
+      button.click();
+      await new Promise(r => setTimeout(r, 100));
+      const success = document.querySelector('[role=status]')?.textContent;
+      Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText: async () => { throw new Error('Denied'); } } });
+      button.click();
+      await new Promise(r => setTimeout(r, 100));
+      const denied = document.querySelector('[role=status]')?.textContent;
+      Object.defineProperty(navigator, 'clipboard', { configurable: true, value: undefined });
+      button.click();
+      await new Promise(r => setTimeout(r, 100));
+      const unavailable = document.querySelector('[role=status]')?.textContent;
+      return { exact: copied === code, success, denied, unavailable };
+    })()`,
+    awaitPromise: true,
+    returnByValue: true,
+  });
+  const copy = guideCopy.result?.value;
+  if (!copy?.exact || !copy.success?.includes('Example copied') ||
+      !copy.denied?.includes('Copy failed') || !copy.unavailable?.includes('Copy failed')) {
+    throw new Error('Guide clipboard behavior failed: ' + JSON.stringify(copy));
+  }
+  console.log('PASS reuse guide copied bytes, success, denial, and unavailable clipboard');
+
+  // A changed parameter must reach both outputs users copy.
+  await page.send('Runtime.evaluate', { expression: "location.hash = '#/p/glitch-text'" });
+  await poll(async () => {
+    const result = await page.send('Runtime.evaluate', {
+      expression: "Boolean(document.querySelector('input[type=range]'))",
+      returnByValue: true,
+    });
+    return result.result?.value;
+  }, 'parameter control for copy parity');
+  const originalValue = await page.send('Runtime.evaluate', {
+    expression: "document.querySelector('input[type=range]').value",
+    returnByValue: true,
+  });
+  await page.send('Runtime.evaluate', { expression: "document.querySelector('input[type=range]').focus()" });
+  await page.send('Input.dispatchKeyEvent', { type: 'keyDown', key: 'ArrowRight', code: 'ArrowRight', windowsVirtualKeyCode: 39 });
+  await page.send('Input.dispatchKeyEvent', { type: 'keyUp', key: 'ArrowRight', code: 'ArrowRight', windowsVirtualKeyCode: 39 });
+  await poll(async () => {
+    const result = await page.send('Runtime.evaluate', {
+      expression: "document.querySelector('input[type=range]').value",
+      returnByValue: true,
+    });
+    return result.result?.value !== originalValue.result?.value;
+  }, 'keyboard parameter change');
+  const parity = await page.send('Runtime.evaluate', {
+    expression: `(async () => {
+      const value = document.querySelector('input[type=range]').value;
+      let copied;
+      Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText: async text => { copied = text; } } });
+      const buttons = () => [...document.querySelectorAll('button')];
+      buttons().find(b => b.textContent.trim() === 'Code').click();
+      await new Promise(r => setTimeout(r, 100));
+      const code = document.querySelector('pre').textContent;
+      document.querySelector('button[title="Copy code"]').click();
+      await new Promise(r => setTimeout(r, 100));
+      const codeMatches = copied === code && code.includes(value + 'px');
+      buttons().find(b => b.textContent.trim() === 'AI prompt').click();
+      await new Promise(r => setTimeout(r, 100));
+      const prompt = document.querySelector('p.whitespace-pre-wrap').textContent;
+      document.querySelector('button[title="Copy AI prompt"]').click();
+      await new Promise(r => setTimeout(r, 100));
+      return { value, codeMatches, promptMatches: copied === prompt && prompt.includes(value + 'px') };
+    })()`,
+    awaitPromise: true,
+    returnByValue: true,
+  });
+  if (!parity.result?.value?.codeMatches || !parity.result?.value?.promptMatches) {
+    throw new Error('Changed parameter and copied output disagree: ' + JSON.stringify(parity.result?.value));
+  }
+  console.log('PASS keyboard parameter change reaches copied code and AI prompt');
 
   // Load the generated artifacts as standalone HTML files, not inside the
   // Fragmenta Preview component. React JSX is compiled and server-rendered

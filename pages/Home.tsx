@@ -122,6 +122,12 @@ const Home: React.FC = () => {
           </Link>
         </div>
       </div>
+
+      <section aria-labelledby="reuse-guide-heading" className="mx-6 mt-8 pt-6 border-t border-ink-border">
+        <h2 id="reuse-guide-heading" className="text-lg font-bold text-ink">From preview to your page</h2>
+        <p className="text-sm leading-relaxed text-ink-muted mt-2">Choose a pattern, check its code format, and follow the integration steps.</p>
+        <Link to="/guide" className="inline-block mt-2 py-2 text-sm font-semibold text-ink underline underline-offset-4 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink">Read the reuse guide</Link>
+      </section>
     </div>
   );
 };

@@ -16,13 +16,13 @@ Fragmenta is deployed to Vercel from the GitHub repository.
 - Production is public; previews require Vercel authentication
 - Framework: Vite
 - Node.js: 22.x
-- Install: `npm install`
+- Install for this locked candidate: `npm ci` (source-controlled in `vercel.json`)
 - Build: `npm run build`
 - Output: `dist`
 
 GitHub remains the source of truth. Vercel is the deployment and preview environment. The app intentionally remains a standard Vite build rather than depending on Vercel-specific runtime features, so it can be moved to another static host if needed.
 
-See [`docs/DEPLOYMENT.md`](./docs/DEPLOYMENT.md) for the deployment policy and workflow.
+This branch contains an unreleased candidate. Its build contract is not evidence that the current Production deployment has adopted it. See [`docs/DEPLOYMENT.md`](./docs/DEPLOYMENT.md) for the deployment policy and workflow.
 
 ## Current capabilities
 
@@ -36,6 +36,7 @@ The app supports:
 - generated AI prompts
 - performance, accessibility, and responsive guidance
 - collections and best-practice guidance
+- a reuse guide with code format, integration steps, and limitations for the eight current examples
 
 Current examples include the original animation set plus:
 
@@ -64,12 +65,14 @@ The guiding question is:
 
 > Does this help someone turn a visual or interaction idea into a reusable web implementation?
 
+See [`docs/CONTENT_PLAN.md`](./docs/CONTENT_PLAN.md) for the current content gaps, selection rationale, and acceptance requirements.
+
 ## Run locally
 
 **Prerequisite:** Node.js 22
 
 ```bash
-npm install
+npm ci
 npm run dev
 ```
 
@@ -85,7 +88,7 @@ npm run build
 - TypeScript
 - Vite
 - React Router
-- Tailwind CSS browser build used by the existing prototype
+- Tailwind CSS compiled at build time with PostCSS
 
 ## Original AI Studio project
 
