@@ -75,6 +75,30 @@ const BestPractices: React.FC = () => {
           <p className="mt-4">An AI prompt describes the intended pattern. Review and test the code produced from it just as you would handwritten code.</p>
         </section>
 
+        <section aria-labelledby="context-heading" className="mt-9 border-t border-ink-border pt-6">
+          <h2 id="context-heading" className="text-xl font-bold font-display text-ink mb-4">Use the examples in a real page</h2>
+          <div className="space-y-6">
+            <div>
+              <h3 className="font-semibold text-ink mb-2">A loading region that finishes</h3>
+              <p>Use Smart Skeleton only while the request is pending. Keep its rough shape close to the content that will replace it, and announce loading once. Finish with the actual content, a meaningful empty result, or an error with a recovery action.</p>
+              <p className="mt-3">The shimmer speed is not a countdown. Keep the copied Pause shimmer control available; a paused placeholder still needs to be replaced when the request ends.</p>
+              <p lang="ja" className="mt-3">読み込み中の見た目と、通信の状態管理は別です。成功・空の結果・失敗のどの場合でも、プレースホルダーを実際の結果へ置き換えます。</p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-ink mb-2">A decorative card without hidden actions</h3>
+              <p>Use Glass Tilt when depth is optional. Keep essential information available without pointer movement, start with a smaller tilt, and compare the paused card on the real background before adding blur.</p>
+              <p className="mt-3">The copied card is a decorative image example. If you put links or buttons inside it, replace the image role with suitable structure and check keyboard access. Its pause checkbox stops both idle and pointer-driven motion.</p>
+              <p lang="ja" className="mt-3">傾きは装飾です。操作や重要な情報をホバーの中に隠さず、動きを止めた状態でも使えることを確認します。</p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-ink mb-2">An editorial note in two languages</h3>
+              <p>Use Warm Editorial for visual emphasis and Editorial Split for the relationship between context and the main text. Both include English and Japanese sample paragraphs. Replace them with your longest realistic heading and source label before judging spacing.</p>
+              <p className="mt-3">Keep language attributes and logical source order. The generated layout changes at a viewport breakpoint; inspect the standalone page at both narrow and wide widths. Parameters belong to each instance so different settings can coexist.</p>
+              <p lang="ja" className="mt-3">短い仮の文章だけで余白を決めず、長い見出し・出典名・日本語の本文を入れて確認します。</p>
+            </div>
+          </div>
+        </section>
+
         <section aria-labelledby="choose-heading" className="mt-9 border-t border-ink-border pt-6">
           <h2 id="choose-heading" className="text-xl font-bold font-display text-ink mb-3">Choose from the current patterns</h2>
           <p className="mb-4">Each example has a different role. Open one for adjustable values and generated output.</p>
@@ -108,6 +132,7 @@ const BestPractices: React.FC = () => {
           </p>
           <p className="mt-3">This is an adaptation example: rename its selectors for your component. For JavaScript-driven motion, also check the preference in the motion logic.</p>
           <p className="mt-3">For non-essential moving content that starts automatically, lasts more than five seconds, and appears alongside other content, provide a pause, stop, or hide mechanism. Reduced-motion handling alone does not establish accessibility conformance.</p>
+          <p className="mt-3">Smart Skeleton, Glitch Text, and Glass Tilt now include pause controls in their copied output. Details also offers Pause preview motion. Check both versions: pausing the gallery does not change the code you copy.</p>
         </section>
 
         <section aria-labelledby="controls-heading" className="mt-9 border-t border-ink-border pt-6">

@@ -6,10 +6,22 @@ const PatternUsage: React.FC<{ guide: PatternGuide }> = ({ guide }) => (
     <p>{guide.useWhen}</p>
     <p><span className="font-semibold text-ink">Code format:</span> {guide.codeFormat}</p>
     <div>
+      <h3 className="font-semibold text-ink mb-2">Try the parameters</h3>
+      <ul className="list-disc pl-5 space-y-2">
+        {guide.parameterTips.map(tip => <li key={tip}>{tip}</li>)}
+      </ul>
+    </div>
+    <div>
       <h3 className="font-semibold text-ink mb-2">Integration steps</h3>
       <ol className="list-decimal pl-5 space-y-2">
         {guide.integrationSteps.map(step => <li key={step}>{step}</li>)}
       </ol>
+    </div>
+    <div>
+      <h3 className="font-semibold text-ink mb-2">Check in your page</h3>
+      <ul className="list-disc pl-5 space-y-2">
+        {guide.verificationChecks.map(check => <li key={check}>{check}</li>)}
+      </ul>
     </div>
     <div>
       <h3 className="font-semibold text-ink mb-2">Before using it</h3>

@@ -7,6 +7,13 @@ const defaults = {
   rule: 2,
 };
 
+const sample = {
+  heading: 'Give the main argument most of the width.',
+  introduction: 'Keep the central explanation in the reading column. Use the rail for context that helps readers interpret it without interrupting the argument.',
+  japanese: '本文には結論と理由を置きます。補足情報は脇にまとめ、小さな画面では本文の前に並べます。',
+  closing: 'Read the page in source order. Check long headings and real paragraphs before replacing the sample with your own material.',
+};
+
 export const editorialSplitLayout: PatternDefinition = {
   id: 'editorial-split-layout',
   title: 'Editorial Split Layout',
@@ -44,7 +51,7 @@ export const editorialSplitLayout: PatternDefinition = {
             <div className="text-[9px] font-mono tracking-[0.16em] opacity-60">FIELD NOTE / 07</div>
             <div className="text-[22px] font-black leading-none mt-1 tracking-[-0.04em]">Readable structure</div>
           </div>
-          <div className="text-[9px] font-mono text-right opacity-60">6 MIN<br />READ</div>
+          <div className="text-[9px] font-mono text-right opacity-60">EN<br />JA</div>
         </div>
 
         <div
@@ -63,13 +70,10 @@ export const editorialSplitLayout: PatternDefinition = {
 
           <article className="pl-3" style={{ borderLeft: `${rule}px solid #23201d` }}>
             <div className="text-[14px] font-black leading-tight mb-2">
-              Give the main argument most of the width.
+              {sample.heading}
             </div>
-            <div className="space-y-1.5">
-              <div className="h-1.5 rounded-full bg-[#23201d]/20 w-full" />
-              <div className="h-1.5 rounded-full bg-[#23201d]/20 w-[92%]" />
-              <div className="h-1.5 rounded-full bg-[#23201d]/20 w-[76%]" />
-            </div>
+            <p className="text-[13px] leading-relaxed">{sample.introduction}</p>
+            <p lang="ja" className="text-[13px] leading-relaxed mt-3">{sample.japanese}</p>
             <div className="mt-3 inline-flex px-2 py-1 rounded-full text-[9px] font-mono font-bold bg-[#f4a261]/35">
               RESPONSIVE
             </div>
@@ -84,14 +88,16 @@ export const editorialSplitLayout: PatternDefinition = {
     const rule = values.rule ?? defaults.rule;
 
     return `<!-- HTML -->
-<section class="editorial-split">
+<section class="editorial-split" lang="en" style="--rail-width: ${rail}%; --column-gap: ${gap}px; --rule-width: ${rule}px;">
   <aside class="editorial-split__rail">
     <p class="meta">FIELD NOTE / 07</p>
     <p>Use this rail for dates, labels, sources, or navigation cues.</p>
   </aside>
   <article class="editorial-split__body">
-    <h2>Give the main argument most of the width.</h2>
-    <p>Your primary reading content goes here.</p>
+    <h2>${sample.heading}</h2>
+    <p>${sample.introduction}</p>
+    <p lang="ja">${sample.japanese}</p>
+    <p>${sample.closing}</p>
   </article>
 </section>
 
@@ -99,14 +105,21 @@ export const editorialSplitLayout: PatternDefinition = {
 /* CSS */
 .editorial-split {
   display: grid;
-  grid-template-columns: ${rail}% minmax(0, 1fr);
-  gap: ${gap}px;
+  grid-template-columns: var(--rail-width) minmax(0, 1fr);
+  gap: var(--column-gap);
   align-items: start;
+  color: #23201d;
+  font: 1rem/1.7 system-ui, sans-serif;
+  overflow-wrap: anywhere;
 }
+
+.editorial-split > * { min-width: 0; }
+.editorial-split h2 { font-size: clamp(1.4rem, 3vw, 2rem); line-height: 1.3; }
+.editorial-split p { max-width: 65ch; }
 
 .editorial-split__body {
   padding-left: 1rem;
-  border-left: ${rule}px solid currentColor;
+  border-left: var(--rule-width) solid currentColor;
 }
 
 .editorial-split__rail,
@@ -123,7 +136,7 @@ export const editorialSplitLayout: PatternDefinition = {
     padding-left: 0;
     padding-top: 1rem;
     border-left: 0;
-    border-top: ${rule}px solid currentColor;
+    border-top: var(--rule-width) solid currentColor;
   }
 }
 </style>`;
@@ -133,6 +146,6 @@ export const editorialSplitLayout: PatternDefinition = {
     const gap = values.gap ?? defaults.gap;
     const rule = values.rule ?? defaults.rule;
 
-    return `Create a responsive editorial split layout using CSS Grid. On wider screens, use a narrow metadata rail of about ${rail}% and a main reading column separated by a ${rule}px rule, with a ${gap}px gap. Keep the DOM in logical reading order. On small screens, collapse to one column with metadata first and replace the vertical rule with a horizontal separator. Use strong typographic hierarchy and generous whitespace rather than decorative complexity.`;
+    return `Create a responsive editorial split layout with real English and Japanese paragraphs, not placeholder bars. Use a ${rail}% metadata rail, ${rule}px separator, and ${gap}px gap on wider screens. Set parameters as CSS variables on each instance. Keep metadata before the article in the DOM. At viewport widths of 640px or less, use one column and a horizontal separator. Scope styles to the component, set language attributes, and check long headings and line wrapping. This is a metadata layout, not a working table of contents.`;
   },
 };

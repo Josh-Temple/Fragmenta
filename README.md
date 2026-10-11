@@ -36,7 +36,10 @@ The app supports:
 - generated AI prompts
 - performance, accessibility, and responsive guidance
 - collections and best-practice guidance
-- a reuse guide with code format, integration steps, and limitations for the eight current examples
+- a reuse guide with code format, parameter tips, integration steps, and host-page checks for all eight examples
+- three bilingual walkthroughs for loading states, decorative cards, and editorial content
+- pause controls for Skeleton, Glitch Text, and Glass Tilt in Details and their copied output
+- English and Japanese editorial samples with parameters isolated to each instance
 
 Current examples include the original animation set plus:
 
