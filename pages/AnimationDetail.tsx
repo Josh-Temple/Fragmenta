@@ -314,7 +314,7 @@ const PatternDetail: React.FC = () => {
       </main>
 
       <div className="fixed bottom-0 left-0 right-0 max-w-md mx-auto p-4 bg-gradient-to-t from-paper via-paper to-transparent z-50">
-        <p role="status" aria-live="polite" className={`text-xs font-semibold mb-2 text-center ${copyStatus === 'error' ? 'text-red-700' : 'text-ink-muted'}`}>
+        <p role="status" aria-label="Copy result" aria-live="polite" className={`text-xs font-semibold mb-2 text-center ${copyStatus === 'error' ? 'text-red-700' : 'text-ink-muted'}`}>
           {copyStatus === 'error' ? 'Copy failed. Check clipboard permissions or select and copy the text manually.' : copyStatus === 'success' ? 'Copied to clipboard.' : ''}
         </p>
         <button

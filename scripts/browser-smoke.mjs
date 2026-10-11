@@ -264,11 +264,11 @@ try {
       Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText: async () => { throw new Error('Denied'); } } });
       copy.click();
       await new Promise(r => setTimeout(r, 100));
-      const failed = document.querySelector('[role="status"]')?.textContent || '';
+      const failed = document.querySelector('[role="status"][aria-label="Copy result"]')?.textContent || '';
       Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText: async () => {} } });
       copy.click();
       await new Promise(r => setTimeout(r, 100));
-      const succeeded = document.querySelector('[role="status"]')?.textContent || '';
+      const succeeded = document.querySelector('[role="status"][aria-label="Copy result"]')?.textContent || '';
       return { failed, succeeded };
     })()`,
     awaitPromise: true,
