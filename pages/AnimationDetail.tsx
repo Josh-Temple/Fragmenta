@@ -31,6 +31,7 @@ const PatternDetail: React.FC = () => {
 
   useEffect(() => {
     if (!def) return;
+    window.scrollTo(0, 0);
 
     const defaults: Record<string, number> = {};
     def.params.forEach(param => {

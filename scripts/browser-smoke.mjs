@@ -347,6 +347,49 @@ try {
   }
   console.log('PASS reuse guide copied bytes, success, denial, and unavailable clipboard');
 
+  // A link near the end of a long guide must open the destination preview,
+  // rather than carry the guide's scroll offset into Details.
+  await page.send('Runtime.evaluate', {
+    expression: "[...document.querySelectorAll('summary')].find(s => s.textContent.includes('Warm Neo-Brutalist Editorial')).focus()",
+  });
+  await page.send('Input.dispatchKeyEvent', { type: 'keyDown', key: ' ', code: 'Space', windowsVirtualKeyCode: 32 });
+  await page.send('Input.dispatchKeyEvent', { type: 'keyUp', key: ' ', code: 'Space', windowsVirtualKeyCode: 32 });
+  await poll(async () => {
+    const result = await page.send('Runtime.evaluate', {
+      expression: "document.querySelector('a[href=\"#/p/warm-neo-brutalist-editorial\"]').closest('details').open",
+      returnByValue: true,
+    });
+    return result.result?.value;
+  }, 'editorial guide disclosure');
+  const guideScroll = await page.send('Runtime.evaluate', {
+    expression: "(() => { const link = document.querySelector('a[href=\"#/p/warm-neo-brutalist-editorial\"]'); link.scrollIntoView(); link.focus(); return scrollY; })()",
+    returnByValue: true,
+  });
+  if (!(guideScroll.result?.value > 100)) throw new Error('Guide navigation fixture was not scrolled');
+  await page.send('Input.dispatchKeyEvent', { type: 'keyDown', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13 });
+  await page.send('Input.dispatchKeyEvent', { type: 'keyUp', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13 });
+  await poll(async () => {
+    const result = await page.send('Runtime.evaluate', {
+      expression: "location.hash === '#/p/warm-neo-brutalist-editorial' && document.querySelector('h1')?.textContent === 'Warm Neo-Brutalist Editorial' && scrollY <= 1",
+      returnByValue: true,
+    });
+    return result.result?.value;
+  }, 'guide link opens top of Details');
+  await page.send('Runtime.evaluate', {
+    expression: "document.querySelector('a[href=\"#/guide\"]').focus()",
+  });
+  await page.send('Input.dispatchKeyEvent', { type: 'keyDown', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13 });
+  await page.send('Input.dispatchKeyEvent', { type: 'keyUp', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13 });
+  await poll(async () => {
+    const result = await page.send('Runtime.evaluate', {
+      expression: "location.hash === '#/guide' && document.querySelector('h1')?.textContent === 'Choose and use a UI pattern' && scrollY <= 1",
+      returnByValue: true,
+    });
+    return result.result?.value;
+  }, 'Details link opens top of Guide');
+  console.log('PASS keyboard Guide-to-Details-to-Guide navigation resets scroll');
+
+
   // A changed parameter must reach both outputs users copy.
   await page.send('Runtime.evaluate', { expression: "location.hash = '#/p/glitch-text'" });
   await poll(async () => {

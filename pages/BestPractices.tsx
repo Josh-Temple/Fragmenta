@@ -31,6 +31,10 @@ const BestPractices: React.FC = () => {
   const guides = Object.entries(patternGuides).filter(([id]) => Boolean(definitions[id]));
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     if (copyStatus === 'idle') return;
     const timer = window.setTimeout(() => setCopyStatus('idle'), 5000);
     return () => window.clearTimeout(timer);

@@ -40,6 +40,7 @@ Following the request to continue content expansion and improvement, the same dr
 - keeps gallery thumbnails of these continuous effects paused;
 - scopes Warm Editorial metadata/badge CSS and puts parameters on each instance for both editorial outputs;
 - preserves a zero shadow at narrow widths instead of unexpectedly adding a shadow.
+- starts Guide and Details at the top, so navigation from a long expanded guide does not hide the destination preview.
 
 Automated verification covers independent pause state, reduced motion, pause/reset/resume in hydrated React, differently configured editorial instances, unrelated host markup, bilingual wrapping, and narrow/wide generated layout. Manual checks and release gates must be reported separately from these automated results.
 
