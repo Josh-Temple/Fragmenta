@@ -74,6 +74,9 @@ const routes = [
   ['/p/fluid-toggle', 'Fluid Toggle'],
   ['/p/morph-fab', 'Morph FAB'],
   ['/p/editorial-split-layout', 'Editorial Split Layout'],
+  ['/p/smart-skeleton', 'Smart Skeleton'],
+  ['/p/glass-tilt', 'Glass Tilt'],
+  ['/guide', 'Choose and use a UI pattern'],
 ];
 
 await poll(async () => (await fetch(baseUrl)).ok, 'built Vite preview server');
@@ -261,11 +264,11 @@ try {
       Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText: async () => { throw new Error('Denied'); } } });
       copy.click();
       await new Promise(r => setTimeout(r, 100));
-      const failed = document.querySelector('[role="status"]')?.textContent || '';
+      const failed = document.querySelector('[role="status"][aria-label="Copy result"]')?.textContent || '';
       Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText: async () => {} } });
       copy.click();
       await new Promise(r => setTimeout(r, 100));
-      const succeeded = document.querySelector('[role="status"]')?.textContent || '';
+      const succeeded = document.querySelector('[role="status"][aria-label="Copy result"]')?.textContent || '';
       return { failed, succeeded };
     })()`,
     awaitPromise: true,
@@ -277,6 +280,205 @@ try {
   }
   console.log('PASS clipboard success and failure states');
 
+  // The reuse guide is product content with real disclosure and copy actions.
+  // Verify the copied bytes and failure feedback, not just the button label.
+  await page.send('Runtime.evaluate', { expression: "location.hash = '#/guide'" });
+  await poll(async () => {
+    const result = await page.send('Runtime.evaluate', {
+      expression: "document.querySelector('h1')?.textContent === 'Choose and use a UI pattern'",
+      returnByValue: true,
+    });
+    return result.result?.value;
+  }, 'reuse guide');
+  const guideLinks = await page.send('Runtime.evaluate', {
+    expression: `(() => ({
+      disclosures: document.querySelectorAll('details').length,
+      targets: [...document.querySelectorAll('details a')].map(link => link.getAttribute('href')),
+      firstClosed: !document.querySelector('details')?.open
+    }))()`,
+    returnByValue: true,
+  });
+  const guide = guideLinks.result?.value;
+  const currentIds = ['elastic-button', 'smart-skeleton', 'glass-tilt', 'fluid-toggle',
+    'glitch-text', 'morph-fab', 'warm-neo-brutalist-editorial', 'editorial-split-layout'];
+  if (guide?.disclosures !== 8 || !guide.firstClosed ||
+      currentIds.some(id => !guide.targets?.includes('#/p/' + id))) {
+    throw new Error('Reuse guide does not cover the registered patterns: ' + JSON.stringify(guide));
+  }
+  await page.send('Runtime.evaluate', { expression: "document.querySelector('summary').focus()" });
+  await page.send('Input.dispatchKeyEvent', { type: 'keyDown', key: ' ', code: 'Space', windowsVirtualKeyCode: 32 });
+  await page.send('Input.dispatchKeyEvent', { type: 'keyUp', key: ' ', code: 'Space', windowsVirtualKeyCode: 32 });
+  await poll(async () => {
+    const result = await page.send('Runtime.evaluate', {
+      expression: "document.querySelector('details').open",
+      returnByValue: true,
+    });
+    return result.result?.value;
+  }, 'guide disclosure keyboard activation');
+  console.log('PASS reuse guide: eight linked patterns and keyboard disclosure');
+
+  const guideCopy = await page.send('Runtime.evaluate', {
+    expression: `(async () => {
+      const button = [...document.querySelectorAll('button')].find(b => b.textContent.includes('Copy reduced-motion example'));
+      const code = document.querySelector('pre code')?.textContent;
+      if (!button || !code) throw new Error('Guide copy action missing');
+      let copied;
+      Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText: async text => { copied = text; } } });
+      button.click();
+      await new Promise(r => setTimeout(r, 100));
+      const success = document.querySelector('[role=status]')?.textContent;
+      Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText: async () => { throw new Error('Denied'); } } });
+      button.click();
+      await new Promise(r => setTimeout(r, 100));
+      const denied = document.querySelector('[role=status]')?.textContent;
+      Object.defineProperty(navigator, 'clipboard', { configurable: true, value: undefined });
+      button.click();
+      await new Promise(r => setTimeout(r, 100));
+      const unavailable = document.querySelector('[role=status]')?.textContent;
+      return { exact: copied === code, success, denied, unavailable };
+    })()`,
+    awaitPromise: true,
+    returnByValue: true,
+  });
+  const copy = guideCopy.result?.value;
+  if (!copy?.exact || !copy.success?.includes('Example copied') ||
+      !copy.denied?.includes('Copy failed') || !copy.unavailable?.includes('Copy failed')) {
+    throw new Error('Guide clipboard behavior failed: ' + JSON.stringify(copy));
+  }
+  console.log('PASS reuse guide copied bytes, success, denial, and unavailable clipboard');
+
+  // A link near the end of a long guide must open the destination preview,
+  // rather than carry the guide's scroll offset into Details.
+  await page.send('Runtime.evaluate', {
+    expression: "[...document.querySelectorAll('summary')].find(s => s.textContent.includes('Warm Neo-Brutalist Editorial')).focus()",
+  });
+  await page.send('Input.dispatchKeyEvent', { type: 'keyDown', key: ' ', code: 'Space', windowsVirtualKeyCode: 32 });
+  await page.send('Input.dispatchKeyEvent', { type: 'keyUp', key: ' ', code: 'Space', windowsVirtualKeyCode: 32 });
+  await poll(async () => {
+    const result = await page.send('Runtime.evaluate', {
+      expression: "document.querySelector('a[href=\"#/p/warm-neo-brutalist-editorial\"]').closest('details').open",
+      returnByValue: true,
+    });
+    return result.result?.value;
+  }, 'editorial guide disclosure');
+  const guideScroll = await page.send('Runtime.evaluate', {
+    expression: "(() => { const link = document.querySelector('a[href=\"#/p/warm-neo-brutalist-editorial\"]'); link.scrollIntoView(); link.focus(); return scrollY; })()",
+    returnByValue: true,
+  });
+  if (!(guideScroll.result?.value > 100)) throw new Error('Guide navigation fixture was not scrolled');
+  await page.send('Input.dispatchKeyEvent', { type: 'keyDown', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13 });
+  await page.send('Input.dispatchKeyEvent', { type: 'keyUp', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13 });
+  await poll(async () => {
+    const result = await page.send('Runtime.evaluate', {
+      expression: "location.hash === '#/p/warm-neo-brutalist-editorial' && document.querySelector('h1')?.textContent === 'Warm Neo-Brutalist Editorial' && scrollY <= 1",
+      returnByValue: true,
+    });
+    return result.result?.value;
+  }, 'guide link opens top of Details');
+  await page.send('Runtime.evaluate', {
+    expression: "document.querySelector('a[href=\"#/guide\"]').focus()",
+  });
+  await page.send('Input.dispatchKeyEvent', { type: 'keyDown', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13 });
+  await page.send('Input.dispatchKeyEvent', { type: 'keyUp', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13 });
+  await poll(async () => {
+    const result = await page.send('Runtime.evaluate', {
+      expression: "location.hash === '#/guide' && document.querySelector('h1')?.textContent === 'Choose and use a UI pattern' && scrollY <= 1",
+      returnByValue: true,
+    });
+    return result.result?.value;
+  }, 'Details link opens top of Guide');
+  console.log('PASS keyboard Guide-to-Details-to-Guide navigation resets scroll');
+
+
+  // A changed parameter must reach both outputs users copy.
+  await page.send('Runtime.evaluate', { expression: "location.hash = '#/p/glitch-text'" });
+  await poll(async () => {
+    const result = await page.send('Runtime.evaluate', {
+      expression: "Boolean(document.querySelector('input[type=range]'))",
+      returnByValue: true,
+    });
+    return result.result?.value;
+  }, 'parameter control for copy parity');
+  const originalValue = await page.send('Runtime.evaluate', {
+    expression: "document.querySelector('input[type=range]').value",
+    returnByValue: true,
+  });
+  await page.send('Runtime.evaluate', { expression: "document.querySelector('input[type=range]').focus()" });
+  await page.send('Input.dispatchKeyEvent', { type: 'keyDown', key: 'ArrowRight', code: 'ArrowRight', windowsVirtualKeyCode: 39 });
+  await page.send('Input.dispatchKeyEvent', { type: 'keyUp', key: 'ArrowRight', code: 'ArrowRight', windowsVirtualKeyCode: 39 });
+  await poll(async () => {
+    const result = await page.send('Runtime.evaluate', {
+      expression: "document.querySelector('input[type=range]').value",
+      returnByValue: true,
+    });
+    return result.result?.value !== originalValue.result?.value;
+  }, 'keyboard parameter change');
+  const parity = await page.send('Runtime.evaluate', {
+    expression: `(async () => {
+      const value = document.querySelector('input[type=range]').value;
+      let copied;
+      Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText: async text => { copied = text; } } });
+      const buttons = () => [...document.querySelectorAll('button')];
+      buttons().find(b => b.textContent.trim() === 'Code').click();
+      await new Promise(r => setTimeout(r, 100));
+      const code = document.querySelector('pre').textContent;
+      document.querySelector('button[title="Copy code"]').click();
+      await new Promise(r => setTimeout(r, 100));
+      const codeMatches = copied === code && code.includes(value + 'px');
+      buttons().find(b => b.textContent.trim() === 'AI prompt').click();
+      await new Promise(r => setTimeout(r, 100));
+      const prompt = document.querySelector('p.whitespace-pre-wrap').textContent;
+      document.querySelector('button[title="Copy AI prompt"]').click();
+      await new Promise(r => setTimeout(r, 100));
+      return { value, codeMatches, promptMatches: copied === prompt && prompt.includes(value + 'px') };
+    })()`,
+    awaitPromise: true,
+    returnByValue: true,
+  });
+  if (!parity.result?.value?.codeMatches || !parity.result?.value?.promptMatches) {
+    throw new Error('Changed parameter and copied output disagree: ' + JSON.stringify(parity.result?.value));
+  }
+  console.log('PASS keyboard parameter change reaches copied code and AI prompt');
+
+  for (const id of ['smart-skeleton', 'glitch-text', 'glass-tilt']) {
+    const title = { 'smart-skeleton': 'Smart Skeleton', 'glitch-text': 'Glitch Text', 'glass-tilt': 'Glass Tilt' }[id];
+    await page.send('Runtime.evaluate', { expression: "location.hash = '#/p/" + id + "'" });
+    await poll(async () => {
+      const r = await page.send('Runtime.evaluate', {
+        expression: "location.hash === '#/p/" + id + "' && document.querySelector('h1')?.textContent.trim() === " + JSON.stringify(title) + " && [...document.querySelectorAll('button')].some(b => b.textContent.trim() === 'Pause preview motion' && b.getAttribute('aria-pressed') === 'false')",
+        returnByValue: true,
+      });
+      return r.result?.value;
+    }, id + ' motion control');
+    await page.send('Runtime.evaluate', { expression: "[...document.querySelectorAll('button')].find(b => b.textContent.trim() === 'Pause preview motion').focus()" });
+    await page.send('Input.dispatchKeyEvent', { type: 'keyDown', key: ' ', code: 'Space', windowsVirtualKeyCode: 32 });
+    await page.send('Input.dispatchKeyEvent', { type: 'keyUp', key: ' ', code: 'Space', windowsVirtualKeyCode: 32 });
+    const selectors = { 'smart-skeleton': '[style*="--speed"]', 'glitch-text': '[aria-label="GLITCH"] [aria-hidden]', 'glass-tilt': '.fragmenta-glass-preview' };
+    await poll(async () => {
+      const r = await page.send('Runtime.evaluate', {
+        expression: `(() => { const nodes = [...document.querySelectorAll(${JSON.stringify(selectors[id])})];
+          return nodes.length > 0 && nodes.every(n => ${id === 'glass-tilt' ? "getComputedStyle(n).animationName === 'none'" : "getComputedStyle(n).animationPlayState === 'paused'"}) &&
+            document.querySelector('button[aria-pressed="true"]')?.textContent.trim() === 'Pause preview motion'; })()`,
+        returnByValue: true,
+      });
+      return r.result?.value;
+    }, id + ' preview paused');
+    await page.send('Input.dispatchKeyEvent', { type: 'keyDown', key: ' ', code: 'Space', windowsVirtualKeyCode: 32 });
+    await page.send('Input.dispatchKeyEvent', { type: 'keyUp', key: ' ', code: 'Space', windowsVirtualKeyCode: 32 });
+    await poll(async () => {
+      const r = await page.send('Runtime.evaluate', {
+        expression: "[...document.querySelectorAll('button')].some(b => b.textContent.trim() === 'Pause preview motion' && b.getAttribute('aria-pressed') === 'false')",
+        returnByValue: true,
+      });
+      return r.result?.value;
+    }, id + ' preview resumed');
+    console.log('PASS keyboard pause/resume in Details ' + id);
+  }
+
+  // Fixture files are generated by Actions after the Vite build; Vercel's
+  // normal app build does not publish this test directory. An external-origin
+  // run verifies the delivered app rather than requesting absent CI fixtures.
+  if (!process.env.SMOKE_BASE_URL) {
   // Load the generated artifacts as standalone HTML files, not inside the
   // Fragmenta Preview component. React JSX is compiled and server-rendered
   // by the fixture builder; browser checks here cover the exported markup/CSS.
@@ -319,6 +521,86 @@ try {
     }
   }
 
+  for (const id of ['smart-skeleton', 'glitch-text']) {
+    for (const variant of ['default', 'changed']) {
+      await page.send('Emulation.setEmulatedMedia', { features: [] });
+      const path = '/pattern-fixtures/' + id + '-' + variant + '-pair.html';
+      await page.send('Page.navigate', { url: baseUrl + path });
+      await poll(async () => {
+        const r = await page.send('Runtime.evaluate', { expression: "location.pathname === " + JSON.stringify(path) + " && document.querySelectorAll('input[type=checkbox]').length === 2", returnByValue: true });
+        return r.result?.value;
+      }, id + ' paired standalone output');
+      await page.send('Runtime.evaluate', { expression: "document.querySelector('input[type=checkbox]').focus()" });
+      await page.send('Input.dispatchKeyEvent', { type: 'keyDown', key: ' ', code: 'Space', windowsVirtualKeyCode: 32 });
+      await page.send('Input.dispatchKeyEvent', { type: 'keyUp', key: ' ', code: 'Space', windowsVirtualKeyCode: 32 });
+      const observed = await page.send('Runtime.evaluate', {
+        expression: `(() => {
+          const roots = [...document.querySelectorAll(${JSON.stringify(id === 'smart-skeleton' ? '.skeleton-demo' : '.glitch-example')})];
+          const states = roots.map(root => ${id === 'smart-skeleton'
+            ? "[...root.querySelectorAll('.skeleton-example__avatar, .skeleton-example__line')].map(n => getComputedStyle(n, '::after').animationPlayState)"
+            : "['::before', '::after'].map(p => getComputedStyle(root.querySelector('.glitch-text'), p).animationPlayState)"});
+          return {checked: roots.map(r => r.querySelector('input').checked), states};
+        })()`, returnByValue: true,
+      });
+      const pair = observed.result?.value;
+      if (!pair?.checked[0] || pair.checked[1] || !pair.states[0].every(s => s === 'paused') || !pair.states[1].every(s => s === 'running')) {
+        throw new Error('Pause is not independent for ' + id + ': ' + JSON.stringify(pair));
+      }
+      await page.send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: 'reduce' }] });
+      const reduced = await page.send('Runtime.evaluate', {
+        expression: `(() => {
+          const nodes = [...document.querySelectorAll(${JSON.stringify(id === 'smart-skeleton' ? '.skeleton-example__avatar, .skeleton-example__line' : '.glitch-text')})];
+          return nodes.every(n => ${id === 'smart-skeleton' ? "getComputedStyle(n, '::after').animationName === 'none'" : "getComputedStyle(n, '::before').animationName === 'none' && getComputedStyle(n, '::after').animationName === 'none'"});
+        })()`, returnByValue: true,
+      });
+      if (!reduced.result?.value) throw new Error('Reduced motion did not stop ' + id);
+      console.log('PASS paired standalone keyboard pause and reduced motion ' + id + ' / ' + variant);
+    }
+  }
+  await page.send('Emulation.setEmulatedMedia', { features: [] });
+
+  for (const id of ['warm-neo-brutalist-editorial', 'editorial-split-layout']) {
+    for (const width of [360, 768]) {
+      await page.send('Emulation.setDeviceMetricsOverride', { width, height: 900, deviceScaleFactor: 1, mobile: false });
+      const path = '/pattern-fixtures/' + id + '-host.html';
+      await page.send('Page.navigate', { url: baseUrl + path });
+      await poll(async () => {
+        const r = await page.send('Runtime.evaluate', { expression: "location.pathname === " + JSON.stringify(path) + " && document.readyState === 'complete' && document.querySelectorAll('[lang=ja]').length === 2", returnByValue: true });
+        return r.result?.value;
+      }, id + ' host fixture');
+      const result = await page.send('Runtime.evaluate', {
+        expression: `(() => {
+          const roots = [...document.querySelectorAll(${JSON.stringify(id === 'warm-neo-brutalist-editorial' ? '.editorial-card' : '.editorial-split')})];
+          return { overflow: document.documentElement.scrollWidth > innerWidth + 1,
+            metaFont: getComputedStyle(document.querySelector('.host-probe .meta')).fontFamily,
+            badgeFont: getComputedStyle(document.querySelector('.host-probe .badge')).fontFamily,
+            badgeBackground: getComputedStyle(document.querySelector('.host-probe .badge')).backgroundColor,
+            instances: roots.map(root => { const s = getComputedStyle(root); return {radius:s.borderRadius, border:s.borderTopWidth,
+              shadow:s.boxShadow, rail:s.getPropertyValue('--rail-width').trim(), columns:s.gridTemplateColumns}; })};
+        })()`, returnByValue: true,
+      });
+      const host = result.result?.value;
+      if (!host || host.overflow || host.metaFont !== 'serif' || host.badgeFont !== 'serif' || host.badgeBackground !== 'rgba(0, 0, 0, 0)') {
+        throw new Error('Host styles or wrapping changed: ' + JSON.stringify(host));
+      }
+      if (id === 'warm-neo-brutalist-editorial') {
+        const [first, second] = host.instances;
+        const shadowNumbers = first.shadow.replace(/rgba?\([^)]*\)/g, '').match(/-?[\d.]+px/g) || [];
+        if (first.radius !== '22px' || second.radius !== '32px' || first.border !== '3px' || second.border !== '5px' ||
+            (first.shadow !== 'none' && (!shadowNumbers.length || shadowNumbers.some(n => parseFloat(n) !== 0)))) {
+          throw new Error('Warm Editorial instance parameters or zero shadow failed: ' + JSON.stringify(host));
+        }
+      } else if (host.instances[0].rail !== '34%' || host.instances[1].rail !== '44%' ||
+          host.instances.some(instance => instance.columns.split(' ').length !== (width <= 640 ? 1 : 2))) {
+        throw new Error('Editorial Split instance parameters or responsive layout failed: ' + JSON.stringify(host));
+      }
+      console.log('PASS bilingual standalone host isolation and independent parameters ' + id + ' / ' + width + 'px');
+    }
+  }
+
+  } else {
+    console.log('SKIP standalone CI fixtures on external origin; deployed app checks ran above');
+  }
 } finally {
   page?.close();
   control?.close();

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { definitions, getPatternKind } from '../data/definitions';
+import { patternGuides } from '../data/pattern-guides';
+import PatternUsage from '../components/PatternUsage';
 
 const kindLabels = {
   motion: 'Motion',
@@ -16,6 +18,7 @@ const PatternDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [activeTab, setActiveTab] = useState<'code' | 'prompt' | 'parameters'>('parameters');
   const [copyStatus, setCopyStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [motionPaused, setMotionPaused] = useState(false);
 
   useEffect(() => {
     if (copyStatus === 'idle') return;
@@ -28,12 +31,14 @@ const PatternDetail: React.FC = () => {
 
   useEffect(() => {
     if (!def) return;
+    window.scrollTo(0, 0);
 
     const defaults: Record<string, number> = {};
     def.params.forEach(param => {
       defaults[param.key] = param.default;
     });
     setParamValues(defaults);
+    setMotionPaused(false);
   }, [def]);
 
   if (!def) {
@@ -94,10 +99,10 @@ const PatternDetail: React.FC = () => {
 
       <main className="flex-1 flex flex-col pb-24">
         <section className="p-4">
-          <div className="relative w-full aspect-[4/3] rounded-2xl bg-surface border border-ink-border flex flex-col items-center justify-center overflow-hidden group shadow-inner">
+          <div className={`relative w-full ${kind === 'style' || kind === 'layout' ? 'min-h-[280px] pt-6 pb-16' : 'aspect-[4/3]'} rounded-2xl bg-surface border border-ink-border flex flex-col items-center justify-center overflow-hidden group shadow-inner`}>
             <div className="absolute inset-0 bg-grid-pattern pointer-events-none opacity-50"></div>
             <div className="relative z-10 w-full flex items-center justify-center px-3">
-              <def.Preview values={paramValues} />
+              <def.Preview values={values} paused={motionPaused} />
             </div>
 
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex p-1 rounded-xl bg-paper/90 border border-ink-border shadow-paper backdrop-blur-sm">
@@ -107,6 +112,15 @@ const PatternDetail: React.FC = () => {
               </div>
             </div>
           </div>
+          {def.continuousMotion && (
+            <div className="mt-3 flex flex-wrap items-center gap-3 text-sm">
+              <button type="button" aria-pressed={motionPaused} onClick={() => setMotionPaused(value => !value)}
+                className="px-3 py-2.5 border border-ink-border rounded-lg text-ink focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink">
+                Pause preview motion
+              </button>
+              <span role="status" className="text-ink-muted">{motionPaused ? 'Motion paused.' : 'Motion follows your device preference.'}</span>
+            </div>
+          )}
         </section>
 
         <section className="px-4 pb-5">
@@ -203,6 +217,14 @@ const PatternDetail: React.FC = () => {
               </div>
             )}
 
+            {patternGuides[def.id] && (
+              <div className="border-t border-ink-border pt-6 space-y-4">
+                <h2 className="text-lg font-bold font-display">Using this pattern</h2>
+                <PatternUsage guide={patternGuides[def.id]} />
+                <Link to="/guide" className="inline-block text-sm text-ink underline underline-offset-4 py-2 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink">Read the reuse guide</Link>
+              </div>
+            )}
+
             <div className="h-px bg-ink-border my-2"></div>
 
             <div className="grid grid-cols-2 gap-4">
@@ -293,7 +315,7 @@ const PatternDetail: React.FC = () => {
       </main>
 
       <div className="fixed bottom-0 left-0 right-0 max-w-md mx-auto p-4 bg-gradient-to-t from-paper via-paper to-transparent z-50">
-        <p role="status" aria-live="polite" className={`text-xs font-semibold mb-2 text-center ${copyStatus === 'error' ? 'text-red-700' : 'text-ink-muted'}`}>
+        <p role="status" aria-label="Copy result" aria-live="polite" className={`text-xs font-semibold mb-2 text-center ${copyStatus === 'error' ? 'text-red-700' : 'text-ink-muted'}`}>
           {copyStatus === 'error' ? 'Copy failed. Check clipboard permissions or select and copy the text manually.' : copyStatus === 'success' ? 'Copied to clipboard.' : ''}
         </p>
         <button

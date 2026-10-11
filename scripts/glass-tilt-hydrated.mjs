@@ -101,6 +101,7 @@ async function state(page) {
       inlineTransform: card.style.transform,
       computedTransform: style.transform,
       inlineAnimation: card.style.animation,
+      paused: document.querySelector('.glass-card-example__pause input')?.checked,
       glare: glare?.style.background,
       blur: getComputedStyle(surface).backdropFilter,
       styleCount: document.querySelectorAll('style').length,
@@ -213,6 +214,27 @@ async function run() {
         const v = await state(page);
         return v?.inlineTransform === '' && v?.animation === 'glass-card-idle';
       }, variant + ' pointer leave reset');
+      await move(0.8, 0.3);
+      await poll(async () => (await state(page))?.inlineTransform.includes('rotateX('), variant + ' tilt before pause');
+      await evaluate(page, "document.querySelector('.glass-card-example__pause input').focus()");
+      const space = async () => {
+        await page.send('Input.dispatchKeyEvent', { type: 'keyDown', key: ' ', code: 'Space', windowsVirtualKeyCode: 32 });
+        await page.send('Input.dispatchKeyEvent', { type: 'keyUp', key: ' ', code: 'Space', windowsVirtualKeyCode: 32 });
+      };
+      await space();
+      await poll(async () => {
+        const v = await state(page);
+        return v?.paused && v.animation === 'none' && v.inlineTransform === '';
+      }, variant + ' pause resets tilt and idle');
+      await move(0.2, 0.7);
+      const paused = await state(page);
+      assert.equal(paused.inlineTransform, '', 'paused card must ignore pointer tilt');
+      assert.equal(paused.animation, 'none', 'paused card must not restart idle motion');
+      await space();
+      await poll(async () => {
+        const v = await state(page);
+        return v && !v.paused && v.animation === 'glass-card-idle';
+      }, variant + ' resume idle motion');
       await page.send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: 'reduce' }] });
       await move(0.7, 0.4);
       const reduced = await state(page);
@@ -232,7 +254,7 @@ async function run() {
       await page.send('Input.dispatchKeyEvent', { type: 'keyUp', key: 'Tab', code: 'Tab', windowsVirtualKeyCode: 9 });
       assert.equal((await state(page)).inlineTransform, '', 'keyboard must not trigger hover tilt');
       checkErrors(errors, variant);
-      console.log('PASS Glass Tilt standalone hydrated React ' + variant + ': mount, CSS, idle, pointer/glare, leave, reduced-motion, touch, keyboard, no browser errors');
+      console.log('PASS Glass Tilt standalone hydrated React ' + variant + ': mount, CSS, idle, pointer/glare, leave, keyboard pause/reset/resume, reduced-motion, touch, keyboard, no browser errors');
     }
     console.log('PASS both Glass Tilt variants: no Fragmenta runtime dependencies; other 16 fixtures remain in existing CI');
   } finally {

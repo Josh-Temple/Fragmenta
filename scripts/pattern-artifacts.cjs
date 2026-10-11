@@ -95,7 +95,18 @@ for (const file of files) {
     fs.writeFileSync(path.join(fixtureDir, def.id + '-' + variant + '.html'),
       '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body>' +
       '<main id="artifact-fixture">' + markup + '</main></body></html>');
+    if (['smart-skeleton', 'glitch-text'].includes(def.id)) {
+      fs.writeFileSync(path.join(fixtureDir, def.id + '-' + variant + '-pair.html'),
+        '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body>' + markup + markup + '</body></html>');
+    }
     console.log('PASS ' + def.id + ' / ' + variant + ': isolated generated artifact checked');
+  }
+  if (['warm-neo-brutalist-editorial', 'editorial-split-layout'].includes(def.id)) {
+    const first = def.id === 'warm-neo-brutalist-editorial' ? { ...initial, shadow: 0 } : initial;
+    fs.writeFileSync(path.join(fixtureDir, def.id + '-host.html'),
+      '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body>' +
+      '<aside class="host-probe" style="font-family:serif;--accent-green:#ff0000"><p class="meta">Unrelated metadata</p><span class="badge">Unrelated badge</span></aside>' +
+      def.generateCode(first) + def.generateCode(changed) + '</body></html>');
   }
 }
 assert.equal(ids.size, 8, 'expected exactly eight registered patterns');

@@ -26,11 +26,11 @@ Preview deployments are particularly important for Fragmenta because a successfu
 
 ## Build contract
 
-Vercel is configured with:
+The lockfile-bearing candidate declares:
 
 - Framework: Vite
 - Node.js: 22.x
-- Install command: `npm install` (current Vercel project setting; switch to `npm ci` before release after merging the committed lockfile)
+- Install command: `npm ci`, provided by the candidate's `vercel.json`
 - Build command: `npm run build`
 - Output directory: `dist`
 
@@ -42,7 +42,9 @@ npx tsc --noEmit
 npm run build
 ```
 
-A change should pass CI before merge. For UI changes, a Preview Deployment should also be checked when practical.
+Verify the effective install command in the build events for the exact deployment. A configured command alone does not prove it ran. The existing Production deployment and its older build contract remain separate until a release is verified.
+
+A change must pass the applicable CI and authenticated Preview acceptance before release. In the current release candidate, dependency-risk handling and rollback/operator confirmation are also required; a green build or a READY deployment does not override those gates.
 
 ## Routing
 
@@ -70,13 +72,13 @@ If Fragmenta later needs server-side APIs or other runtime capabilities, evaluat
 2. Implement the pattern or gallery change.
 3. Open a pull request.
 4. Wait for GitHub CI.
-5. Review the Vercel Preview Deployment, especially on mobile for visual changes.
-6. Merge to `main`.
-7. Confirm the automatic Production Deployment reaches `READY`.
-8. If production rendering differs from the preview, treat the deployment as incomplete and investigate before adding more patterns.
+5. Review the exact Vercel Preview Deployment, especially on mobile for visual changes. Keep authentication enabled.
+6. Confirm security-risk handling, the current Production alias, the rollback target, and the authorized operator before merging the single release candidate to `main`.
+7. Confirm the automatic Production Deployment reaches `READY`, serves the actual new `main` SHA, and ran the locked install/build.
+8. Verify the application and key interactions on Production independently. If rendering differs from the accepted Preview, treat the release as incomplete and follow the verified recovery procedure.
 
-## No `vercel.json` by default
+## Source-controlled install command
 
-Fragmenta does not currently need a `vercel.json`.
+The candidate contains a small `vercel.json` that sets `installCommand` to `npm ci`. This applies the locked dependency contract to new deployments built from this source without changing project-wide settings for an older source that lacks a lockfile.
 
-The build contract is represented by the normal Vite project plus Vercel project settings. Add `vercel.json` only when a source-controlled Vercel-specific behavior such as redirects, headers, or another explicit platform feature becomes necessary.
+No rewrite is needed for `HashRouter`. Do not infer rollback authorization or a successful rollback from this file; recovery must use the confirmed deployment, alias, and operator procedure.
