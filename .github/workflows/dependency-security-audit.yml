@@ -3,12 +3,8 @@ name: Locked dependency security audit
 on:
   push:
     branches:
-      - fix/postcss-advisories-20261010
+      - main
   pull_request:
-    paths:
-      - package.json
-      - package-lock.json
-      - .github/workflows/dependency-security-audit.yml
 
 permissions:
   contents: read
