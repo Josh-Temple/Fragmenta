@@ -7,6 +7,9 @@ on:
       - main
       - test/glass-tilt-hydrated-on-reconciled-20261009
 
+permissions:
+  contents: read
+
 jobs:
   glass-tilt:
     runs-on: ubuntu-latest
