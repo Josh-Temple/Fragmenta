@@ -16,24 +16,24 @@ export const smartSkeleton: AnimationDefinition = {
     { key: 'opacity', cssVar: '--opacity', label: 'Shimmer Opacity', type: 'number', min: 0.1, max: 1.0, step: 0.1, default: 0.5 },
   ],
   Preview: ({ values, paused = false }) => (
-    <div role="status" aria-label="Loading content" className="w-64 flex flex-col gap-3 p-4 bg-white rounded-xl shadow-sm border border-black/5">
+    <div role="status" aria-label="Loading content" className="w-64 flex flex-col gap-3 p-4 bg-white rounded-xl shadow-xs border border-black/5">
       <div className="flex items-center gap-3">
           <div className="relative w-12 h-12 rounded-full bg-gray-200 overflow-hidden">
               <div 
-                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent -translate-x-full animate-[shimmer_var(--speed)_infinite] motion-reduce:animate-none"
+                  className="absolute inset-0 bg-linear-to-r from-transparent via-white/60 to-transparent -translate-x-full animate-[shimmer_var(--speed)_infinite] motion-reduce:animate-none"
                   style={{ '--speed': `${values['speed']}s`, opacity: values['opacity'], animationPlayState: paused ? 'paused' : 'running' } as React.CSSProperties}
               ></div>
           </div>
           <div className="flex-1 space-y-2">
               <div className="relative h-3 w-3/4 bg-gray-200 rounded overflow-hidden">
                    <div 
-                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent -translate-x-full animate-[shimmer_var(--speed)_infinite] motion-reduce:animate-none"
+                      className="absolute inset-0 bg-linear-to-r from-transparent via-white/60 to-transparent -translate-x-full animate-[shimmer_var(--speed)_infinite] motion-reduce:animate-none"
                       style={{ '--speed': `${values['speed']}s`, opacity: values['opacity'], animationPlayState: paused ? 'paused' : 'running' } as React.CSSProperties}
                   ></div>
               </div>
               <div className="relative h-3 w-1/2 bg-gray-200 rounded overflow-hidden">
                    <div 
-                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent -translate-x-full animate-[shimmer_var(--speed)_infinite] motion-reduce:animate-none"
+                      className="absolute inset-0 bg-linear-to-r from-transparent via-white/60 to-transparent -translate-x-full animate-[shimmer_var(--speed)_infinite] motion-reduce:animate-none"
                       style={{ '--speed': `${values['speed']}s`, opacity: values['opacity'], animationPlayState: paused ? 'paused' : 'running' } as React.CSSProperties}
                   ></div>
               </div>

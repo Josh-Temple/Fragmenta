@@ -88,7 +88,7 @@ export const glassTilt: AnimationDefinition = {
 
           {/* Main Card Content */}
           <div 
-              className="absolute inset-0 rounded-2xl border border-white/50 overflow-hidden flex flex-col items-center justify-center gap-2 bg-gradient-to-br from-white/30 to-white/10 shadow-lg backdrop-blur-md z-10"
+              className="absolute inset-0 rounded-2xl border border-white/50 overflow-hidden flex flex-col items-center justify-center gap-2 bg-linear-to-br from-white/30 to-white/10 shadow-lg backdrop-blur-md z-10"
               style={{ backdropFilter: `blur(${values['blur']}px)` }}
           >
               {/* Glare Effect */}
@@ -102,11 +102,11 @@ export const glassTilt: AnimationDefinition = {
                   }}
               ></div>
 
-              <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-primary to-accent flex items-center justify-center shadow-inner mb-1 border border-white/20">
+              <div className="w-12 h-12 rounded-full bg-linear-to-tr from-primary to-accent flex items-center justify-center inset-shadow-sm mb-1 border border-white/20">
                  <span className="material-symbols-outlined text-white">credit_card</span>
               </div>
-              <div className="w-32 h-2 bg-white/60 rounded-full shadow-sm"></div>
-              <div className="w-20 h-2 bg-white/30 rounded-full shadow-sm"></div>
+              <div className="w-32 h-2 bg-white/60 rounded-full shadow-xs"></div>
+              <div className="w-20 h-2 bg-white/30 rounded-full shadow-xs"></div>
               
               {/* Shine on border */}
               <div className="absolute inset-0 rounded-2xl border border-white/40 group-hover:border-white/80 transition-colors"></div>

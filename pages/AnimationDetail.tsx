@@ -99,13 +99,13 @@ const PatternDetail: React.FC = () => {
 
       <main className="flex-1 flex flex-col pb-24">
         <section className="p-4">
-          <div className={`relative w-full ${kind === 'style' || kind === 'layout' ? 'min-h-[280px] pt-6 pb-16' : 'aspect-[4/3]'} rounded-2xl bg-surface border border-ink-border flex flex-col items-center justify-center overflow-hidden group shadow-inner`}>
+          <div className={`relative w-full ${kind === 'style' || kind === 'layout' ? 'min-h-[280px] pt-6 pb-16' : 'aspect-[4/3]'} rounded-2xl bg-surface border border-ink-border flex flex-col items-center justify-center overflow-hidden group inset-shadow-sm`}>
             <div className="absolute inset-0 bg-grid-pattern pointer-events-none opacity-50"></div>
             <div className="relative z-10 w-full flex items-center justify-center px-3">
               <def.Preview values={values} paused={motionPaused} />
             </div>
 
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex p-1 rounded-xl bg-paper/90 border border-ink-border shadow-paper backdrop-blur-sm">
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex p-1 rounded-xl bg-paper/90 border border-ink-border shadow-paper backdrop-blur-xs">
               <div className="flex items-center gap-2 px-3 py-1.5 text-xs font-medium text-ink-muted">
                 <span className="flex size-2 rounded-full bg-green-500"></span>
                 Live preview
@@ -201,7 +201,7 @@ const PatternDetail: React.FC = () => {
                         aria-label={param.label}
                       />
                       <div
-                        className="absolute top-1/2 w-4 h-4 bg-paper rounded-full border-2 border-primary shadow-sm z-0 pointer-events-none"
+                        className="absolute top-1/2 w-4 h-4 bg-paper rounded-full border-2 border-primary shadow-xs z-0 pointer-events-none"
                         style={{
                           left: `${percent}%`,
                           transform: 'translate(-50%, -50%)',
@@ -221,7 +221,7 @@ const PatternDetail: React.FC = () => {
               <div className="border-t border-ink-border pt-6 space-y-4">
                 <h2 className="text-lg font-bold font-display">Using this pattern</h2>
                 <PatternUsage guide={patternGuides[def.id]} />
-                <Link to="/guide" className="inline-block text-sm text-ink underline underline-offset-4 py-2 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink">Read the reuse guide</Link>
+                <Link to="/guide" className="inline-block text-sm text-ink underline underline-offset-4 py-2 rounded-xs focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink">Read the reuse guide</Link>
               </div>
             )}
 
@@ -280,7 +280,7 @@ const PatternDetail: React.FC = () => {
 
         {activeTab === 'code' && (
           <section className="p-4">
-            <div className="bg-[#2e2b29] p-4 rounded-xl border border-ink-border shadow-inner relative group">
+            <div className="bg-[#2e2b29] p-4 rounded-xl border border-ink-border inset-shadow-sm relative group">
               <button
                 onClick={() => handleCopy(code)}
                 className="absolute top-3 right-3 p-2 bg-white/10 hover:bg-white/20 rounded-lg text-white/70 transition-colors"
@@ -298,7 +298,7 @@ const PatternDetail: React.FC = () => {
 
         {activeTab === 'prompt' && (
           <section className="p-4">
-            <div className="bg-surface/50 p-4 rounded-xl border border-ink-border shadow-sm relative">
+            <div className="bg-surface/50 p-4 rounded-xl border border-ink-border shadow-xs relative">
               <button
                 onClick={() => handleCopy(prompt)}
                 className="absolute top-3 right-3 p-2 bg-primary/10 hover:bg-primary/20 rounded-lg text-primary transition-colors"
@@ -314,7 +314,7 @@ const PatternDetail: React.FC = () => {
         )}
       </main>
 
-      <div className="fixed bottom-0 left-0 right-0 max-w-md mx-auto p-4 bg-gradient-to-t from-paper via-paper to-transparent z-50">
+      <div className="fixed bottom-0 left-0 right-0 max-w-md mx-auto p-4 bg-linear-to-t from-paper via-paper to-transparent z-50">
         <p role="status" aria-label="Copy result" aria-live="polite" className={`text-xs font-semibold mb-2 text-center ${copyStatus === 'error' ? 'text-red-700' : 'text-ink-muted'}`}>
           {copyStatus === 'error' ? 'Copy failed. Check clipboard permissions or select and copy the text manually.' : copyStatus === 'success' ? 'Copied to clipboard.' : ''}
         </p>

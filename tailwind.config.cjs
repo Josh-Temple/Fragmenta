@@ -1,10 +1,9 @@
 // Build-time Tailwind configuration; migrated from the previous browser CDN setup.
 const forms = require('@tailwindcss/forms');
-const containerQueries = require('@tailwindcss/container-queries');
 
 module.exports = {
   content: ['./index.html', './index.tsx', './App.tsx', './pages/**/*.{ts,tsx}', './components/**/*.{ts,tsx}', './data/**/*.{ts,tsx}'],
-  plugins: [forms, containerQueries],
+  plugins: [forms],
   darkMode: "class",
             theme: {
                 extend: {

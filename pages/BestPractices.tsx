@@ -23,7 +23,7 @@ const sources = [
   { label: 'MDN: will-change', url: 'https://developer.mozilla.org/en-US/docs/Web/CSS/will-change' },
 ];
 
-const linkClass = 'text-ink underline underline-offset-4 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink';
+const linkClass = 'text-ink underline underline-offset-4 rounded-xs focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink';
 
 const BestPractices: React.FC = () => {
   const [copyStatus, setCopyStatus] = useState<'idle' | 'success' | 'error'>('idle');
@@ -109,7 +109,7 @@ const BestPractices: React.FC = () => {
           <div className="divide-y divide-ink-border">
             {guides.map(([id, guide]) => (
               <details key={id} className="py-4">
-                <summary className="cursor-pointer rounded-sm font-semibold text-ink focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink">
+                <summary className="cursor-pointer rounded-xs font-semibold text-ink focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink">
                   {definitions[id].title}
                   <span className="block pl-4 mt-1 text-xs font-normal text-ink-muted">{guide.codeFormat}</span>
                 </summary>

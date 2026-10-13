@@ -28,7 +28,7 @@ export const fluidToggle: AnimationDefinition = {
         onPointerDown={() => setIsPressed(true)} onPointerUp={() => setIsPressed(false)}
         onPointerCancel={() => setIsPressed(false)} onPointerLeave={() => setIsPressed(false)}
         className={`fragmenta-toggle-demo w-14 h-8 rounded-full flex items-center px-1 cursor-pointer transition-colors motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${isOn ? 'bg-primary' : 'bg-ink/20'}`}>
-        <span aria-hidden="true" className="h-6 bg-white rounded-full shadow-sm transition-all motion-reduce:transition-none"
+        <span aria-hidden="true" className="h-6 bg-white rounded-full shadow-xs transition-all motion-reduce:transition-none"
           style={{ width: `${width}px`, transform: `translateX(${x}px)`, transitionDuration: `${duration}s` }} />
       </button>
       </>

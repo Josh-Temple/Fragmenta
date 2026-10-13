@@ -57,7 +57,7 @@ const Browse: React.FC = () => {
             <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
               <span className="material-symbols-outlined text-ink/40 group-focus-within:text-primary transition-colors">search</span>
             </div>
-            <div className="block w-full p-3.5 pl-11 text-sm bg-surface-highlight border border-ink-border rounded-xl text-ink/40 cursor-text shadow-sm hover:border-primary/50 transition-colors">
+            <div className="block w-full p-3.5 pl-11 text-sm bg-surface-highlight border border-ink-border rounded-xl text-ink/40 cursor-text shadow-xs hover:border-primary/50 transition-colors">
               Search styles, layouts, motion...
             </div>
           </Link>
@@ -70,7 +70,7 @@ const Browse: React.FC = () => {
               onClick={() => setFilter(category.id)}
               className={`flex-shrink-0 px-4 py-2 rounded-full font-medium text-sm transition-colors ${
                 filter === category.id
-                  ? 'bg-primary text-white border border-primary shadow-sm font-bold'
+                  ? 'bg-primary text-white border border-primary shadow-xs font-bold'
                   : 'bg-transparent border border-ink-border text-ink-muted hover:border-primary hover:bg-surface hover:text-primary'
               }`}
             >

@@ -60,7 +60,7 @@ const SearchResults: React.FC = () => {
           </div>
           <input
             id="pattern-search"
-            className="block w-full pl-12 pr-12 py-3.5 bg-surface border-none rounded-xl text-ink font-semibold placeholder-ink/40 focus:ring-2 focus:ring-primary/20 shadow-inner"
+            className="block w-full pl-12 pr-12 py-3.5 bg-surface border-none rounded-xl text-ink font-semibold placeholder-ink/40 focus:ring-2 focus:ring-primary/20 inset-shadow-sm"
             placeholder="Search patterns..."
             type="text"
             value={localQuery}
