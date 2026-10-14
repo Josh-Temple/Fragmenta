@@ -16,6 +16,18 @@ const Licenses: React.FC = () => {
       <p>No repository-wide software license has been specified in an authoritative LICENSE file.
         Viewing or copying a code example does not establish permission to redistribute or reuse it.
         Confirm applicable rights with the repository owner before reuse.</p>
+      <h2 className="text-xl font-semibold font-display">Planned code reuse license</h2>
+      <p>MIT has been selected for original generated implementation code after each pattern's
+        rights and any third-party contributions have been cleared. The intended copyright
+        display name is Josh Temple (a pen name), with a 2026 notice for eligible original work.
+        <strong> No pattern is currently marked as rights-cleared, and this is not an active license grant.</strong>
+      </p>
+      <p>The planned scope excludes this gallery application, branding, screenshots, prompts,
+        third-party libraries and materials, and sample text not cleared for reuse.
+        The <a href="https://opensource.org/license/mit" target="_blank" rel="noreferrer"
+          className="text-primary underline">MIT license text</a> requires preservation of the
+        copyright and permission notice in copies or substantial portions. Refer to the
+        license supplied with a future rights-cleared example before redistributing it.</p>
       <h2 className="text-xl font-semibold font-display">Sources and inspiration</h2>
       <p>References linked from individual patterns identify sources or inspiration where provided.
         They are not software licensing statements.</p>
