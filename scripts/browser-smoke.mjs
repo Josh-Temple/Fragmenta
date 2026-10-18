@@ -300,8 +300,11 @@ try {
   });
   const guide = guideLinks.result?.value;
   const currentIds = ['elastic-button', 'smart-skeleton', 'glass-tilt', 'fluid-toggle',
-    'glitch-text', 'morph-fab', 'warm-neo-brutalist-editorial', 'editorial-split-layout'];
-  if (guide?.disclosures !== 8 || !guide.firstClosed ||
+    'glitch-text', 'morph-fab', 'warm-neo-brutalist-editorial', 'editorial-split-layout',
+    'inline-validation', 'article-table-of-contents', 'readable-article', 'native-faq',
+    'pricing-comparison', 'release-timeline', 'metric-summary', 'breadcrumb-trail',
+    'empty-state', 'responsive-data-table'];
+  if (guide?.disclosures !== currentIds.length || !guide.firstClosed ||
       currentIds.some(id => !guide.targets?.includes('#/p/' + id))) {
     throw new Error('Reuse guide does not cover the registered patterns: ' + JSON.stringify(guide));
   }
@@ -315,7 +318,7 @@ try {
     });
     return result.result?.value;
   }, 'guide disclosure keyboard activation');
-  console.log('PASS reuse guide: eight linked patterns and keyboard disclosure');
+  console.log('PASS reuse guide: eighteen linked patterns and keyboard disclosure');
 
   const guideCopy = await page.send('Runtime.evaluate', {
     expression: `(async () => {
@@ -607,3 +610,4 @@ try {
   browser.kill('SIGTERM');
   await rm(profile, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 });
 }
+
