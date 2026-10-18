@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { definitions, getPatternKind } from '../data/definitions';
+import { patternGuides } from '../data/pattern-guides';
+import PatternUsage from '../components/PatternUsage';
+import { patternRights } from '../data/pattern-rights';
 
 const kindLabels = {
   motion: 'Motion',
@@ -16,6 +19,7 @@ const PatternDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [activeTab, setActiveTab] = useState<'code' | 'prompt' | 'parameters'>('parameters');
   const [copyStatus, setCopyStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [motionPaused, setMotionPaused] = useState(false);
 
   useEffect(() => {
     if (copyStatus === 'idle') return;
@@ -28,12 +32,14 @@ const PatternDetail: React.FC = () => {
 
   useEffect(() => {
     if (!def) return;
+    window.scrollTo(0, 0);
 
     const defaults: Record<string, number> = {};
     def.params.forEach(param => {
       defaults[param.key] = param.default;
     });
     setParamValues(defaults);
+    setMotionPaused(false);
   }, [def]);
 
   if (!def) {
@@ -74,6 +80,7 @@ const PatternDetail: React.FC = () => {
   const values = { ...Object.fromEntries(def.params.map(param => [param.key, param.default])), ...paramValues };
   const code = def.generateCode(values);
   const prompt = def.generatePrompt(values);
+  const rightsStatus = patternRights[def.id]?.status ?? 'UNCLEAR';
   const activeCopyText = activeTab === 'prompt' ? prompt : code;
 
   return (
@@ -92,21 +99,30 @@ const PatternDetail: React.FC = () => {
         <div className="size-10" aria-hidden="true" />
       </div>
 
-      <main className="flex-1 flex flex-col pb-24">
+      <main className="flex-1 flex flex-col pb-40">
         <section className="p-4">
-          <div className="relative w-full aspect-[4/3] rounded-2xl bg-surface border border-ink-border flex flex-col items-center justify-center overflow-hidden group shadow-inner">
+          <div className={`relative w-full ${kind === 'style' || kind === 'layout' ? 'min-h-[280px] pt-6 pb-16' : 'aspect-[4/3]'} rounded-2xl bg-surface border border-ink-border flex flex-col items-center justify-center overflow-hidden group inset-shadow-sm`}>
             <div className="absolute inset-0 bg-grid-pattern pointer-events-none opacity-50"></div>
             <div className="relative z-10 w-full flex items-center justify-center px-3">
-              <def.Preview values={paramValues} />
+              <def.Preview values={values} paused={motionPaused} />
             </div>
 
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex p-1 rounded-xl bg-paper/90 border border-ink-border shadow-paper backdrop-blur-sm">
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex p-1 rounded-xl bg-paper/90 border border-ink-border shadow-paper backdrop-blur-xs">
               <div className="flex items-center gap-2 px-3 py-1.5 text-xs font-medium text-ink-muted">
                 <span className="flex size-2 rounded-full bg-green-500"></span>
                 Live preview
               </div>
             </div>
           </div>
+          {def.continuousMotion && (
+            <div className="mt-3 flex flex-wrap items-center gap-3 text-sm">
+              <button type="button" aria-pressed={motionPaused} onClick={() => setMotionPaused(value => !value)}
+                className="px-3 py-2.5 border border-ink-border rounded-lg text-ink focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink">
+                Pause preview motion
+              </button>
+              <span role="status" className="text-ink-muted">{motionPaused ? 'Motion paused.' : 'Motion follows your device preference.'}</span>
+            </div>
+          )}
         </section>
 
         <section className="px-4 pb-5">
@@ -187,7 +203,7 @@ const PatternDetail: React.FC = () => {
                         aria-label={param.label}
                       />
                       <div
-                        className="absolute top-1/2 w-4 h-4 bg-paper rounded-full border-2 border-primary shadow-sm z-0 pointer-events-none"
+                        className="absolute top-1/2 w-4 h-4 bg-paper rounded-full border-2 border-primary shadow-xs z-0 pointer-events-none"
                         style={{
                           left: `${percent}%`,
                           transform: 'translate(-50%, -50%)',
@@ -200,6 +216,14 @@ const PatternDetail: React.FC = () => {
             ) : (
               <div className="rounded-xl border border-ink-border bg-surface/30 p-4 text-sm text-ink-muted">
                 This pattern has no adjustable parameters yet.
+              </div>
+            )}
+
+            {patternGuides[def.id] && (
+              <div className="border-t border-ink-border pt-6 space-y-4">
+                <h2 className="text-lg font-bold font-display">Using this pattern</h2>
+                <PatternUsage guide={patternGuides[def.id]} />
+                <Link to="/guide" className="inline-block text-sm text-ink underline underline-offset-4 py-2 rounded-xs focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink">Read the reuse guide</Link>
               </div>
             )}
 
@@ -252,13 +276,20 @@ const PatternDetail: React.FC = () => {
               </div>
             )}
 
-            <p className="text-xs text-ink-muted">License not specified. Confirm permission before reusing code.</p>
+            <div role="note" className="rounded-xl border border-ink-border bg-surface/50 p-3 text-xs leading-relaxed text-ink">
+              <strong>Reuse rights: {rightsStatus}.</strong> This pattern is not currently licensed for reuse. Copying text does not grant permission to use, modify, or redistribute it.{' '}
+              <Link to="/licenses" className="text-primary underline underline-offset-2">See rights status and exclusions</Link>.
+            </div>
           </section>
         )}
 
         {activeTab === 'code' && (
           <section className="p-4">
-            <div className="bg-[#2e2b29] p-4 rounded-xl border border-ink-border shadow-inner relative group">
+            <p role="note" className="mb-3 rounded-lg border border-ink-border bg-surface/50 p-3 text-xs leading-relaxed text-ink">
+              <strong>Reuse permission not verified ({rightsStatus}).</strong> Copy code transfers the displayed text to your clipboard only; it is not a license grant.{' '}
+              <Link to="/licenses" className="text-primary underline underline-offset-2">Review licensing information</Link>.
+            </p>
+            <div className="bg-[#2e2b29] p-4 rounded-xl border border-ink-border inset-shadow-sm relative group">
               <button
                 onClick={() => handleCopy(code)}
                 className="absolute top-3 right-3 p-2 bg-white/10 hover:bg-white/20 rounded-lg text-white/70 transition-colors"
@@ -276,7 +307,7 @@ const PatternDetail: React.FC = () => {
 
         {activeTab === 'prompt' && (
           <section className="p-4">
-            <div className="bg-surface/50 p-4 rounded-xl border border-ink-border shadow-sm relative">
+            <div className="bg-surface/50 p-4 rounded-xl border border-ink-border shadow-xs relative">
               <button
                 onClick={() => handleCopy(prompt)}
                 className="absolute top-3 right-3 p-2 bg-primary/10 hover:bg-primary/20 rounded-lg text-primary transition-colors"
@@ -292,10 +323,15 @@ const PatternDetail: React.FC = () => {
         )}
       </main>
 
-      <div className="fixed bottom-0 left-0 right-0 max-w-md mx-auto p-4 bg-gradient-to-t from-paper via-paper to-transparent z-50">
-        <p role="status" aria-live="polite" className={`text-xs font-semibold mb-2 text-center ${copyStatus === 'error' ? 'text-red-700' : 'text-ink-muted'}`}>
+      <div className="fixed bottom-0 left-0 right-0 max-w-md mx-auto p-4 bg-linear-to-t from-paper via-paper to-transparent z-50">
+        <p role="status" aria-label="Copy result" aria-live="polite" className={`text-xs font-semibold mb-2 text-center ${copyStatus === 'error' ? 'text-red-700' : 'text-ink-muted'}`}>
           {copyStatus === 'error' ? 'Copy failed. Check clipboard permissions or select and copy the text manually.' : copyStatus === 'success' ? 'Copied to clipboard.' : ''}
         </p>
+        {activeTab === 'code' && (
+          <p className="text-[11px] text-center text-ink-muted mb-2">
+            No reuse license granted for this code. Copying does not grant rights.
+          </p>
+        )}
         <button
           onClick={() => handleCopy(activeCopyText)}
           className="w-full bg-primary hover:bg-primary/90 text-white font-bold text-base py-3.5 px-6 rounded-xl shadow-lg shadow-primary/20 flex items-center justify-center gap-2 transition-transform active:scale-95 border-b-4 border-[rgba(0,0,0,0.2)] active:border-b-0 active:translate-y-[4px]"
@@ -309,3 +345,4 @@ const PatternDetail: React.FC = () => {
 };
 
 export default PatternDetail;
+

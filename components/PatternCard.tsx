@@ -31,7 +31,7 @@ const PatternCard: React.FC<PatternCardProps> = ({ definition, className = '' })
 
       <div className="h-32 w-full bg-paper bg-grid-pattern flex items-center justify-center relative overflow-hidden p-4 z-10 pointer-events-none">
         <div className="scale-75 select-none flex items-center justify-center w-full h-full group-hover:pointer-events-auto transition-opacity duration-300 [&_*]:[animation-play-state:paused] group-hover:[&_*]:[animation-play-state:running]">
-          <definition.Preview values={defaultValues} />
+          <definition.Preview values={defaultValues} paused />
         </div>
       </div>
 

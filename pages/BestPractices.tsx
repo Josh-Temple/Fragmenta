@@ -1,169 +1,178 @@
-import React from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { definitions } from '../data/definitions';
+import { patternGuides } from '../data/pattern-guides';
+import PatternUsage from '../components/PatternUsage';
+
+const reducedMotionSnippet = `/* Adapt these selectors to your component's decorative elements. */
+@media (prefers-reduced-motion: reduce) {
+  .pattern-decoration,
+  .pattern-decoration::before,
+  .pattern-decoration::after {
+    animation: none;
+    transition: none;
+    transform: none;
+  }
+}`;
+
+const sources = [
+  { label: 'MDN: prefers-reduced-motion', url: 'https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion' },
+  { label: 'W3C: Pause, Stop, Hide', url: 'https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide.html' },
+  { label: 'W3C: Switch pattern', url: 'https://www.w3.org/WAI/ARIA/apg/patterns/switch/' },
+  { label: 'web.dev: CSS animation performance', url: 'https://web.dev/articles/animations-guide' },
+  { label: 'MDN: will-change', url: 'https://developer.mozilla.org/en-US/docs/Web/CSS/will-change' },
+];
+
+const linkClass = 'text-ink underline underline-offset-4 rounded-xs focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink';
 
 const BestPractices: React.FC = () => {
-  const navigate = useNavigate();
+  const [copyStatus, setCopyStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [copying, setCopying] = useState(false);
+  const guides = Object.entries(patternGuides).filter(([id]) => Boolean(definitions[id]));
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
+    if (copyStatus === 'idle') return;
+    const timer = window.setTimeout(() => setCopyStatus('idle'), 5000);
+    return () => window.clearTimeout(timer);
+  }, [copyStatus]);
+
+  const copySnippet = async () => {
+    setCopyStatus('idle');
+    setCopying(true);
+    try {
+      if (!navigator.clipboard?.writeText) throw new Error('Clipboard unavailable');
+      await navigator.clipboard.writeText(reducedMotionSnippet);
+      setCopyStatus('success');
+    } catch {
+      setCopyStatus('error');
+    } finally {
+      setCopying(false);
+    }
+  };
 
   return (
-    <div className="flex flex-col h-full w-full">
-      {/* Top Navigation Bar */}
-      <div className="sticky top-0 z-50 bg-paper/90 backdrop-blur-md border-b border-ink-border">
-        <div className="flex items-center p-4 justify-between max-w-md mx-auto">
-          <div className="flex items-center gap-3">
-            <div 
-              onClick={() => navigate(-1)}
-              className="p-2 -ml-2 hover:bg-ink/5 rounded-full cursor-pointer transition-colors"
-            >
-              <span className="material-symbols-outlined">arrow_back</span>
-            </div>
-            <h2 className="text-lg font-bold leading-tight tracking-tight font-display">A11y & Performance</h2>
-          </div>
-          <div className="flex items-center gap-2">
-            <button className="p-2 hover:bg-ink/5 rounded-full cursor-pointer transition-colors">
-              <span className="material-symbols-outlined">bookmark</span>
-            </button>
-            <button className="p-2 hover:bg-ink/5 rounded-full cursor-pointer transition-colors">
-              <span className="material-symbols-outlined">share</span>
-            </button>
-          </div>
-        </div>
-        {/* Reading Progress Bar */}
-        <div className="w-full h-1 bg-ink/5">
-          <div className="h-full bg-primary" style={{ width: '42%' }}></div>
-        </div>
-      </div>
+    <div className="flex flex-col w-full">
+      <header className="sticky top-0 z-50 bg-paper/95 border-b border-ink-border px-4 py-3 flex items-center justify-between gap-4">
+        <Link to="/browse" className={linkClass}>Browse patterns</Link>
+        <span className="font-mono text-xs text-ink-muted">GUIDE</span>
+      </header>
 
-      <main className="max-w-md mx-auto pb-24">
-        {/* Header Section */}
-        <section className="px-4 pt-8 pb-4">
-          <span className="text-xs font-bold tracking-widest uppercase text-primary mb-2 block font-display">Developer Resource</span>
-          <h1 className="text-3xl font-bold leading-[1.1] mb-4 font-display">Designing for Motion Accessibility</h1>
-          <p className="text-base leading-relaxed text-ink-muted">
-            Respecting user preferences is critical for those with vestibular disorders. Learn how to balance delightful motion with technical performance and inclusive design.
+      <article className="px-5 pt-8 pb-28 text-sm leading-relaxed text-ink-muted min-w-0">
+        <p className="font-mono text-xs tracking-wider uppercase text-ink-muted mb-3">From preview to implementation</p>
+        <h1 className="text-3xl leading-tight font-bold font-display text-ink mb-4">Choose and use a UI pattern</h1>
+        <p className="text-base">Start with the interface task, inspect the example, then adapt its code or AI prompt to your own page.</p>
+        <p className="mt-4">Code licensing is not specified. <Link to="/licenses" className={linkClass}>Check permissions before reuse.</Link></p>
+
+        <section aria-labelledby="reuse-heading" className="mt-9 border-t border-ink-border pt-6">
+          <h2 id="reuse-heading" className="text-xl font-bold font-display text-ink mb-4">A practical reuse workflow</h2>
+          <ol className="list-decimal pl-5 space-y-3">
+            <li><strong className="text-ink">Choose the task.</strong> Pick a control, a loading appearance, a decorative effect, a visual style, or a reading layout.</li>
+            <li><strong className="text-ink">Inspect Details.</strong> Check the code format, integration steps, parameters, and limitations.</li>
+            <li><strong className="text-ink">Adjust one value.</strong> Compare the live example with the generated code or prompt, then copy the output you need.</li>
+            <li><strong className="text-ink">Run it separately.</strong> HTML examples include their own CSS; Morph FAB also includes a script. Glass Tilt requires a React project that compiles JSX.</li>
+            <li><strong className="text-ink">Adapt and verify.</strong> Replace sample content, connect real application state, and check the complete result with keyboard, touch, narrow screens, and motion preferences.</li>
+          </ol>
+          <p className="mt-4">An AI prompt describes the intended pattern. Review and test the code produced from it just as you would handwritten code.</p>
+        </section>
+
+        <section aria-labelledby="context-heading" className="mt-9 border-t border-ink-border pt-6">
+          <h2 id="context-heading" className="text-xl font-bold font-display text-ink mb-4">Use the examples in a real page</h2>
+          <div className="space-y-6">
+            <div>
+              <h3 className="font-semibold text-ink mb-2">A loading region that finishes</h3>
+              <p>Use Smart Skeleton only while the request is pending. Keep its rough shape close to the content that will replace it, and announce loading once. Finish with the actual content, a meaningful empty result, or an error with a recovery action.</p>
+              <p className="mt-3">The shimmer speed is not a countdown. Keep the copied Pause shimmer control available; a paused placeholder still needs to be replaced when the request ends.</p>
+              <p lang="ja" className="mt-3">読み込み中の見た目と、通信の状態管理は別です。成功・空の結果・失敗のどの場合でも、プレースホルダーを実際の結果へ置き換えます。</p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-ink mb-2">A decorative card without hidden actions</h3>
+              <p>Use Glass Tilt when depth is optional. Keep essential information available without pointer movement, start with a smaller tilt, and compare the paused card on the real background before adding blur.</p>
+              <p className="mt-3">The copied card is a decorative image example. If you put links or buttons inside it, replace the image role with suitable structure and check keyboard access. Its pause checkbox stops both idle and pointer-driven motion.</p>
+              <p lang="ja" className="mt-3">傾きは装飾です。操作や重要な情報をホバーの中に隠さず、動きを止めた状態でも使えることを確認します。</p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-ink mb-2">An editorial note in two languages</h3>
+              <p>Use Warm Editorial for visual emphasis and Editorial Split for the relationship between context and the main text. Both include English and Japanese sample paragraphs. Replace them with your longest realistic heading and source label before judging spacing.</p>
+              <p className="mt-3">Keep language attributes and logical source order. The generated layout changes at a viewport breakpoint; inspect the standalone page at both narrow and wide widths. Parameters belong to each instance so different settings can coexist.</p>
+              <p lang="ja" className="mt-3">短い仮の文章だけで余白を決めず、長い見出し・出典名・日本語の本文を入れて確認します。</p>
+            </div>
+          </div>
+        </section>
+
+        <section aria-labelledby="choose-heading" className="mt-9 border-t border-ink-border pt-6">
+          <h2 id="choose-heading" className="text-xl font-bold font-display text-ink mb-3">Choose from the current patterns</h2>
+          <p className="mb-4">Each example has a different role. Open one for adjustable values and generated output.</p>
+          <div className="divide-y divide-ink-border">
+            {guides.map(([id, guide]) => (
+              <details key={id} className="py-4">
+                <summary className="cursor-pointer rounded-xs font-semibold text-ink focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink">
+                  {definitions[id].title}
+                  <span className="block pl-4 mt-1 text-xs font-normal text-ink-muted">{guide.codeFormat}</span>
+                </summary>
+                <div className="mt-4 pl-4 space-y-4">
+                  <PatternUsage guide={guide} />
+                  <Link to={`/p/${id}`} className={`${linkClass} inline-block py-2`}>Open {definitions[id].title}</Link>
+                </div>
+              </details>
+            ))}
+          </div>
+        </section>
+
+        <section aria-labelledby="motion-heading" className="mt-9 border-t border-ink-border pt-6">
+          <h2 id="motion-heading" className="text-xl font-bold font-display text-ink mb-3">Keep motion optional</h2>
+          <p>Use <code>prefers-reduced-motion</code> to remove, reduce, or replace non-essential movement when the user requests it. Keep the content and state change understandable when animation is disabled.</p>
+          <p className="mt-3">Scope the rule to decorative elements. A blanket reset of every transform can break positioning or functional state changes.</p>
+          <pre className="mt-4 bg-ink text-paper p-4 rounded-lg text-xs whitespace-pre-wrap break-words leading-relaxed"><code>{reducedMotionSnippet}</code></pre>
+          <button type="button" onClick={copySnippet} disabled={copying}
+            className="mt-3 px-4 py-3 rounded-lg border border-ink-border font-semibold text-ink hover:bg-ink/5 disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink">
+            {copying ? 'Copying…' : 'Copy reduced-motion example'}
+          </button>
+          <p role="status" aria-live="polite" className="mt-2 min-h-5">
+            {copyStatus === 'success' ? 'Example copied.' : copyStatus === 'error' ? 'Copy failed. Select the code above and copy it manually, or check clipboard permissions.' : ''}
           </p>
+          <p className="mt-3">This is an adaptation example: rename its selectors for your component. For JavaScript-driven motion, also check the preference in the motion logic.</p>
+          <p className="mt-3">For non-essential moving content that starts automatically, lasts more than five seconds, and appears alongside other content, provide a pause, stop, or hide mechanism. Reduced-motion handling alone does not establish accessibility conformance.</p>
+          <p className="mt-3">Smart Skeleton, Glitch Text, and Glass Tilt now include pause controls in their copied output. Details also offers Pause preview motion. Check both versions: pausing the gallery does not change the code you copy.</p>
         </section>
 
-        {/* A11y Section Card */}
-        <div className="p-4">
-          <div className="bg-surface p-6 rounded-xl shadow-paper border border-ink-border">
-            <div className="flex items-center gap-2 mb-4">
-              <span className="material-symbols-outlined text-primary">accessibility_new</span>
-              <h3 className="font-bold text-lg font-display">The Accessibility Rule</h3>
-            </div>
-            <p className="text-sm mb-6 leading-relaxed text-ink-muted">
-              Use the 'prefers-reduced-motion' media query to provide a safe experience for users who experience dizziness or nausea from screen movement.
-            </p>
-            <div className="bg-[#2e2b29] rounded-lg p-4 overflow-x-auto mb-4 border border-ink/10">
-              <code className="text-xs font-mono text-gray-300 block leading-relaxed">
-                <span className="text-purple-400">@media</span> (<span className="text-blue-300">prefers-reduced-motion</span>: reduce) {'{'}<br/>
-                &nbsp;&nbsp;* {'{'}<br/>
-                &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-orange-300">animation-duration</span>: 0.01ms !important;<br/>
-                &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-orange-300">transition-duration</span>: 0.01ms !important;<br/>
-                &nbsp;&nbsp;{'}'}<br/>
-                {'}'}
-              </code>
-            </div>
-            <button className="w-full flex items-center justify-center gap-2 bg-primary text-white py-3 rounded-lg font-medium text-sm hover:bg-primary-dark transition-all shadow-sm">
-              <span className="material-symbols-outlined text-sm">content_copy</span>
-              Copy Snippet
-            </button>
-          </div>
-        </div>
-
-        {/* Performance Comparison Section */}
-        <section className="px-4 mt-6">
-          <h2 className="text-xl font-bold mb-6 font-display">Performance Foundations</h2>
-          {/* Comparison Container */}
-          <div className="space-y-4">
-            {/* Bad Example */}
-            <div className="bg-surface rounded-xl overflow-hidden border-2 border-red-900/10">
-              <div className="bg-red-900/5 px-4 py-2 flex justify-between items-center border-b border-red-900/10">
-                <span className="text-[10px] font-bold tracking-widest uppercase text-red-800">Avoid: Layout Properties</span>
-                <span className="material-symbols-outlined text-red-800 text-sm">error</span>
-              </div>
-              <div className="p-4 flex gap-4">
-                <div className="w-16 h-16 bg-red-900/10 rounded flex items-center justify-center shrink-0">
-                  <div className="w-8 h-8 bg-red-800 rounded-sm"></div>
-                </div>
-                <div className="flex-1">
-                  <p className="text-xs font-bold mb-1 text-ink">Height/Width Animations</p>
-                  <p className="text-xs text-ink-muted mb-3">Causes layout thrashing and forces the browser to re-calculate geometry.</p>
-                  <div className="h-1 w-full bg-ink/5 rounded-full overflow-hidden">
-                    <div className="h-full bg-red-800 w-[85%]"></div>
-                  </div>
-                  <div className="flex justify-between mt-1">
-                    <span className="text-[10px] opacity-50 uppercase">Jank Level</span>
-                    <span className="text-[10px] font-bold text-red-800 uppercase">High CPU Impact</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Good Example */}
-            <div className="bg-surface rounded-xl overflow-hidden border-2 border-primary/10">
-              <div className="bg-primary/5 px-4 py-2 flex justify-between items-center border-b border-primary/10">
-                <span className="text-[10px] font-bold tracking-widest uppercase text-primary">Best: CSS Transforms</span>
-                <span className="material-symbols-outlined text-primary text-sm">check_circle</span>
-              </div>
-              <div className="p-4 flex gap-4">
-                <div className="w-16 h-16 bg-primary/10 rounded flex items-center justify-center shrink-0">
-                  <div className="w-8 h-8 bg-primary rounded-sm"></div>
-                </div>
-                <div className="flex-1">
-                  <p className="text-xs font-bold mb-1 text-ink">Scale/Translate/Opacity</p>
-                  <p className="text-xs text-ink-muted mb-3">Handled by the GPU. Smooth 60FPS without affecting document flow.</p>
-                  <div className="h-1 w-full bg-ink/5 rounded-full overflow-hidden">
-                    <div className="h-full bg-primary w-[15%]"></div>
-                  </div>
-                  <div className="flex justify-between mt-1">
-                    <span className="text-[10px] opacity-50 uppercase">Jank Level</span>
-                    <span className="text-[10px] font-bold text-primary uppercase">Hardware Accelerated</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+        <section aria-labelledby="controls-heading" className="mt-9 border-t border-ink-border pt-6">
+          <h2 id="controls-heading" className="text-xl font-bold font-display text-ink mb-3">Connect appearance to real behavior</h2>
+          <ul className="list-disc pl-5 space-y-3">
+            <li>Use buttons for actions, links for navigation, and labels for form inputs. Give icon-only controls an accessible name.</li>
+            <li>Keep focus visible. Check Tab, Enter, and Space as appropriate for the control, rather than testing pointer clicks alone.</li>
+            <li>Give a switch a stable setting label and an on/off state. Its animation does not implement preference storage.</li>
+            <li>Replace loading placeholders with content or a useful error. Example action labels are not working application features.</li>
+            <li>On small screens and with larger text, check wrapping, reading order, target size, and whether sticky or fixed controls cover content.</li>
+          </ul>
         </section>
 
-        {/* Knowledge Card */}
-        <div className="p-4 mt-6">
-          <div className="bg-primary/5 rounded-xl p-6 border border-primary/20">
-            <h4 className="font-bold text-lg mb-2 flex items-center gap-2 font-display text-ink">
-              <span className="material-symbols-outlined text-primary">lightbulb</span>
-              Pro-tip: Will-Change
-            </h4>
-            <p className="text-sm leading-relaxed mb-4 text-ink-muted">
-              Use <code className="bg-white/50 px-1 py-0.5 rounded font-mono text-ink">will-change: transform;</code> to hint to the browser that an element is about to move.
-            </p>
-            <div 
-              className="w-full bg-white/40 h-[120px] rounded-lg flex items-center justify-center bg-cover bg-center border border-primary/10" 
-              style={{ backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuCeLG4allBcmSQWH4HWRdB3Hzva_C6aIzzTN4W0xr-GBgOjZ9jPJjNemDGLhfQx1n1acDabxf3nmz6Xb6CqyNHlP6YUZtrQo8iQ0ATSj94bXMPlKhiSgOUU6pfNp7ZPmk6dc5VuJvZxydMeuHMlfq2xa9a6cVJOmWNRbiaYAALKLqigm49fLsBhRg3KSeW53_4CzPOz9mHNWuq8AlWdn_Qvblm0Ofnq_XYdMhDP4nP3R5dcoLZKI2WOx4Roc6DphuneHGwiN5q1pzs')" }}
-            >
-              <span className="bg-paper/90 px-3 py-1.5 rounded-full text-[10px] font-bold tracking-widest uppercase shadow-sm text-ink border border-ink-border">Motion Visualization</span>
-            </div>
-          </div>
-        </div>
+        <section aria-labelledby="performance-heading" className="mt-9 border-t border-ink-border pt-6">
+          <h2 id="performance-heading" className="text-xl font-bold font-display text-ink mb-3">Measure performance in context</h2>
+          <p>For movement and fades, start with <code>transform</code> and <code>opacity</code>. They can avoid layout work, but do not guarantee GPU acceleration or a particular frame rate.</p>
+          <p className="mt-3">Changing dimensions can trigger layout; shadows, filters, and blur can add paint or compositing work. Record the actual page in browser performance tools, especially when several effects run together.</p>
+          <p className="mt-3">Use <code>will-change</code> only when a measured problem justifies it. Persistent layers can consume resources; the property is not a default speed improvement.</p>
+          <p className="mt-3 font-semibold text-ink">These notes are design guidance. Fragmenta does not provide measured performance scores or an accessibility certification for these examples.</p>
+        </section>
 
-      </main>
+        <section aria-labelledby="references-heading" className="mt-9 border-t border-ink-border pt-6">
+          <h2 id="references-heading" className="text-xl font-bold font-display text-ink mb-3">Further reading</h2>
+          <ul className="space-y-3">
+            {sources.map(source => (
+              <li key={source.url}><a href={source.url} className={linkClass} target="_blank" rel="noreferrer">{source.label}<span className="sr-only"> (opens in a new tab)</span></a></li>
+            ))}
+          </ul>
+        </section>
+      </article>
 
-      {/* Floating Bottom Navigation */}
-      <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md bg-paper/95 backdrop-blur-md border-t border-ink-border px-6 py-4 flex justify-between items-center z-50">
-        <Link to="/" className="flex flex-col items-center gap-1 opacity-50 cursor-pointer hover:opacity-100 transition-opacity">
-          <span className="material-symbols-outlined">home</span>
-          <span className="text-[10px] font-medium">Home</span>
-        </Link>
-        <Link to="/browse" className="flex flex-col items-center gap-1 opacity-50 cursor-pointer hover:opacity-100 transition-opacity">
-          <span className="material-symbols-outlined">auto_stories</span>
-          <span className="text-[10px] font-medium">Library</span>
-        </Link>
-        <Link to="/guide" className="flex flex-col items-center gap-1 text-primary cursor-pointer relative">
-          <span className="material-symbols-outlined filled">menu_book</span>
-          <span className="text-[10px] font-medium">Guide</span>
-        </Link>
-        <Link to="/licenses" className="flex flex-col items-center gap-1 opacity-50 cursor-pointer hover:opacity-100 transition-opacity">
-          <span className="material-symbols-outlined">copyright</span>
-          <span className="text-[10px] font-medium">License</span>
-        </Link>
+      <nav aria-label="Guide navigation" className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md bg-paper/95 border-t border-ink-border px-5 py-4 flex justify-between gap-3 z-50">
+        <Link to="/" className={linkClass}>Home</Link>
+        <Link to="/browse" className={linkClass}>Browse</Link>
+        <Link to="/guide" className={linkClass} aria-current="page">Guide</Link>
+        <Link to="/licenses" className={linkClass}>License</Link>
       </nav>
     </div>
   );

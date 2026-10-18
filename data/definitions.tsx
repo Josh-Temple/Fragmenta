@@ -8,7 +8,10 @@ import { morphFab } from './animations/morph-fab';
 import { warmNeoBrutalistEditorial } from './patterns/warm-neo-brutalist-editorial';
 import { editorialSplitLayout } from './patterns/editorial-split-layout';
 
+import { practicalPatterns } from './patterns/practical-patterns';
+
 export const definitions: Record<string, PatternDefinition> = {
+  ...practicalPatterns,
   'elastic-button': elasticButton,
   'smart-skeleton': smartSkeleton,
   'glass-tilt': glassTilt,
@@ -43,3 +46,4 @@ export const getPatternKind = (definition: PatternDefinition): PatternKind => {
       return 'motion';
   }
 };
+

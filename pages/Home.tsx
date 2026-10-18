@@ -54,7 +54,7 @@ const Home: React.FC = () => {
 
         <div className="pt-8 pb-2">
           <label className="relative flex w-full flex-col">
-            <div className="relative flex w-full items-center rounded-xl bg-surface shadow-inner overflow-hidden group focus-within:ring-2 focus-within:ring-primary/50 transition-all border border-ink/5">
+            <div className="relative flex w-full items-center rounded-xl bg-surface inset-shadow-sm overflow-hidden group focus-within:ring-2 focus-within:ring-primary/50 transition-all border border-ink/5">
               <div className="flex h-14 w-12 items-center justify-center text-ink/50">
                 <span className="material-symbols-outlined">search</span>
               </div>
@@ -86,7 +86,7 @@ const Home: React.FC = () => {
           </Link>
         </div>
         <div className="flex w-full overflow-x-auto no-scrollbar gap-3 px-6 pb-2">
-          <Link to="/browse" className="shrink-0 h-10 px-5 flex items-center rounded-full bg-primary text-paper text-sm font-bold border border-primary shadow-sm">All</Link>
+          <Link to="/browse" className="shrink-0 h-10 px-5 flex items-center rounded-full bg-primary text-paper text-sm font-bold border border-primary shadow-xs">All</Link>
           <Link to="/browse?kind=motion" className="shrink-0 h-10 px-5 flex items-center rounded-full bg-transparent border border-ink/20 text-ink/80 text-sm font-medium hover:border-primary hover:bg-surface hover:text-primary transition-colors">Motion</Link>
           <Link to="/browse?kind=interaction" className="shrink-0 h-10 px-5 flex items-center rounded-full bg-transparent border border-ink/20 text-ink/80 text-sm font-medium hover:border-primary hover:bg-surface hover:text-primary transition-colors">Interaction</Link>
           <Link to="/browse?kind=style" className="shrink-0 h-10 px-5 flex items-center rounded-full bg-transparent border border-ink/20 text-ink/80 text-sm font-medium hover:border-primary hover:bg-surface hover:text-primary transition-colors">Styles</Link>
@@ -122,6 +122,12 @@ const Home: React.FC = () => {
           </Link>
         </div>
       </div>
+
+      <section aria-labelledby="reuse-guide-heading" className="mx-6 mt-8 pt-6 border-t border-ink-border">
+        <h2 id="reuse-guide-heading" className="text-lg font-bold text-ink">From preview to your page</h2>
+        <p className="text-sm leading-relaxed text-ink-muted mt-2">Choose a pattern, check its code format, and follow the integration steps.</p>
+        <Link to="/guide" className="inline-block mt-2 py-2 text-sm font-semibold text-ink underline underline-offset-4 rounded-xs focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink">Read the reuse guide</Link>
+      </section>
     </div>
   );
 };

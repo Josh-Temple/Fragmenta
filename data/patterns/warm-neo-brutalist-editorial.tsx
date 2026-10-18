@@ -8,6 +8,12 @@ const defaults = {
   spacing: 18,
 };
 
+const sample = {
+  heading: 'Make the next step easy to understand.',
+  body: 'Use one clear heading, a short explanation, and a label that describes the action. Give supporting details less visual weight.',
+  japanese: '見出しで話題を示し、本文で理由を伝えます。色だけに頼らず、言葉と配置でも情報の違いを表しましょう。',
+};
+
 export const warmNeoBrutalistEditorial: PatternDefinition = {
   id: 'warm-neo-brutalist-editorial',
   title: 'Warm Neo-Brutalist Editorial',
@@ -83,17 +89,18 @@ export const warmNeoBrutalistEditorial: PatternDefinition = {
           }}
         >
           <div className="flex items-center justify-between gap-3 mb-3">
-            <div className="text-[10px] font-mono font-bold">01 · TODAY</div>
+              <div className="text-[10px] font-mono font-bold">DESIGN NOTE · EN / JA</div>
             <div className="px-2 py-1 rounded-full text-[9px] font-mono font-bold border border-[#211b17]" style={{ background: '#b8e6a3' }}>
               STYLE
             </div>
           </div>
           <div className="text-[16px] font-black leading-tight">
-            Strong type, quiet color, tactile edges.
+            {sample.heading}
           </div>
-          <p className="text-[10px] leading-relaxed mt-2 opacity-70 font-body">
-            Use large hierarchy and generous whitespace; reserve accent colors for meaning.
+          <p className="text-[13px] leading-relaxed mt-2 font-body">
+            {sample.body}
           </p>
+          <p lang="ja" className="text-[13px] leading-relaxed mt-3 font-body">{sample.japanese}</p>
         </div>
       </div>
     );
@@ -105,15 +112,17 @@ export const warmNeoBrutalistEditorial: PatternDefinition = {
     const spacing = values.spacing ?? defaults.spacing;
 
     return `<!-- HTML -->
-<article class="editorial-card">
-  <p class="meta">01 · TODAY</p>
+<article class="editorial-card" lang="en" style="--editorial-radius: ${radius}px; --editorial-border: ${border}px; --editorial-shadow: ${shadow}px; --editorial-spacing: ${spacing}px;">
+  <p class="meta">DESIGN NOTE · EN / JA</p>
   <span class="badge">STYLE</span>
-  <h2>Strong type, quiet color, tactile edges.</h2>
-  <p>Use large hierarchy and generous whitespace; reserve accents for meaning.</p>
+  <h2>${sample.heading}</h2>
+  <p>${sample.body}</p>
+  <p lang="ja">${sample.japanese}</p>
 </article>
 
+<style>
 /* CSS */
-:root {
+.editorial-card {
   --paper: #fff3d9;
   --surface: #fffdf7;
   --ink: #211b17;
@@ -121,40 +130,45 @@ export const warmNeoBrutalistEditorial: PatternDefinition = {
   --accent-green: #b8e6a3;
 }
 
-body {
-  background: var(--paper);
-  color: var(--ink);
-}
-
 .editorial-card {
-  padding: ${spacing}px;
+  box-sizing: border-box;
+  max-width: 100%;
+  padding: var(--editorial-spacing);
+  font: 1rem/1.7 system-ui, sans-serif;
+  overflow-wrap: anywhere;
+  color: var(--ink);
   background: var(--surface);
-  border: ${border}px solid var(--ink);
-  border-radius: ${radius}px;
-  box-shadow: ${shadow}px ${shadow}px 0 var(--ink);
+  border: var(--editorial-border) solid var(--ink);
+  border-radius: var(--editorial-radius);
+  box-shadow: var(--editorial-shadow) var(--editorial-shadow) 0 var(--ink);
 }
 
 .editorial-card h2 {
-  font: 800 clamp(1.5rem, 4vw, 2.8rem)/0.98 system-ui, sans-serif;
+  font: 800 clamp(1.5rem, 4vw, 2.8rem)/1.1 system-ui, sans-serif;
   letter-spacing: -0.04em;
 }
 
-.meta,
-.badge {
+.editorial-card .meta,
+.editorial-card .badge {
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   letter-spacing: 0.08em;
 }
 
-.badge {
+.editorial-card .badge {
+  display: inline-block;
+  padding: 0.2em 0.6em;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
   background: var(--accent-green);
 }
 
 @media (max-width: 480px) {
   .editorial-card {
-    padding: ${Math.max(12, spacing - 4)}px;
-    box-shadow: ${Math.max(3, shadow - 3)}px ${Math.max(3, shadow - 3)}px 0 var(--ink);
+    padding: max(8px, calc(var(--editorial-spacing) - 4px));
+    box-shadow: max(0px, calc(var(--editorial-shadow) - 3px)) max(0px, calc(var(--editorial-shadow) - 3px)) 0 var(--ink);
   }
-}`;
+}
+</style>`;
   },
   generatePrompt: (values) => {
     const radius = values.radius ?? defaults.radius;
@@ -162,6 +176,6 @@ body {
     const shadow = values.shadow ?? defaults.shadow;
     const spacing = values.spacing ?? defaults.spacing;
 
-    return `Design an original warm neo-brutalist editorial web interface. Use a warm off-white background, near-black heavy sans-serif headings, monospace metadata, muted orange and pale green accents, generous whitespace, and strong information hierarchy. Use ${border}px dark outlines, approximately ${radius}px corner radii, ${shadow}px offset shadows, and about ${spacing}px inner spacing. Keep the composition mobile-first and readable. Do not copy any specific brand, page text, logo, or exact third-party composition. Use accessible contrast and visible focus states.`;
+    return `Design an original warm neo-brutalist editorial section with English and Japanese paragraphs. Use near-black heavy headings, monospace metadata, muted accents, generous whitespace, and strong hierarchy. Use ${border}px outlines, ${radius}px radii, ${shadow}px offset shadows, and ${spacing}px inner spacing. Scope metadata and badge selectors to the section, and put adjustable CSS variables on each instance so different configurations can coexist. A zero shadow must remain zero at narrow widths. Keep body text readable and use appropriate language attributes. Do not copy a brand, page text, logo, or exact third-party composition.`;
   },
 };

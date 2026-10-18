@@ -45,7 +45,8 @@ export interface PatternDefinition {
   title: string;
   description: string;
   params: PatternParam[];
-  Preview: React.FC<{ values: Record<string, number> }>;
+  Preview: React.FC<{ values: Record<string, number>; paused?: boolean }>;
+  continuousMotion?: boolean;
   generateCode: (values: Record<string, number>) => string;
   generatePrompt: (values: Record<string, number>) => string;
   tags: string[];
