@@ -9,6 +9,12 @@ interface CuratedCollection {
 
 const curated: CuratedCollection[] = [
   {
+    id: 'practical-page-patterns',
+    title: 'Practical Page Patterns',
+    description: 'Forms, reading, navigation, and data presentation with standalone HTML and CSS.',
+    patternIds: ['inline-validation', 'article-table-of-contents', 'readable-article', 'native-faq', 'pricing-comparison', 'release-timeline', 'metric-summary', 'breadcrumb-trail', 'empty-state', 'responsive-data-table'],
+  },
+  {
     id: 'motion-essentials',
     title: 'Motion Essentials',
     description: 'Animation and loading patterns to inspect and adapt, with motion preferences to verify before use.',
@@ -36,3 +42,4 @@ export const collections = curated.map(collection => ({
 
 export const findCollection = (id: string | undefined) =>
   collections.find(collection => collection.id === id);
+

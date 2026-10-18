@@ -1,3 +1,5 @@
+import { practicalExamples } from './patterns/practical-patterns';
+
 export interface PatternGuide {
   codeFormat: string;
   useWhen: string;
@@ -10,6 +12,14 @@ export interface PatternGuide {
 // Describe the current generated examples, not certified components.
 // Update these notes when a definition's output changes.
 export const patternGuides: Record<string, PatternGuide> = {
+  ...Object.fromEntries(practicalExamples.map(example => [example.id, {
+    codeFormat: 'HTML + native nested CSS',
+    useWhen: example.description,
+    integrationSteps: ['Copy the complete section and style block into your page. No external library is required.', 'Replace sample text, data, and destinations. Prefix IDs again if using two copies of this same pattern.', 'Use a browser with native CSS nesting support and verify in your actual host layout.'],
+    limitations: [example.guidance, 'Preview runs in a sandboxed document. Parent-page routing, forms, fonts, and security policy must be tested after integration. Reuse licensing remains pending.'],
+    parameterTips: ['Content Spacing adjusts gaps and padding in pixels.', 'Corner Radius changes decorative corners without changing interaction behavior.'],
+    verificationChecks: ['Test 360px, 768px, and 1280px layouts and keyboard navigation.', 'Check default and changed parameters, long text, and multiple instances. No performance or accessibility certification is claimed.'],
+  }])),
   'elastic-button': {
     codeFormat: 'HTML + CSS',
     useWhen: 'Give an ordinary button a small hover and press response without changing its purpose.',
@@ -137,3 +147,4 @@ export const patternGuides: Record<string, PatternGuide> = {
     ],
   },
 };
+
