@@ -36,6 +36,18 @@
             color: rgb(51, 34, 0); /* ink */
         }
         .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined', sans-serif;
+            font-style: normal;
+            font-weight: normal;
+            line-height: 1;
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            flex-shrink: 0;
+            overflow: hidden;
+            white-space: nowrap;
+            letter-spacing: normal;
+            text-transform: none;
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
         .material-symbols-outlined.filled {
@@ -65,3 +77,4 @@
             background: rgba(51, 34, 0, 0.1);
             border-radius: 2px;
         }
+
