@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { definitions, getPatternKind } from '../data/definitions';
 import { patternGuides } from '../data/pattern-guides';
 import PatternUsage from '../components/PatternUsage';
+import { patternRights } from '../data/pattern-rights';
 
 const kindLabels = {
   motion: 'Motion',
@@ -79,6 +80,7 @@ const PatternDetail: React.FC = () => {
   const values = { ...Object.fromEntries(def.params.map(param => [param.key, param.default])), ...paramValues };
   const code = def.generateCode(values);
   const prompt = def.generatePrompt(values);
+  const rightsStatus = patternRights[def.id]?.status ?? 'UNCLEAR';
   const activeCopyText = activeTab === 'prompt' ? prompt : code;
 
   return (
@@ -97,7 +99,7 @@ const PatternDetail: React.FC = () => {
         <div className="size-10" aria-hidden="true" />
       </div>
 
-      <main className="flex-1 flex flex-col pb-24">
+      <main className="flex-1 flex flex-col pb-40">
         <section className="p-4">
           <div className={`relative w-full ${kind === 'style' || kind === 'layout' ? 'min-h-[280px] pt-6 pb-16' : 'aspect-[4/3]'} rounded-2xl bg-surface border border-ink-border flex flex-col items-center justify-center overflow-hidden group inset-shadow-sm`}>
             <div className="absolute inset-0 bg-grid-pattern pointer-events-none opacity-50"></div>
@@ -274,12 +276,19 @@ const PatternDetail: React.FC = () => {
               </div>
             )}
 
-            <p className="text-xs text-ink-muted">License not specified. Confirm permission before reusing code.</p>
+            <div role="note" className="rounded-xl border border-ink-border bg-surface/50 p-3 text-xs leading-relaxed text-ink">
+              <strong>Reuse rights: {rightsStatus}.</strong> This pattern is not currently licensed for reuse. Copying text does not grant permission to use, modify, or redistribute it.{' '}
+              <Link to="/licenses" className="text-primary underline underline-offset-2">See rights status and exclusions</Link>.
+            </div>
           </section>
         )}
 
         {activeTab === 'code' && (
           <section className="p-4">
+            <p role="note" className="mb-3 rounded-lg border border-ink-border bg-surface/50 p-3 text-xs leading-relaxed text-ink">
+              <strong>Reuse permission not verified ({rightsStatus}).</strong> Copy code transfers the displayed text to your clipboard only; it is not a license grant.{' '}
+              <Link to="/licenses" className="text-primary underline underline-offset-2">Review licensing information</Link>.
+            </p>
             <div className="bg-[#2e2b29] p-4 rounded-xl border border-ink-border inset-shadow-sm relative group">
               <button
                 onClick={() => handleCopy(code)}
@@ -318,6 +327,11 @@ const PatternDetail: React.FC = () => {
         <p role="status" aria-label="Copy result" aria-live="polite" className={`text-xs font-semibold mb-2 text-center ${copyStatus === 'error' ? 'text-red-700' : 'text-ink-muted'}`}>
           {copyStatus === 'error' ? 'Copy failed. Check clipboard permissions or select and copy the text manually.' : copyStatus === 'success' ? 'Copied to clipboard.' : ''}
         </p>
+        {activeTab === 'code' && (
+          <p className="text-[11px] text-center text-ink-muted mb-2">
+            No reuse license granted for this code. Copying does not grant rights.
+          </p>
+        )}
         <button
           onClick={() => handleCopy(activeCopyText)}
           className="w-full bg-primary hover:bg-primary/90 text-white font-bold text-base py-3.5 px-6 rounded-xl shadow-lg shadow-primary/20 flex items-center justify-center gap-2 transition-transform active:scale-95 border-b-4 border-[rgba(0,0,0,0.2)] active:border-b-0 active:translate-y-[4px]"
