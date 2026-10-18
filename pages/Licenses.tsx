@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { patternRights } from '../data/pattern-rights';
 
 const Licenses: React.FC = () => {
   const navigate = useNavigate();
@@ -28,6 +29,19 @@ const Licenses: React.FC = () => {
           className="text-primary underline">MIT license text</a> requires preservation of the
         copyright and permission notice in copies or substantial portions. Refer to the
         license supplied with a future rights-cleared example before redistributing it.</p>
+      <h2 className="text-xl font-semibold font-display">Rights status of the eight code examples</h2>
+      <p>All eight are currently <strong>UNCLEAR</strong>: source-code history and embedded materials were inspected, but the original authors' authority to license each complete example has not been established. <strong>Active MIT grants: 0 of 8.</strong> A source or inspiration credit is not proof of ownership.</p>
+      <ul className="space-y-3">
+        {Object.entries(patternRights).map(([id, rights]) => (
+          <li key={id} className="rounded-xl border border-ink-border p-3 text-sm">
+            <Link to={`/p/${id}`} className="font-semibold text-primary underline break-words">{id}</Link>
+            <p className="mt-1"><strong>{rights.status}</strong> — {rights.grantActive ? 'License documentation must be checked before reuse.' : 'No code reuse license has been granted.'}</p>
+            <p className="text-ink-muted text-xs mt-1">{rights.outputFormat} · {rights.dependencyNote}</p>
+            <p className="text-ink-muted text-xs mt-1">{rights.sampleTextNote}</p>
+          </li>
+        ))}
+      </ul>
+      <p>Copy code copies text to your clipboard; it does not grant copyright permission. If rights are cleared later, the complete operative MIT license, any required copyright holder notices, and defined exclusions must accompany the eligible code. Editorial sample prose and third-party dependencies require separate treatment.</p>
       <h2 className="text-xl font-semibold font-display">Sources and inspiration</h2>
       <p>References linked from individual patterns identify sources or inspiration where provided.
         They are not software licensing statements.</p>
