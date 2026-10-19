@@ -31,8 +31,8 @@ export const editorialSplitLayout: PatternDefinition = {
   responsiveNotes:
     'Collapse to a single column on narrow screens; keep metadata above the main text rather than shrinking the rail until it becomes unreadable.',
   source: {
-    label: 'Original reusable layout',
-    note: 'A general editorial split pattern designed for articles, release notes, research summaries, and project logs.',
+    label: 'Editorial layout study — provenance pending',
+    note: 'The project describes this as a general editorial layout, but authorship, source materials, bilingual sample prose rights, and permission for reuse have not been independently verified.',
   },
   params: [
     { key: 'rail', cssVar: '--rail-width', label: 'Rail Width', type: 'number', min: 24, max: 44, step: 1, default: defaults.rail, unit: '%' },
