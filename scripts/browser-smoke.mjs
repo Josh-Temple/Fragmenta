@@ -77,6 +77,16 @@ const routes = [
   ['/p/smart-skeleton', 'Smart Skeleton'],
   ['/p/glass-tilt', 'Glass Tilt'],
   ['/guide', 'Choose and use a UI pattern'],
+  ['/p/inline-validation', 'Inline Validation'],
+  ['/p/article-table-of-contents', 'Article Table of Contents'],
+  ['/p/readable-article', 'Readable Article'],
+  ['/p/native-faq', 'Native FAQ'],
+  ['/p/pricing-comparison', 'Pricing Comparison'],
+  ['/p/release-timeline', 'Release Timeline'],
+  ['/p/metric-summary', 'Metric Summary'],
+  ['/p/breadcrumb-trail', 'Breadcrumb Trail'],
+  ['/p/empty-state', 'Empty State'],
+  ['/p/responsive-data-table', 'Responsive Data Table'],
 ];
 
 await poll(async () => (await fetch(baseUrl)).ok, 'built Vite preview server');
