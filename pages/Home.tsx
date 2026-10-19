@@ -44,13 +44,15 @@ const Home: React.FC = () => {
           Live UI pattern library
         </div>
         <h1 className="text-ink tracking-tight text-[40px] font-bold leading-[1.04] text-left">
-          Reusable web
+          Explore web
           <br />
           <span className="text-primary">UI patterns</span>
         </h1>
         <p className="text-ink/70 font-body text-base font-normal leading-relaxed pt-3 max-w-[92%]">
-          Preview motion, styles, components, and layouts. Then take away implementation code or an AI-ready prompt.
+          Preview motion, styles, components, and layouts. Inspect implementation code and AI-ready prompts; copying does not grant reuse permission.
         </p>
+
+        <p className="text-xs leading-relaxed text-ink-muted mt-3"><Link to="/licenses" className="font-semibold underline underline-offset-2">Check each pattern’s rights status before using its code.</Link></p>
 
         <div className="pt-8 pb-2">
           <label className="relative flex w-full flex-col">
@@ -115,7 +117,7 @@ const Home: React.FC = () => {
         <div className="relative z-10">
           <h4 className="text-paper font-bold text-lg mb-1">Curated collections</h4>
           <p className="text-paper/80 font-body text-sm mb-4 max-w-[85%]">
-            Group reusable patterns by interface goal instead of browsing isolated examples.
+            Group UI patterns by interface goal instead of browsing isolated examples.
           </p>
           <Link to="/collections" className="flex items-center gap-2 text-primary font-bold text-sm hover:text-accent transition-colors">
             Explore collections <span className="material-symbols-outlined text-sm">arrow_forward</span>
@@ -125,7 +127,7 @@ const Home: React.FC = () => {
 
       <section aria-labelledby="reuse-guide-heading" className="mx-6 mt-8 pt-6 border-t border-ink-border">
         <h2 id="reuse-guide-heading" className="text-lg font-bold text-ink">From preview to your page</h2>
-        <p className="text-sm leading-relaxed text-ink-muted mt-2">Choose a pattern, check its code format, and follow the integration steps.</p>
+        <p className="text-sm leading-relaxed text-ink-muted mt-2">Choose a pattern and inspect its code and integration guidance. Confirm reuse permission before putting its code on your page.</p>
         <Link to="/guide" className="inline-block mt-2 py-2 text-sm font-semibold text-ink underline underline-offset-4 rounded-xs focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink">Read the reuse guide</Link>
       </section>
     </div>
