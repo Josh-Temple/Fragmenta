@@ -62,7 +62,7 @@ async function poll(fn, description, ms = timeout) {
 }
 
 const routes = [
-  ['/', 'Reusable web'],
+  ['/', 'Explore web'],
   ['/browse', 'All patterns'],
   ['/p/glitch-text', 'Glitch Text'],
   ['/a/glitch-text', 'Glitch Text'],
@@ -76,7 +76,17 @@ const routes = [
   ['/p/editorial-split-layout', 'Editorial Split Layout'],
   ['/p/smart-skeleton', 'Smart Skeleton'],
   ['/p/glass-tilt', 'Glass Tilt'],
-  ['/guide', 'Choose and use a UI pattern'],
+  ['/guide', 'Explore and assess a UI pattern'],
+  ['/p/inline-validation', 'Inline Validation'],
+  ['/p/article-table-of-contents', 'Article Table of Contents'],
+  ['/p/readable-article', 'Readable Article'],
+  ['/p/native-faq', 'Native FAQ'],
+  ['/p/pricing-comparison', 'Pricing Comparison'],
+  ['/p/release-timeline', 'Release Timeline'],
+  ['/p/metric-summary', 'Metric Summary'],
+  ['/p/breadcrumb-trail', 'Breadcrumb Trail'],
+  ['/p/empty-state', 'Empty State'],
+  ['/p/responsive-data-table', 'Responsive Data Table'],
 ];
 
 await poll(async () => (await fetch(baseUrl)).ok, 'built Vite preview server');
@@ -285,7 +295,7 @@ try {
   await page.send('Runtime.evaluate', { expression: "location.hash = '#/guide'" });
   await poll(async () => {
     const result = await page.send('Runtime.evaluate', {
-      expression: "document.querySelector('h1')?.textContent === 'Choose and use a UI pattern'",
+      expression: "document.querySelector('h1')?.textContent === 'Explore and assess a UI pattern'",
       returnByValue: true,
     });
     return result.result?.value;
@@ -385,7 +395,7 @@ try {
   await page.send('Input.dispatchKeyEvent', { type: 'keyUp', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13 });
   await poll(async () => {
     const result = await page.send('Runtime.evaluate', {
-      expression: "location.hash === '#/guide' && document.querySelector('h1')?.textContent === 'Choose and use a UI pattern' && scrollY <= 1",
+      expression: "location.hash === '#/guide' && document.querySelector('h1')?.textContent === 'Explore and assess a UI pattern' && scrollY <= 1",
       returnByValue: true,
     });
     return result.result?.value;
