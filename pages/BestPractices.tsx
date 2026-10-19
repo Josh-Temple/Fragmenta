@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { definitions } from '../data/definitions';
 import { patternGuides } from '../data/pattern-guides';
+import { patternRights } from '../data/pattern-rights';
 import PatternUsage from '../components/PatternUsage';
 
 const reducedMotionSnippet = `/* Adapt these selectors to your component's decorative elements. */
@@ -63,13 +64,14 @@ const BestPractices: React.FC = () => {
 
       <article className="px-5 pt-8 pb-28 text-sm leading-relaxed text-ink-muted min-w-0">
         <p className="font-mono text-xs tracking-wider uppercase text-ink-muted mb-3">From preview to implementation</p>
-        <h1 className="text-3xl leading-tight font-bold font-display text-ink mb-4">Choose and use a UI pattern</h1>
-        <p className="text-base">Start with the interface task, inspect the example, then adapt its code or AI prompt to your own page.</p>
-        <p className="mt-4">Code licensing is not specified. <Link to="/licenses" className={linkClass}>Check permissions before reuse.</Link></p>
+        <h1 className="text-3xl leading-tight font-bold font-display text-ink mb-4">Explore and assess a UI pattern</h1>
+        <p className="text-base">Start with the interface task and inspect the example. Check rights and third-party conditions before adapting any copied code or prompt for your own page.</p>
+        <p className="mt-4">Active pattern code reuse licenses: {Object.values(patternRights).filter(rights => rights.grantActive).length} of {Object.keys(patternRights).length}. Copying or previewing code does not grant permission to use, modify, or redistribute it. <Link to="/licenses" className={linkClass}>Check rights for each pattern.</Link></p>
 
         <section aria-labelledby="reuse-heading" className="mt-9 border-t border-ink-border pt-6">
-          <h2 id="reuse-heading" className="text-xl font-bold font-display text-ink mb-4">A practical reuse workflow</h2>
+          <h2 id="reuse-heading" className="text-xl font-bold font-display text-ink mb-4">Evaluate first, integrate only with permission</h2>
           <ol className="list-decimal pl-5 space-y-3">
+            <li><strong className="text-ink">Check permissions.</strong> Inspect the individual rights status. The steps below describe technical evaluation; only integrate a pattern when you have the necessary permission.</li>
             <li><strong className="text-ink">Choose the task.</strong> Pick a control, a loading appearance, a decorative effect, a visual style, or a reading layout.</li>
             <li><strong className="text-ink">Inspect Details.</strong> Check the code format, integration steps, parameters, and limitations.</li>
             <li><strong className="text-ink">Adjust one value.</strong> Compare the live example with the generated code or prompt, then copy the output you need.</li>
