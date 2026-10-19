@@ -136,6 +136,7 @@ const BestPractices: React.FC = () => {
           <p role="status" aria-live="polite" className="mt-2 min-h-5">
             {copyStatus === 'success' ? 'Example copied.' : copyStatus === 'error' ? 'Copy failed. Select the code above and copy it manually, or check clipboard permissions.' : ''}
           </p>
+          <p className="mt-3">This standalone guide snippet is not included in the 18 pattern rights records. Its reuse rights have not been independently verified; copying it does not grant permission to use or redistribute it. <Link to="/licenses" className={linkClass}>Review licensing information.</Link></p>
           <p className="mt-3">This is an adaptation example: rename its selectors for your component. For JavaScript-driven motion, also check the preference in the motion logic.</p>
           <p className="mt-3">For non-essential moving content that starts automatically, lasts more than five seconds, and appears alongside other content, provide a pause, stop, or hide mechanism. Reduced-motion handling alone does not establish accessibility conformance.</p>
           <p className="mt-3">Smart Skeleton, Glitch Text, and Glass Tilt now include pause controls in their copied output. Details also offers Pause preview motion. Check both versions: pausing the gallery does not change the code you copy.</p>
