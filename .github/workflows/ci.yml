@@ -33,6 +33,9 @@ jobs:
       - name: Verify generated pattern artifacts independently
         run: node scripts/pattern-artifacts.cjs
 
+      - name: Verify all 18 IDs and emit a 36-output machine-readable manifest
+        run: node scripts/pattern-manifest.cjs
+
       - name: Browser startup smoke test
         run: |
           chrome="$(command -v google-chrome || command -v chromium || true)"
