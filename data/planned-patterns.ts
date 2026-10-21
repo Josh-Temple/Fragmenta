@@ -29,7 +29,7 @@ export const plannedPatterns: readonly PlannedPattern[] = [
     title: 'Modal Dialog / Drawer',
     description: 'An accessible modal and a responsive slide-in drawer.',
     kind: 'component',
-    icon: 'dialogs',
+    icon: 'web_asset',
     tags: ['Dialog', 'Responsive'],
     acceptance: 'Open and close actions, keyboard focus management, Escape handling, background inertness, and narrow-screen behavior.',
     status: 'planned',
