@@ -42,7 +42,7 @@ if (process.argv.includes('--self-test')) {
 } else {
   const files = targets.flatMap(x => sourceFiles(path.join(root, x)));
   if (files.length < 10) throw Error('Application source inventory unexpectedly small: ' + files.length);
-  const errors = files.flatMap(f => lint(fs.readFileSync(f, 'utf8'), path.relative(root, f))));
+  const errors = files.flatMap(f => lint(fs.readFileSync(f, 'utf8'), path.relative(root, f)));
   errors.forEach(x => console.error(x));
   if (errors.length) {
     console.error('FAIL lint: ' + errors.length + ' violations in ' + files.length + ' files');
