@@ -31,8 +31,8 @@ export const warmNeoBrutalistEditorial: PatternDefinition = {
   responsiveNotes:
     'Reduce border, shadow, and outer spacing slightly on narrow screens while preserving the same hierarchy and reading order.',
   source: {
-    label: 'Original reusable pattern',
-    note: 'Synthesized from general warm editorial and neo-brutalist UI characteristics; not an exact reproduction of a third-party page.',
+    label: 'Editorial style study — provenance pending',
+    note: 'The project describes this as synthesized from general visual characteristics, but authorship, source materials, sample prose rights, and permission for reuse have not been independently verified.',
   },
   params: [
     { key: 'radius', cssVar: '--pattern-radius', label: 'Corner Radius', type: 'number', min: 8, max: 32, step: 1, default: defaults.radius, unit: 'px' },

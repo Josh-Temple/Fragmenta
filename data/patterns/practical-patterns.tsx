@@ -121,7 +121,7 @@ export const practicalPatterns: Record<string, PatternDefinition> = Object.fromE
   performanceNotes: 'No runtime scripts or remote assets in generated output. Performance has not been benchmarked.',
   a11yNotes: example.guidance,
   responsiveNotes: 'Test standalone output with real content at narrow widths and 200% text zoom. Preview is an isolated scrollable document.',
-  source: { label: 'Written for Fragmenta', note: 'New illustrative markup, CSS, and sample copy; no imported third-party template. Reuse license status remains pending.' },
+  source: { label: 'Fragmenta example — provenance pending', note: 'Created during the ten-pattern addition according to the development record. Authorship, source materials, bilingual sample prose rights, and permission for reuse have not been independently verified.' },
   params: [
     { key: 'spacing', cssVar: '--space', label: 'Content Spacing', type: 'number' as const, min: 8, max: 28, step: 1, default: 16, unit: 'px' },
     { key: 'radius', cssVar: '--radius', label: 'Corner Radius', type: 'number' as const, min: 0, max: 24, step: 1, default: 12, unit: 'px' },

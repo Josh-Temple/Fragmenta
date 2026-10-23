@@ -1,6 +1,8 @@
 # Fragmenta
 
-**A live gallery of reusable web UI patterns, with copy-ready code and AI prompts.**
+**A live gallery for inspecting web UI patterns, generated code, and AI prompts.**
+
+**Rights notice:** Viewing or copying an example is not a license. As of this release, none of the 18 patterns has an active reuse grant. MIT is a chosen future license for individually cleared code, not a current blanket permission. See the in-app Licensing information before using an example.
 
 Fragmenta began as a CSS and JavaScript animation gallery. It now uses the same preview-and-copy workflow for motion, microinteractions, visual styles, component treatments, layouts, and text or visual effects.
 
@@ -22,7 +24,7 @@ Fragmenta is deployed to Vercel from the GitHub repository.
 
 GitHub remains the source of truth. Vercel is the deployment and preview environment. The app intentionally remains a standard Vite build rather than depending on Vercel-specific runtime features, so it can be moved to another static host if needed.
 
-This branch contains an unreleased candidate. Its build contract is not evidence that the current Production deployment has adopted it. See [`docs/DEPLOYMENT.md`](./docs/DEPLOYMENT.md) for the deployment policy and workflow.
+The 18-pattern gallery has been published to Production; successful deployment is not independent proof of browser acceptance, license clearance, or CI enforcement. See [`docs/DEPLOYMENT.md`](./docs/DEPLOYMENT.md) for the deployment policy and workflow.
 
 ## Current capabilities
 
@@ -36,7 +38,7 @@ The app supports:
 - generated AI prompts
 - performance, accessibility, and responsive guidance
 - collections and best-practice guidance
-- a reuse guide with code format, parameter tips, integration steps, and host-page checks for all eight examples
+- a technical implementation guide with code format, parameter tips, integration steps, and host-page checks for all eighteen examples
 - three bilingual walkthroughs for loading states, decorative cards, and editorial content
 - pause controls for Skeleton, Glitch Text, and Glass Tilt in Details and their copied output
 - English and Japanese editorial samples with parameters isolated to each instance
