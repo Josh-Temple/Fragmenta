@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { definitions, getPatternKind } from '../data/definitions';
 import PatternCard from '../components/PatternCard';
+import { plannedPatterns } from '../data/planned-patterns';
 import { PatternKind } from '../types';
 
 type Filter = 'all' | PatternKind;
@@ -94,12 +95,24 @@ const Browse: React.FC = () => {
             <p>No patterns found in this category.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-2 gap-4 pb-24">
+          <div className="grid grid-cols-2 gap-4 pb-8">
             {patterns.map(definition => (
               <PatternCard key={definition.id} definition={definition} />
             ))}
           </div>
         )}
+        <section aria-labelledby="upcoming-browse-heading" className="rounded-xl border border-ink-border bg-surface p-4 mb-20">
+          <div className="flex items-center justify-between gap-2">
+            <h3 id="upcoming-browse-heading" className="text-base font-bold text-ink">Upcoming patterns</h3>
+            <span className="text-xs font-bold text-primary">{plannedPatterns.length} planned</span>
+          </div>
+          <p className="text-sm text-ink-muted leading-relaxed my-2">
+            Explore future ideas, not usable demos or copyable code. These are separate from the {Object.keys(definitions).length} currently listed gallery entries.
+          </p>
+          <Link to="/upcoming" className="inline-block text-sm font-semibold text-primary underline underline-offset-4 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
+            View planned patterns
+          </Link>
+        </section>
       </main>
     </>
   );
