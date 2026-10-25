@@ -81,6 +81,18 @@ const Browse: React.FC = () => {
       </header>
 
       <main className="flex-1 px-5 py-6">
+        <aside aria-label="Planned practical tools" className="mb-6 rounded-xl border border-ink-border bg-surface p-4">
+          <p className="text-sm font-bold text-ink">Practical tools · 12 planned</p>
+          <p className="mt-1 text-xs leading-relaxed text-ink-muted">
+            Future editing, development and design tools. Not part of the live pattern results below.
+          </p>
+          <Link
+            to="/tools/upcoming"
+            className="mt-2 inline-block py-2 text-sm font-semibold text-primary underline underline-offset-2 rounded focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+          >
+            View planned tools
+          </Link>
+        </aside>
         <div className="flex items-end justify-between mb-5">
           <h2 className="text-sm font-bold uppercase tracking-widest text-ink/50 font-display">
             {heading}
