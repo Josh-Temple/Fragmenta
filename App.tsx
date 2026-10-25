@@ -3,6 +3,7 @@ import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Layout from './components/Layout';
 import Home from './pages/Home';
 import Browse from './pages/Browse';
+import Morph from './pages/Morph';
 import PatternDetail from './pages/AnimationDetail';
 import Collections from './pages/Collections';
 import CollectionDetail from './pages/CollectionDetail';
@@ -23,6 +24,7 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/" element={<Layout><Home /></Layout>} />
         <Route path="/browse" element={<Layout><Browse /></Layout>} />
+        <Route path="/experiments/morph" element={<Layout showNav={false}><Morph /></Layout>} />
         <Route path="/search" element={<Layout><SearchResults /></Layout>} />
         <Route path="/p/:id" element={<Layout showNav={false}><PatternDetail /></Layout>} />
         <Route path="/a/:id" element={<Layout showNav={false}><PatternDetail /></Layout>} />
