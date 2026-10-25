@@ -125,6 +125,21 @@ const Home: React.FC = () => {
         </div>
       </div>
 
+      <section aria-labelledby="planned-tools-heading" className="mx-6 mt-8 rounded-xl border border-ink-border bg-surface p-5">
+        <p className="text-xs font-mono uppercase tracking-wider text-primary font-bold">Planned · 12 tools</p>
+        <h2 id="planned-tools-heading" className="mt-2 text-lg font-bold text-ink">Practical tools for everyday work</h2>
+        <p lang="ja" className="mt-2 text-sm leading-relaxed text-ink-muted">
+          文章・コード・デザイン作業に役立つ12件の企画枠です。現在はまだ利用できません。
+        </p>
+        <Link
+          to="/tools/upcoming"
+          className="mt-3 inline-flex items-center gap-2 py-2 text-sm font-bold text-primary underline underline-offset-4 rounded focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+        >
+          Explore planned tools
+          <span className="material-symbols-outlined text-sm" aria-hidden="true">arrow_forward</span>
+        </Link>
+      </section>
+
       <section aria-labelledby="reuse-guide-heading" className="mx-6 mt-8 pt-6 border-t border-ink-border">
         <h2 id="reuse-guide-heading" className="text-lg font-bold text-ink">From preview to your page</h2>
         <p className="text-sm leading-relaxed text-ink-muted mt-2">Choose a pattern and inspect its code and integration guidance. Confirm reuse permission before putting its code on your page.</p>
