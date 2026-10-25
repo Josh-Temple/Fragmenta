@@ -81,9 +81,9 @@ const Browse: React.FC = () => {
         </div>
       </header>
 
-      <main className="flex-1 px-5 py-6">
+      <section aria-labelledby="browse-results-heading" className="flex-1 px-5 py-6">
         <div className="flex items-end justify-between mb-5">
-          <h2 className="text-sm font-bold uppercase tracking-widest text-ink/50 font-display">
+          <h2 id="browse-results-heading" className="text-sm font-bold uppercase tracking-widest text-ink/50 font-display">
             {heading}
           </h2>
           <span className="text-xs text-primary font-bold">{patterns.length} results</span>
@@ -113,7 +113,7 @@ const Browse: React.FC = () => {
             View planned patterns
           </Link>
         </section>
-      </main>
+      </section>
     </>
   );
 };
