@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { definitions } from '../data/definitions';
 import PatternCard from '../components/PatternCard';
+import { plannedTools } from '../data/planned-tools';
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
@@ -126,10 +127,10 @@ const Home: React.FC = () => {
       </div>
 
       <section aria-labelledby="planned-tools-heading" className="mx-6 mt-8 rounded-xl border border-ink-border bg-surface p-5">
-        <p className="text-xs font-mono uppercase tracking-wider text-primary font-bold">Planned · 12 tools</p>
+        <p className="text-xs font-mono uppercase tracking-wider text-primary font-bold">Planned · {plannedTools.length} tools</p>
         <h2 id="planned-tools-heading" className="mt-2 text-lg font-bold text-ink">Practical tools for everyday work</h2>
         <p lang="ja" className="mt-2 text-sm leading-relaxed text-ink-muted">
-          文章・コード・デザイン作業に役立つ12件の企画枠です。現在はまだ利用できません。
+          文章・コード・デザイン作業に役立つ{plannedTools.length}件の企画枠です。現在はまだ利用できません。
         </p>
         <Link
           to="/tools/upcoming"
