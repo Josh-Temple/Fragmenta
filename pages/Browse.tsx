@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { definitions, getPatternKind } from '../data/definitions';
 import PatternCard from '../components/PatternCard';
+import { plannedTools } from '../data/planned-tools';
 import { PatternKind } from '../types';
 
 type Filter = 'all' | PatternKind;
@@ -82,7 +83,7 @@ const Browse: React.FC = () => {
 
       <main className="flex-1 px-5 py-6">
         <aside aria-label="Planned practical tools" className="mb-6 rounded-xl border border-ink-border bg-surface p-4">
-          <p className="text-sm font-bold text-ink">Practical tools · 12 planned</p>
+          <p className="text-sm font-bold text-ink">Practical tools · {plannedTools.length} planned</p>
           <p className="mt-1 text-xs leading-relaxed text-ink-muted">
             Future editing, development and design tools. Not part of the live pattern results below.
           </p>
