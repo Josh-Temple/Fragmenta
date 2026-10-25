@@ -9,6 +9,7 @@ import CollectionDetail from './pages/CollectionDetail';
 import Licenses from './pages/Licenses';
 import SearchResults from './pages/SearchResults';
 import BestPractices from './pages/BestPractices';
+import UpcomingTools from './pages/UpcomingTools';
 
 const Placeholder = ({ title }: { title: string }) => (
   <div className="p-6">
@@ -23,6 +24,7 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/" element={<Layout><Home /></Layout>} />
         <Route path="/browse" element={<Layout><Browse /></Layout>} />
+        <Route path="/tools/upcoming" element={<Layout><UpcomingTools /></Layout>} />
         <Route path="/search" element={<Layout><SearchResults /></Layout>} />
         <Route path="/p/:id" element={<Layout showNav={false}><PatternDetail /></Layout>} />
         <Route path="/a/:id" element={<Layout showNav={false}><PatternDetail /></Layout>} />
