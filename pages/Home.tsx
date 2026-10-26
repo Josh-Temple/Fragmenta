@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { definitions } from '../data/definitions';
 import { plannedPatterns } from '../data/planned-patterns';
 import { plannedTools } from '../data/planned-tools';
+import { designStyles } from '../data/design-styles';
 import PatternCard from '../components/PatternCard';
 
 const Home: React.FC = () => {
@@ -113,6 +114,18 @@ const Home: React.FC = () => {
           ))}
         </div>
       </div>
+
+      <section aria-labelledby="design-atlas-home-heading" className="mx-6 mt-8 rounded-xl border border-ink-border bg-surface p-5">
+        <p className="text-xs uppercase tracking-widest font-bold text-primary">Live design reference</p>
+        <h2 id="design-atlas-home-heading" className="mt-2 text-lg font-bold text-ink">Design Styles / デザイン図鑑</h2>
+        <p lang="ja" className="mt-2 text-sm leading-relaxed text-ink-muted">
+          {designStyles.length}系統のデザインを、同じ画面で見比べてAIに指示できます。検索・比較・プロンプトのコピーに対応しています。
+        </p>
+        <Link to="/styles" className="mt-3 inline-flex items-center gap-2 py-2 text-sm font-semibold text-primary underline underline-offset-4 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
+          Explore {designStyles.length} styles
+          <span aria-hidden="true" className="material-symbols-outlined text-sm">arrow_forward</span>
+        </Link>
+      </section>
 
       <section aria-labelledby="upcoming-home-heading" className="mx-6 mt-8 p-5 rounded-xl border border-ink-border bg-surface">
         <div className="flex items-center justify-between gap-2 mb-2">
