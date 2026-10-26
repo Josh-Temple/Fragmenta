@@ -4,6 +4,7 @@ import { definitions, getPatternKind } from '../data/definitions';
 import PatternCard from '../components/PatternCard';
 import { plannedPatterns } from '../data/planned-patterns';
 import { plannedTools } from '../data/planned-tools';
+import { designStyles } from '../data/design-styles';
 import { PatternKind } from '../types';
 
 type Filter = 'all' | PatternKind;
@@ -102,6 +103,18 @@ const Browse: React.FC = () => {
             ))}
           </div>
         )}
+        <section aria-labelledby="style-atlas-browse-heading" className="rounded-xl border border-ink-border bg-surface p-4 mb-5">
+          <div className="flex items-start justify-between gap-2">
+            <h3 id="style-atlas-browse-heading" className="text-base font-bold text-ink">Design Styles / デザイン図鑑</h3>
+            <span className="shrink-0 text-xs font-bold text-primary">{designStyles.length} styles</span>
+          </div>
+          <p lang="ja" className="mt-2 text-sm text-ink-muted leading-relaxed">
+            見た目の系統を検索・比較し、AIに渡す指示文を作ります。実装済みUIパターンの件数とは別です。
+          </p>
+          <Link to="/styles" className="mt-2 inline-block py-2 text-sm font-semibold text-primary underline underline-offset-4 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
+            Open Design Styles
+          </Link>
+        </section>
         <section aria-labelledby="upcoming-browse-heading" className="rounded-xl border border-ink-border bg-surface p-4 mb-20">
           <div className="flex items-center justify-between gap-2">
             <h3 id="upcoming-browse-heading" className="text-base font-bold text-ink">Upcoming patterns</h3>
