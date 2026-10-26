@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import Browse from './pages/Browse';
 import Upcoming from './pages/Upcoming';
 import UpcomingTools from './pages/UpcomingTools';
+import DesignStyles from './pages/DesignStyles';
 import PatternDetail from './pages/AnimationDetail';
 import Collections from './pages/Collections';
 import CollectionDetail from './pages/CollectionDetail';
@@ -27,6 +28,7 @@ const App: React.FC = () => {
         <Route path="/browse" element={<Layout><Browse /></Layout>} />
         <Route path="/upcoming" element={<Layout><Upcoming /></Layout>} />
         <Route path="/tools/upcoming" element={<Layout><UpcomingTools /></Layout>} />
+        <Route path="/styles" element={<Layout><DesignStyles /></Layout>} />
         <Route path="/search" element={<Layout><SearchResults /></Layout>} />
         <Route path="/p/:id" element={<Layout showNav={false}><PatternDetail /></Layout>} />
         <Route path="/a/:id" element={<Layout showNav={false}><PatternDetail /></Layout>} />
