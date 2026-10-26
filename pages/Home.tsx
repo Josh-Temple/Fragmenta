@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { definitions } from '../data/definitions';
+import { plannedPatterns } from '../data/planned-patterns';
+import { plannedTools } from '../data/planned-tools';
 import PatternCard from '../components/PatternCard';
 
 const Home: React.FC = () => {
@@ -111,6 +113,33 @@ const Home: React.FC = () => {
           ))}
         </div>
       </div>
+
+      <section aria-labelledby="upcoming-home-heading" className="mx-6 mt-8 p-5 rounded-xl border border-ink-border bg-surface">
+        <div className="flex items-center justify-between gap-2 mb-2">
+          <h2 id="upcoming-home-heading" className="text-lg font-bold text-ink">Upcoming patterns</h2>
+          <span className="shrink-0 rounded-full bg-primary/10 border border-primary/20 text-primary px-2 py-1 text-xs font-bold">{plannedPatterns.length} planned</span>
+        </div>
+        <p className="text-sm text-ink-muted leading-relaxed mb-3">
+          These are ideas for future patterns, not usable previews or copy-ready code. The existing gallery and its rights notices are unchanged.
+        </p>
+        <Link to="/upcoming" className="inline-flex items-center gap-1 text-sm font-semibold text-primary underline underline-offset-4 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
+          View all {plannedPatterns.length} ideas <span aria-hidden="true" className="material-symbols-outlined text-sm">arrow_forward</span>
+        </Link>
+      </section>
+
+      <section aria-labelledby="planned-tools-heading" className="mx-6 mt-5 rounded-xl border border-ink-border bg-surface p-5">
+        <div className="flex items-start justify-between gap-2">
+          <h2 id="planned-tools-heading" className="text-lg font-bold text-ink">Practical tools</h2>
+          <span className="shrink-0 rounded-full bg-primary/10 border border-primary/20 text-primary px-2 py-1 text-xs font-bold">{plannedTools.length} planned</span>
+        </div>
+        <p lang="ja" className="mt-2 text-sm leading-relaxed text-ink-muted">
+          文章、データ、デザインのための実用ツールの企画枠です。現在はまだ利用できません。
+        </p>
+        <Link to="/tools/upcoming" className="mt-3 inline-flex items-center gap-2 py-2 text-sm font-semibold text-primary underline underline-offset-4 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
+          View all {plannedTools.length} tool ideas
+          <span aria-hidden="true" className="material-symbols-outlined text-sm">arrow_forward</span>
+        </Link>
+      </section>
 
       <div className="mt-8 mx-6 p-5 rounded-xl bg-ink border border-ink/5 relative overflow-hidden shadow-lg">
         <div className="absolute top-0 right-0 w-32 h-32 bg-primary/20 rounded-full blur-3xl -mr-10 -mt-10"></div>

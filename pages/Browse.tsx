@@ -2,6 +2,8 @@ import React from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { definitions, getPatternKind } from '../data/definitions';
 import PatternCard from '../components/PatternCard';
+import { plannedPatterns } from '../data/planned-patterns';
+import { plannedTools } from '../data/planned-tools';
 import { PatternKind } from '../types';
 
 type Filter = 'all' | PatternKind;
@@ -80,9 +82,9 @@ const Browse: React.FC = () => {
         </div>
       </header>
 
-      <main className="flex-1 px-5 py-6">
+      <section aria-labelledby="browse-results-heading" className="flex-1 px-5 py-6">
         <div className="flex items-end justify-between mb-5">
-          <h2 className="text-sm font-bold uppercase tracking-widest text-ink/50 font-display">
+          <h2 id="browse-results-heading" className="text-sm font-bold uppercase tracking-widest text-ink/50 font-display">
             {heading}
           </h2>
           <span className="text-xs text-primary font-bold">{patterns.length} results</span>
@@ -94,13 +96,37 @@ const Browse: React.FC = () => {
             <p>No patterns found in this category.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-2 gap-4 pb-24">
+          <div className="grid grid-cols-2 gap-4 pb-8">
             {patterns.map(definition => (
               <PatternCard key={definition.id} definition={definition} />
             ))}
           </div>
         )}
-      </main>
+        <section aria-labelledby="upcoming-browse-heading" className="rounded-xl border border-ink-border bg-surface p-4 mb-20">
+          <div className="flex items-center justify-between gap-2">
+            <h3 id="upcoming-browse-heading" className="text-base font-bold text-ink">Upcoming patterns</h3>
+            <span className="text-xs font-bold text-primary">{plannedPatterns.length} planned</span>
+          </div>
+          <p className="text-sm text-ink-muted leading-relaxed my-2">
+            Explore future ideas, not usable demos or copyable code. These are separate from the {Object.keys(definitions).length} currently listed gallery entries.
+          </p>
+          <Link to="/upcoming" className="inline-block text-sm font-semibold text-primary underline underline-offset-4 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
+            View planned patterns
+          </Link>
+        </section>
+        <section aria-labelledby="planned-tools-browse-heading" className="rounded-xl border border-ink-border bg-surface p-4 mb-20">
+          <div className="flex items-start justify-between gap-2">
+            <h3 id="planned-tools-browse-heading" className="text-base font-bold text-ink">Practical tools</h3>
+            <span className="shrink-0 text-xs font-bold text-primary">{plannedTools.length} planned</span>
+          </div>
+          <p lang="ja" className="mt-2 text-sm text-ink-muted leading-relaxed">
+            文章・データ・デザインの作業ツールの掲載予定です。まだ利用できず、上の実装済みパターン件数にも含まれません。
+          </p>
+          <Link to="/tools/upcoming" className="mt-2 inline-block py-2 text-sm font-semibold text-primary underline underline-offset-4 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
+            View planned tools
+          </Link>
+        </section>
+      </section>
     </>
   );
 };
