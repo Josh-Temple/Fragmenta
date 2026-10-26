@@ -28,7 +28,7 @@ check(designStyleGroups.length === 5, 'exactly 5 discovery families');
 check(designStyles.length === 24, 'exactly 24 example styles');
 const ids = designStyles.map(s => s.id);
 check(new Set(ids).size === 24, 'unique style ids');
-check(designStyles.every(s => /^(?:[a-z]+)(?:-[a-z]+)*$/.test(s.id)), 'safe identifiers');
+check(designStyles.every(s => /^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$/.test(s.id)), 'safe identifiers');
 check(designStyles.every(s => designStyleGroups.some(g => g.id === s.group)), 'known group');
 check(designStyles.every(s => s.name && s.ja && s.summary && s.use), 'named and explained');
 check(designStyles.every(s => s.features.length >= 3 && s.avoid.length >= 2), 'features and avoidances');
