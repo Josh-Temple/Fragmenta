@@ -7,9 +7,10 @@
     "dev": "vite",
     "typecheck": "tsc --noEmit",
     "lint": "node scripts/lint.cjs",
-    "prebuild": "npm run typecheck && npm run lint",
+    "prebuild": "npm run typecheck && npm run lint && npm run design:verify",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "design:verify": "node scripts/check-design-styles.cjs"
   },
   "dependencies": {
     "react": "^19.2.3",
