@@ -3,6 +3,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { definitions, getPatternKind } from '../data/definitions';
 import PatternCard from '../components/PatternCard';
 import { plannedPatterns } from '../data/planned-patterns';
+import { plannedTools } from '../data/planned-tools';
 import { PatternKind } from '../types';
 
 type Filter = 'all' | PatternKind;
@@ -111,6 +112,18 @@ const Browse: React.FC = () => {
           </p>
           <Link to="/upcoming" className="inline-block text-sm font-semibold text-primary underline underline-offset-4 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
             View planned patterns
+          </Link>
+        </section>
+        <section aria-labelledby="planned-tools-browse-heading" className="rounded-xl border border-ink-border bg-surface p-4 mb-20">
+          <div className="flex items-start justify-between gap-2">
+            <h3 id="planned-tools-browse-heading" className="text-base font-bold text-ink">Practical tools</h3>
+            <span className="shrink-0 text-xs font-bold text-primary">{plannedTools.length} planned</span>
+          </div>
+          <p lang="ja" className="mt-2 text-sm text-ink-muted leading-relaxed">
+            文章・データ・デザインの作業ツールの掲載予定です。まだ利用できず、上の実装済みパターン件数にも含まれません。
+          </p>
+          <Link to="/tools/upcoming" className="mt-2 inline-block py-2 text-sm font-semibold text-primary underline underline-offset-4 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
+            View planned tools
           </Link>
         </section>
       </section>
