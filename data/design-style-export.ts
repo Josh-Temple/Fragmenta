@@ -51,3 +51,28 @@ export const createStyleCss = (style: DesignStyle): string => {
     '/* Test contrast and focus states against actual content. */',
   ].join('\n');
 };
+
+/**
+ * A/B percentages express design priorities in the AI brief, not pixel-accurate mixing.
+ * Existing single-style briefs and their CSS token export stay unchanged.
+ */
+export function createBlendedStylePrompt(primary: DesignStyle, secondary: DesignStyle, screen: DemoScreen, secondaryWeight: number): string {
+  if (primary.id === secondary.id) return createStylePrompt(primary, screen);
+  const weight = Number.isFinite(secondaryWeight) ? Math.max(0, Math.min(100, Math.round(secondaryWeight))) : 0;
+  if (weight === 0) return createStylePrompt(primary, screen);
+  if (weight === 100) return createStylePrompt(secondary, screen);
+  return [
+    '日本語の' + (screen === 'dashboard' ? 'Webダッシュボード' : '記事サイト') + 'を、2つのデザイン系統を組み合わせて制作してください。',
+    'A（基調）: ' + primary.name + '（' + primary.ja + '） ' + (100 - weight) + '%。',
+    'Aの構造と情報設計: ' + primary.summary + '。特徴: ' + primary.features.join('、') + '。',
+    'B（副次的な表現）: ' + secondary.name + '（' + secondary.ja + '） ' + weight + '%。',
+    'Bから取り入れる要素: ' + secondary.features.join('、') + '。',
+    '優先規則: 本文・見出しの階層、情報の順序、操作の明快さはAを基本に保ち、Bはアクセント色、質感、輪郭、装飾などへ選択的に取り入れます。',
+    '避ける表現: Aでは ' + primary.avoid.join('、') + '。Bでは ' + secondary.avoid.join('、') + '。',
+    'Aの参考トークン: 背景 ' + primary.tokens.background + '、文字 ' + primary.tokens.text + '、線幅 ' + primary.tokens.borderWidth + 'px。',
+    'Bの参考トークン: アクセント ' + secondary.tokens.accent + '、角丸 ' + secondary.tokens.radius + 'px、影 ' + secondary.tokens.shadow + '。',
+    '上記の比率はデザイン要素の採用優先度の目安です。CSS値を機械的に補間する指示ではありません。調和しない要素は無理に混ぜず、可読性を優先してください。',
+    '他社の画面やロゴを複製せず独自に制作し、日本語の折返し・モバイル幅・キーボード操作・十分な文字コントラストを検証してください。',
+    'この指定は様式の解釈であり、公式デザインシステム準拠やアクセシビリティ認証ではありません。',
+  ].join('\n');
+}
