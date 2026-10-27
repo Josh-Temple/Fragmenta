@@ -49,6 +49,18 @@ for (const style of designStyles) {
   check(css.includes('--style-text') && css.includes('--style-border-width'), 'CSS content: ' + style.id);
 }
 check(new Set(prompts).size === 48, 'screen-specific prompts generated');
+const { mixStyles, mixPrompt } = loadTs('data/design-style-mix.ts');
+for (const ratio of [25, 50, 75]) {
+  const mixed = mixStyles(designStyles[0], designStyles[1], ratio);
+  check(mixed.id.includes('-mix-'), 'mix identity');
+  check(mixed.tokens.radius >= 0, 'mix radius');
+  check(mixed.features.length === designStyles[0].features.length + designStyles[1].features.length, 'mix features');
+  const prompt = mixPrompt(designStyles[0], designStyles[1], ratio, 'article');
+  check(prompt.includes(designStyles[0].name) && prompt.includes(designStyles[1].name), 'both names in prompt');
+  check(prompt.includes(String(ratio) + '%'), 'mix ratio in prompt');
+  check(createStyleCss(mixed).includes('--style-accent'), 'mix CSS export');
+}
+
 
 const app = fs.readFileSync(path.join(root, 'App.tsx'), 'utf8');
 const home = fs.readFileSync(path.join(root, 'pages/Home.tsx'), 'utf8');
