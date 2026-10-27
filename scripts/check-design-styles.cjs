@@ -78,7 +78,7 @@ for (const style of designStyles) {
 const page = fs.readFileSync(path.join(root, 'pages/DesignStyles.tsx'), 'utf8');
 const specimen = fs.readFileSync(path.join(root, 'components/DesignStyleSpecimen.tsx'), 'utf8');
 check(page.includes('createBlendedStylePrompt') && page.includes('type="range"') && page.includes('secondaryStyle={secondaryWeight > 50 ? first : second}'), 'mixing controls and preview');
-check(specimen.includes('compositionFor(style)') && specimen.includes('layoutGrid(shape)'), 'structural layouts driven by style');
+check(specimen.includes('compositionFor(style)') && specimen.includes('artDirectionFor(style)') && specimen.includes('metricColumns(art)'), 'structural layouts driven by style and individual art direction');
 check(page.includes('配合した完成CSSを生成する機能はまだありません'), 'mixed CSS not falsely promised');
 
 const app = fs.readFileSync(path.join(root, 'App.tsx'), 'utf8');
@@ -87,5 +87,7 @@ const browse = fs.readFileSync(path.join(root, 'pages/Browse.tsx'), 'utf8');
 check(app.includes('path="/styles"'), 'route registered');
 check(home.includes('to="/styles"') && browse.includes('to="/styles"'), 'navigation links');
 check(!fs.readFileSync(path.join(root, 'data/definitions.tsx'), 'utf8').includes('design-styles'), '18 pattern registry isolated');
+
+require('./check-style-art-direction.cjs');
 
 console.log('PASS Design Styles: 24 styles, 8 compositions, 48 single-style prompts, weighted mixes, 24 CSS outputs');
