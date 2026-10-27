@@ -68,7 +68,10 @@ check(blend.includes('CSS値を機械的に補間する指示ではありませ�
 check(createBlendedStylePrompt(a, b, 'dashboard', 0) === createStylePrompt(a, 'dashboard'), '0% equals primary');
 check(createBlendedStylePrompt(a, b, 'dashboard', 100) === createStylePrompt(b, 'dashboard'), '100% equals secondary');
 check(createBlendedStylePrompt(a, a, 'article', 30) === createStylePrompt(a, 'article'), 'same style not duplicated');
-check(createBlendedStylePrompt(a, b, 'dashboard', 70) !== blend, 'changing mix changes prompt');
+const bDominant = createBlendedStylePrompt(a, b, 'dashboard', 70);
+check(bDominant !== blend, 'changing mix changes prompt');
+check(bDominant.includes('基調B') && bDominant.includes('補助A'), 'majority B becomes structural base');
+check(blend.includes('基調A') && blend.includes('補助B'), 'majority A remains structural base');
 for (const style of designStyles) {
   check(createBlendedStylePrompt(style, a, 'article', 30).length > 150, 'mixed prompt for ' + style.id);
 }
