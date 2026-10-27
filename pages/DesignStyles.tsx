@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { DesignStyleSpecimen } from '../components/DesignStyleSpecimen';
 import { designStyleGroups, designStyles, type DesignStyleGroup } from '../data/design-styles';
-import { createStylePrompt, createStyleCss, type DemoScreen } from '../data/design-style-export';
+import { createStylePrompt, createBlendedStylePrompt, createStyleCss, type DemoScreen } from '../data/design-style-export';
 
 type Family = 'all' | DesignStyleGroup;
 
@@ -14,6 +14,8 @@ const DesignStyles: React.FC = () => {
   const [screen, setScreen] = useState<DemoScreen>('dashboard');
   const [copyStatus, setCopyStatus] = useState('');
   const [showCss, setShowCss] = useState(false);
+  const [mixEnabled, setMixEnabled] = useState(false);
+  const [secondaryWeight, setSecondaryWeight] = useState(30);
   const first = designStyles.find(item => item.id === primary) ?? designStyles[0];
   const second = compare === 'none' ? null : designStyles.find(item => item.id === compare) ?? null;
   const results = useMemo(() => {
@@ -23,7 +25,9 @@ const DesignStyles: React.FC = () => {
       (!q || [item.name, item.ja, item.summary, ...item.features].join(' ').normalize('NFKC').toLowerCase().includes(q))
     );
   }, [family, query]);
-  const prompt = createStylePrompt(first, screen);
+  const canMix = Boolean(second && first.id !== second.id);
+  const mixing = mixEnabled && canMix;
+  const prompt = mixing && second ? createBlendedStylePrompt(first, second, screen, secondaryWeight) : createStylePrompt(first, screen);
   const css = createStyleCss(first);
   const copyText = async (value: string, label: string) => {
     try {
@@ -126,6 +130,30 @@ const DesignStyles: React.FC = () => {
             </label>
           </div>
         </fieldset>
+        <div className="mt-5 rounded-xl border border-ink-border bg-surface p-4">
+          <label className="flex items-start gap-3 text-sm font-semibold">
+            <input type="checkbox" checked={mixEnabled} disabled={!canMix} onChange={e => { setMixEnabled(e.target.checked); setCopyStatus(''); }}
+              className="mt-1 size-4 shrink-0 accent-primary"/>
+            2つのデザインを組み合わせたAI指示を作る
+          </label>
+          {!canMix && (
+            <p className="mt-2 text-xs leading-relaxed text-ink-muted">異なる2つのスタイルを選ぶと配合できます。</p>
+          )}
+          {mixing && second && (
+            <div className="mt-4">
+              <label htmlFor="style-mix-weight" className="block text-sm font-bold">
+                Bの採用優先度：{secondaryWeight}%（A：{100 - secondaryWeight}%）
+              </label>
+              <input id="style-mix-weight" type="range" min={10} max={90} step={10} value={secondaryWeight}
+                onChange={e => { setSecondaryWeight(Number(e.target.value)); setCopyStatus(''); }}
+                className="mt-3 w-full accent-primary"/>
+              <p className="mt-2 text-xs leading-relaxed text-ink-muted">
+                Aのレイアウト・情報階層を基調に、Bのアクセントや質感を取り入れる指示です。
+                比率はAIに伝える優先度の目安で、CSS値を正確に混色するものではありません。
+              </p>
+            </div>
+          )}
+        </div>
         <div className="grid grid-cols-1 gap-4 mt-4">
           <div className="border border-ink-border rounded-xl overflow-hidden">
             <div className="px-3 py-2 bg-surface text-sm font-bold">{first.name} / {first.ja}</div>
@@ -135,6 +163,15 @@ const DesignStyles: React.FC = () => {
             <div className="border border-ink-border rounded-xl overflow-hidden">
               <div className="px-3 py-2 bg-surface text-sm font-bold">{second.name} / {second.ja}</div>
               <DesignStyleSpecimen style={second} screen={screen}/>
+            </div>
+          )}
+          {mixing && second && (
+            <div className="border border-ink-border rounded-xl overflow-hidden">
+              <div className="px-3 py-2 bg-surface text-sm font-bold">配合指示の雰囲気図（A {100 - secondaryWeight}% / B {secondaryWeight}%）</div>
+              <DesignStyleSpecimen style={first} screen={screen} secondaryStyle={second} secondaryWeight={secondaryWeight}/>
+              <p className="p-3 text-xs leading-relaxed text-ink-muted">
+                プレビューはAの構成とBの色見本を表示します。AIが生成する合成デザインを完全に再現したものではありません。
+              </p>
             </div>
           )}
         </div>
@@ -153,7 +190,7 @@ const DesignStyles: React.FC = () => {
           {first.avoid.map(value => <li key={value}>{value}</li>)}
         </ul>
         <div className="flex items-center justify-between gap-2 mt-5">
-          <h3 className="text-sm font-bold">AI向けプロンプト</h3>
+          <h3 className="text-sm font-bold">{mixing ? 'AI向け配合プロンプト' : 'AI向けプロンプト'}</h3>
           <button type="button" onClick={() => void copyText(prompt, 'プロンプト')}
             className="rounded-lg border border-ink-border px-3 py-2 text-sm font-semibold hover:border-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
             コピー
@@ -161,6 +198,7 @@ const DesignStyles: React.FC = () => {
         </div>
         <textarea readOnly aria-label="AI用プロンプト" rows={9} value={prompt}
           onFocus={e => e.currentTarget.select()} className="mt-2 w-full rounded-lg bg-surface border border-ink-border p-3 font-mono text-xs leading-relaxed text-ink resize-y"/>
+        {mixing && <p className="mt-3 text-xs leading-relaxed text-ink-muted">下のCSSはスタイルAのみのトークンです。配合した完成CSSを生成する機能はまだありません。</p>}
         <button type="button" onClick={() => setShowCss(value => !value)} aria-expanded={showCss} aria-controls="atlas-css"
           className="mt-4 w-full text-left rounded-lg border border-ink-border p-3 text-sm font-bold hover:border-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
           {showCss ? 'CSSトークンを閉じる −' : 'CSSトークンを見る ＋'}
