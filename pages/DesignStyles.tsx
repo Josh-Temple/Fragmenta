@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { DesignStyleSpecimen } from '../components/DesignStyleSpecimen';
 import { designStyleGroups, designStyles, type DesignStyleGroup } from '../data/design-styles';
 import { createStylePrompt, createStyleCss, type DemoScreen } from '../data/design-style-export';
+import { mixStyles, mixPrompt, type MixRatio } from '../data/design-style-mix';
 
 type Family = 'all' | DesignStyleGroup;
 
@@ -14,6 +15,8 @@ const DesignStyles: React.FC = () => {
   const [screen, setScreen] = useState<DemoScreen>('dashboard');
   const [copyStatus, setCopyStatus] = useState('');
   const [showCss, setShowCss] = useState(false);
+  const [mixEnabled, setMixEnabled] = useState(false);
+  const [mixRatio, setMixRatio] = useState<MixRatio>(25);
   const first = designStyles.find(item => item.id === primary) ?? designStyles[0];
   const second = compare === 'none' ? null : designStyles.find(item => item.id === compare) ?? null;
   const results = useMemo(() => {
@@ -23,8 +26,10 @@ const DesignStyles: React.FC = () => {
       (!q || [item.name, item.ja, item.summary, ...item.features].join(' ').normalize('NFKC').toLowerCase().includes(q))
     );
   }, [family, query]);
-  const prompt = createStylePrompt(first, screen);
-  const css = createStyleCss(first);
+  const mixed = mixEnabled && second && first.id !== second.id ? mixStyles(first, second, mixRatio) : null;
+  const selected = mixed ?? first;
+  const prompt = mixed && second ? mixPrompt(first, second, mixRatio, screen) : createStylePrompt(first, screen);
+  const css = createStyleCss(selected);
   const copyText = async (value: string, label: string) => {
     try {
       if (!navigator.clipboard?.writeText) throw new Error('Clipboard unavailable');
@@ -138,19 +143,49 @@ const DesignStyles: React.FC = () => {
             </div>
           )}
         </div>
+        <div className="mt-5 rounded-xl border border-ink-border bg-surface p-4">
+          <h3 className="text-base font-bold">スタイルを組み合わせる</h3>
+          <label className="mt-3 flex items-center gap-2 text-sm font-semibold">
+            <input type="checkbox" checked={mixEnabled} onChange={e => setMixEnabled(e.target.checked)}/>
+            Aを主軸にBの要素を取り入れる
+          </label>
+          <fieldset disabled={!mixEnabled || !second || first.id === second.id} className="mt-3">
+            <legend className="text-sm font-semibold">Bの配合目安</legend>
+            <div className="mt-2 flex flex-wrap gap-4">
+              {([25, 50, 75] as const).map(value => (
+                <label key={value} className="flex items-center gap-2 text-sm">
+                  <input type="radio" name="mix-ratio" checked={mixRatio === value} onChange={() => setMixRatio(value)}/>
+                  {value}%
+                </label>
+              ))}
+            </div>
+          </fieldset>
+          {mixEnabled && !second && <p className="mt-2 text-sm text-ink-muted">比較対象Bを選ぶと混合できます。</p>}
+          {mixEnabled && second && first.id === second.id && <p className="mt-2 text-sm text-ink-muted">異なる2つのスタイルを選んでください。</p>}
+          {mixed && (
+            <div className="mt-4">
+              <p className="mb-2 text-sm font-semibold">混合プレビュー（簡易トークン合成）</p>
+              <DesignStyleSpecimen style={mixed} screen={screen}/>
+              <p className="mt-2 text-xs text-ink-muted leading-relaxed">
+                配合率は視覚的な優先度の目安です。色はHEX同士の場合のみ補間し、背景のグラデーションなどは主に近い側を採用します。
+                下のAI指示文とCSSは混合結果に切り替わります。
+              </p>
+            </div>
+          )}
+        </div>
       </section>
 
       <section aria-labelledby="recipe-heading" className="px-5 pt-6 pb-5 border-t border-ink-border">
         <h2 id="recipe-heading" className="text-xl font-bold">特徴とAI用の指定文</h2>
-        <h3 className="mt-4 text-lg font-bold">{first.name} / {first.ja}</h3>
-        <p className="mt-2 text-sm leading-relaxed">{first.summary}。{first.use}に向いています。</p>
+        <h3 className="mt-4 text-lg font-bold">{selected.name} / {selected.ja}</h3>
+        <p className="mt-2 text-sm leading-relaxed">{selected.summary}。{selected.use}に向いています。</p>
         <h4 className="mt-4 text-sm font-bold">指定するとよい特徴</h4>
         <ul className="mt-2 list-disc pl-5 text-sm leading-loose">
-          {first.features.map(value => <li key={value}>{value}</li>)}
+          {selected.features.map((value, i) => <li key={i}>{value}</li>)}
         </ul>
         <h4 className="mt-3 text-sm font-bold">避けたいこと</h4>
         <ul className="mt-2 list-disc pl-5 text-sm leading-loose">
-          {first.avoid.map(value => <li key={value}>{value}</li>)}
+          {selected.avoid.map((value, i) => <li key={i}>{value}</li>)}
         </ul>
         <div className="flex items-center justify-between gap-2 mt-5">
           <h3 className="text-sm font-bold">AI向けプロンプト</h3>
