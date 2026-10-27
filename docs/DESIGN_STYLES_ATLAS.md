@@ -54,3 +54,37 @@ Preview build status alone is not an actual-device/browser acceptance result.
 
 Future work: style mixing, editable tokens, CSS fidelity improvements, layouts catalog,
 vendor design-system reference cross-links, side-by-side visual diff, and saved presets.
+
+## 2026-10-27 — Structural preview and two-style direction
+
+Version 2 gives all 24 styles an explicit composition grammar (eight distinct layout
+archetypes), so the visible difference is not just swapping colors and shadows.
+The same dashboard/article content is retained for meaningful comparison.
+
+- Strict grid: alignment and columns
+- Editorial: prominent headline and unequal blocks
+- Diagonal: asymmetric cards and diagonal accents
+- Stacked: dense, vertically layered outlined blocks
+- Soft cards: soft rounded containers and spacing
+- Instrument: measured dashboard-like labels and indicators
+- Retro: decorative repeated stripes and compressed rhythm
+- Quiet: restrained single-column layout and large whitespace
+
+All 24 IDs map to one of these eight grammars in `data/design-style-composition.ts`.
+Each style still adds its existing colors, type family, border, shadow and pattern treatment.
+This is **not** a separate historically faithful art direction for each style.
+
+The Compare section now optionally includes a weighted A/B **AI instruction**:
+B can be set from 10% to 90% in ten-point steps. Whichever side has the majority
+supplies the information hierarchy and layout; the other provides accents, texture and
+decorative direction. At 50/50 A supplies the structure to make ambiguity deterministic.
+The mix ratio is design priority, **not** color-channel mixing, CSS interpolation,
+claim of stylistic authenticity or simulated output from an actual AI.
+
+The third preview is a *conceptual diagram* showing the dominant layout and a stripe
+for the secondary accent. The CSS export stays single-style (A) and is explicitly
+labelled as such even if mixing is enabled. Only the AI prompt incorporates the weight.
+
+Tests cover every style's grammar, all eight grammar variants, numeric weight clamping,
+same-style mixing, 0%/100% endpoints, A-majority and B-majority prompts,
+and source-level UI wiring. Build/test success is not independent smartphone/browser QA.
