@@ -29,6 +29,16 @@ const DesignStyles: React.FC = () => {
   const mixing = mixEnabled && canMix;
   const prompt = mixing && second ? createBlendedStylePrompt(first, second, screen, secondaryWeight) : createStylePrompt(first, screen);
   const css = createStyleCss(first);
+  const choosePrimary = (id: string) => {
+    setPrimary(id);
+    if (id === compare) setMixEnabled(false);
+    setCopyStatus('');
+  };
+  const chooseComparison = (id: string) => {
+    setCompare(id);
+    if (id === 'none' || id === primary) setMixEnabled(false);
+    setCopyStatus('');
+  };
   const copyText = async (value: string, label: string) => {
     try {
       if (!navigator.clipboard?.writeText) throw new Error('Clipboard unavailable');
@@ -60,7 +70,7 @@ const DesignStyles: React.FC = () => {
         <h2 id="atlas-list-heading" className="text-lg font-bold">スタイルを探す</h2>
         <label htmlFor="atlas-search" className="block mt-4 text-sm font-semibold">名前・特徴で検索</label>
         <input id="atlas-search" type="search" value={query} onChange={e => setQuery(e.target.value)}
-          placeholder="例：Swiss、和、グラデーション"
+          placeholder="例：Swiss、侘び寂び、グラデーション"
           className="w-full mt-2 rounded-lg border border-ink-border bg-paper p-3 text-ink text-base focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"/>
         <div role="group" aria-label="スタイル分類" className="flex flex-wrap gap-2 mt-4">
           {[{ id: 'all' as const, label: 'すべて' }, ...designStyleGroups].map(group => (
@@ -71,12 +81,12 @@ const DesignStyles: React.FC = () => {
             </button>
           ))}
         </div>
-        <p className="mt-3 text-xs text-ink-muted" role="status">{results.length} / {designStyles.length} styles</p>
+        <p className="mt-3 text-xs text-ink-muted" role="status">{results.length} / {designStyles.length} 件</p>
         {results.length ? (
           <div className="grid grid-cols-2 gap-3 mt-4">
             {results.map(item => (
               <button type="button" aria-pressed={primary === item.id} key={item.id}
-                onClick={() => { setPrimary(item.id); setCopyStatus(''); }}
+                onClick={() => choosePrimary(item.id)}
                 className={'min-w-0 text-left rounded-xl border p-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ' +
                   (primary === item.id ? 'border-primary ring-2 ring-primary/30' : 'border-ink-border hover:border-primary')}>
                 <div aria-hidden="true" className="h-16 rounded-md p-2 flex items-end gap-2 overflow-hidden"
@@ -103,14 +113,14 @@ const DesignStyles: React.FC = () => {
         <div className="mt-4 grid grid-cols-1 gap-3">
           <div>
             <label htmlFor="style-a" className="block mb-1 text-sm font-semibold">スタイルA</label>
-            <select id="style-a" value={primary} onChange={e => { setPrimary(e.target.value); setCopyStatus(''); }}
+            <select id="style-a" value={primary} onChange={e => choosePrimary(e.target.value)}
               className="w-full bg-paper text-ink border border-ink-border rounded-lg p-3 text-base">
               {designStyles.map(item => <option key={item.id} value={item.id}>{item.name} / {item.ja}</option>)}
             </select>
           </div>
           <div>
             <label htmlFor="style-b" className="block mb-1 text-sm font-semibold">比較対象B</label>
-            <select id="style-b" value={compare} onChange={e => setCompare(e.target.value)}
+            <select id="style-b" value={compare} onChange={e => chooseComparison(e.target.value)}
               className="w-full bg-paper text-ink border border-ink-border rounded-lg p-3 text-base">
               <option value="none">比較しない</option>
               {designStyles.map(item => <option key={item.id} value={item.id}>{item.name} / {item.ja}</option>)}
@@ -121,11 +131,11 @@ const DesignStyles: React.FC = () => {
           <legend className="text-sm font-semibold">比較する画面</legend>
           <div className="flex flex-wrap gap-4 mt-2">
             <label className="flex items-center gap-2 text-sm">
-              <input type="radio" name="atlas-example" value="dashboard" checked={screen === 'dashboard'} onChange={() => setScreen('dashboard')}/>
+              <input type="radio" name="atlas-example" value="dashboard" checked={screen === 'dashboard'} onChange={() => { setScreen('dashboard'); setCopyStatus(''); }}/>
               Dashboard
             </label>
             <label className="flex items-center gap-2 text-sm">
-              <input type="radio" name="atlas-example" value="article" checked={screen === 'article'} onChange={() => setScreen('article')}/>
+              <input type="radio" name="atlas-example" value="article" checked={screen === 'article'} onChange={() => { setScreen('article'); setCopyStatus(''); }}/>
               Article
             </label>
           </div>
@@ -148,7 +158,7 @@ const DesignStyles: React.FC = () => {
                 onChange={e => { setSecondaryWeight(Number(e.target.value)); setCopyStatus(''); }}
                 className="mt-3 w-full accent-primary"/>
               <p className="mt-2 text-xs leading-relaxed text-ink-muted">
-                比率の高い{secondaryWeight > 50 ? 'B' : 'A'}のレイアウト・情報階層を基調に、
+                {secondaryWeight === 50 ? '同率50/50ではA' : '比率の高い' + (secondaryWeight > 50 ? 'B' : 'A')}のレイアウト・情報階層を基調に、
                 {secondaryWeight > 50 ? 'A' : 'B'}のアクセントや質感を取り入れる指示です。
                 比率はAIに伝える優先度の目安で、CSS値を正確に混色するものではありません。
               </p>
@@ -180,10 +190,10 @@ const DesignStyles: React.FC = () => {
       </section>
 
       <section aria-labelledby="recipe-heading" className="px-5 pt-6 pb-5 border-t border-ink-border">
-        <h2 id="recipe-heading" className="text-xl font-bold">特徴とAI用の指定文</h2>
+        <h2 id="recipe-heading" className="text-xl font-bold">{mixing ? 'スタイルAの特徴とA/Bの配合指示' : '特徴とAI用の指定文'}</h2>
         <h3 className="mt-4 text-lg font-bold">{first.name} / {first.ja}</h3>
         <p className="mt-2 text-sm leading-relaxed">{first.summary}。{first.use}に向いています。</p>
-        <h4 className="mt-4 text-sm font-bold">指定するとよい特徴</h4>
+        <h4 className="mt-4 text-sm font-bold">スタイルAで指定するとよい特徴</h4>
         <ul className="mt-2 list-disc pl-5 text-sm leading-loose">
           {first.features.map(value => <li key={value}>{value}</li>)}
         </ul>
