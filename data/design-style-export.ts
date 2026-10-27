@@ -51,3 +51,32 @@ export const createStyleCss = (style: DesignStyle): string => {
     '/* Test contrast and focus states against actual content. */',
   ].join('\n');
 };
+
+/**
+ * A/B percentages express design priorities in the AI brief, not pixel-accurate mixing.
+ * Existing single-style briefs and their CSS token export stay unchanged.
+ */
+export function createBlendedStylePrompt(primary: DesignStyle, secondary: DesignStyle, screen: DemoScreen, secondaryWeight: number): string {
+  if (primary.id === secondary.id) return createStylePrompt(primary, screen);
+  const weight = Number.isFinite(secondaryWeight) ? Math.max(0, Math.min(100, Math.round(secondaryWeight))) : 0;
+  if (weight === 0) return createStylePrompt(primary, screen);
+  if (weight === 100) return createStylePrompt(secondary, screen);
+  const main = weight > 50 ? secondary : primary;
+  const detail = weight > 50 ? primary : secondary;
+  const mainName = weight > 50 ? 'B' : 'A';
+  const detailName = weight > 50 ? 'A' : 'B';
+  return [
+    '日本語の' + (screen === 'dashboard' ? 'Webダッシュボード' : '記事サイト') + 'を、2つのデザイン系統を組み合わせて制作してください。',
+    'A: ' + primary.name + '（' + primary.ja + '） ' + (100 - weight) + '%。',
+    'B: ' + secondary.name + '（' + secondary.ja + '） ' + weight + '%。',
+    '基調' + mainName + 'の構造と情報設計: ' + main.summary + '。特徴: ' + main.features.join('、') + '。',
+    '補助' + detailName + 'から取り入れる要素: ' + detail.features.join('、') + '。',
+    '優先規則: 本文・見出しの階層、情報の順序、操作の明快さは比率の高い' + mainName + 'を基本に保ち、' + detailName + 'はアクセント色、質感、輪郭、装飾などへ選択的に取り入れます。',
+    '避ける表現: Aでは ' + primary.avoid.join('、') + '。Bでは ' + secondary.avoid.join('、') + '。',
+    'Aの参考トークン: 背景 ' + primary.tokens.background + '、文字 ' + primary.tokens.text + '、線幅 ' + primary.tokens.borderWidth + 'px。',
+    'Bの参考トークン: アクセント ' + secondary.tokens.accent + '、角丸 ' + secondary.tokens.radius + 'px、影 ' + secondary.tokens.shadow + '。',
+    '上記の比率はデザイン要素の採用優先度の目安です。CSS値を機械的に補間する指示ではありません。調和しない要素は無理に混ぜず、可読性を優先してください。',
+    '他社の画面やロゴを複製せず独自に制作し、日本語の折返し・モバイル幅・キーボード操作・十分な文字コントラストを検証してください。',
+    'この指定は様式の解釈であり、公式デザインシステム準拠やアクセシビリティ認証ではありません。',
+  ].join('\n');
+}
