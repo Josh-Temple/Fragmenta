@@ -61,13 +61,17 @@ export function createBlendedStylePrompt(primary: DesignStyle, secondary: Design
   const weight = Number.isFinite(secondaryWeight) ? Math.max(0, Math.min(100, Math.round(secondaryWeight))) : 0;
   if (weight === 0) return createStylePrompt(primary, screen);
   if (weight === 100) return createStylePrompt(secondary, screen);
+  const main = weight > 50 ? secondary : primary;
+  const detail = weight > 50 ? primary : secondary;
+  const mainName = weight > 50 ? 'B' : 'A';
+  const detailName = weight > 50 ? 'A' : 'B';
   return [
     '日本語の' + (screen === 'dashboard' ? 'Webダッシュボード' : '記事サイト') + 'を、2つのデザイン系統を組み合わせて制作してください。',
-    'A（基調）: ' + primary.name + '（' + primary.ja + '） ' + (100 - weight) + '%。',
-    'Aの構造と情報設計: ' + primary.summary + '。特徴: ' + primary.features.join('、') + '。',
-    'B（副次的な表現）: ' + secondary.name + '（' + secondary.ja + '） ' + weight + '%。',
-    'Bから取り入れる要素: ' + secondary.features.join('、') + '。',
-    '優先規則: 本文・見出しの階層、情報の順序、操作の明快さはAを基本に保ち、Bはアクセント色、質感、輪郭、装飾などへ選択的に取り入れます。',
+    'A: ' + primary.name + '（' + primary.ja + '） ' + (100 - weight) + '%。',
+    'B: ' + secondary.name + '（' + secondary.ja + '） ' + weight + '%。',
+    '基調' + mainName + 'の構造と情報設計: ' + main.summary + '。特徴: ' + main.features.join('、') + '。',
+    '補助' + detailName + 'から取り入れる要素: ' + detail.features.join('、') + '。',
+    '優先規則: 本文・見出しの階層、情報の順序、操作の明快さは比率の高い' + mainName + 'を基本に保ち、' + detailName + 'はアクセント色、質感、輪郭、装飾などへ選択的に取り入れます。',
     '避ける表現: Aでは ' + primary.avoid.join('、') + '。Bでは ' + secondary.avoid.join('、') + '。',
     'Aの参考トークン: 背景 ' + primary.tokens.background + '、文字 ' + primary.tokens.text + '、線幅 ' + primary.tokens.borderWidth + 'px。',
     'Bの参考トークン: アクセント ' + secondary.tokens.accent + '、角丸 ' + secondary.tokens.radius + 'px、影 ' + secondary.tokens.shadow + '。',
