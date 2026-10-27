@@ -148,7 +148,8 @@ const DesignStyles: React.FC = () => {
                 onChange={e => { setSecondaryWeight(Number(e.target.value)); setCopyStatus(''); }}
                 className="mt-3 w-full accent-primary"/>
               <p className="mt-2 text-xs leading-relaxed text-ink-muted">
-                Aのレイアウト・情報階層を基調に、Bのアクセントや質感を取り入れる指示です。
+                比率の高い{secondaryWeight > 50 ? 'B' : 'A'}のレイアウト・情報階層を基調に、
+                {secondaryWeight > 50 ? 'A' : 'B'}のアクセントや質感を取り入れる指示です。
                 比率はAIに伝える優先度の目安で、CSS値を正確に混色するものではありません。
               </p>
             </div>
@@ -168,9 +169,10 @@ const DesignStyles: React.FC = () => {
           {mixing && second && (
             <div className="border border-ink-border rounded-xl overflow-hidden">
               <div className="px-3 py-2 bg-surface text-sm font-bold">配合指示の雰囲気図（A {100 - secondaryWeight}% / B {secondaryWeight}%）</div>
-              <DesignStyleSpecimen style={first} screen={screen} secondaryStyle={second} secondaryWeight={secondaryWeight}/>
+              <DesignStyleSpecimen style={secondaryWeight > 50 ? second : first} screen={screen}
+                secondaryStyle={secondaryWeight > 50 ? first : second} secondaryWeight={Math.min(secondaryWeight, 100 - secondaryWeight)}/>
               <p className="p-3 text-xs leading-relaxed text-ink-muted">
-                プレビューはAの構成とBの色見本を表示します。AIが生成する合成デザインを完全に再現したものではありません。
+                プレビューは比率が高いスタイルの構成と、もう一方の色見本を表示します。AIが生成する合成デザインを完全に再現したものではありません。
               </p>
             </div>
           )}
