@@ -77,7 +77,7 @@ for (const style of designStyles) {
 }
 const page = fs.readFileSync(path.join(root, 'pages/DesignStyles.tsx'), 'utf8');
 const specimen = fs.readFileSync(path.join(root, 'components/DesignStyleSpecimen.tsx'), 'utf8');
-check(page.includes('createBlendedStylePrompt') && page.includes('type="range"') && page.includes('secondaryStyle={second}'), 'mixing controls and preview');
+check(page.includes('createBlendedStylePrompt') && page.includes('type="range"') && page.includes('secondaryStyle={secondaryWeight > 50 ? first : second}'), 'mixing controls and preview');
 check(specimen.includes('compositionFor(style)') && specimen.includes('layoutGrid(shape)'), 'structural layouts driven by style');
 check(page.includes('配合した完成CSSを生成する機能はまだありません'), 'mixed CSS not falsely promised');
 
