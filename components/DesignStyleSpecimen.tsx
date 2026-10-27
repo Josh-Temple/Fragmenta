@@ -1,7 +1,7 @@
 import React, { type CSSProperties } from 'react';
 import type { DesignStyle } from '../data/design-styles';
 import { designFont, type DemoScreen } from '../data/design-style-export';
-import { compositionFor, type Composition, clampSecondaryWeight } from '../data/design-style-composition';
+import { compositionFor, clampSecondaryWeight } from '../data/design-style-composition';
 import { artDirectionFor, type ArtDirectionRecipe, type Ornament } from '../data/design-style-art-direction';
 
 const patternMap: Record<DesignStyle['tokens']['pattern'], string> = {
@@ -10,16 +10,6 @@ const patternMap: Record<DesignStyle['tokens']['pattern'], string> = {
   dots: 'radial-gradient(#77777730 1.5px, transparent 1.5px)',
   diagonal: 'repeating-linear-gradient(135deg, #77777716 0 2px, transparent 2px 28px)',
   gradient: 'none',
-};
-
-const layoutGrid = (shape: Composition): string => {
-  switch (shape) {
-    case 'editorial': return '1.55fr .8fr';
-    case 'quiet': return '1fr';
-    case 'instrument': return '.85fr 1.15fr';
-    case 'diagonal': return '1.15fr .85fr';
-    default: return '1fr 1fr';
-  }
 };
 
 // All motifs are locally drawn CSS geometry; they have no semantic or interactive role.
@@ -113,7 +103,6 @@ export const DesignStyleSpecimen: React.FC<{
     border: t.borderWidth >= 3 ? String(t.borderWidth) + 'px solid ' + t.border : 'none',
     boxShadow: ['neo-brutalism', 'bauhaus', 'pixel-art'].includes(style.id) ? t.shadow : undefined,
   };
-  const isEditorial = shape === 'editorial' || shape === 'quiet';
   const headline: CSSProperties = {
     fontFamily: designFont(style),
     fontSize: 'clamp(22px, 8cqw, ' + art.headlineSize + 'px)',
