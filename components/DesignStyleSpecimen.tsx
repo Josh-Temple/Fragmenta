@@ -85,6 +85,20 @@ export const DesignStyleSpecimen: React.FC<{
   const t = style.tokens;
   const shape = compositionFor(style);
   const art = artDirectionFor(style);
+  // Keep the background color and image in separate longhands. React can
+  // otherwise clear a background image when switching specimens.
+  const hasGradientBackground = /gradient\(/i.test(t.background);
+  const backgroundColor = hasGradientBackground
+    ? (t.background.match(/#[0-9a-f]{6}\b/i)?.[0] ?? t.surface)
+    : t.background;
+  const pattern = patternMap[t.pattern];
+  const backgroundImage = [pattern, hasGradientBackground ? t.background : 'none']
+    .filter(layer => layer !== 'none').join(', ') || 'none';
+  const backgroundSize = t.pattern === 'grid'
+    ? hasGradientBackground ? '22px 22px, 22px 22px, 100% 100%' : '22px 22px'
+    : t.pattern === 'dots'
+      ? hasGradientBackground ? '24px 24px, 100% 100%' : '24px 24px'
+      : undefined;
   const mix = secondaryStyle && secondaryStyle.id !== style.id ? clampSecondaryWeight(secondaryWeight) : 0;
   const secondaryAccent = mix && secondaryStyle ? secondaryStyle.tokens.accent : t.accent;
   const panel: CSSProperties = {
@@ -118,11 +132,11 @@ export const DesignStyleSpecimen: React.FC<{
       className="relative isolate min-w-0 overflow-hidden p-4"
       style={{
         containerType: 'inline-size',
-        background: t.background,
+        backgroundColor,
         color: t.text,
         fontFamily: designFont(style),
-        backgroundImage: patternMap[t.pattern] === 'none' ? undefined : patternMap[t.pattern],
-        backgroundSize: t.pattern === 'grid' ? '22px 22px' : t.pattern === 'dots' ? '24px 24px' : undefined,
+        backgroundImage,
+        backgroundSize,
         borderRadius: 12,
       }}
     >
