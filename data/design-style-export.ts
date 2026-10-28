@@ -1,4 +1,6 @@
 import type { DesignStyle } from './design-styles';
+import type {Locale} from '../i18n/locale';
+import {localStyle} from '../i18n/styles-en';
 
 export type DemoScreen = 'dashboard' | 'article';
 
@@ -10,7 +12,7 @@ const fontValues = {
 
 export const designFont = (style: DesignStyle): string => fontValues[style.tokens.font];
 
-export const createStylePrompt = (style: DesignStyle, screen: DemoScreen): string => [
+export const createStylePrompt = (style: DesignStyle, screen: DemoScreen, locale: Locale='ja'): string => locale==='en'?englishSingle(style,screen):[
   '日本語の' + (screen === 'dashboard' ? 'Webダッシュボード' : '記事サイト') + 'を「' + style.name + '（' + style.ja + '）」の方向性でデザインしてください。',
   'デザインの意図: ' + style.summary + '。',
   '重視する特徴: ' + style.features.join('、') + '。',
@@ -56,7 +58,8 @@ export const createStyleCss = (style: DesignStyle): string => {
  * A/B percentages express design priorities in the AI brief, not pixel-accurate mixing.
  * Existing single-style briefs and their CSS token export stay unchanged.
  */
-export function createBlendedStylePrompt(primary: DesignStyle, secondary: DesignStyle, screen: DemoScreen, secondaryWeight: number): string {
+export function createBlendedStylePrompt(primary: DesignStyle, secondary: DesignStyle, screen: DemoScreen, secondaryWeight: number, locale: Locale='ja'): string {
+  if(locale==='en')return englishBlend(primary,secondary,screen,secondaryWeight);
   if (primary.id === secondary.id) return createStylePrompt(primary, screen);
   const weight = Number.isFinite(secondaryWeight) ? Math.max(0, Math.min(100, Math.round(secondaryWeight))) : 0;
   if (weight === 0) return createStylePrompt(primary, screen);
@@ -79,4 +82,26 @@ export function createBlendedStylePrompt(primary: DesignStyle, secondary: Design
     '他社の画面やロゴを複製せず独自に制作し、日本語の折返し・モバイル幅・キーボード操作・十分な文字コントラストを検証してください。',
     'この指定は様式の解釈であり、公式デザインシステム準拠やアクセシビリティ認証ではありません。',
   ].join('\n');
+}
+
+function englishSingle(style:DesignStyle,screen:DemoScreen):string {
+  const s=localStyle(style,'en');
+  return ['Design an original English-language '+(screen==='dashboard'?'dashboard':'article site')+' in the '+s.name+' style.',
+    'Intent: '+s.summary+'. Features: '+s.features.join('; ')+'.',
+    'Colors: background '+s.tokens.background+', surface '+s.tokens.surface+', text '+s.tokens.text+', accent '+s.tokens.accent+'.',
+    'Avoid: '+s.avoid.join('; ')+'.',
+    'Use original content, not a copy of a brand or website. Validate responsiveness, contrast, keyboard focus and English text wrapping.',
+    'This is illustrative guidance, not official design-system conformance or accessibility certification.'].join('\n');
+}
+function englishBlend(primary:DesignStyle,secondary:DesignStyle,screen:DemoScreen,weightInput:number):string {
+  const w=Number.isFinite(weightInput)?Math.max(0,Math.min(100,Math.round(weightInput))):0;
+  if(w===0||primary.id===secondary.id)return englishSingle(primary,screen);
+  if(w===100)return englishSingle(secondary,screen);
+  const a=localStyle(primary,'en'),b=localStyle(secondary,'en'),main=w>50?b:a,detail=w>50?a:b;
+  return ['Create an original English-language '+(screen==='dashboard'?'dashboard':'article site')+' combining two design styles.',
+    'A: '+a.name+' '+(100-w)+'%; B: '+b.name+' '+w+'%. Percentages are design priorities, not CSS mixing.',
+    'Use '+(w>50?'B':'A')+' for layout, hierarchy and main actions. At equal 50/50, A determines the structure.',
+    'Dominant features: '+main.features.join('; ')+'. Secondary accents only: '+detail.features.join('; ')+'.',
+    'Avoid: '+a.avoid.join('; ')+'; '+b.avoid.join('; ')+'. Use original content and keep primary content readable.',
+    'Check responsiveness, contrast, keyboard navigation and English wrapping. Not a finished CSS implementation or certification.'].join('\n');
 }

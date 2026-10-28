@@ -3,10 +3,15 @@ import { Link } from 'react-router-dom';
 import { DesignStyleSpecimen } from '../components/DesignStyleSpecimen';
 import { designStyleGroups, designStyles, type DesignStyleGroup } from '../data/design-styles';
 import { createStylePrompt, createBlendedStylePrompt, createStyleCss, type DemoScreen } from '../data/design-style-export';
+import {useLocale,type Locale} from '../i18n/locale';
+import {localStyle} from '../i18n/styles-en';
 
 type Family = 'all' | DesignStyleGroup;
 
 const DesignStyles: React.FC = () => {
+  const {locale,txt}=useLocale();
+  const [promptLocale,setPromptLocale]=useState<Locale>(locale);
+  const styles=useMemo(()=>designStyles.map(s=>localStyle(s,locale)),[locale]);
   const [family, setFamily] = useState<Family>('all');
   const [query, setQuery] = useState('');
   const [primary, setPrimary] = useState('swiss');
@@ -16,18 +21,18 @@ const DesignStyles: React.FC = () => {
   const [showCss, setShowCss] = useState(false);
   const [mixEnabled, setMixEnabled] = useState(false);
   const [secondaryWeight, setSecondaryWeight] = useState(30);
-  const first = designStyles.find(item => item.id === primary) ?? designStyles[0];
-  const second = compare === 'none' ? null : designStyles.find(item => item.id === compare) ?? null;
+  const first = styles.find(item => item.id === primary) ?? styles[0];
+  const second = compare === 'none' ? null : styles.find(item => item.id === compare) ?? null;
   const results = useMemo(() => {
     const q = query.trim().normalize('NFKC').toLowerCase();
-    return designStyles.filter(item =>
+    return styles.filter(item =>
       (family === 'all' || item.group === family) &&
-      (!q || [item.name, item.ja, item.summary, ...item.features].join(' ').normalize('NFKC').toLowerCase().includes(q))
+      (!q || [item.name,item.ja,item.summary,item.use,...item.features,...item.avoid,designStyles.find(s=>s.id===item.id)?.summary??''].join(' ').normalize('NFKC').toLowerCase().includes(q))
     );
-  }, [family, query]);
+  }, [family,query,styles]);
   const canMix = Boolean(second && first.id !== second.id);
   const mixing = mixEnabled && canMix;
-  const prompt = mixing && second ? createBlendedStylePrompt(first, second, screen, secondaryWeight) : createStylePrompt(first, screen);
+  const prompt = mixing && second ? createBlendedStylePrompt(first,second,screen,secondaryWeight,promptLocale) : createStylePrompt(first,screen,promptLocale);
   const css = createStyleCss(first);
   const copyText = async (value: string, label: string) => {
     try {
@@ -47,7 +52,7 @@ const DesignStyles: React.FC = () => {
           Home
         </Link>
         <p className="mt-4 text-xs uppercase tracking-[.2em] text-primary font-bold">Design Styles / デザインの図鑑</p>
-        <h1 className="mt-2 text-3xl font-bold text-ink">デザインの名前から探す</h1>
+        <h1 className="mt-2 text-3xl font-bold text-ink">{txt('Explore design styles','デザインの名前から探す')}</h1>
         <p className="mt-3 text-sm leading-relaxed text-ink-muted">
           {designStyles.length}系統の特徴を知り、同じ画面で比較し、AIへの指示文やCSSトークンを持ち帰れます。
         </p>
@@ -57,7 +62,7 @@ const DesignStyles: React.FC = () => {
       </header>
 
       <section aria-labelledby="atlas-list-heading" className="px-5 py-6">
-        <h2 id="atlas-list-heading" className="text-lg font-bold">スタイルを探す</h2>
+        <h2 id="atlas-list-heading" className="text-lg font-bold">{txt('Find a style','スタイルを探す')}</h2>
         <label htmlFor="atlas-search" className="block mt-4 text-sm font-semibold">名前・特徴で検索</label>
         <input id="atlas-search" type="search" value={query} onChange={e => setQuery(e.target.value)}
           placeholder="例：Swiss、和、グラデーション"
@@ -105,7 +110,7 @@ const DesignStyles: React.FC = () => {
             <label htmlFor="style-a" className="block mb-1 text-sm font-semibold">スタイルA</label>
             <select id="style-a" value={primary} onChange={e => { setPrimary(e.target.value); setCopyStatus(''); }}
               className="w-full bg-paper text-ink border border-ink-border rounded-lg p-3 text-base">
-              {designStyles.map(item => <option key={item.id} value={item.id}>{item.name} / {item.ja}</option>)}
+              {styles.map(item => <option key={item.id} value={item.id}>{item.name} / {item.ja}</option>)}
             </select>
           </div>
           <div>
@@ -113,7 +118,7 @@ const DesignStyles: React.FC = () => {
             <select id="style-b" value={compare} onChange={e => setCompare(e.target.value)}
               className="w-full bg-paper text-ink border border-ink-border rounded-lg p-3 text-base">
               <option value="none">比較しない</option>
-              {designStyles.map(item => <option key={item.id} value={item.id}>{item.name} / {item.ja}</option>)}
+              {styles.map(item => <option key={item.id} value={item.id}>{item.name} / {item.ja}</option>)}
             </select>
           </div>
         </div>
@@ -180,9 +185,9 @@ const DesignStyles: React.FC = () => {
       </section>
 
       <section aria-labelledby="recipe-heading" className="px-5 pt-6 pb-5 border-t border-ink-border">
-        <h2 id="recipe-heading" className="text-xl font-bold">特徴とAI用の指定文</h2>
+        <h2 id="recipe-heading" className="text-xl font-bold">{txt('Style details and AI prompt','特徴とAI用の指定文')}</h2>
         <h3 className="mt-4 text-lg font-bold">{first.name} / {first.ja}</h3>
-        <p className="mt-2 text-sm leading-relaxed">{first.summary}。{first.use}に向いています。</p>
+        <p className="mt-2 text-sm leading-relaxed">{locale==='en'?first.summary+'. Suitable for '+first.use.toLowerCase()+'.':first.summary+'。'+first.use+'に向いています。'}</p>
         <h4 className="mt-4 text-sm font-bold">指定するとよい特徴</h4>
         <ul className="mt-2 list-disc pl-5 text-sm leading-loose">
           {first.features.map(value => <li key={value}>{value}</li>)}
@@ -197,6 +202,11 @@ const DesignStyles: React.FC = () => {
             className="rounded-lg border border-ink-border px-3 py-2 text-sm font-semibold hover:border-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
             コピー
           </button>
+        </div>
+        <div className="mt-3 flex items-center gap-3">
+          <label htmlFor="prompt-locale" className="text-sm font-semibold">{txt('Prompt language','出力言語')}</label>
+          <select id="prompt-locale" value={promptLocale} onChange={e=>{setPromptLocale(e.target.value==='ja'?'ja':'en');setCopyStatus('');}}
+            className="rounded border border-ink-border bg-surface px-3 py-2 text-sm"><option value="en">English</option><option value="ja">日本語</option></select>
         </div>
         <textarea readOnly aria-label="AI用プロンプト" rows={9} value={prompt}
           onFocus={e => e.currentTarget.select()} className="mt-2 w-full rounded-lg bg-surface border border-ink-border p-3 font-mono text-xs leading-relaxed text-ink resize-y"/>
