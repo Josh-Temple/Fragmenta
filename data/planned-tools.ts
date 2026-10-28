@@ -1,4 +1,6 @@
-// Proposed practical tools only. Not released UI patterns and not working tools.
+import { liveToolIds } from './live-tools';
+
+// Retain the original ideas; publish only the entries that are still planned.
 // Keep this registry separate from data/definitions.tsx and data/planned-patterns.ts.
 export type PlannedToolCategory = 'writing' | 'development' | 'design' | 'content';
 
@@ -13,7 +15,7 @@ export interface PlannedTool {
   readonly status: 'planned';
 }
 
-export const plannedTools = [
+const proposedTools = [
   {
     "id": "tool-markdown-editor",
     "title": "Markdown Editor & Preview",
@@ -183,3 +185,5 @@ export const plannedTools = [
     "status": "planned"
   }
 ] as const satisfies readonly PlannedTool[];
+
+export const plannedTools = proposedTools.filter(tool => !liveToolIds.has(tool.id));

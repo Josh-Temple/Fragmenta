@@ -33,6 +33,9 @@ The app supports:
 - live browser previews for animated and static patterns
 - top-level browsing across Motion, Interaction, Styles, Components, Layouts, and Text & Effects
 - tag and text search
+- English/Japanese keyword search across the 18 patterns, 24 design styles, and 2 working tools
+- a local-only color contrast checker with WCAG 2.2 AA/AAA thresholds and CSS export
+- a local-only Japanese typography playground with editable sample text and scoped CSS export
 - adjustable parameters
 - generated implementation code
 - generated AI prompts
@@ -42,6 +45,8 @@ The app supports:
 - three bilingual walkthroughs for loading states, decorative cards, and editorial content
 - pause controls for Skeleton, Glitch Text, and Glass Tilt in Details and their copied output
 - English and Japanese editorial samples with parameters isolated to each instance
+
+The home page starts with working patterns, design references, and tools. Future ideas are grouped separately. Two of the original twelve tool ideas are implemented; ten remain planned. The former empty Saved and Settings routes redirect to Collections and Home. See [the tools guide](docs/TOOLS.md) for scope and verification.
 
 Current examples include the original animation set plus:
 
