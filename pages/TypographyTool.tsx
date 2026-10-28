@@ -21,7 +21,7 @@ const TypographyTool: React.FC = () => {
           {([{ key: 'size', label: '文字サイズ', min: 14, max: 28, step: 1, unit: 'px' }, { key: 'leading', label: '行間', min: 1.4, max: 2.4, step: 0.05, unit: '倍' }, { key: 'spacing', label: '字間', min: 0, max: 0.12, step: 0.01, unit: 'em' }, { key: 'width', label: '本文の最大幅', min: 20, max: 48, step: 1, unit: 'rem' }] as const).map(control => (
             <label key={control.key} className="block text-sm font-semibold">
               <span className="flex justify-between gap-3">{control.label}<span className="font-mono">{settings[control.key]}{control.unit}</span></span>
-              <input type="range" min={control.min} max={control.max} step={control.step} value={settings[control.key]} onChange={event => update(control.key, Number(event.target.value))} aria-valuetext={`${settings[control.key]}${control.unit}`} className="mt-2 min-h-11 w-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink" />
+              <input type="range" min={control.min} max={control.max} step={control.step} value={settings[control.key]} onChange={event => update(control.key, Number(event.target.value))} aria-valuetext={`${settings[control.key]}${control.unit}`} className="tool-range mt-2 min-h-11 w-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink" />
             </label>
           ))}
         </div>
@@ -40,7 +40,7 @@ const TypographyTool: React.FC = () => {
       </details>
       <section aria-labelledby="type-preview-heading" className="mt-6">
         <h2 id="type-preview-heading" className="text-lg font-bold">表示を確認</h2>
-        <div role="group" aria-label="プレビューの最大幅" className="mt-3 flex flex-wrap gap-2">{[320, 390, 640].map(width => <button key={width} type="button" aria-pressed={previewWidth === width} onClick={() => setPreviewWidth(width)} className={`${toolButtonClass} ${previewWidth === width ? 'bg-ink text-paper hover:bg-ink' : ''}`}>{width}px</button>)}</div>
+        <div role="group" aria-label="プレビューの最大幅" className="mt-3 flex flex-wrap gap-2">{[320, 390, 640].map(width => <button key={width} type="button" aria-pressed={previewWidth === width} onClick={() => setPreviewWidth(width)} className={`${toolButtonClass} aria-pressed:bg-ink aria-pressed:text-paper aria-pressed:hover:bg-ink`}>{width}px</button>)}</div>
         <p className="mt-2 text-xs leading-relaxed text-ink-muted">プレビューは指定幅を上限に、この画面に収まる幅で表示します。本文の最大幅は、この枠より狭い場合に反映されます。実機の再現ではありません。</p>
         <div className="mt-4 rounded-xl border border-ink/30 bg-surface-highlight p-4 sm:p-5" style={{ maxWidth: previewWidth, marginInline: 'auto' }}>
           <article aria-label="タイポグラフィのプレビュー" style={{ fontFamily: typographyFonts[settings.font], fontSize: settings.size, lineHeight: settings.leading, letterSpacing: `${settings.spacing}em`, maxInlineSize: `${settings.width}rem`, marginInline: 'auto', overflowWrap: 'anywhere' }}>

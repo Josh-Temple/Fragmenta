@@ -16,7 +16,7 @@ module.exports = {
                         "surface": "rgb(230, 215, 177)",   // Cards / Inputs
                         "surface-highlight": "rgba(255, 255, 255, 0.4)",
                         "ink": "rgb(51, 34, 0)",           // Main Text
-                        "ink-muted": "rgba(51, 34, 0, 0.6)",
+                        "ink-muted": "rgba(51, 34, 0, 0.75)",
                         "ink-border": "rgba(51, 34, 0, 0.1)",
                         "white": "#ffffff",
                     },
