@@ -429,7 +429,7 @@ export const designStyles: readonly DesignStyle[] = [
       "background": "linear-gradient(135deg,#372669,#8258B4)",
       "surface": "rgba(27,16,59,.65)",
       "text": "#FFFFFF",
-      "muted": "#E8DEFF",
+      "muted": "#FFFFFF",
       "accent": "#D8C5FF",
       "border": "rgba(255,255,255,.48)",
       "borderWidth": 1,
@@ -606,10 +606,10 @@ export const designStyles: readonly DesignStyle[] = [
       "装飾の強すぎる反復"
     ],
     "tokens": {
-      "background": "linear-gradient(135deg,#603C89,#AD578F)",
+      "background": "linear-gradient(135deg,#603C89,#A54F87)",
       "surface": "rgba(39,26,83,.8)",
       "text": "#FFFFFF",
-      "muted": "#EBE7FF",
+      "muted": "#FFFFFF",
       "accent": "#7FF0E8",
       "border": "#D9A3EF",
       "borderWidth": 1,

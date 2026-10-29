@@ -9,6 +9,7 @@
     "lint": "node scripts/lint.cjs",
     "prebuild": "npm run typecheck && npm run lint && npm run design:verify && npm run tools:verify",
     "build": "vite build",
+    "postbuild": "node scripts/prepare-browser-acceptance.cjs",
     "preview": "vite preview",
     "design:verify": "node scripts/check-design-styles.cjs",
     "tools:verify": "node scripts/check-tools.cjs"
