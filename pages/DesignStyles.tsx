@@ -4,17 +4,16 @@ import { DesignStyleSpecimen } from '../components/DesignStyleSpecimen';
 import { designStyleGroups, designStyles, type DesignStyleGroup } from '../data/design-styles';
 import { createStylePrompt, createBlendedStylePrompt, createStyleCss, type DemoScreen } from '../data/design-style-export';
 
+import { matchesSearch, styleSearchAliases } from '../data/discovery';
+
 type Family = 'all' | DesignStyleGroup;
 
 const DesignStyles: React.FC = () => {
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const requestedStyle = searchParams.get('style');
   const [family, setFamily] = useState<Family>('all');
   const [query, setQuery] = useState('');
   const [primary, setPrimary] = useState(() => designStyles.find(style => style.id === requestedStyle)?.id ?? 'swiss');
-  useEffect(() => {
-    if (requestedStyle && designStyles.some(style => style.id === requestedStyle)) setPrimary(requestedStyle);
-  }, [requestedStyle]);
   const [compare, setCompare] = useState('neo-brutalism');
   const [screen, setScreen] = useState<DemoScreen>('dashboard');
   const [copyStatus, setCopyStatus] = useState('');
@@ -24,16 +23,37 @@ const DesignStyles: React.FC = () => {
   const first = designStyles.find(item => item.id === primary) ?? designStyles[0];
   const second = compare === 'none' ? null : designStyles.find(item => item.id === compare) ?? null;
   const results = useMemo(() => {
-    const q = query.trim().normalize('NFKC').toLowerCase();
     return designStyles.filter(item =>
       (family === 'all' || item.group === family) &&
-      (!q || [item.name, item.ja, item.summary, ...item.features].join(' ').normalize('NFKC').toLowerCase().includes(q))
+      matchesSearch(query, [item.name, item.ja, item.summary, item.use, ...item.features, ...item.avoid, styleSearchAliases[item.id] ?? ''])
     );
   }, [family, query]);
   const canMix = Boolean(second && first.id !== second.id);
   const mixing = mixEnabled && canMix;
   const prompt = mixing && second ? createBlendedStylePrompt(first, second, screen, secondaryWeight) : createStylePrompt(first, screen);
   const css = createStyleCss(first);
+  useEffect(() => {
+    if (requestedStyle && designStyles.some(style => style.id === requestedStyle)) {
+      setPrimary(requestedStyle);
+      setCopyStatus('');
+      setMixEnabled(false);
+    }
+  }, [requestedStyle]);
+  const choosePrimary = (id: string) => {
+    setPrimary(id);
+    setSearchParams(current => {
+      const next = new URLSearchParams(current);
+      next.set('style', id);
+      return next;
+    }, { replace: true });
+    setMixEnabled(false);
+    setCopyStatus('');
+  };
+  const chooseComparison = (id: string) => {
+    setCompare(id);
+    if (id === 'none' || id === primary) setMixEnabled(false);
+    setCopyStatus('');
+  };
   const copyText = async (value: string, label: string) => {
     try {
       if (!navigator.clipboard?.writeText) throw new Error('Clipboard unavailable');
@@ -59,13 +79,14 @@ const DesignStyles: React.FC = () => {
         <p className="mt-2 text-xs leading-relaxed text-ink-muted">
           プレビューは各様式から着想を得て独自に作った簡易解釈です。歴史的な正解や公式デザインシステムの再現ではありません。
         </p>
+        <a href="#compare-heading" onClick={event => { event.preventDefault(); document.getElementById('compare-heading')?.focus(); }} className="mt-4 inline-flex min-h-11 items-center rounded-lg border border-ink-border px-4 py-2 text-sm font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">スタイルを選んで比較する</a>
       </header>
 
       <section aria-labelledby="atlas-list-heading" className="px-5 py-6">
         <h2 id="atlas-list-heading" className="text-lg font-bold">スタイルを探す</h2>
         <label htmlFor="atlas-search" className="block mt-4 text-sm font-semibold">名前・特徴で検索</label>
         <input id="atlas-search" type="search" value={query} onChange={e => setQuery(e.target.value)}
-          placeholder="例：Swiss、和、グラデーション"
+          placeholder="例：Swiss、侘び寂び、グラデーション"
           className="w-full mt-2 rounded-lg border border-ink-border bg-paper p-3 text-ink text-base focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"/>
         <div role="group" aria-label="スタイル分類" className="flex flex-wrap gap-2 mt-4">
           {[{ id: 'all' as const, label: 'すべて' }, ...designStyleGroups].map(group => (
@@ -76,12 +97,12 @@ const DesignStyles: React.FC = () => {
             </button>
           ))}
         </div>
-        <p className="mt-3 text-xs text-ink-muted" role="status">{results.length} / {designStyles.length} styles</p>
+        <p className="mt-3 text-xs text-ink-muted" role="status">{results.length} / {designStyles.length} 件</p>
         {results.length ? (
-          <div className="grid grid-cols-2 gap-3 mt-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-4">
             {results.map(item => (
               <button type="button" aria-pressed={primary === item.id} key={item.id}
-                onClick={() => { setPrimary(item.id); setCopyStatus(''); }}
+                onClick={() => choosePrimary(item.id)}
                 className={'min-w-0 text-left rounded-xl border p-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ' +
                   (primary === item.id ? 'border-primary ring-2 ring-primary/30' : 'border-ink-border hover:border-primary')}>
                 <div aria-hidden="true" className="h-16 rounded-md p-2 flex items-end gap-2 overflow-hidden"
@@ -103,19 +124,19 @@ const DesignStyles: React.FC = () => {
       </section>
 
       <section aria-labelledby="compare-heading" className="px-5 pt-5 pb-6 border-t border-ink-border">
-        <h2 id="compare-heading" className="text-xl font-bold">同じ内容で見比べる</h2>
+        <h2 id="compare-heading" tabIndex={-1} className="scroll-mt-5 text-xl font-bold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">同じ内容で見比べる</h2>
         <p className="mt-2 text-sm text-ink-muted">文字、余白、色、形、素材感の違いを確認します。比較する組合せと画面を選べます。</p>
-        <div className="mt-4 grid grid-cols-1 gap-3">
+        <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
             <label htmlFor="style-a" className="block mb-1 text-sm font-semibold">スタイルA</label>
-            <select id="style-a" value={primary} onChange={e => { setPrimary(e.target.value); setCopyStatus(''); }}
+            <select id="style-a" value={primary} onChange={e => choosePrimary(e.target.value)}
               className="w-full bg-paper text-ink border border-ink-border rounded-lg p-3 text-base">
               {designStyles.map(item => <option key={item.id} value={item.id}>{item.name} / {item.ja}</option>)}
             </select>
           </div>
           <div>
             <label htmlFor="style-b" className="block mb-1 text-sm font-semibold">比較対象B</label>
-            <select id="style-b" value={compare} onChange={e => setCompare(e.target.value)}
+            <select id="style-b" value={compare} onChange={e => chooseComparison(e.target.value)}
               className="w-full bg-paper text-ink border border-ink-border rounded-lg p-3 text-base">
               <option value="none">比較しない</option>
               {designStyles.map(item => <option key={item.id} value={item.id}>{item.name} / {item.ja}</option>)}
@@ -126,11 +147,11 @@ const DesignStyles: React.FC = () => {
           <legend className="text-sm font-semibold">比較する画面</legend>
           <div className="flex flex-wrap gap-4 mt-2">
             <label className="flex items-center gap-2 text-sm">
-              <input type="radio" name="atlas-example" value="dashboard" checked={screen === 'dashboard'} onChange={() => setScreen('dashboard')}/>
+              <input type="radio" name="atlas-example" value="dashboard" checked={screen === 'dashboard'} onChange={() => { setScreen('dashboard'); setCopyStatus(''); }}/>
               Dashboard
             </label>
             <label className="flex items-center gap-2 text-sm">
-              <input type="radio" name="atlas-example" value="article" checked={screen === 'article'} onChange={() => setScreen('article')}/>
+              <input type="radio" name="atlas-example" value="article" checked={screen === 'article'} onChange={() => { setScreen('article'); setCopyStatus(''); }}/>
               Article
             </label>
           </div>
@@ -151,16 +172,16 @@ const DesignStyles: React.FC = () => {
               </label>
               <input id="style-mix-weight" type="range" min={10} max={90} step={10} value={secondaryWeight}
                 onChange={e => { setSecondaryWeight(Number(e.target.value)); setCopyStatus(''); }}
-                className="mt-3 w-full accent-primary"/>
+                className="tool-range mt-3 min-h-11 w-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"/>
               <p className="mt-2 text-xs leading-relaxed text-ink-muted">
-                比率の高い{secondaryWeight > 50 ? 'B' : 'A'}のレイアウト・情報階層を基調に、
+                {secondaryWeight === 50 ? '同率50/50ではA' : '比率の高い' + (secondaryWeight > 50 ? 'B' : 'A')}のレイアウト・情報階層を基調に、
                 {secondaryWeight > 50 ? 'A' : 'B'}のアクセントや質感を取り入れる指示です。
                 比率はAIに伝える優先度の目安で、CSS値を正確に混色するものではありません。
               </p>
             </div>
           )}
         </div>
-        <div className="grid grid-cols-1 gap-4 mt-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
           <div className="border border-ink-border rounded-xl overflow-hidden">
             <div className="px-3 py-2 bg-surface text-sm font-bold">{first.name} / {first.ja}</div>
             <DesignStyleSpecimen style={first} screen={screen}/>
@@ -172,7 +193,7 @@ const DesignStyles: React.FC = () => {
             </div>
           )}
           {mixing && second && (
-            <div className="border border-ink-border rounded-xl overflow-hidden">
+            <div className="border border-ink-border rounded-xl overflow-hidden sm:col-span-2">
               <div className="px-3 py-2 bg-surface text-sm font-bold">配合指示の雰囲気図（A {100 - secondaryWeight}% / B {secondaryWeight}%）</div>
               <DesignStyleSpecimen style={secondaryWeight > 50 ? second : first} screen={screen}
                 secondaryStyle={secondaryWeight > 50 ? first : second} secondaryWeight={Math.min(secondaryWeight, 100 - secondaryWeight)}/>
@@ -185,10 +206,10 @@ const DesignStyles: React.FC = () => {
       </section>
 
       <section aria-labelledby="recipe-heading" className="px-5 pt-6 pb-5 border-t border-ink-border">
-        <h2 id="recipe-heading" className="text-xl font-bold">特徴とAI用の指定文</h2>
+        <h2 id="recipe-heading" className="text-xl font-bold">{mixing ? 'スタイルAの特徴とA/Bの配合指示' : '特徴とAI用の指定文'}</h2>
         <h3 className="mt-4 text-lg font-bold">{first.name} / {first.ja}</h3>
         <p className="mt-2 text-sm leading-relaxed">{first.summary}。{first.use}に向いています。</p>
-        <h4 className="mt-4 text-sm font-bold">指定するとよい特徴</h4>
+        <h4 className="mt-4 text-sm font-bold">スタイルAで指定するとよい特徴</h4>
         <ul className="mt-2 list-disc pl-5 text-sm leading-loose">
           {first.features.map(value => <li key={value}>{value}</li>)}
         </ul>
