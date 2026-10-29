@@ -29,8 +29,8 @@ const PatternCard: React.FC<PatternCardProps> = ({ definition, className = '' })
     <div className={`group relative flex flex-col bg-surface rounded-xl overflow-hidden border border-ink-border hover:border-primary/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-paper-lg ${className}`}>
       <Link to={`/p/${definition.id}`} className="absolute inset-0 z-0" aria-label={`View ${definition.title}`} />
 
-      <div className="h-32 w-full bg-paper bg-grid-pattern flex items-center justify-center relative overflow-hidden p-4 z-10 pointer-events-none">
-        <div className="scale-75 select-none flex items-center justify-center w-full h-full group-hover:pointer-events-auto transition-opacity duration-300 [&_*]:[animation-play-state:paused] group-hover:[&_*]:[animation-play-state:running]">
+      <div aria-hidden="true" inert className="h-32 w-full bg-paper bg-grid-pattern flex items-center justify-center relative overflow-hidden p-4 z-10 pointer-events-none">
+        <div className="scale-75 select-none flex items-center justify-center w-full h-full transition-opacity duration-300 [&_*]:[animation-play-state:paused] group-hover:[&_*]:[animation-play-state:running]">
           <definition.Preview values={defaultValues} paused />
         </div>
       </div>
