@@ -71,7 +71,7 @@ const DesignStyles: React.FC = () => {
           <span aria-hidden="true" className="material-symbols-outlined">arrow_back</span>
           Home
         </Link>
-        <p className="mt-4 text-xs uppercase tracking-[.2em] text-primary font-bold">Design Styles / デザインの図鑑</p>
+        <p className="mt-4 text-xs uppercase tracking-[.2em] text-primary-dark font-bold">Design Styles / デザインの図鑑</p>
         <h1 className="mt-2 text-3xl font-bold text-ink">デザインの名前から探す</h1>
         <p className="mt-3 text-sm leading-relaxed text-ink-muted">
           {designStyles.length}系統の特徴を知り、同じ画面で比較し、AIへの指示文やCSSトークンを持ち帰れます。
@@ -87,12 +87,12 @@ const DesignStyles: React.FC = () => {
         <label htmlFor="atlas-search" className="block mt-4 text-sm font-semibold">名前・特徴で検索</label>
         <input id="atlas-search" type="search" value={query} onChange={e => setQuery(e.target.value)}
           placeholder="例：Swiss、侘び寂び、グラデーション"
-          className="w-full mt-2 rounded-lg border border-ink-border bg-paper p-3 text-ink text-base focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"/>
+          className="w-full mt-2 rounded-lg border border-ink-border bg-paper p-3 text-ink text-base focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"/>
         <div role="group" aria-label="スタイル分類" className="flex flex-wrap gap-2 mt-4">
           {[{ id: 'all' as const, label: 'すべて' }, ...designStyleGroups].map(group => (
             <button key={group.id} type="button" aria-pressed={family === group.id} onClick={() => setFamily(group.id)}
-              className={'rounded-full border px-3 py-2 text-xs font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ' +
-                (family === group.id ? 'bg-primary text-paper border-primary' : 'bg-surface text-ink border-ink-border hover:border-primary')}>
+              className={'rounded-full border px-3 py-2 text-xs font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink ' +
+                (family === group.id ? 'bg-primary-dark text-paper border-primary-dark' : 'bg-surface text-ink border-ink-border hover:border-primary')}>
               {group.label}
             </button>
           ))}
@@ -103,8 +103,8 @@ const DesignStyles: React.FC = () => {
             {results.map(item => (
               <button type="button" aria-pressed={primary === item.id} key={item.id}
                 onClick={() => choosePrimary(item.id)}
-                className={'min-w-0 text-left rounded-xl border p-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ' +
-                  (primary === item.id ? 'border-primary ring-2 ring-primary/30' : 'border-ink-border hover:border-primary')}>
+                className={'min-w-0 text-left rounded-xl border p-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink ' +
+                  (primary === item.id ? 'border-primary-dark ring-2 ring-primary-dark/30' : 'border-ink-border hover:border-primary')}>
                 <div aria-hidden="true" className="h-16 rounded-md p-2 flex items-end gap-2 overflow-hidden"
                   style={{ background: item.tokens.background, border: '1px solid ' + item.tokens.border }}>
                   <span className="h-8 w-8 shrink-0" style={{
@@ -220,7 +220,7 @@ const DesignStyles: React.FC = () => {
         <div className="flex items-center justify-between gap-2 mt-5">
           <h3 className="text-sm font-bold">{mixing ? 'AI向け配合プロンプト' : 'AI向けプロンプト'}</h3>
           <button type="button" onClick={() => void copyText(prompt, 'プロンプト')}
-            className="rounded-lg border border-ink-border px-3 py-2 text-sm font-semibold hover:border-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+            className="rounded-lg border border-ink-border px-3 py-2 text-sm font-semibold hover:border-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
             コピー
           </button>
         </div>
@@ -228,14 +228,14 @@ const DesignStyles: React.FC = () => {
           onFocus={e => e.currentTarget.select()} className="mt-2 w-full rounded-lg bg-surface border border-ink-border p-3 font-mono text-xs leading-relaxed text-ink resize-y"/>
         {mixing && <p className="mt-3 text-xs leading-relaxed text-ink-muted">下のCSSはスタイルAのみのトークンです。配合した完成CSSを生成する機能はまだありません。</p>}
         <button type="button" onClick={() => setShowCss(value => !value)} aria-expanded={showCss} aria-controls="atlas-css"
-          className="mt-4 w-full text-left rounded-lg border border-ink-border p-3 text-sm font-bold hover:border-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+          className="mt-4 w-full text-left rounded-lg border border-ink-border p-3 text-sm font-bold hover:border-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
           {showCss ? 'CSSトークンを閉じる −' : 'CSSトークンを見る ＋'}
         </button>
         {showCss && (
           <div id="atlas-css" className="mt-3">
             <div className="flex justify-end">
               <button type="button" onClick={() => void copyText(css, 'CSS')}
-                className="rounded-lg border border-ink-border px-3 py-2 text-sm font-semibold hover:border-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+                className="rounded-lg border border-ink-border px-3 py-2 text-sm font-semibold hover:border-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
                 CSSをコピー
               </button>
             </div>
