@@ -222,7 +222,7 @@ const PatternDetail: React.FC = () => {
             {patternGuides[def.id] && (
               <div className="border-t border-ink-border pt-6 space-y-4">
                 <h2 className="text-lg font-bold font-display">Using this pattern</h2>
-                <PatternUsage guide={patternGuides[def.id]} />
+                <PatternUsage guide={patternGuides[def.id]} id={def.id} />
                 <Link to="/guide" className="inline-block text-sm text-ink underline underline-offset-4 py-2 rounded-xs focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink">Read the reuse guide</Link>
               </div>
             )}
