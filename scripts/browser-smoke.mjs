@@ -62,7 +62,11 @@ async function poll(fn, description, ms = timeout) {
 }
 
 const routes = [
-  ['/', 'Explore web'],
+  ['/', 'つくりたいUIを'],
+  ['/tools', '実用ツール'],
+  ['/tools/contrast', 'コントラスト比'],
+  ['/tools/typography', '日本語の文字を調整'],
+  ['/tools/upcoming', '10 tools planned'],
   ['/browse', 'All patterns'],
   ['/p/glitch-text', 'Glitch Text'],
   ['/a/glitch-text', 'Glitch Text'],

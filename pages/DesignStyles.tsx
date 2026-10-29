@@ -1,5 +1,5 @@
-import React, { useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useMemo, useState } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
 import { DesignStyleSpecimen } from '../components/DesignStyleSpecimen';
 import { designStyleGroups, designStyles, type DesignStyleGroup } from '../data/design-styles';
 import { createStylePrompt, createBlendedStylePrompt, createStyleCss, type DemoScreen } from '../data/design-style-export';
@@ -9,7 +9,12 @@ type Family = 'all' | DesignStyleGroup;
 const DesignStyles: React.FC = () => {
   const [family, setFamily] = useState<Family>('all');
   const [query, setQuery] = useState('');
-  const [primary, setPrimary] = useState('swiss');
+  const [searchParams] = useSearchParams();
+  const requestedStyle = searchParams.get('style');
+  const [primary, setPrimary] = useState(() => designStyles.find(style => style.id === requestedStyle)?.id ?? 'swiss');
+  useEffect(() => {
+    if (requestedStyle && designStyles.some(style => style.id === requestedStyle)) setPrimary(requestedStyle);
+  }, [requestedStyle]);
   const [compare, setCompare] = useState('neo-brutalism');
   const [screen, setScreen] = useState<DemoScreen>('dashboard');
   const [copyStatus, setCopyStatus] = useState('');
