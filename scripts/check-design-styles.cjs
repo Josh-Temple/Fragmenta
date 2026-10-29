@@ -143,5 +143,6 @@ check(home.includes('to="/styles"') && browse.includes('to="/styles"'), 'navigat
 check(!fs.readFileSync(path.join(root, 'data/definitions.tsx'), 'utf8').includes('design-styles'), '18 pattern registry isolated');
 
 require('./check-style-art-direction.cjs');
+require('./check-style-contrast.cjs');
 
 console.log('PASS Design Styles: 24 styles, 8 compositions, 24 individual recipes, 48 single prompts, 5520 mix-matrix cases, 24 A-only CSS outputs');
