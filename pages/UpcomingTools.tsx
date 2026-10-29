@@ -30,10 +30,10 @@ const UpcomingTools: React.FC = () => {
           Practical tools · planned
         </p>
         <h1 className="mt-2 text-3xl leading-tight font-bold text-ink">
-          12 tools for everyday work
+          {plannedTools.length} tools planned
         </h1>
         <p lang="ja" className="mt-3 text-sm leading-relaxed text-ink-muted">
-          文章作成、開発、デザイン、情報整理に使うツールの掲載予定です。
+          <Link to="/tools" className="font-semibold underline underline-offset-4">公開済みの実用ツール</Link>に加え、文章作成、開発、情報整理に使うツールを予定しています。
           現時点では企画枠のみで、入力・プレビュー・変換・コピー・保存などの機能は利用できません。
         </p>
         <p className="mt-3 text-xs leading-relaxed text-ink-muted">
