@@ -68,6 +68,13 @@ assert.ok(plannedTools.every(tool => !liveTools.some(live => live.id === tool.id
 assert.equal(liveTools.filter(tool => matchesSearch('行間', [tool.titleJa, ...tool.tags])).length, 1);
 const { definitions } = load('data/definitions.tsx');
 assert.equal(Object.keys(definitions).length, 18);
+const { patternChoices } = load('data/pattern-choices.ts');
+assert.deepEqual(Object.keys(patternChoices).sort(), Object.keys(definitions).sort());
+for (const [id, choice] of Object.entries(patternChoices)) {
+  assert.ok(choice.avoidWhen && choice.startWith, 'selection advice: ' + id);
+  assert.equal(new Set(choice.related.map(item => item.id)).size, choice.related.length);
+  assert.ok(choice.related.every(item => item.id !== id && definitions[item.id] && item.reason), 'related destinations: ' + id);
+}
 assert.deepEqual(Object.keys(patternSearchAliases).sort(), Object.keys(definitions).sort());
 const { designStyles } = load('data/design-styles.ts');
 assert.equal(designStyles.length, 24);
