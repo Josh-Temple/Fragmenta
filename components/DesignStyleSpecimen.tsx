@@ -119,7 +119,9 @@ export const DesignStyleSpecimen: React.FC<{
   };
   const headline: CSSProperties = {
     fontFamily: designFont(style),
-    fontSize: 'clamp(22px, 8cqw, ' + art.headlineSize + 'px)',
+    // Scale each recipe proportionally. A shared 8cqw flattened every title
+    // to the same size on a phone, hiding the intended typographic hierarchy.
+    fontSize: 'clamp(22px, ' + (art.headlineSize / 3.6).toFixed(3) + 'cqw, ' + art.headlineSize + 'px)',
     lineHeight: shape === 'editorial' ? 1.08 : 1.18,
     fontWeight: art.headlineWeight,
     letterSpacing: art.headlineTracking,
