@@ -22,6 +22,7 @@ function loadTs(file) {
 function check(assertion, label) { if (!assertion) throw Error('FAIL atlas: ' + label); }
 
 const { designStyleGroups, designStyles } = loadTs('data/design-styles.ts');
+const { styleGuidance } = loadTs('data/design-style-guidance.ts');
 const { createStylePrompt, createStyleCss, createBlendedStylePrompt } = loadTs('data/design-style-export.ts');
 const { styleCompositions, compositionFor, compositionNotes, clampSecondaryWeight } = loadTs('data/design-style-composition.ts');
 
@@ -33,6 +34,13 @@ check(designStyles.every(s => /^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$/.test(s.id)), 'sa
 check(designStyles.every(s => designStyleGroups.some(g => g.id === s.group)), 'known group');
 check(designStyles.every(s => s.name && s.ja && s.summary && s.use), 'named and explained');
 check(designStyles.every(s => s.features.length >= 3 && s.avoid.length >= 2), 'features and avoidances');
+check(Object.keys(styleGuidance).length === 24, '24 individual selection guides');
+check(designStyles.every(s => {
+  const guide = styleGuidance[s.id];
+  return guide && guide.unsuitable.length > 10 && guide.firstAdjustment.length > 10 &&
+    guide.related.length === 2 && new Set(guide.related).size === 2 &&
+    guide.related.every(id => id !== s.id && designStyles.some(item => item.id === id));
+}), 'all guides have uses, first adjustments and two valid cross-links');
 check(designStyles.every(s => s.tokens.radius >= 0 && s.tokens.borderWidth >= 0), 'bounded radius and borders');
 check(designStyles.every(s => ['sans', 'serif', 'mono'].includes(s.tokens.font)), 'fonts');
 check(designStyles.every(s => ['none', 'grid', 'dots', 'diagonal', 'gradient'].includes(s.tokens.pattern)), 'background patterns');
@@ -134,6 +142,8 @@ check(page.includes("compare === 'none'") && page.includes('mixEnabled && canMix
 check(page.includes('value={prompt}') && page.includes("copyText(prompt, 'プロンプト')"), 'display and copy reference same prompt string');
 check(page.includes('onFocus={e => e.currentTarget.select()}') && page.includes('コピーできませんでした。下の欄から手動で選択してください。'), 'manual selection fallback');
 check(page.includes('value={css}') && page.includes("copyText(css, 'CSS')"), 'CSS output and copy use same source');
+check(page.includes('guidance.unsuitable') && page.includes('guidance.firstAdjustment') && page.includes("'/styles?style='"), 'guidance and deep links rendered');
+check(page.includes('min-[340px]:grid-cols-2'), 'style grid can collapse to one column for zoom');
 
 const app = fs.readFileSync(path.join(root, 'App.tsx'), 'utf8');
 const home = fs.readFileSync(path.join(root, 'pages/Home.tsx'), 'utf8');
