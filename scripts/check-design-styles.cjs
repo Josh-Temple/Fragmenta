@@ -143,6 +143,10 @@ check(page.includes('value={prompt}') && page.includes("copyText(prompt, 'プロ
 check(page.includes('onFocus={e => e.currentTarget.select()}') && page.includes('コピーできませんでした。下の欄から手動で選択してください。'), 'manual selection fallback');
 check(page.includes('value={css}') && page.includes("copyText(css, 'CSS')"), 'CSS output and copy use same source');
 check(page.includes('guidance.unsuitable') && page.includes('guidance.firstAdjustment') && page.includes("'/styles?style='"), 'guidance and deep links rendered');
+check(page.includes('setSearchParams(previous =>') && page.includes("next.set('style', id)"),
+  'style selections update shareable URL for refresh/back');
+check(page.includes('requestedStyle === compare') && page.includes('checked={mixing} disabled={!canMix}'),
+  'deep links and equal A/B choices clear disabled blend state');
 check(page.includes('min-[340px]:grid-cols-2'), 'style grid can collapse to one column for zoom');
 
 const app = fs.readFileSync(path.join(root, 'App.tsx'), 'utf8');

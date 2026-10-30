@@ -10,12 +10,13 @@ type Family = 'all' | DesignStyleGroup;
 const DesignStyles: React.FC = () => {
   const [family, setFamily] = useState<Family>('all');
   const [query, setQuery] = useState('');
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const requestedStyle = searchParams.get('style');
   const [primary, setPrimary] = useState(() => designStyles.find(style => style.id === requestedStyle)?.id ?? 'swiss');
   useEffect(() => {
     if (requestedStyle && designStyles.some(style => style.id === requestedStyle)) {
       setPrimary(requestedStyle);
+      if (requestedStyle === compare) setMixEnabled(false);
       setCopyStatus('');
     }
   }, [requestedStyle]);
@@ -42,6 +43,11 @@ const DesignStyles: React.FC = () => {
   const choosePrimary = (id: string) => {
     setPrimary(id);
     if (id === compare) setMixEnabled(false);
+    setSearchParams(previous => {
+      const next = new URLSearchParams(previous);
+      next.set('style', id);
+      return next;
+    });
     setCopyStatus('');
   };
   const chooseComparison = (id: string) => {
@@ -152,7 +158,7 @@ const DesignStyles: React.FC = () => {
         </fieldset>
         <div className="mt-5 rounded-xl border border-ink-border bg-surface p-4">
           <label className="flex items-start gap-3 text-sm font-semibold">
-            <input type="checkbox" checked={mixEnabled} disabled={!canMix} onChange={e => { setMixEnabled(e.target.checked); setCopyStatus(''); }}
+            <input type="checkbox" checked={mixing} disabled={!canMix} onChange={e => { setMixEnabled(e.target.checked); setCopyStatus(''); }}
               className="mt-1 size-4 shrink-0 accent-primary"/>
             2つのデザインを組み合わせたAI指示を作る
           </label>
