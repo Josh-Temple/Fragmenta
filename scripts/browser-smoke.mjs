@@ -355,6 +355,16 @@ try {
   // silently rewrite the AI output language (or vice versa). Reuse the existing
   // exact-HEAD app and real Chromium, not mock components.
   await page.send('Runtime.evaluate', { expression: "location.hash = '#/styles?style=swiss'" });
+  await page.send('Runtime.evaluate', {
+    expression: "document.querySelector('input[name=\\\"atlas-example\\\"][value=dashboard]')?.click()",
+  });
+  await poll(async () => {
+    const r = await page.send('Runtime.evaluate', {
+      expression: "document.querySelector('input[name=\\\"atlas-example\\\"]:checked')?.value === 'dashboard'",
+      returnByValue: true,
+    });
+    return r.result?.value;
+  }, 'restore dashboard before language matrix');
   await poll(async () => {
     const r = await page.send('Runtime.evaluate', {
       expression: "document.querySelector('#style-a')?.value === 'swiss'",
@@ -402,6 +412,13 @@ try {
   await page.send('Runtime.evaluate', {
     expression: "document.querySelector('section[aria-labelledby=compare-heading] input[type=checkbox]')?.click()",
   });
+  await poll(async () => {
+    const r = await page.send('Runtime.evaluate', {
+      expression: "Boolean(document.querySelector('#style-mix-weight'))",
+      returnByValue: true,
+    });
+    return r.result?.value;
+  }, 'blend range mounted before selecting 50/50');
   await page.send('Runtime.evaluate', {
     expression: "(()=>{const s=document.querySelector('#style-mix-weight');const setter=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;setter.call(s,'50');s.dispatchEvent(new Event('input',{bubbles:true}));s.dispatchEvent(new Event('change',{bubbles:true}));})()",
   });
