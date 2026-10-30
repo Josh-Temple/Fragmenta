@@ -68,6 +68,7 @@ const routes = [
   ['/tools/typography', '日本語の文字を調整'],
   ['/tools/upcoming', '10 tools planned'],
   ['/browse', 'All patterns'],
+  ['/styles', 'デザインの名前から探す'],
   ['/p/glitch-text', 'Glitch Text'],
   ['/a/glitch-text', 'Glitch Text'],
   ['/p/warm-neo-brutalist-editorial', 'Warm Neo-Brutalist'],
@@ -122,6 +123,13 @@ try {
   page = new DevTools(target.webSocketDebuggerUrl);
   await page.ready();
   await Promise.all([page.send('Page.enable'), page.send('Runtime.enable'), page.send('Network.enable')]);
+  // New browser profiles commonly default to en-US. Run legacy Japanese
+  // acceptance deterministically, without changing the user's browser settings.
+  // This only seeds storage inside this throwaway Chrome profile on the app origin.
+  await page.send('Page.addScriptToEvaluateOnNewDocument', {
+    source: "if (location.origin === " + JSON.stringify(new URL(baseUrl).origin) +
+      ") { try { localStorage.setItem('fragmenta.locale', 'ja'); } catch {} }",
+  });
 
   const requests = new Map();
   const errors = [];
@@ -219,6 +227,224 @@ try {
     }
   }
   await page.send('Emulation.clearDeviceMetricsOverride');
+
+  // Browser-level atlas coverage. This runs only in a trusted, authenticated
+  // browser origin or a local preview; it does not bypass Vercel Preview SSO.
+  await page.send('Runtime.evaluate', { expression: "location.hash = '#/styles?style=swiss'" });
+  await poll(async () => {
+    const r = await page.send('Runtime.evaluate', {
+      expression: "document.querySelectorAll('#style-a option').length === 24",
+      returnByValue: true,
+    });
+    return r.result?.value;
+  }, 'atlas loaded with 24 styles');
+  const idsResult = await page.send('Runtime.evaluate', {
+    expression: "Array.from(document.querySelectorAll('#style-a option')).map(option => option.value)",
+    returnByValue: true,
+  });
+  const atlasIds = idsResult.result?.value;
+  if (!Array.isArray(atlasIds) || atlasIds.length !== 24 || new Set(atlasIds).size !== 24) {
+    throw new Error('Expected 24 unique atlas style IDs: ' + JSON.stringify(atlasIds));
+  }
+
+  for (const id of atlasIds) {
+    for (const view of ['dashboard', 'article']) {
+      errors.length = 0;
+      await page.send('Runtime.evaluate', {
+        expression: 'location.hash = ' + JSON.stringify('#/styles?style=' + id),
+      });
+      await page.send('Runtime.evaluate', {
+        expression: "document.querySelector('input[name=\"atlas-example\"][value=" + JSON.stringify(view) + "]')?.click()",
+      });
+      await poll(async () => {
+        const result = await page.send('Runtime.evaluate', {
+          expression: "JSON.stringify({id:document.querySelector('#style-a')?.value,view:document.querySelector('input[name=\"atlas-example\"]:checked')?.value,headline:document.querySelector('section[aria-labelledby=\"compare-heading\"] h3')?.textContent,prompt:document.querySelector('textarea[aria-label=\"AI用プロンプト\"]')?.value || '',links:document.querySelectorAll('a[href*=\"/styles?style=\"]').length})",
+          returnByValue: true,
+        });
+        const actual = JSON.parse(result.result?.value || '{}');
+        return actual.id === id && actual.view === view &&
+          actual.headline === (view === 'dashboard' ? 'プロジェクトの概要' : 'デザインと言葉') &&
+          actual.prompt.includes(view === 'dashboard' ? 'Webダッシュボード' : '記事サイト') &&
+          actual.links === 2;
+      }, 'atlas renders ' + id + '/' + view);
+      if (errors.length) throw new Error('Atlas JavaScript failure: ' + errors.join('; '));
+      console.log('PASS actual atlas DOM/render ' + id + '/' + view);
+    }
+  }
+
+  // Width 180/195px approximates layout reflow from 360/390px at 200%;
+  // this is NOT a substitute for independently checking real browser zoom.
+  for (const width of [180, 195, 360, 390, 768, 1280]) {
+    await page.send('Emulation.setDeviceMetricsOverride', {
+      width, height: 850, deviceScaleFactor: 1, mobile: false,
+    });
+    const observed = await page.send('Runtime.evaluate', {
+      expression: "JSON.stringify({width:innerWidth,scroll:document.documentElement.scrollWidth,cards:document.querySelectorAll('section[aria-labelledby=\"atlas-list-heading\"] button[aria-pressed]').length,columns:getComputedStyle(document.querySelector('section[aria-labelledby=\"atlas-list-heading\"] .grid')).gridTemplateColumns.split(' ').length})",
+      returnByValue: true,
+    });
+    const actual = JSON.parse(observed.result?.value || '{}');
+    if (actual.width !== width || actual.scroll > width + 1 || actual.cards !== 24 ||
+        (width < 340 && actual.columns !== 1)) {
+      throw new Error('Atlas narrow-width overflow/reflow: ' + JSON.stringify(actual));
+    }
+    console.log('PASS atlas CSS viewport ' + width + 'px (not actual browser zoom)');
+  }
+  await page.send('Emulation.clearDeviceMetricsOverride');
+
+  // Verify shareable style URLs, including user selection and invalid A/B state.
+  await page.send('Runtime.evaluate', {
+    expression: "(() => {const select=document.querySelector('#style-a');select.value='neo-brutalism';select.dispatchEvent(new Event('change',{bubbles:true}));})()",
+  });
+  await poll(async () => {
+    const r = await page.send('Runtime.evaluate', {
+      expression: "location.hash.includes('style=neo-brutalism') && document.querySelector('#style-a')?.value==='neo-brutalism'",
+      returnByValue: true,
+    });
+    return r.result?.value;
+  }, 'atlas selection updates URL');
+  await page.send('Runtime.evaluate', {
+    expression: "(() => {const select=document.querySelector('#style-b');select.value='neo-brutalism';select.dispatchEvent(new Event('change',{bubbles:true}));})()",
+  });
+  await poll(async () => {
+    const r = await page.send('Runtime.evaluate', {
+      expression: "(()=>{const box=document.querySelector('#compare-heading ~ p')?.closest('section')?.querySelector('input[type=checkbox]');return !!box && box.disabled && !box.checked;})()",
+      returnByValue: true,
+    });
+    return r.result?.value;
+  }, 'atlas same-style mix disabled and unchecked');
+  console.log('PASS atlas URL and equal-style blend reset');
+
+  // The promise must settle and the system clipboard must read back the full
+  // textarea bytes, not merely a mocked writeText or a success status.
+  await control.send('Browser.grantPermissions', {
+    origin: new URL(baseUrl).origin,
+    permissions: ['clipboardReadWrite', 'clipboardSanitizedWrite'],
+  });
+  for (const kind of ['AI用プロンプト', 'CSSトークン']) {
+    if (kind === 'CSSトークン') {
+      await page.send('Runtime.evaluate', {
+        expression: "Array.from(document.querySelectorAll('button')).find(b=>b.textContent.includes('CSSトークンを見る'))?.click()",
+        userGesture: true,
+      });
+      await poll(async () => {
+        const r = await page.send('Runtime.evaluate', {
+          expression: "!!document.querySelector('textarea[aria-label=\"CSSトークン\"]')",
+          returnByValue: true,
+        });
+        return r.result?.value;
+      }, 'atlas CSS visible');
+    }
+    const expression = "(async()=>{const expected=document.querySelector('textarea[aria-label=" +
+      JSON.stringify(kind) + "]')?.value;const section=document.querySelector('#recipe-heading')?.closest('section');" +
+      "const button=Array.from(section.querySelectorAll('button')).find(b=>b.textContent.trim()===" +
+      JSON.stringify(kind === 'CSSトークン' ? 'CSSをコピー' : 'コピー') + ");" +
+      "if(!button || !expected)return {failure:'missing control'};" +
+      "button.click();await new Promise(r=>setTimeout(r,100));const copied=await navigator.clipboard.readText();" +
+      "return {match:copied===expected,expectedLength:expected.length,readLength:copied.length};})()";
+    const result = await page.send('Runtime.evaluate', {
+      expression, awaitPromise: true, returnByValue: true, userGesture: true,
+    });
+    if (result.exceptionDetails || !result.result?.value?.match) {
+      throw new Error('Atlas system clipboard read-back failed for ' + kind + ': ' +
+        JSON.stringify(result.exceptionDetails || result.result?.value));
+    }
+    console.log('PASS exact system clipboard read-back ' + kind);
+  }
+
+  // Four independent language combinations: changing the UI language must not
+  // silently rewrite the AI output language (or vice versa). Reuse the existing
+  // exact-HEAD app and real Chromium, not mock components.
+  await page.send('Runtime.evaluate', { expression: "location.hash = '#/styles?style=swiss'" });
+  await page.send('Runtime.evaluate', {
+    expression: "document.querySelector('input[name=\\\"atlas-example\\\"][value=dashboard]')?.click()",
+  });
+  await poll(async () => {
+    const r = await page.send('Runtime.evaluate', {
+      expression: "document.querySelector('input[name=\\\"atlas-example\\\"]:checked')?.value === 'dashboard'",
+      returnByValue: true,
+    });
+    return r.result?.value;
+  }, 'restore dashboard before language matrix');
+  await poll(async () => {
+    const r = await page.send('Runtime.evaluate', {
+      expression: "document.querySelector('#style-a')?.value === 'swiss'",
+      returnByValue: true,
+    });
+    return r.result?.value;
+  }, 'return to Swiss atlas before 4 locale combinations');
+  for (const uiLocale of ['ja', 'en']) {
+    for (const outputLocale of ['ja', 'en']) {
+      await page.send('Runtime.evaluate', {
+        expression: "(()=>{const s=document.querySelector('#site-locale');s.value=" +
+          JSON.stringify(uiLocale) + ";s.dispatchEvent(new Event('change',{bubbles:true}));})()",
+      });
+      await page.send('Runtime.evaluate', {
+        expression: "(()=>{const s=document.querySelector('#prompt-locale');s.value=" +
+          JSON.stringify(outputLocale) + ";s.dispatchEvent(new Event('change',{bubbles:true}));})()",
+      });
+      await poll(async () => {
+        const r = await page.send('Runtime.evaluate', {
+          expression: `JSON.stringify({ui:document.querySelector('#site-locale')?.value,
+            output:document.querySelector('#prompt-locale')?.value,
+            lang:document.documentElement.lang,
+            saved:localStorage.getItem('fragmenta.locale'),
+            heading:document.querySelector('#recipe-heading')?.textContent,
+            title:document.querySelector('h1')?.textContent,
+            prompt:document.querySelector('textarea[aria-label="AI用プロンプト"]')?.value})`,
+          returnByValue: true,
+        });
+        const state = JSON.parse(r.result?.value || '{}');
+        return state.ui === uiLocale && state.output === outputLocale &&
+          state.lang === uiLocale && state.saved === uiLocale &&
+          state.title === (uiLocale === 'ja' ? 'デザインの名前から探す' : 'Explore design styles') &&
+          (outputLocale === 'ja'
+            ? state.prompt?.includes('日本語のWebダッシュボード')
+            : state.prompt?.includes('Design an original English-language web dashboard'));
+      }, 'actual UI/output combination ' + uiLocale + '/' + outputLocale);
+      console.log('PASS actual independent language combination UI=' + uiLocale + ', prompt=' + outputLocale);
+    }
+  }
+  // Test the English half-and-half case separately: A retains the structural
+  // lead even when B is equally weighted.
+  await page.send('Runtime.evaluate', {
+    expression: "(()=>{const s=document.querySelector('#style-b');s.value='neo-brutalism';s.dispatchEvent(new Event('change',{bubbles:true}));})()",
+  });
+  await page.send('Runtime.evaluate', {
+    expression: "document.querySelector('section[aria-labelledby=compare-heading] input[type=checkbox]')?.click()",
+  });
+  await poll(async () => {
+    const r = await page.send('Runtime.evaluate', {
+      expression: "Boolean(document.querySelector('#style-mix-weight'))",
+      returnByValue: true,
+    });
+    return r.result?.value;
+  }, 'blend range mounted before selecting 50/50');
+  await page.send('Runtime.evaluate', {
+    expression: "(()=>{const s=document.querySelector('#style-mix-weight');const setter=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;setter.call(s,'50');s.dispatchEvent(new Event('input',{bubbles:true}));s.dispatchEvent(new Event('change',{bubbles:true}));})()",
+  });
+  await poll(async () => {
+    const r = await page.send('Runtime.evaluate', {
+      expression: "document.querySelector('textarea[aria-label=\\\"AI用プロンプト\\\"]')?.value || ''",
+      returnByValue: true,
+    });
+    return r.result?.value?.includes('At 50/50, A always determines structure');
+  }, 'English A-led 50/50 prompt');
+  console.log('PASS English 50/50 A-led structure rule');
+
+  // Restore Japanese for the remaining legacy route acceptance checks.
+  await page.send('Runtime.evaluate', {
+    expression: "(()=>{const s=document.querySelector('#site-locale');s.value='ja';s.dispatchEvent(new Event('change',{bubbles:true}));})()",
+  });
+  await page.send('Runtime.evaluate', {
+    expression: "(()=>{const s=document.querySelector('#prompt-locale');s.value='ja';s.dispatchEvent(new Event('change',{bubbles:true}));})()",
+  });
+  await poll(async () => {
+    const r = await page.send('Runtime.evaluate', {
+      expression: "document.documentElement.lang === 'ja' && document.querySelector('#prompt-locale')?.value === 'ja'",
+      returnByValue: true,
+    });
+    return r.result?.value;
+  }, 'restore Japanese after locale combinations');
 
   // Search input must have an explicit accessible name, not placeholder-only text.
   await page.send('Runtime.evaluate', { expression: "location.hash = '#/search'" });

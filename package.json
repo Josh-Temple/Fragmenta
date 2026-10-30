@@ -7,7 +7,7 @@
     "dev": "vite",
     "typecheck": "tsc --noEmit",
     "lint": "node scripts/lint.cjs",
-    "prebuild": "npm run typecheck && npm run lint && npm run design:verify && npm run tools:verify",
+    "prebuild": "npm run typecheck && npm run lint && npm run design:verify && npm run tools:verify && node --check scripts/browser-smoke.mjs",
     "build": "vite build",
     "postbuild": "node scripts/prepare-browser-acceptance.cjs",
     "preview": "vite preview",

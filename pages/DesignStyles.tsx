@@ -2,13 +2,18 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { DesignStyleSpecimen } from '../components/DesignStyleSpecimen';
 import { designStyleGroups, designStyles, type DesignStyleGroup } from '../data/design-styles';
+import { styleGuidance } from '../data/design-style-guidance';
 import { createStylePrompt, createBlendedStylePrompt, createStyleCss, type DemoScreen } from '../data/design-style-export';
 
 import { matchesSearch, styleSearchAliases } from '../data/discovery';
+import { useLocale, type Locale } from '../i18n/locale';
+import { localStyle } from '../i18n/styles-en';
 
 type Family = 'all' | DesignStyleGroup;
 
 const DesignStyles: React.FC = () => {
+  const { locale, txt } = useLocale();
+  const [promptLocale, setPromptLocale] = useState<Locale>(locale);
   const [searchParams, setSearchParams] = useSearchParams();
   const requestedStyle = searchParams.get('style');
   const [family, setFamily] = useState<Family>('all');
@@ -21,16 +26,20 @@ const DesignStyles: React.FC = () => {
   const [mixEnabled, setMixEnabled] = useState(false);
   const [secondaryWeight, setSecondaryWeight] = useState(30);
   const first = designStyles.find(item => item.id === primary) ?? designStyles[0];
+  const displayFirst = localStyle(first, locale);
+  const guidance = styleGuidance[first.id];
   const second = compare === 'none' ? null : designStyles.find(item => item.id === compare) ?? null;
   const results = useMemo(() => {
     return designStyles.filter(item =>
       (family === 'all' || item.group === family) &&
-      matchesSearch(query, [item.name, item.ja, item.summary, item.use, ...item.features, ...item.avoid, styleSearchAliases[item.id] ?? ''])
+      matchesSearch(query, [item.name, item.ja, item.summary, item.use, ...item.features, ...item.avoid,
+        localStyle(item, 'en').summary, localStyle(item, 'en').use, ...localStyle(item, 'en').features,
+        ...localStyle(item, 'en').avoid, styleSearchAliases[item.id] ?? ''])
     );
   }, [family, query]);
   const canMix = Boolean(second && first.id !== second.id);
   const mixing = mixEnabled && canMix;
-  const prompt = mixing && second ? createBlendedStylePrompt(first, second, screen, secondaryWeight) : createStylePrompt(first, screen);
+  const prompt = mixing && second ? createBlendedStylePrompt(first, second, screen, secondaryWeight, promptLocale) : createStylePrompt(first, screen, promptLocale);
   const css = createStyleCss(first);
   useEffect(() => {
     if (requestedStyle && designStyles.some(style => style.id === requestedStyle)) {
@@ -45,7 +54,7 @@ const DesignStyles: React.FC = () => {
       const next = new URLSearchParams(current);
       next.set('style', id);
       return next;
-    }, { replace: true });
+    });
     setMixEnabled(false);
     setCopyStatus('');
   };
@@ -58,9 +67,9 @@ const DesignStyles: React.FC = () => {
     try {
       if (!navigator.clipboard?.writeText) throw new Error('Clipboard unavailable');
       await navigator.clipboard.writeText(value);
-      setCopyStatus(label + 'をコピーしました。');
+      setCopyStatus(txt(label + ' copied.', label + 'をコピーしました。'));
     } catch {
-      setCopyStatus('コピーできませんでした。下の欄から手動で選択してください。');
+      setCopyStatus(txt('Copy failed. Select the text in the field below.', 'コピーできませんでした。下の欄から手動で選択してください。'));
     }
   };
 
@@ -72,9 +81,9 @@ const DesignStyles: React.FC = () => {
           Home
         </Link>
         <p className="mt-4 text-xs uppercase tracking-[.2em] text-primary-dark font-bold">Design Styles / デザインの図鑑</p>
-        <h1 className="mt-2 text-3xl font-bold text-ink">デザインの名前から探す</h1>
+        <h1 className="mt-2 text-3xl font-bold text-ink">{txt('Explore design styles','デザインの名前から探す')}</h1>
         <p className="mt-3 text-sm leading-relaxed text-ink-muted">
-          {designStyles.length}系統の特徴を知り、同じ画面で比較し、AIへの指示文やCSSトークンを持ち帰れます。
+          {txt(`Compare ${designStyles.length} styles on the same screen, then copy an AI brief or CSS tokens.`, `${designStyles.length}系統の特徴を知り、同じ画面で比較し、AIへの指示文やCSSトークンを持ち帰れます。`)}
         </p>
         <p className="mt-2 text-xs leading-relaxed text-ink-muted">
           プレビューは各様式から着想を得て独自に作った簡易解釈です。歴史的な正解や公式デザインシステムの再現ではありません。
@@ -83,8 +92,8 @@ const DesignStyles: React.FC = () => {
       </header>
 
       <section aria-labelledby="atlas-list-heading" className="px-5 py-6">
-        <h2 id="atlas-list-heading" className="text-lg font-bold">スタイルを探す</h2>
-        <label htmlFor="atlas-search" className="block mt-4 text-sm font-semibold">名前・特徴で検索</label>
+        <h2 id="atlas-list-heading" className="text-lg font-bold">{txt('Find a style','スタイルを探す')}</h2>
+        <label htmlFor="atlas-search" className="block mt-4 text-sm font-semibold">{txt('Search by name or feature','名前・特徴で検索')}</label>
         <input id="atlas-search" type="search" value={query} onChange={e => setQuery(e.target.value)}
           placeholder="例：Swiss、侘び寂び、グラデーション"
           className="w-full mt-2 rounded-lg border border-ink-border bg-paper p-3 text-ink text-base focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"/>
@@ -99,7 +108,7 @@ const DesignStyles: React.FC = () => {
         </div>
         <p className="mt-3 text-xs text-ink-muted" role="status">{results.length} / {designStyles.length} 件</p>
         {results.length ? (
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-4">
+          <div className="grid grid-cols-1 min-[340px]:grid-cols-2 sm:grid-cols-3 gap-3 mt-4">
             {results.map(item => (
               <button type="button" aria-pressed={primary === item.id} key={item.id}
                 onClick={() => choosePrimary(item.id)}
@@ -120,11 +129,11 @@ const DesignStyles: React.FC = () => {
               </button>
             ))}
           </div>
-        ) : <p className="mt-4 p-4 bg-surface rounded-lg text-sm">該当するスタイルがありません。検索語や分類を変えてください。</p>}
+        ) : <p className="mt-4 p-4 bg-surface rounded-lg text-sm">{txt('No styles match. Change the query or category.','該当するスタイルがありません。検索語や分類を変えてください。')}</p>}
       </section>
 
       <section aria-labelledby="compare-heading" className="px-5 pt-5 pb-6 border-t border-ink-border">
-        <h2 id="compare-heading" tabIndex={-1} className="scroll-mt-5 text-xl font-bold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">同じ内容で見比べる</h2>
+        <h2 id="compare-heading" tabIndex={-1} className="scroll-mt-5 text-xl font-bold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">{txt('Compare the same content','同じ内容で見比べる')}</h2>
         <p className="mt-2 text-sm text-ink-muted">文字、余白、色、形、素材感の違いを確認します。比較する組合せと画面を選べます。</p>
         <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
@@ -208,21 +217,45 @@ const DesignStyles: React.FC = () => {
       <section aria-labelledby="recipe-heading" className="px-5 pt-6 pb-5 border-t border-ink-border">
         <h2 id="recipe-heading" className="text-xl font-bold">{mixing ? 'スタイルAの特徴とA/Bの配合指示' : '特徴とAI用の指定文'}</h2>
         <h3 className="mt-4 text-lg font-bold">{first.name} / {first.ja}</h3>
-        <p className="mt-2 text-sm leading-relaxed">{first.summary}。{first.use}に向いています。</p>
+        <p className="mt-2 text-sm leading-relaxed">{locale === 'en' ? `${displayFirst.summary}. Suitable for ${displayFirst.use.toLowerCase()}.` : `${displayFirst.summary}。${displayFirst.use}に向いています。`}</p>
         <h4 className="mt-4 text-sm font-bold">スタイルAで指定するとよい特徴</h4>
         <ul className="mt-2 list-disc pl-5 text-sm leading-loose">
-          {first.features.map(value => <li key={value}>{value}</li>)}
+          {displayFirst.features.map(value => <li key={value}>{value}</li>)}
         </ul>
         <h4 className="mt-3 text-sm font-bold">避けたいこと</h4>
         <ul className="mt-2 list-disc pl-5 text-sm leading-loose">
-          {first.avoid.map(value => <li key={value}>{value}</li>)}
+          {displayFirst.avoid.map(value => <li key={value}>{value}</li>)}
         </ul>
+        <h4 className="mt-4 text-sm font-bold">{txt('When it may not fit', '向かない可能性がある用途')}</h4>
+        <p className="mt-2 text-sm leading-relaxed">{guidance.unsuitable}</p>
+        <h4 className="mt-4 text-sm font-bold">{txt('What to adjust first', '最初に調整すること')}</h4>
+        <p className="mt-2 text-sm leading-relaxed">{guidance.firstAdjustment}</p>
+        <h4 className="mt-4 text-sm font-bold">{txt('Related styles', '関連するスタイル')}</h4>
+        <div className="mt-2 flex flex-wrap gap-2">
+          {guidance.related.map(id => {
+            const item = designStyles.find(style => style.id === id);
+            return item ? (
+              <Link key={id} to={'/styles?style=' + encodeURIComponent(id)}
+                className="inline-flex min-h-11 items-center rounded-lg border border-ink-border px-3 py-2 text-sm text-ink underline-offset-2 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
+                {item.name} / {item.ja}
+              </Link>
+            ) : null;
+          })}
+        </div>
+        {locale === 'en' && <p className="mt-2 text-xs text-ink-muted">The detailed selection advice above is currently available in Japanese only.</p>}
         <div className="flex items-center justify-between gap-2 mt-5">
           <h3 className="text-sm font-bold">{mixing ? 'AI向け配合プロンプト' : 'AI向けプロンプト'}</h3>
           <button type="button" onClick={() => void copyText(prompt, 'プロンプト')}
             className="rounded-lg border border-ink-border px-3 py-2 text-sm font-semibold hover:border-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
             コピー
           </button>
+        </div>
+        <div className="mt-3 flex flex-wrap items-center gap-3">
+          <label htmlFor="prompt-locale" className="text-sm font-semibold">{txt('AI prompt language','AI指示文の出力言語')}</label>
+          <select id="prompt-locale" value={promptLocale} onChange={event => { setPromptLocale(event.target.value === 'ja' ? 'ja' : 'en'); setCopyStatus(''); }}
+            className="min-h-11 rounded border border-ink-border bg-paper px-3 text-sm text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
+            <option value="ja">日本語</option><option value="en">English</option>
+          </select>
         </div>
         <textarea readOnly aria-label="AI用プロンプト" rows={9} value={prompt}
           onFocus={e => e.currentTarget.select()} className="mt-2 w-full rounded-lg bg-surface border border-ink-border p-3 font-mono text-xs leading-relaxed text-ink resize-y"/>
@@ -247,6 +280,7 @@ const DesignStyles: React.FC = () => {
         <p className="mt-3 text-sm" role="status" aria-live="polite">{copyStatus}</p>
       </section>
 
+      {locale === 'en' && <p className="mx-5 mt-3 text-xs leading-relaxed text-ink-muted" role="note">English support is currently limited to navigation, style descriptions and AI prompts. Other site pages and guidance may remain in Japanese.</p>}
       <aside className="mx-5 mt-3 p-4 rounded-xl bg-surface border border-ink-border">
         <h2 className="text-base font-bold">類型を混同しないために</h2>
         <p className="text-sm leading-relaxed mt-2">
