@@ -1,4 +1,6 @@
 import type { DesignStyle } from './design-styles';
+import type { Locale } from '../i18n/locale';
+import { localStyle } from '../i18n/styles-en';
 
 export type DemoScreen = 'dashboard' | 'article';
 
@@ -10,7 +12,7 @@ const fontValues = {
 
 export const designFont = (style: DesignStyle): string => fontValues[style.tokens.font];
 
-export const createStylePrompt = (style: DesignStyle, screen: DemoScreen): string => [
+export const createStylePrompt = (style: DesignStyle, screen: DemoScreen, locale: Locale = 'ja'): string => locale === 'en' ? englishSingle(style, screen) : [
   '日本語の' + (screen === 'dashboard' ? 'Webダッシュボード' : '記事サイト') + 'を「' + style.name + '（' + style.ja + '）」の方向性でデザインしてください。',
   'デザインの意図: ' + style.summary + '。',
   '重視する特徴: ' + style.features.join('、') + '。',
@@ -90,7 +92,8 @@ const supportingDetails: Readonly<Record<string, string>> = {
  * At 50/50 the layout and information hierarchy are deterministically A.
  * Existing single-style briefs and A-only CSS token export stay unchanged.
  */
-export function createBlendedStylePrompt(primary: DesignStyle, secondary: DesignStyle, screen: DemoScreen, secondaryWeight: number): string {
+export function createBlendedStylePrompt(primary: DesignStyle, secondary: DesignStyle, screen: DemoScreen, secondaryWeight: number, locale: Locale = 'ja'): string {
+  if (locale === 'en') return englishBlend(primary, secondary, screen, secondaryWeight);
   if (primary.id === secondary.id) return createStylePrompt(primary, screen);
   const weight = Number.isFinite(secondaryWeight) ? Math.max(0, Math.min(100, Math.round(secondaryWeight))) : 0;
   if (weight === 0) return createStylePrompt(primary, screen);
@@ -126,5 +129,52 @@ export function createBlendedStylePrompt(primary: DesignStyle, secondary: Design
     '上記の比率はデザイン要素の採用優先度の目安です。CSS値を機械的に補間する指示ではありません。提示した色や質感も概念上の参考値で、実際の画面や生成結果を保証しません。',
     '他社の画面やロゴを複製せず独自に制作し、日本語の折返し・モバイル幅・キーボード操作・十分な文字コントラスト・フォーカス表示を実画面で検証してください。',
     'この指定は様式の解釈であり、公式デザインシステム準拠やアクセシビリティ認証ではありません。',
+  ].join('\n');
+}
+
+function englishSingle(style: DesignStyle, screen: DemoScreen): string {
+  const value = localStyle(style, 'en');
+  return [
+    'Design an original English-language ' + (screen === 'dashboard' ? 'web dashboard' : 'article site') + ' using the ' + value.name + ' design direction.',
+    'Intent: ' + value.summary + '.',
+    'Features: ' + value.features.join('; ') + '.',
+    'Illustrative tokens: background ' + value.tokens.background + ', surface ' + value.tokens.surface +
+      ', text ' + value.tokens.text + ', accent ' + value.tokens.accent +
+      ', border radius ' + value.tokens.radius + 'px, border width ' + value.tokens.borderWidth + 'px.',
+    'Avoid: ' + value.avoid.join('; ') + '.',
+    'Use original copy and layout; do not reproduce a brand or an existing website.',
+    'Check English text wrapping, mobile layouts, text contrast, visible keyboard focus and keyboard navigation.',
+    'These are illustrative directions, not official design-system conformance or accessibility certification.',
+  ].join('\n');
+}
+
+function englishBlend(primary: DesignStyle, secondary: DesignStyle, screen: DemoScreen, input: number): string {
+  const weight = Number.isFinite(input) ? Math.max(0, Math.min(100, Math.round(input))) : 0;
+  if (primary.id === secondary.id || weight === 0) return englishSingle(primary, screen);
+  if (weight === 100) return englishSingle(secondary, screen);
+  const dominantIsB = weight > 50;
+  const main = localStyle(dominantIsB ? secondary : primary, 'en');
+  const detail = localStyle(dominantIsB ? primary : secondary, 'en');
+  const mainName = dominantIsB ? 'B' : 'A', detailName = dominantIsB ? 'A' : 'B';
+  const a = localStyle(primary, 'en'), b = localStyle(secondary, 'en');
+  const minorShare = Math.min(weight, 100 - weight);
+  return [
+    'Design an original English-language ' + (screen === 'dashboard' ? 'web dashboard' : 'article site') + ' combining two design directions.',
+    'A: ' + a.name + ' ' + (100 - weight) + '%; B: ' + b.name + ' ' + weight + '%.',
+    'These percentages indicate adoption priority, not area ratios, CSS interpolation or exact visual mixing.',
+    'Structure: use ' + mainName + ' (' + main.name + ') for content order, hierarchy, grid, spacing and placement of primary actions.',
+    ...(weight === 50 ? ['At 50/50, A always determines structure and information hierarchy; B only supplements surface detail.'] : []),
+    'Dominant ' + mainName + ' intent: ' + main.summary + '; features: ' + main.features.join('; ') + '.',
+    'Dominant typography: refer to ' + designFont(main) + ', preserving readable body text and heading levels.',
+    'Supporting ' + detailName + ': use ' + (minorShare <= 10 ? 'only one' : 'at most two') +
+      ' accents in labels, dividers or card surfaces without changing the content structure.',
+    'Example supporting feature: ' + detail.features[0] + '. Supporting features are optional: ' + detail.features.join('; ') + '.',
+    'Dominant reference colors (not finished CSS): background ' + main.tokens.background +
+      ', surface ' + main.tokens.surface + ', text ' + main.tokens.text + ', accent ' + main.tokens.accent + '.',
+    'Supporting accent reference (not an automatic text color): ' + detail.tokens.accent + '.',
+    'On conflict, omit supporting decoration rather than weakening the dominant hierarchy or readability.',
+    'Avoid in A: ' + a.avoid.join('; ') + '. Avoid in B: ' + b.avoid.join('; ') + '.',
+    'Do not copy brands or third-party sites. Verify English wrapping, mobile widths, keyboard access, visible focus and actual text contrast.',
+    'The mixed preview is illustrative, not a finished implementation, a CSS blend or a conformance certification.',
   ].join('\n');
 }

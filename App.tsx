@@ -1,4 +1,5 @@
 import React from 'react';
+import { LocaleProvider } from './i18n/locale';
 import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Layout from './components/Layout';
 import Home from './pages/Home';
@@ -18,7 +19,7 @@ import BestPractices from './pages/BestPractices';
 
 const App: React.FC = () => {
   return (
-    <HashRouter>
+    <LocaleProvider><HashRouter>
       <Routes>
         <Route path="/" element={<Layout><Home /></Layout>} />
         <Route path="/browse" element={<Layout><Browse /></Layout>} />
@@ -39,7 +40,7 @@ const App: React.FC = () => {
         <Route path="/settings" element={<Navigate to="/" replace />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-    </HashRouter>
+    </HashRouter></LocaleProvider>
   );
 };
 
