@@ -35,6 +35,7 @@ function loadTs(file) {
 function check(assertion, label) { if (!assertion) throw Error('FAIL atlas: ' + label); }
 
 const { designStyleGroups, designStyles } = loadTs('data/design-styles.ts');
+const { styleGuidance } = loadTs('data/design-style-guidance.ts');
 const { createStylePrompt, createStyleCss, createBlendedStylePrompt } = loadTs('data/design-style-export.ts');
 const { styleCompositions, compositionFor, compositionNotes, clampSecondaryWeight } = loadTs('data/design-style-composition.ts');
 
@@ -46,6 +47,8 @@ check(designStyles.every(s => /^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$/.test(s.id)), 'sa
 check(designStyles.every(s => designStyleGroups.some(g => g.id === s.group)), 'known group');
 check(designStyles.every(s => s.name && s.ja && s.summary && s.use), 'named and explained');
 check(designStyles.every(s => s.features.length >= 3 && s.avoid.length >= 2), 'features and avoidances');
+check(Object.keys(styleGuidance).length === 24, '24 style selection guides');
+check(designStyles.every(s => { const g = styleGuidance[s.id]; return g && g.unsuitable.length > 10 && g.firstAdjustment.length > 10 && g.related.length === 2 && new Set(g.related).size === 2 && g.related.every(id => id !== s.id && designStyles.some(item => item.id === id)); }), 'complete style advice with 2 valid links per style');
 check(designStyles.every(s => s.tokens.radius >= 0 && s.tokens.borderWidth >= 0), 'bounded radius and borders');
 check(designStyles.every(s => ['sans', 'serif', 'mono'].includes(s.tokens.font)), 'fonts');
 check(designStyles.every(s => ['none', 'grid', 'dots', 'diagonal', 'gradient'].includes(s.tokens.pattern)), 'background patterns');
@@ -177,6 +180,7 @@ check(englishPairs === 5520, '5520 English mix-matrix cases');
 
 const page = fs.readFileSync(path.join(root, 'pages/DesignStyles.tsx'), 'utf8');
 const specimen = fs.readFileSync(path.join(root, 'components/DesignStyleSpecimen.tsx'), 'utf8');
+check(page.includes('styleGuidance[first.id]') && page.includes("'/styles?style=' + encodeURIComponent(id)"), 'selected style guides and related links wired');
 check(page.includes('createBlendedStylePrompt') && page.includes('type="range"') && page.includes('secondaryStyle={secondaryWeight > 50 ? first : second}'), 'mixing controls and preview');
 check(specimen.includes('compositionFor(style)') && specimen.includes('artDirectionFor(style)') && specimen.includes('metricColumns(art)'), 'structural layouts driven by style and individual art direction');
 check(page.includes('配合した完成CSSを生成する機能はまだありません'), 'mixed CSS not falsely promised');

@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { DesignStyleSpecimen } from '../components/DesignStyleSpecimen';
 import { designStyleGroups, designStyles, type DesignStyleGroup } from '../data/design-styles';
+import { styleGuidance } from '../data/design-style-guidance';
 import { createStylePrompt, createBlendedStylePrompt, createStyleCss, type DemoScreen } from '../data/design-style-export';
 
 import { matchesSearch, styleSearchAliases } from '../data/discovery';
@@ -26,6 +27,7 @@ const DesignStyles: React.FC = () => {
   const [secondaryWeight, setSecondaryWeight] = useState(30);
   const first = designStyles.find(item => item.id === primary) ?? designStyles[0];
   const displayFirst = localStyle(first, locale);
+  const guidance = styleGuidance[first.id];
   const second = compare === 'none' ? null : designStyles.find(item => item.id === compare) ?? null;
   const results = useMemo(() => {
     return designStyles.filter(item =>
@@ -52,7 +54,7 @@ const DesignStyles: React.FC = () => {
       const next = new URLSearchParams(current);
       next.set('style', id);
       return next;
-    }, { replace: true });
+    });
     setMixEnabled(false);
     setCopyStatus('');
   };
@@ -106,7 +108,7 @@ const DesignStyles: React.FC = () => {
         </div>
         <p className="mt-3 text-xs text-ink-muted" role="status">{results.length} / {designStyles.length} 件</p>
         {results.length ? (
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-4">
+          <div className="grid grid-cols-1 min-[340px]:grid-cols-2 sm:grid-cols-3 gap-3 mt-4">
             {results.map(item => (
               <button type="button" aria-pressed={primary === item.id} key={item.id}
                 onClick={() => choosePrimary(item.id)}
@@ -224,6 +226,23 @@ const DesignStyles: React.FC = () => {
         <ul className="mt-2 list-disc pl-5 text-sm leading-loose">
           {displayFirst.avoid.map(value => <li key={value}>{value}</li>)}
         </ul>
+        <h4 className="mt-4 text-sm font-bold">{txt('When it may not fit', '向かない可能性がある用途')}</h4>
+        <p className="mt-2 text-sm leading-relaxed">{guidance.unsuitable}</p>
+        <h4 className="mt-4 text-sm font-bold">{txt('What to adjust first', '最初に調整すること')}</h4>
+        <p className="mt-2 text-sm leading-relaxed">{guidance.firstAdjustment}</p>
+        <h4 className="mt-4 text-sm font-bold">{txt('Related styles', '関連するスタイル')}</h4>
+        <div className="mt-2 flex flex-wrap gap-2">
+          {guidance.related.map(id => {
+            const item = designStyles.find(style => style.id === id);
+            return item ? (
+              <Link key={id} to={'/styles?style=' + encodeURIComponent(id)}
+                className="inline-flex min-h-11 items-center rounded-lg border border-ink-border px-3 py-2 text-sm text-ink underline-offset-2 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
+                {item.name} / {item.ja}
+              </Link>
+            ) : null;
+          })}
+        </div>
+        {locale === 'en' && <p className="mt-2 text-xs text-ink-muted">The detailed selection advice above is currently available in Japanese only.</p>}
         <div className="flex items-center justify-between gap-2 mt-5">
           <h3 className="text-sm font-bold">{mixing ? 'AI向け配合プロンプト' : 'AI向けプロンプト'}</h3>
           <button type="button" onClick={() => void copyText(prompt, 'プロンプト')}

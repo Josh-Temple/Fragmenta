@@ -68,6 +68,7 @@ const routes = [
   ['/tools/typography', '日本語の文字を調整'],
   ['/tools/upcoming', '10 tools planned'],
   ['/browse', 'All patterns'],
+  ['/styles', 'デザインの名前から探す'],
   ['/p/glitch-text', 'Glitch Text'],
   ['/a/glitch-text', 'Glitch Text'],
   ['/p/warm-neo-brutalist-editorial', 'Warm Neo-Brutalist'],
@@ -219,6 +220,129 @@ try {
     }
   }
   await page.send('Emulation.clearDeviceMetricsOverride');
+
+  // Browser-level atlas coverage. This runs only in a trusted, authenticated
+  // browser origin or a local preview; it does not bypass Vercel Preview SSO.
+  await page.send('Runtime.evaluate', { expression: "location.hash = '#/styles?style=swiss'" });
+  await poll(async () => {
+    const r = await page.send('Runtime.evaluate', {
+      expression: "document.querySelectorAll('#style-a option').length === 24",
+      returnByValue: true,
+    });
+    return r.result?.value;
+  }, 'atlas loaded with 24 styles');
+  const idsResult = await page.send('Runtime.evaluate', {
+    expression: "Array.from(document.querySelectorAll('#style-a option')).map(option => option.value)",
+    returnByValue: true,
+  });
+  const atlasIds = idsResult.result?.value;
+  if (!Array.isArray(atlasIds) || atlasIds.length !== 24 || new Set(atlasIds).size !== 24) {
+    throw new Error('Expected 24 unique atlas style IDs: ' + JSON.stringify(atlasIds));
+  }
+
+  for (const id of atlasIds) {
+    for (const view of ['dashboard', 'article']) {
+      errors.length = 0;
+      await page.send('Runtime.evaluate', {
+        expression: 'location.hash = ' + JSON.stringify('#/styles?style=' + id),
+      });
+      await page.send('Runtime.evaluate', {
+        expression: "document.querySelector('input[name=\"atlas-example\"][value=" + JSON.stringify(view) + "]')?.click()",
+      });
+      await poll(async () => {
+        const result = await page.send('Runtime.evaluate', {
+          expression: "JSON.stringify({id:document.querySelector('#style-a')?.value,view:document.querySelector('input[name=\"atlas-example\"]:checked')?.value,headline:document.querySelector('section[aria-labelledby=\"compare-heading\"] h3')?.textContent,prompt:document.querySelector('textarea[aria-label=\"AI用プロンプト\"]')?.value || '',links:document.querySelectorAll('a[href*=\"/styles?style=\"]').length})",
+          returnByValue: true,
+        });
+        const actual = JSON.parse(result.result?.value || '{}');
+        return actual.id === id && actual.view === view &&
+          actual.headline === (view === 'dashboard' ? 'プロジェクトの概要' : 'デザインと言葉') &&
+          actual.prompt.includes(view === 'dashboard' ? 'Webダッシュボード' : '記事サイト') &&
+          actual.links === 2;
+      }, 'atlas renders ' + id + '/' + view);
+      if (errors.length) throw new Error('Atlas JavaScript failure: ' + errors.join('; '));
+      console.log('PASS actual atlas DOM/render ' + id + '/' + view);
+    }
+  }
+
+  // Width 180/195px approximates layout reflow from 360/390px at 200%;
+  // this is NOT a substitute for independently checking real browser zoom.
+  for (const width of [180, 195, 360, 390, 768, 1280]) {
+    await page.send('Emulation.setDeviceMetricsOverride', {
+      width, height: 850, deviceScaleFactor: 1, mobile: false,
+    });
+    const observed = await page.send('Runtime.evaluate', {
+      expression: "JSON.stringify({width:innerWidth,scroll:document.documentElement.scrollWidth,cards:document.querySelectorAll('section[aria-labelledby=\"atlas-list-heading\"] button[aria-pressed]').length,columns:getComputedStyle(document.querySelector('section[aria-labelledby=\"atlas-list-heading\"] .grid')).gridTemplateColumns.split(' ').length})",
+      returnByValue: true,
+    });
+    const actual = JSON.parse(observed.result?.value || '{}');
+    if (actual.width !== width || actual.scroll > width + 1 || actual.cards !== 24 ||
+        (width < 340 && actual.columns !== 1)) {
+      throw new Error('Atlas narrow-width overflow/reflow: ' + JSON.stringify(actual));
+    }
+    console.log('PASS atlas CSS viewport ' + width + 'px (not actual browser zoom)');
+  }
+  await page.send('Emulation.clearDeviceMetricsOverride');
+
+  // Verify shareable style URLs, including user selection and invalid A/B state.
+  await page.send('Runtime.evaluate', {
+    expression: "(() => {const select=document.querySelector('#style-a');select.value='neo-brutalism';select.dispatchEvent(new Event('change',{bubbles:true}));})()",
+  });
+  await poll(async () => {
+    const r = await page.send('Runtime.evaluate', {
+      expression: "location.hash.includes('style=neo-brutalism') && document.querySelector('#style-a')?.value==='neo-brutalism'",
+      returnByValue: true,
+    });
+    return r.result?.value;
+  }, 'atlas selection updates URL');
+  await page.send('Runtime.evaluate', {
+    expression: "(() => {const select=document.querySelector('#style-b');select.value='neo-brutalism';select.dispatchEvent(new Event('change',{bubbles:true}));})()",
+  });
+  await poll(async () => {
+    const r = await page.send('Runtime.evaluate', {
+      expression: "(()=>{const box=document.querySelector('#compare-heading ~ p')?.closest('section')?.querySelector('input[type=checkbox]');return !!box && box.disabled && !box.checked;})()",
+      returnByValue: true,
+    });
+    return r.result?.value;
+  }, 'atlas same-style mix disabled and unchecked');
+  console.log('PASS atlas URL and equal-style blend reset');
+
+  // The promise must settle and the system clipboard must read back the full
+  // textarea bytes, not merely a mocked writeText or a success status.
+  await control.send('Browser.grantPermissions', {
+    origin: new URL(baseUrl).origin,
+    permissions: ['clipboardReadWrite', 'clipboardSanitizedWrite'],
+  });
+  for (const kind of ['AI用プロンプト', 'CSSトークン']) {
+    if (kind === 'CSSトークン') {
+      await page.send('Runtime.evaluate', {
+        expression: "Array.from(document.querySelectorAll('button')).find(b=>b.textContent.includes('CSSトークンを見る'))?.click()",
+        userGesture: true,
+      });
+      await poll(async () => {
+        const r = await page.send('Runtime.evaluate', {
+          expression: "!!document.querySelector('textarea[aria-label=\"CSSトークン\"]')",
+          returnByValue: true,
+        });
+        return r.result?.value;
+      }, 'atlas CSS visible');
+    }
+    const expression = "(async()=>{const expected=document.querySelector('textarea[aria-label=" +
+      JSON.stringify(kind) + "]')?.value;const section=document.querySelector('#recipe-heading')?.closest('section');" +
+      "const button=Array.from(section.querySelectorAll('button')).find(b=>b.textContent.trim()===" +
+      JSON.stringify(kind === 'CSSトークン' ? 'CSSをコピー' : 'コピー') + ");" +
+      "if(!button || !expected)return {failure:'missing control'};" +
+      "button.click();await new Promise(r=>setTimeout(r,100));const copied=await navigator.clipboard.readText();" +
+      "return {match:copied===expected,expectedLength:expected.length,readLength:copied.length};})()";
+    const result = await page.send('Runtime.evaluate', {
+      expression, awaitPromise: true, returnByValue: true, userGesture: true,
+    });
+    if (result.exceptionDetails || !result.result?.value?.match) {
+      throw new Error('Atlas system clipboard read-back failed for ' + kind + ': ' +
+        JSON.stringify(result.exceptionDetails || result.result?.value));
+    }
+    console.log('PASS exact system clipboard read-back ' + kind);
+  }
 
   // Search input must have an explicit accessible name, not placeholder-only text.
   await page.send('Runtime.evaluate', { expression: "location.hash = '#/search'" });
