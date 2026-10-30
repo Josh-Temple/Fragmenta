@@ -7,11 +7,12 @@
     "dev": "vite",
     "typecheck": "tsc --noEmit",
     "lint": "node scripts/lint.cjs",
-    "prebuild": "npm run typecheck && npm run lint && npm run design:verify && npm run tools:verify",
+    "prebuild": "npm run typecheck && npm run lint && npm run design:verify && npm run tools:verify && npm run motion:verify",
     "build": "vite build",
     "preview": "vite preview",
     "design:verify": "node scripts/check-design-styles.cjs",
-    "tools:verify": "node scripts/check-tools.cjs"
+    "tools:verify": "node scripts/check-tools.cjs",
+    "motion:verify": "node scripts/check-site-motion.cjs"
   },
   "dependencies": {
     "react": "^19.2.3",
