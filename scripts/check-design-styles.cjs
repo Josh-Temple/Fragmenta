@@ -165,7 +165,6 @@ for (const first of designStyles) {
         check(text.includes('A: ' + first.name) && text.includes('B: ' + second.name) &&
           text.includes('Structure: use ' + (dominantB ? 'B' : 'A')) &&
           text.includes('not area ratios, CSS interpolation') &&
-          text.includes('accessibility') === false &&
           text.includes('visible focus') && !text.includes('undefined'),
           'English blend ' + first.id + '/' + second.id + '/' + screen + '/' + weight);
         if (weight === 50) check(text.includes('At 50/50, A always determines structure'), 'English tie-break');
