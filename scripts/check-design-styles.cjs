@@ -5,8 +5,11 @@ const vm = require('node:vm');
 const ts = require('typescript');
 const root = path.resolve(__dirname, '..');
 
+const moduleCache = new Map();
 function loadTs(file) {
-  const source = fs.readFileSync(path.join(root, file), 'utf8');
+  const fullPath = path.join(root, file);
+  if (moduleCache.has(fullPath)) return moduleCache.get(fullPath);
+  const source = fs.readFileSync(fullPath, 'utf8');
   const result = ts.transpileModule(source, {
     fileName: file,
     compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 },
@@ -16,7 +19,17 @@ function loadTs(file) {
     throw Error('TypeScript syntax error: ' + file);
   }
   const exports = {};
-  vm.runInNewContext(result.outputText, { exports }, { timeout: 3000, filename: file });
+  moduleCache.set(fullPath, exports);
+  const localRequire = name => {
+    if (!name.startsWith('.')) return require(name);
+    const relative = path.relative(root, path.resolve(path.dirname(fullPath), name));
+    for (const extension of ['.ts', '.tsx']) {
+      const candidate = relative + extension;
+      if (fs.existsSync(path.join(root, candidate))) return loadTs(candidate);
+    }
+    throw Error('Unknown local test module: ' + name + ' in ' + file);
+  };
+  vm.runInNewContext(result.outputText, { exports, require: localRequire }, { timeout: 3000, filename: file });
   return exports;
 }
 function check(assertion, label) { if (!assertion) throw Error('FAIL atlas: ' + label); }
@@ -124,6 +137,44 @@ for (const [primaryId, secondaryId] of [
     check(prompt.includes('補助') && prompt.includes('衝突時の解決:'), 'challenging mix has constraints ' + primaryId + '/' + secondaryId);
   }
 }
+
+// Bilingual prompts remain independent of the chosen UI locale.
+const { englishStyles } = loadTs('i18n/styles-en.ts');
+check(Object.keys(englishStyles).length === 24, '24 English style definitions');
+check(designStyles.every(style => englishStyles[style.id] &&
+  englishStyles[style.id].features.length >= 3 &&
+  englishStyles[style.id].avoid.length >= 2), 'English guidance complete');
+for (const first of designStyles) {
+  for (const screen of ['dashboard', 'article']) {
+    const jp = createStylePrompt(first, screen, 'ja');
+    const en = createStylePrompt(first, screen, 'en');
+    check(jp === createStylePrompt(first, screen), 'Japanese default preserved ' + first.id);
+    check(en.includes('English-language') && en.includes(first.name) &&
+      en.includes(englishStyles[first.id].features[0]) &&
+      !en.includes('undefined'), 'English single language ' + first.id);
+  }
+}
+let englishPairs = 0;
+for (const first of designStyles) {
+  for (const second of designStyles) {
+    if (first.id === second.id) continue;
+    for (const screen of ['dashboard', 'article']) {
+      for (const weight of [10, 30, 50, 70, 90]) {
+        const text = createBlendedStylePrompt(first, second, screen, weight, 'en');
+        const dominantB = weight > 50;
+        check(text.includes('A: ' + first.name) && text.includes('B: ' + second.name) &&
+          text.includes('Structure: use ' + (dominantB ? 'B' : 'A')) &&
+          text.includes('not area ratios, CSS interpolation') &&
+          text.includes('accessibility') === false &&
+          text.includes('visible focus') && !text.includes('undefined'),
+          'English blend ' + first.id + '/' + second.id + '/' + screen + '/' + weight);
+        if (weight === 50) check(text.includes('At 50/50, A always determines structure'), 'English tie-break');
+        englishPairs++;
+      }
+    }
+  }
+}
+check(englishPairs === 5520, '5520 English mix-matrix cases');
 
 const page = fs.readFileSync(path.join(root, 'pages/DesignStyles.tsx'), 'utf8');
 const specimen = fs.readFileSync(path.join(root, 'components/DesignStyleSpecimen.tsx'), 'utf8');
