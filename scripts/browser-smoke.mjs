@@ -123,6 +123,13 @@ try {
   page = new DevTools(target.webSocketDebuggerUrl);
   await page.ready();
   await Promise.all([page.send('Page.enable'), page.send('Runtime.enable'), page.send('Network.enable')]);
+  // New browser profiles commonly default to en-US. Run legacy Japanese
+  // acceptance deterministically, without changing the user's browser settings.
+  // This only seeds storage inside this throwaway Chrome profile on the app origin.
+  await page.send('Page.addScriptToEvaluateOnNewDocument', {
+    source: "if (location.origin === " + JSON.stringify(new URL(baseUrl).origin) +
+      ") { try { localStorage.setItem('fragmenta.locale', 'ja'); } catch {} }",
+  });
 
   const requests = new Map();
   const errors = [];
@@ -343,6 +350,84 @@ try {
     }
     console.log('PASS exact system clipboard read-back ' + kind);
   }
+
+  // Four independent language combinations: changing the UI language must not
+  // silently rewrite the AI output language (or vice versa). Reuse the existing
+  // exact-HEAD app and real Chromium, not mock components.
+  await page.send('Runtime.evaluate', { expression: "location.hash = '#/styles?style=swiss'" });
+  await poll(async () => {
+    const r = await page.send('Runtime.evaluate', {
+      expression: "document.querySelector('#style-a')?.value === 'swiss'",
+      returnByValue: true,
+    });
+    return r.result?.value;
+  }, 'return to Swiss atlas before 4 locale combinations');
+  for (const uiLocale of ['ja', 'en']) {
+    for (const outputLocale of ['ja', 'en']) {
+      await page.send('Runtime.evaluate', {
+        expression: "(()=>{const s=document.querySelector('#site-locale');s.value=" +
+          JSON.stringify(uiLocale) + ";s.dispatchEvent(new Event('change',{bubbles:true}));})()",
+      });
+      await page.send('Runtime.evaluate', {
+        expression: "(()=>{const s=document.querySelector('#prompt-locale');s.value=" +
+          JSON.stringify(outputLocale) + ";s.dispatchEvent(new Event('change',{bubbles:true}));})()",
+      });
+      await poll(async () => {
+        const r = await page.send('Runtime.evaluate', {
+          expression: `JSON.stringify({ui:document.querySelector('#site-locale')?.value,
+            output:document.querySelector('#prompt-locale')?.value,
+            lang:document.documentElement.lang,
+            saved:localStorage.getItem('fragmenta.locale'),
+            heading:document.querySelector('#recipe-heading')?.textContent,
+            title:document.querySelector('h1')?.textContent,
+            prompt:document.querySelector('textarea[aria-label="AI用プロンプト"]')?.value})`,
+          returnByValue: true,
+        });
+        const state = JSON.parse(r.result?.value || '{}');
+        return state.ui === uiLocale && state.output === outputLocale &&
+          state.lang === uiLocale && state.saved === uiLocale &&
+          state.title === (uiLocale === 'ja' ? 'デザインの名前から探す' : 'Explore design styles') &&
+          (outputLocale === 'ja'
+            ? state.prompt?.includes('日本語のWebダッシュボード')
+            : state.prompt?.includes('Design an original English-language web dashboard'));
+      }, 'actual UI/output combination ' + uiLocale + '/' + outputLocale);
+      console.log('PASS actual independent language combination UI=' + uiLocale + ', prompt=' + outputLocale);
+    }
+  }
+  // Test the English half-and-half case separately: A retains the structural
+  // lead even when B is equally weighted.
+  await page.send('Runtime.evaluate', {
+    expression: "(()=>{const s=document.querySelector('#style-b');s.value='neo-brutalism';s.dispatchEvent(new Event('change',{bubbles:true}));})()",
+  });
+  await page.send('Runtime.evaluate', {
+    expression: "document.querySelector('section[aria-labelledby=compare-heading] input[type=checkbox]')?.click()",
+  });
+  await page.send('Runtime.evaluate', {
+    expression: "(()=>{const s=document.querySelector('#style-mix-weight');const setter=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;setter.call(s,'50');s.dispatchEvent(new Event('input',{bubbles:true}));s.dispatchEvent(new Event('change',{bubbles:true}));})()",
+  });
+  await poll(async () => {
+    const r = await page.send('Runtime.evaluate', {
+      expression: "document.querySelector('textarea[aria-label=\\\"AI用プロンプト\\\"]')?.value || ''",
+      returnByValue: true,
+    });
+    return r.result?.value?.includes('At 50/50, A always determines structure');
+  }, 'English A-led 50/50 prompt');
+  console.log('PASS English 50/50 A-led structure rule');
+
+  // Restore Japanese for the remaining legacy route acceptance checks.
+  await page.send('Runtime.evaluate', {
+    expression: "(()=>{const s=document.querySelector('#site-locale');s.value='ja';s.dispatchEvent(new Event('change',{bubbles:true}));})()",
+  });
+  await page.send('Runtime.evaluate', {
+    expression: "(()=>{const s=document.querySelector('#prompt-locale');s.value='ja';s.dispatchEvent(new Event('change',{bubbles:true}));})()",
+  });
+  await poll(async () => {
+    const r = await page.send('Runtime.evaluate', {
+      expression: "document.documentElement.lang === 'ja' && document.querySelector('#prompt-locale')?.value === 'ja'",
+      returnByValue: true,
+    });
+    return r.result?.value;
+  }, 'restore Japanese after locale combinations');
 
   // Search input must have an explicit accessible name, not placeholder-only text.
   await page.send('Runtime.evaluate', { expression: "location.hash = '#/search'" });
