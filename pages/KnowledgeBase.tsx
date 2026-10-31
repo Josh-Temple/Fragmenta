@@ -1,10 +1,11 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import catalog from '../data/content-ideas.json';
 
 const normalize = (value: string) => value.normalize('NFKC').toLocaleLowerCase('ja');
 const categories = catalog.categories;
 const entries = catalog.ideas;
+const PAGE_SIZE = 24;
 const labelFor = (id: string) => categories.find(category => category.id === id)?.label ?? id;
 
 export const KnowledgeBase: React.FC = () => {
@@ -13,6 +14,8 @@ export const KnowledgeBase: React.FC = () => {
   const category = categories.some(item => item.id === params.get('category')) ? params.get('category') ?? 'all' : 'all';
   const draftOnly = params.get('draft') === '1';
   const draftCount = entries.filter(item => 'editorial' in item && item.editorial).length;
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+  useEffect(() => { setVisibleCount(PAGE_SIZE); }, [query, category, draftOnly]);
 
   const setFilter = (name: 'q' | 'category' | 'draft', value: string) => {
     const next = new URLSearchParams(params);
@@ -74,7 +77,7 @@ export const KnowledgeBase: React.FC = () => {
           参考メモがある項目だけを表示（{draftCount}件）
         </label>
         <div className="mt-2 flex items-center justify-between gap-3">
-          <p role="status" className="text-sm text-ink-muted">{filtered.length}件 / 全{entries.length}件・{categories.length}分野</p>
+          <p role="status" className="text-sm text-ink-muted">{filtered.length}件該当・{Math.min(visibleCount, filtered.length)}件表示 / 全{entries.length}件</p>
           {(query || category !== 'all' || draftOnly) && <Link to="/knowledge" className="min-h-11 inline-flex items-center text-sm font-semibold underline underline-offset-4">条件をクリア</Link>}
         </div>
       </section>
@@ -82,7 +85,7 @@ export const KnowledgeBase: React.FC = () => {
       {filtered.length ? (
         <section aria-label="デザインの企画案" className="py-6">
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-            {filtered.map(entry =>
+            {filtered.slice(0, visibleCount).map(entry =>
               <article key={entry.id} className="flex min-w-0 flex-col rounded-xl border border-ink-border bg-surface p-4">
                 <p className="text-xs leading-relaxed text-ink-muted">{labelFor(entry.categoryId)} ・ {'editorial' in entry && entry.editorial ? '参考メモあり（未レビュー）' : '企画段階'}</p>
                 <h2 className="mt-2 text-base font-bold leading-snug">
@@ -93,6 +96,12 @@ export const KnowledgeBase: React.FC = () => {
               </article>
             )}
           </div>
+          {visibleCount < filtered.length && (
+            <button type="button" onClick={() => setVisibleCount(count => count + PAGE_SIZE)}
+              className="mt-5 w-full min-h-11 rounded-lg border border-ink-border px-4 py-3 text-sm font-semibold hover:border-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
+              さらに表示（残り{filtered.length - visibleCount}件）
+            </button>
+          )}
         </section>
       ) : (
         <section className="py-8" role="status">

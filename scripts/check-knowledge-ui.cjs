@@ -25,7 +25,7 @@ const listing = read('pages/KnowledgeBase.tsx');
 const detail = read('pages/KnowledgeDetail.tsx');
 check(app.includes('path="/knowledge"') && app.includes('path="/knowledge/:id"'), 'Routes');
 check(home.includes("path: '/knowledge'") && globalSearch.includes("knowledge?"), 'Navigation and query handoff');
-check(listing.includes('draftOnly') && listing.includes('setSearchParams') && listing.includes('filtered.map('), 'Search, filter and draft-only view');
+check(listing.includes('draftOnly') && listing.includes('setSearchParams') && listing.includes('filtered.slice(0, visibleCount).map(') && listing.includes('setVisibleCount'), 'Search, filter and paged draft-only view');
 check(detail.includes('useParams') && detail.includes('relatedIdeaIds') && detail.includes('relatedExisting') && detail.includes('siblings'), 'Detail and navigation');
 check(atlas.includes('relatedKnowledge') && atlas.includes('/knowledge/'), 'Design atlas backlink');
 check(llms.includes('/knowledge/ideas.json') && llms.includes('proposal'), 'AI entry point and proposal caution');
