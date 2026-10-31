@@ -7,14 +7,15 @@
     "dev": "vite",
     "typecheck": "tsc --noEmit",
     "lint": "node scripts/lint.cjs",
-    "prebuild": "npm run typecheck && npm run lint && npm run design:verify && npm run tools:verify && npm run catalog:verify && npm run catalog:export",
+    "prebuild": "npm run typecheck && npm run lint && npm run design:verify && npm run tools:verify && npm run catalog:verify && npm run catalog:export && npm run catalog:smoke",
     "build": "vite build",
     "preview": "vite preview",
     "design:verify": "node scripts/check-design-styles.cjs",
     "tools:verify": "node scripts/check-tools.cjs",
     "predev": "npm run catalog:export",
     "catalog:verify": "node scripts/check-content-ideas.cjs",
-    "catalog:export": "node scripts/export-knowledge.cjs"
+    "catalog:export": "node scripts/export-knowledge.cjs",
+    "catalog:smoke": "node scripts/check-knowledge-ui.cjs"
   },
   "dependencies": {
     "react": "^19.2.3",

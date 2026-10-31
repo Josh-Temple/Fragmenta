@@ -70,7 +70,7 @@ export const KnowledgeBase: React.FC = () => {
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             {filtered.map(entry =>
               <article key={entry.id} className="flex min-w-0 flex-col rounded-xl border border-ink-border bg-surface p-4">
-                <p className="text-xs leading-relaxed text-ink-muted">{labelFor(entry.categoryId)} ・ 企画段階</p>
+                <p className="text-xs leading-relaxed text-ink-muted">{labelFor(entry.categoryId)} ・ {'editorial' in entry && entry.editorial ? '参考メモあり（未レビュー）' : '企画段階'}</p>
                 <h2 className="mt-2 text-base font-bold leading-snug">
                   <Link to={`/knowledge/${entry.id}`} className="inline-block rounded underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">{entry.titleJa}</Link>
                 </h2>

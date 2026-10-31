@@ -21,6 +21,15 @@ for (const idea of data.ideas) {
     if (relation === idea.id || !ideas.has(relation)) fail('Broken relation: ' + idea.id + ' -> ' + relation);
     if (!ideas.get(relation).relatedIdeaIds.includes(idea.id)) fail('Non-reciprocal relation: ' + idea.id + ' -> ' + relation);
   }
+  if (idea.editorial) {
+    const draft = idea.editorial;
+    if (draft.reviewStatus !== 'draft_unreviewed' ||
+      !draft.summary || !Array.isArray(draft.appropriateUses) ||
+      !Array.isArray(draft.pitfalls) || !Array.isArray(draft.reviewChecks) ||
+      !draft.appropriateUses.length || !draft.pitfalls.length || !draft.reviewChecks.length) {
+      fail('Invalid editorial draft: ' + idea.id);
+    }
+  }
   for (const reference of idea.relatedExisting) {
     if (!['style', 'pattern'].includes(reference.kind) || !reference.href.startsWith('https://fragmenta-brown.vercel.app/#/')) fail('Invalid existing reference: ' + idea.id);
   }

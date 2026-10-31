@@ -20,6 +20,7 @@ const KnowledgeDetail: React.FC = () => {
     return found ? [found] : [];
   });
   const category = catalog.categories.find(item => item.id === entry.categoryId);
+  const draft = 'editorial' in entry && entry.editorial ? entry.editorial : null;
   return (
     <article lang="ja" className="min-w-0 px-5 py-7 pb-14">
       <nav aria-label="パンくずリスト" className="text-sm">
@@ -35,9 +36,24 @@ const KnowledgeDetail: React.FC = () => {
       </header>
       <section aria-labelledby="knowledge-status-title" className="py-6">
         <h2 id="knowledge-status-title" className="text-xl font-bold">現在の内容</h2>
-        <p className="mt-3 text-sm leading-relaxed">この項目は今後制作する候補として登録されています。説明、実装方法、プレビュー、出典の調査はまだ完了していません。</p>
+        <p className="mt-3 text-sm leading-relaxed">この項目は今後制作する候補として登録されています。{draft ? '以下に編集下書きがありますが、出典照合や実装検証はまだ完了していません。' : '説明、実装方法、プレビュー、出典の調査はまだ完了していません。'}</p>
         <p className="mt-2 text-sm leading-relaxed text-ink-muted">デザインの特徴や品質を評価した確定資料としては使用せず、調査・制作の出発点として参照してください。</p>
       </section>
+      {draft && <section aria-labelledby="knowledge-draft-title" className="border-t border-ink-border py-6">
+        <h2 id="knowledge-draft-title" className="text-xl font-bold">参考メモ（未レビューの下書き）</h2>
+        <p className="mt-3 text-sm leading-relaxed">{draft.summary}</p>
+        {[
+          { title: '向く用途', items: draft.appropriateUses },
+          { title: '避けたい設計', items: draft.pitfalls },
+          { title: '確認事項', items: draft.reviewChecks },
+        ].map(group => <div key={group.title} className="mt-4">
+          <h3 className="text-sm font-bold">{group.title}</h3>
+          <ul className="mt-2 list-disc space-y-1 pl-5 text-sm leading-relaxed text-ink-muted">
+            {group.items.map(item => <li key={item}>{item}</li>)}
+          </ul>
+        </div>)}
+        <p className="mt-4 text-xs text-ink-muted">編集下書きであり、専門家レビュー・ユーザー検証・出典確認の完了を意味しません。</p>
+      </section>}
       <section aria-labelledby="knowledge-related-title" className="border-t border-ink-border py-6">
         <h2 id="knowledge-related-title" className="text-xl font-bold">関連する企画案</h2>
         <p className="mt-2 text-sm text-ink-muted">用途や表現が近い候補へのリンクです。類似点・相違点は今後検証します。</p>

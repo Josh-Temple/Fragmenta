@@ -259,7 +259,23 @@
         "idea-information-11",
         "idea-layout-08"
       ],
-      "relatedExisting": []
+      "relatedExisting": [],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "一覧から選んだ内容を隣の詳細領域で確認する画面構成。情報を行き来する作業に向く。",
+        "appropriateUses": [
+          "メール、文書管理、管理画面",
+          "一覧と詳細の比較を繰り返す作業"
+        ],
+        "pitfalls": [
+          "狭い画面で2領域を無理に並べない",
+          "詳細表示中も元の一覧へ戻れるようにする"
+        ],
+        "reviewChecks": [
+          "スマートフォン幅で一覧→詳細→戻るを試す",
+          "キーボードとスクリーンリーダーで読み順を確かめる"
+        ]
+      }
     },
     {
       "id": "idea-layout-02",
@@ -404,7 +420,23 @@
       "relatedIdeaIds": [
         "idea-typography-11"
       ],
-      "relatedExisting": []
+      "relatedExisting": [],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "日本語と欧文が混在しても、字形・大きさ・行間に不自然な段差が出ない文字組み。",
+        "appropriateUses": [
+          "日本語・英語が混ざる記事",
+          "技術用語やコードを含むUI"
+        ],
+        "pitfalls": [
+          "フォント名だけで見た目が保証されると考えない",
+          "長い英数字が横にはみ出さないようにする"
+        ],
+        "reviewChecks": [
+          "数字・記号・半角英語・漢字を同じ段落で確認する",
+          "OS別の代替フォントと200%ズームで表示する"
+        ]
+      }
     },
     {
       "id": "idea-typography-02",
@@ -611,7 +643,23 @@
         "idea-accessibility-10",
         "idea-ai-reference-04"
       ],
-      "relatedExisting": []
+      "relatedExisting": [],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "明るい配色と暗い配色を、意味・可読性・操作状態を保ちながら使い分ける設計。",
+        "appropriateUses": [
+          "夜間利用も多い業務画面",
+          "OSの外観設定に従うサービス"
+        ],
+        "pitfalls": [
+          "背景だけ反転してコントラストを失わない",
+          "状態の違いを色だけで伝えない"
+        ],
+        "reviewChecks": [
+          "本文・リンク・フォーム・警告の双方を確認する",
+          "OS設定切替時のちらつきや可読性を確認する"
+        ]
+      }
     },
     {
       "id": "idea-color-07",
@@ -841,7 +889,23 @@
         "idea-forms-03",
         "idea-use-cases-01"
       ],
-      "relatedExisting": []
+      "relatedExisting": [],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "複雑な入力を意味のある工程に分け、進捗と戻る手段を示す入力画面。",
+        "appropriateUses": [
+          "行政手続き、長い申請",
+          "複数の入力テーマがある登録"
+        ],
+        "pitfalls": [
+          "必要以上に工程を増やさない",
+          "戻る操作で入力内容が消えないようにする"
+        ],
+        "reviewChecks": [
+          "途中離脱・戻る・エラー・再開を実画面で試す",
+          "現在の工程と総工程数が理解できるか確認する"
+        ]
+      }
     },
     {
       "id": "idea-forms-02",
@@ -1096,7 +1160,23 @@
           "label": "読み込み状態の実装例",
           "href": "https://fragmenta-brown.vercel.app/#/p/smart-skeleton"
         }
-      ]
+      ],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "実際の処理状態と対応した進捗表示。進捗率が不明な場合は無理に数字を示さない。",
+        "appropriateUses": [
+          "ファイル処理やデータ取得",
+          "待ち時間が生じる操作"
+        ],
+        "pitfalls": [
+          "根拠のない進捗率や完了予告を出さない",
+          "連続する動きの停止・軽減に配慮する"
+        ],
+        "reviewChecks": [
+          "失敗・長時間処理・完了時の表示を試す",
+          "動きを減らすOS設定での代替表現を確認する"
+        ]
+      }
     },
     {
       "id": "idea-motion-10",
@@ -1152,7 +1232,23 @@
           "label": "数値の表示パターン",
           "href": "https://fragmenta-brown.vercel.app/#/p/metric-summary"
         }
-      ]
+      ],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "カテゴリ間の量の比較を棒の長さで示すグラフ。単位、軸、並び順が理解できることを重視する。",
+        "appropriateUses": [
+          "項目ごとの件数比較",
+          "期間別の集計結果"
+        ],
+        "pitfalls": [
+          "棒の長さを歪める軸の切り取りに注意する",
+          "色のみで系列を識別させない"
+        ],
+        "reviewChecks": [
+          "数値・単位・軸の範囲と出典を明示する",
+          "小画面でラベルが読めるか確認する"
+        ]
+      }
     },
     {
       "id": "idea-data-viz-02",
@@ -1451,7 +1547,23 @@
       "relatedIdeaIds": [
         "idea-use-cases-02"
       ],
-      "relatedExisting": []
+      "relatedExisting": [],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "複雑な制度や規則を、原則・条件・例外・確認事項に分けて理解できるように整理する。",
+        "appropriateUses": [
+          "法令・行政手続きの案内",
+          "適用条件が分岐する業務マニュアル"
+        ],
+        "pitfalls": [
+          "要約が法的条件を落とさないようにする",
+          "独自の解釈を原典と混同しない"
+        ],
+        "reviewChecks": [
+          "各判断条件から一次資料へ戻れるか確認する",
+          "例外ケースを使って誤解が生じないか検証する"
+        ]
+      }
     },
     {
       "id": "idea-accessibility-01",
@@ -1463,7 +1575,23 @@
         "idea-components-10",
         "idea-design-systems-12"
       ],
-      "relatedExisting": []
+      "relatedExisting": [],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "ポインターを使わずに主要操作を完了でき、現在のフォーカス位置が分かる設計。",
+        "appropriateUses": [
+          "すべての操作型Web UI",
+          "入力フォーム、ダイアログ、メニュー"
+        ],
+        "pitfalls": [
+          "見た目だけのフォーカス表現にしない",
+          "キーボードだけで抜け出せない状態を作らない"
+        ],
+        "reviewChecks": [
+          "Tab・Shift+Tab・Enter・Escapeを実際に試す",
+          "順序と表示位置が一致するか確認する"
+        ]
+      }
     },
     {
       "id": "idea-accessibility-02",
@@ -1638,7 +1766,23 @@
       "relatedIdeaIds": [
         "idea-information-02"
       ],
-      "relatedExisting": []
+      "relatedExisting": [],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "AIの回答が参照した根拠を示し、元資料の確認につなげる表示設計。",
+        "appropriateUses": [
+          "検索結果に基づくAI回答",
+          "規則や研究資料に触れる支援ツール"
+        ],
+        "pitfalls": [
+          "出典を確認していないのに根拠があるように見せない",
+          "引用範囲とAIによる解釈を混同しない"
+        ],
+        "reviewChecks": [
+          "表示された出典リンクが参照先を開くか確かめる",
+          "主張と出典の対応をサンプル回答で点検する"
+        ]
+      }
     },
     {
       "id": "idea-ai-ui-04",
@@ -1778,7 +1922,23 @@
           "label": "長い制度解説の目次例",
           "href": "https://fragmenta-brown.vercel.app/#/p/article-table-of-contents"
         }
-      ]
+      ],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "制度説明、対象者、申請方法、根拠資料への導線を区別した情報サイトの画面設計。",
+        "appropriateUses": [
+          "法令・制度の解説サイト",
+          "行政の手引きやFAQ"
+        ],
+        "pitfalls": [
+          "更新日の不明な案内を最新情報として扱わない",
+          "自治体独自の取扱いと国のルールを混在させない"
+        ],
+        "reviewChecks": [
+          "制度の例外と出典へ迷わず到達できるか試す",
+          "スマートフォンで長文と表の表示を確認する"
+        ]
+      }
     },
     {
       "id": "idea-use-cases-03",
@@ -2076,7 +2236,23 @@
           "label": "文字の読みやすさの比較",
           "href": "https://fragmenta-brown.vercel.app/#/p/readable-article"
         }
-      ]
+      ],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "文字と背景の見分けにくさを改善前後で比較し、単なる好みと操作上の問題を分けて示す。",
+        "appropriateUses": [
+          "デザイン改善教材",
+          "色や背景を変更するツール"
+        ],
+        "pitfalls": [
+          "見本画像だけで適合を断定しない",
+          "本文と大きな文字の基準を混同しない"
+        ],
+        "reviewChecks": [
+          "実際の色値でコントラストを測る",
+          "フォーカス・非文字要素・実際の利用環境を確認する"
+        ]
+      }
     },
     {
       "id": "idea-review-04",
@@ -2203,7 +2379,23 @@
           "label": "既存のスタイル定義例",
           "href": "https://fragmenta-brown.vercel.app/#/styles"
         }
-      ]
+      ],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "デザインの名称、固有ID、特徴、用途、制約、関連項目、出典と公開状態を機械可読で表すデータ形式。",
+        "appropriateUses": [
+          "AIによるスタイル検索と制作指示",
+          "人間向けページとの共通データ"
+        ],
+        "pitfalls": [
+          "企画案を完成済みの事実として扱わせない",
+          "未検証の出典や再利用許諾を生成しない"
+        ],
+        "reviewChecks": [
+          "JSONのスキーマとリンク整合性を検証する",
+          "公開データが画面表示と一致するか確認する"
+        ]
+      }
     },
     {
       "id": "idea-ai-reference-02",
@@ -2333,5 +2525,6 @@
       ],
       "relatedExisting": []
     }
-  ]
+  ],
+  "editorialNote": "editorial.reviewStatus=draft_unreviewed は編集上の仮案。出典照合・デザイン検証・公開受入を経た完成資料ではありません。"
 }

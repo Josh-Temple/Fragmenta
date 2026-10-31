@@ -7,7 +7,6 @@ const catalog = JSON.parse(fs.readFileSync(path.join(root, 'data/content-ideas.j
 const out = path.join(root, 'public', 'knowledge');
 fs.mkdirSync(out, { recursive: true });
 const itemsById = new Map(catalog.ideas.map(item => [item.id, item]));
-const categoryLabel = new Map(catalog.categories.map(category => [category.id, category.label]));
 const lines = [
   '# Fragmenta — デザイン知識ベース（企画台帳）',
   '',
@@ -25,6 +24,12 @@ for (const category of catalog.categories) {
     lines.push('- ID: ' + item.id);
     lines.push('- 状態: 企画段階');
     lines.push('- 表示: /#/knowledge/' + item.id);
+    if (item.editorial) {
+      lines.push('- 参考メモ（未レビュー）: ' + item.editorial.summary);
+      lines.push('- 向く用途: ' + item.editorial.appropriateUses.join(' / '));
+      lines.push('- 避けたい設計: ' + item.editorial.pitfalls.join(' / '));
+      lines.push('- 確認事項: ' + item.editorial.reviewChecks.join(' / '));
+    }
     if (item.relatedIdeaIds.length) lines.push('- 関連案: ' + item.relatedIdeaIds.map(id => itemsById.get(id)?.titleJa + ' (' + id + ')').join(' / '));
     if (item.relatedExisting.length) lines.push('- 既存の関連項目: ' + item.relatedExisting.map(x => x.kind + ':' + x.id + ' — ' + x.label).join(' / '));
     lines.push('');
