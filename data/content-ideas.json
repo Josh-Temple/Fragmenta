@@ -112,7 +112,7 @@
           "kind": "style",
           "id": "bauhaus",
           "label": "バウハウス（同時代の造形思想の対照）",
-          "href": "https://fragmenta-brown.vercel.app/#/styles"
+          "href": "https://fragmenta-brown.vercel.app/#/styles?style=bauhaus"
         }
       ]
     },
@@ -130,7 +130,7 @@
           "kind": "style",
           "id": "scandinavian",
           "label": "北欧モダン（現代的な方向性との比較）",
-          "href": "https://fragmenta-brown.vercel.app/#/styles"
+          "href": "https://fragmenta-brown.vercel.app/#/styles?style=scandinavian"
         }
       ]
     },
@@ -159,7 +159,7 @@
           "kind": "style",
           "id": "memphis",
           "label": "メンフィス（表現豊かな様式の比較）",
-          "href": "https://fragmenta-brown.vercel.app/#/styles"
+          "href": "https://fragmenta-brown.vercel.app/#/styles?style=memphis"
         }
       ]
     },
@@ -222,7 +222,7 @@
           "kind": "style",
           "id": "cyberpunk",
           "label": "サイバーパンク（世界観の対照）",
-          "href": "https://fragmenta-brown.vercel.app/#/styles"
+          "href": "https://fragmenta-brown.vercel.app/#/styles?style=cyberpunk"
         }
       ]
     },
@@ -407,7 +407,7 @@
           "kind": "style",
           "id": "minimalism",
           "label": "ミニマリズム（情報密度との比較）",
-          "href": "https://fragmenta-brown.vercel.app/#/styles"
+          "href": "https://fragmenta-brown.vercel.app/#/styles?style=minimalism"
         }
       ]
     },
@@ -532,7 +532,7 @@
           "kind": "style",
           "id": "editorial",
           "label": "エディトリアル（文字表現の比較）",
-          "href": "https://fragmenta-brown.vercel.app/#/styles"
+          "href": "https://fragmenta-brown.vercel.app/#/styles?style=editorial"
         }
       ]
     },
@@ -733,7 +733,7 @@
           "kind": "style",
           "id": "glass",
           "label": "グラスモーフィズム（質感の例）",
-          "href": "https://fragmenta-brown.vercel.app/#/styles"
+          "href": "https://fragmenta-brown.vercel.app/#/styles?style=glass"
         }
       ]
     },
@@ -2377,7 +2377,7 @@
           "kind": "style",
           "id": "minimalism",
           "label": "既存のスタイル定義例",
-          "href": "https://fragmenta-brown.vercel.app/#/styles"
+          "href": "https://fragmenta-brown.vercel.app/#/styles?style=minimalism"
         }
       ],
       "editorial": {

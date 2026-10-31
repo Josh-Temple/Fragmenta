@@ -56,13 +56,13 @@
 
 **デ・ステイル**  ・  状態：企画段階
 関連案：[スタイル定義のJSON](#idea-ai-reference-01) / [タイル型ポータル](#idea-layout-05) / [形状のモーフィング](#idea-motion-05)
-既存の関連項目：[バウハウス（同時代の造形思想の対照）](https://fragmenta-brown.vercel.app/#/styles)
+既存の関連項目：[バウハウス（同時代の造形思想の対照）](https://fragmenta-brown.vercel.app/#/styles?style=bauhaus)
 
 ### idea-visual-history-03
 
 **ミッドセンチュリー・モダン**  ・  状態：企画段階
 関連案：[類似色配色](#idea-color-02)
-既存の関連項目：[北欧モダン（現代的な方向性との比較）](https://fragmenta-brown.vercel.app/#/styles)
+既存の関連項目：[北欧モダン（現代的な方向性との比較）](https://fragmenta-brown.vercel.app/#/styles?style=scandinavian)
 
 ### idea-visual-history-04
 
@@ -73,7 +73,7 @@
 
 **ポップアート**  ・  状態：企画段階
 関連案：[補色配色](#idea-color-03)
-既存の関連項目：[メンフィス（表現豊かな様式の比較）](https://fragmenta-brown.vercel.app/#/styles)
+既存の関連項目：[メンフィス（表現豊かな様式の比較）](https://fragmenta-brown.vercel.app/#/styles?style=memphis)
 
 ### idea-visual-history-06
 
@@ -99,7 +99,7 @@
 
 **ソーラーパンク**  ・  状態：企画段階
 関連案：[博物館・美術館サイト](#idea-use-cases-04)
-既存の関連項目：[サイバーパンク（世界観の対照）](https://fragmenta-brown.vercel.app/#/styles)
+既存の関連項目：[サイバーパンク（世界観の対照）](https://fragmenta-brown.vercel.app/#/styles?style=cyberpunk)
 
 ### idea-visual-history-11
 
@@ -187,7 +187,7 @@
 
 **高密度・低密度ダッシュボード比較**  ・  状態：企画段階
 関連案：[ミニマリズムと情報不足の違い](#idea-review-01) / [情報密度の調整](#idea-review-07)
-既存の関連項目：[ミニマリズム（情報密度との比較）](https://fragmenta-brown.vercel.app/#/styles)
+既存の関連項目：[ミニマリズム（情報密度との比較）](https://fragmenta-brown.vercel.app/#/styles?style=minimalism)
 
 ## category-typography
 
@@ -250,7 +250,7 @@
 
 **明朝体とゴシック体の使い分け**  ・  状態：企画段階
 関連案：[似た書体・スタイルの見分け方](#idea-review-08) / [ダークアカデミア](#idea-visual-history-11)
-既存の関連項目：[エディトリアル（文字表現の比較）](https://fragmenta-brown.vercel.app/#/styles)
+既存の関連項目：[エディトリアル（文字表現の比較）](https://fragmenta-brown.vercel.app/#/styles?style=editorial)
 
 ### idea-typography-10
 
@@ -343,7 +343,7 @@
 
 **影・輪郭線・透明度の組み合わせ**  ・  状態：企画段階
 関連案：[異なるスタイルの組み合わせ失敗例](#idea-review-12)
-既存の関連項目：[グラスモーフィズム（質感の例）](https://fragmenta-brown.vercel.app/#/styles)
+既存の関連項目：[グラスモーフィズム（質感の例）](https://fragmenta-brown.vercel.app/#/styles?style=glass)
 
 ## category-components
 
@@ -1147,7 +1147,7 @@
 
 **スタイル定義のJSON**  ・  状態：企画段階
 関連案：[AI向けの検索・取得用インデックス](#idea-ai-reference-12) / [JSONなどの構造化出力の表示](#idea-ai-ui-04) / [デ・ステイル](#idea-visual-history-02)
-既存の関連項目：[既存のスタイル定義例](https://fragmenta-brown.vercel.app/#/styles)
+既存の関連項目：[既存のスタイル定義例](https://fragmenta-brown.vercel.app/#/styles?style=minimalism)
 
 ### idea-ai-reference-02
 

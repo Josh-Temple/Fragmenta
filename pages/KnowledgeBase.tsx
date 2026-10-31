@@ -11,8 +11,10 @@ export const KnowledgeBase: React.FC = () => {
   const [params, setParams] = useSearchParams();
   const query = params.get('q') ?? '';
   const category = categories.some(item => item.id === params.get('category')) ? params.get('category') ?? 'all' : 'all';
+  const draftOnly = params.get('draft') === '1';
+  const draftCount = entries.filter(item => 'editorial' in item && item.editorial).length;
 
-  const setFilter = (name: 'q' | 'category', value: string) => {
+  const setFilter = (name: 'q' | 'category' | 'draft', value: string) => {
     const next = new URLSearchParams(params);
     if (!value || value === 'all') next.delete(name);
     else next.set(name, value);
@@ -23,11 +25,18 @@ export const KnowledgeBase: React.FC = () => {
     const q = normalize(query.trim());
     return entries.filter(entry => {
       if (category !== 'all' && entry.categoryId !== category) return false;
+      if (draftOnly && !('editorial' in entry && entry.editorial)) return false;
       if (!q) return true;
       return normalize([entry.titleJa, entry.id, labelFor(entry.categoryId),
-        ...entry.relatedExisting.map(item => item.label)].join(' ')).includes(q);
+        ...entry.relatedExisting.map(item => item.label),
+        ...('editorial' in entry && entry.editorial ? [
+          entry.editorial.summary,
+          ...entry.editorial.appropriateUses,
+          ...entry.editorial.pitfalls,
+          ...entry.editorial.reviewChecks,
+        ] : [])].join(' ')).includes(q);
     });
-  }, [query, category]);
+  }, [query, category, draftOnly]);
 
   return (
     <div lang="ja" className="min-w-0 px-5 pb-12">
@@ -35,7 +44,7 @@ export const KnowledgeBase: React.FC = () => {
         <Link to="/" className="inline-flex min-h-11 items-center text-sm font-semibold underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">ホームに戻る</Link>
         <p className="mt-4 text-xs font-mono uppercase tracking-wider text-primary">Knowledge base / 計画中のデザイン資料</p>
         <h1 className="mt-2 text-3xl font-bold leading-tight">デザインを、つながりから探す</h1>
-        <p className="mt-3 text-sm leading-relaxed text-ink-muted">デザインやUIの企画案180件を、分類・関連項目から探せます。現時点ではすべて企画段階であり、完成した解説や実装例ではありません。</p>
+        <p className="mt-3 text-sm leading-relaxed text-ink-muted">デザインやUIの企画案180件を、分類・関連項目から探せます。うち{draftCount}件には未レビューの参考メモがあります。完成した解説や実装例ではありません。</p>
         <div className="mt-4 flex flex-wrap gap-3 text-sm">
           <a href="/knowledge/ideas.json" className="min-h-11 inline-flex items-center underline underline-offset-4">AI向けJSON</a>
           <a href="/knowledge/ideas.md" className="min-h-11 inline-flex items-center underline underline-offset-4">Markdown一覧</a>
@@ -59,9 +68,14 @@ export const KnowledgeBase: React.FC = () => {
             </select>
           </div>
         </div>
-        <div className="mt-4 flex items-center justify-between gap-3">
+        <label className="mt-4 flex min-h-11 items-center gap-3 text-sm">
+          <input type="checkbox" checked={draftOnly} onChange={event => setFilter('draft', event.target.checked ? '1' : '')}
+            className="size-4 shrink-0 accent-primary" />
+          参考メモがある項目だけを表示（{draftCount}件）
+        </label>
+        <div className="mt-2 flex items-center justify-between gap-3">
           <p role="status" className="text-sm text-ink-muted">{filtered.length}件 / 全{entries.length}件・{categories.length}分野</p>
-          {(query || category !== 'all') && <Link to="/knowledge" className="min-h-11 inline-flex items-center text-sm font-semibold underline underline-offset-4">条件をクリア</Link>}
+          {(query || category !== 'all' || draftOnly) && <Link to="/knowledge" className="min-h-11 inline-flex items-center text-sm font-semibold underline underline-offset-4">条件をクリア</Link>}
         </div>
       </section>
 

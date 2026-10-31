@@ -10,7 +10,7 @@ const itemsById = new Map(catalog.ideas.map(item => [item.id, item]));
 const lines = [
   '# Fragmenta — デザイン知識ベース（企画台帳）',
   '',
-  '> 180件すべて企画案。完成した解説、検証済み実装、公式のデザイン規格ではありません。',
+  '> 180件すべて企画案。完成した解説、検証済み実装、公式のデザイン規格ではありません。参考メモは出典未確認の編集下書きです。',
   '',
   '- JSON: /knowledge/ideas.json',
   '- 人間向けの閲覧・検索: /#/knowledge',
@@ -25,7 +25,7 @@ for (const category of catalog.categories) {
     lines.push('- 状態: 企画段階');
     lines.push('- 表示: /#/knowledge/' + item.id);
     if (item.editorial) {
-      lines.push('- 参考メモ（未レビュー）: ' + item.editorial.summary);
+      lines.push('- 参考メモ（未レビュー・出典未確認）: ' + item.editorial.summary);
       lines.push('- 向く用途: ' + item.editorial.appropriateUses.join(' / '));
       lines.push('- 避けたい設計: ' + item.editorial.pitfalls.join(' / '));
       lines.push('- 確認事項: ' + item.editorial.reviewChecks.join(' / '));

@@ -20,6 +20,10 @@ const KnowledgeDetail: React.FC = () => {
     return found ? [found] : [];
   });
   const category = catalog.categories.find(item => item.id === entry.categoryId);
+  const siblings = ideas.filter(item => item.categoryId === entry.categoryId);
+  const siblingIndex = siblings.findIndex(item => item.id === entry.id);
+  const previous = siblings[siblingIndex - 1];
+  const next = siblings[siblingIndex + 1];
   const draft = 'editorial' in entry && entry.editorial ? entry.editorial : null;
   return (
     <article lang="ja" className="min-w-0 px-5 py-7 pb-14">
@@ -79,7 +83,14 @@ const KnowledgeDetail: React.FC = () => {
         <p className="mt-2 text-sm leading-relaxed text-ink-muted">JSON一覧で上のIDを検索すると、この項目の分類と関連IDを取得できます。企画案という状態も保持してください。</p>
         <a href="/knowledge/ideas.json" className="mt-3 min-h-11 inline-flex items-center text-sm font-semibold underline underline-offset-4">構造化JSONを開く</a>
       </section>
-      <Link to={category ? `/knowledge?category=${category.id}` : '/knowledge'} className="inline-flex min-h-11 items-center text-sm font-semibold underline underline-offset-4">同じ分野の企画案を見る</Link>
+      <nav aria-label="同じ分野の項目" className="mt-2 border-t border-ink-border pt-5">
+        <p className="mb-3 text-sm font-bold">同じ分野の前後の項目</p>
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          {previous && <Link to={`/knowledge/${previous.id}`} className="min-h-11 rounded-lg border border-ink-border p-3 text-sm font-semibold underline underline-offset-4">前へ：{previous.titleJa}</Link>}
+          {next && <Link to={`/knowledge/${next.id}`} className="min-h-11 rounded-lg border border-ink-border p-3 text-sm font-semibold underline underline-offset-4">次へ：{next.titleJa}</Link>}
+        </div>
+        <Link to={category ? `/knowledge?category=${category.id}` : '/knowledge'} className="mt-4 inline-flex min-h-11 items-center text-sm font-semibold underline underline-offset-4">同じ分野の企画案を見る</Link>
+      </nav>
     </article>
   );
 };
