@@ -35,7 +35,7 @@ const Home: React.FC = () => {
       <section aria-labelledby="start-heading" className="px-6 pb-5">
         <h2 id="start-heading" className="text-lg font-bold">何から始めますか</h2>
         <div className="mt-3 divide-y divide-ink/20 border-y border-ink/20">
-          {[{ path: '/styles', title: 'デザインの方向を決める', detail: `${designStyles.length}スタイルを比較し、AIに伝える` }, { path: '/browse', title: '部品やレイアウトを探す', detail: `${Object.keys(definitions).length}パターンの動作と実装を見る` }, { path: '/tools', title: '色と文字を調整する', detail: '自分の配色・文章で試し、CSSをコピー' }].map(item => (
+          {[{ path: '/styles', title: 'デザインの方向を決める', detail: `${designStyles.length}スタイルを比較し、AIに伝える` }, { path: '/browse', title: '部品やレイアウトを探す', detail: `${Object.keys(definitions).length}パターンの動作と実装を見る` }, { path: '/tools', title: '色と文字を調整する', detail: '自分の配色・文章で試し、CSSをコピー' }, { path: '/knowledge', title: 'デザインの企画を横断して探す', detail: '180件の企画案と関連する項目をたどる（未制作）' }].map(item => (
             <Link key={item.path} to={item.path} className="flex items-center justify-between gap-3 rounded py-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
               <span><strong className="text-sm">{item.title}</strong><span className="mt-1 block text-xs leading-relaxed text-ink-muted">{item.detail}</span></span><span aria-hidden="true">→</span>
             </Link>
@@ -69,8 +69,8 @@ const Home: React.FC = () => {
       </section>
       <details className="mx-6 mt-7 border-t border-ink-border pt-4 text-sm">
         <summary className="cursor-pointer py-2 font-semibold">今後のコンテンツ案</summary>
-        <p className="mt-2 text-xs leading-relaxed text-ink-muted">公開前の企画です。利用できる機能に含めていません。</p>
-        <div className="mt-2 flex flex-col gap-1 font-semibold underline underline-offset-4"><Link to="/upcoming" className="py-2">UIパターンの案 {plannedPatterns.length}件</Link><Link to="/tools/upcoming" className="py-2">実用ツールの案 {plannedTools.length}件</Link></div>
+        <p className="mt-2 text-xs leading-relaxed text-ink-muted">公開前の企画です。完成した実装例ではありません。</p>
+        <div className="mt-2 flex flex-col gap-1 font-semibold underline underline-offset-4"><Link to="/upcoming" className="py-2">UIパターンの案 {plannedPatterns.length}件</Link><Link to="/tools/upcoming" className="py-2">実用ツールの案 {plannedTools.length}件</Link><Link to="/knowledge" className="py-2">関連リンク付きの企画台帳 180件</Link></div>
       </details>
     </div>
   );

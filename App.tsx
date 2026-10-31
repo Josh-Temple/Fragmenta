@@ -9,6 +9,8 @@ import Tools from './pages/Tools';
 import ContrastTool from './pages/ContrastTool';
 import TypographyTool from './pages/TypographyTool';
 import DesignStyles from './pages/DesignStyles';
+import KnowledgeBase from './pages/KnowledgeBase';
+import KnowledgeDetail from './pages/KnowledgeDetail';
 import PatternDetail from './pages/AnimationDetail';
 import Collections from './pages/Collections';
 import CollectionDetail from './pages/CollectionDetail';
@@ -28,6 +30,8 @@ const App: React.FC = () => {
         <Route path="/tools/contrast" element={<Layout><ContrastTool /></Layout>} />
         <Route path="/tools/typography" element={<Layout><TypographyTool /></Layout>} />
         <Route path="/styles" element={<Layout><DesignStyles /></Layout>} />
+        <Route path="/knowledge" element={<Layout><KnowledgeBase /></Layout>} />
+        <Route path="/knowledge/:id" element={<Layout><KnowledgeDetail /></Layout>} />
         <Route path="/search" element={<Layout><SearchResults /></Layout>} />
         <Route path="/p/:id" element={<Layout showNav={false}><PatternDetail /></Layout>} />
         <Route path="/a/:id" element={<Layout showNav={false}><PatternDetail /></Layout>} />
