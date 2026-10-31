@@ -1,4 +1,5 @@
-// Independent content ideas registry integrity check. Run: node scripts/check-content-ideas.cjs
+// Validate Fragmenta's proposed-content catalog; read-only and no runtime dependencies.
+// Usage: node scripts/check-content-ideas.cjs
 const fs = require('node:fs');
 const path = require('node:path');
 const root = path.join(__dirname, '..');
@@ -6,21 +7,22 @@ const data = JSON.parse(fs.readFileSync(path.join(root, 'data', 'content-ideas.j
 const md = fs.readFileSync(path.join(root, 'docs', 'CONTENT_IDEAS.md'), 'utf8');
 const fail = msg => { throw new Error(msg); };
 const categories = new Map(data.categories.map(c => [c.id, c]));
-const ids = new Map(data.ideas.map(e => [e.id, e]));
-if (categories.size !== 15 || data.ideas.length !== 180 || ids.size !== 180) fail('Expected 15 categories, 180 unique ideas');
-for (const c of data.categories) {
-  if (data.ideas.filter(e => e.categoryId === c.id).length !== 12) fail('Category cardinality: '+c.id);
+const ideas = new Map(data.ideas.map(e => [e.id, e]));
+if (categories.size !== 15 || data.ideas.length !== 180 || ideas.size !== 180) fail('Expected 15 categories and 180 unique ideas');
+for (const category of data.categories) {
+  if (data.ideas.filter(e => e.categoryId === category.id).length !== 12) fail('Category size mismatch: ' + category.id);
 }
-for (const e of data.ideas) {
-  if (e.status !== 'proposal' || !categories.has(e.categoryId)) fail('Unknown status/category: '+e.id);
-  if (!md.includes('### '+e.id+'\\n')) fail('Missing Markdown item: '+e.id);
-  if (new Set(e.relatedIdeaIds).size !== e.relatedIdeaIds.length) fail('Repeated relation: '+e.id);
-  for (const ref of e.relatedIdeaIds) {
-    if (ref === e.id || !ids.has(ref)) fail('Broken link: '+e.id+' -> '+ref);
-    if (!ids.get(ref).relatedIdeaIds.includes(e.id)) fail('Non-reciprocal link: '+e.id+' -> '+ref);
+const mdHeadings = new Set(md.split(String.fromCharCode(10)).filter(x => x.startsWith('### ')).map(x => x.slice(4)));
+for (const idea of data.ideas) {
+  if (idea.status !== 'proposal' || !categories.has(idea.categoryId)) fail('Unknown status/category: ' + idea.id);
+  if (!mdHeadings.has(idea.id)) fail('Missing Markdown item: ' + idea.id);
+  if (new Set(idea.relatedIdeaIds).size !== idea.relatedIdeaIds.length) fail('Duplicate relations: ' + idea.id);
+  for (const relation of idea.relatedIdeaIds) {
+    if (relation === idea.id || !ideas.has(relation)) fail('Broken relation: ' + idea.id + ' -> ' + relation);
+    if (!ideas.get(relation).relatedIdeaIds.includes(idea.id)) fail('Non-reciprocal relation: ' + idea.id + ' -> ' + relation);
   }
-  for (const ref of e.relatedExisting) {
-    if (!['style','pattern'].includes(ref.kind) || !/^https:\\/\\/fragmenta-brown\\.vercel\\.app\\/#\\//.test(ref.href)) fail('Invalid existing reference: '+e.id);
+  for (const reference of idea.relatedExisting) {
+    if (!['style', 'pattern'].includes(reference.kind) || !reference.href.startsWith('https://fragmenta-brown.vercel.app/#/')) fail('Invalid existing reference: ' + idea.id);
   }
 }
-console.log('OK: 180 ideas / 15 categories / '+data.ideas.reduce((n,x)=>n+x.relatedIdeaIds.length,0)+' reciprocal idea links / '+data.ideas.reduce((n,x)=>n+x.relatedExisting.length,0)+' existing references.');
+console.log('OK: 180 ideas / 15 categories / ' + data.ideas.reduce((n, e) => n + e.relatedIdeaIds.length, 0) + ' reciprocal links / ' + data.ideas.reduce((n, e) => n + e.relatedExisting.length, 0) + ' existing references');
