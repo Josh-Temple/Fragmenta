@@ -1,0 +1,2337 @@
+{
+  "schemaVersion": 1,
+  "generatedOn": "2026-10-31",
+  "source": "2026-10-31 Fragmenta planning conversation (180 proposed content ideas)",
+  "statusMeaning": {
+    "proposal": "企画案。記事・UI実装・検証・公開は未実施"
+  },
+  "note": "単一の企画台帳。名称・関連項目は編集案であり、学術的分類・公式準拠・著作権利用許諾を意味しない。公開済み参照先の表示はmainのルート・レジストリに基づくがブラウザ実測ではない。",
+  "authority": "data/content-ideas.json",
+  "categories": [
+    {
+      "id": "visual-history",
+      "label": "デザイン様式・美術史",
+      "sequence": 1
+    },
+    {
+      "id": "layout",
+      "label": "レイアウト・画面構成",
+      "sequence": 2
+    },
+    {
+      "id": "typography",
+      "label": "タイポグラフィ・文字組み",
+      "sequence": 3
+    },
+    {
+      "id": "color",
+      "label": "配色・質感・視覚表現",
+      "sequence": 4
+    },
+    {
+      "id": "components",
+      "label": "UIコンポーネント・ナビゲーション",
+      "sequence": 5
+    },
+    {
+      "id": "forms",
+      "label": "フォーム・ユーザー操作の流れ",
+      "sequence": 6
+    },
+    {
+      "id": "motion",
+      "label": "アニメーション・動きの設計",
+      "sequence": 7
+    },
+    {
+      "id": "data-viz",
+      "label": "グラフ・データ可視化",
+      "sequence": 8
+    },
+    {
+      "id": "information",
+      "label": "情報設計・読みやすいコンテンツ",
+      "sequence": 9
+    },
+    {
+      "id": "accessibility",
+      "label": "アクセシビリティ・使いやすさ",
+      "sequence": 10
+    },
+    {
+      "id": "ai-ui",
+      "label": "AIアプリ特有のUI",
+      "sequence": 11
+    },
+    {
+      "id": "use-cases",
+      "label": "用途別のデザイン実例",
+      "sequence": 12
+    },
+    {
+      "id": "design-systems",
+      "label": "既存デザインシステムの比較資料",
+      "sequence": 13
+    },
+    {
+      "id": "review",
+      "label": "デザインの比較・判断・失敗例",
+      "sequence": 14
+    },
+    {
+      "id": "ai-reference",
+      "label": "AIが利用するためのデータ・テンプレート",
+      "sequence": 15
+    }
+  ],
+  "ideas": [
+    {
+      "id": "idea-visual-history-01",
+      "categoryId": "visual-history",
+      "titleJa": "アール・ヌーヴォー",
+      "sequence": 1,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-use-cases-04"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-visual-history-02",
+      "categoryId": "visual-history",
+      "titleJa": "デ・ステイル",
+      "sequence": 2,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-ai-reference-01",
+        "idea-layout-05",
+        "idea-motion-05"
+      ],
+      "relatedExisting": [
+        {
+          "kind": "style",
+          "id": "bauhaus",
+          "label": "バウハウス（同時代の造形思想の対照）",
+          "href": "https://fragmenta-brown.vercel.app/#/styles"
+        }
+      ]
+    },
+    {
+      "id": "idea-visual-history-03",
+      "categoryId": "visual-history",
+      "titleJa": "ミッドセンチュリー・モダン",
+      "sequence": 3,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-color-02"
+      ],
+      "relatedExisting": [
+        {
+          "kind": "style",
+          "id": "scandinavian",
+          "label": "北欧モダン（現代的な方向性との比較）",
+          "href": "https://fragmenta-brown.vercel.app/#/styles"
+        }
+      ]
+    },
+    {
+      "id": "idea-visual-history-04",
+      "categoryId": "visual-history",
+      "titleJa": "アーツ・アンド・クラフツ",
+      "sequence": 4,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-color-10"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-visual-history-05",
+      "categoryId": "visual-history",
+      "titleJa": "ポップアート",
+      "sequence": 5,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-color-03"
+      ],
+      "relatedExisting": [
+        {
+          "kind": "style",
+          "id": "memphis",
+          "label": "メンフィス（表現豊かな様式の比較）",
+          "href": "https://fragmenta-brown.vercel.app/#/styles"
+        }
+      ]
+    },
+    {
+      "id": "idea-visual-history-06",
+      "categoryId": "visual-history",
+      "titleJa": "オプ・アート",
+      "sequence": 6,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-accessibility-03",
+        "idea-color-09"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-visual-history-07",
+      "categoryId": "visual-history",
+      "titleJa": "サイケデリック・アート",
+      "sequence": 7,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-color-11"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-visual-history-08",
+      "categoryId": "visual-history",
+      "titleJa": "グランジ",
+      "sequence": 8,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-color-10"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-visual-history-09",
+      "categoryId": "visual-history",
+      "titleJa": "コラージュ",
+      "sequence": 9,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-layout-02"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-visual-history-10",
+      "categoryId": "visual-history",
+      "titleJa": "ソーラーパンク",
+      "sequence": 10,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-use-cases-04"
+      ],
+      "relatedExisting": [
+        {
+          "kind": "style",
+          "id": "cyberpunk",
+          "label": "サイバーパンク（世界観の対照）",
+          "href": "https://fragmenta-brown.vercel.app/#/styles"
+        }
+      ]
+    },
+    {
+      "id": "idea-visual-history-11",
+      "categoryId": "visual-history",
+      "titleJa": "ダークアカデミア",
+      "sequence": 11,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-typography-09"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-visual-history-12",
+      "categoryId": "visual-history",
+      "titleJa": "コテージコア",
+      "sequence": 12,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-color-02"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-layout-01",
+      "categoryId": "layout",
+      "titleJa": "マスター・ディテール型",
+      "sequence": 1,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-components-04",
+        "idea-information-11",
+        "idea-layout-08"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-layout-02",
+      "categoryId": "layout",
+      "titleJa": "メーソンリー型",
+      "sequence": 2,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-use-cases-04",
+        "idea-visual-history-09"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-layout-03",
+      "categoryId": "layout",
+      "titleJa": "固定サイドバー型",
+      "sequence": 3,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-accessibility-02",
+        "idea-components-10"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-layout-04",
+      "categoryId": "layout",
+      "titleJa": "3カラムのドキュメント型",
+      "sequence": 4,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-information-02",
+        "idea-review-05"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-layout-05",
+      "categoryId": "layout",
+      "titleJa": "タイル型ポータル",
+      "sequence": 5,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-data-viz-09",
+        "idea-visual-history-02"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-layout-06",
+      "categoryId": "layout",
+      "titleJa": "全画面セクション型",
+      "sequence": 6,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-motion-01"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-layout-07",
+      "categoryId": "layout",
+      "titleJa": "ヒーロー＋特徴紹介型",
+      "sequence": 7,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-use-cases-06"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-layout-08",
+      "categoryId": "layout",
+      "titleJa": "フィード＋詳細パネル型",
+      "sequence": 8,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-layout-01"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-layout-09",
+      "categoryId": "layout",
+      "titleJa": "横スクロールギャラリー型",
+      "sequence": 9,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-components-09"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-layout-10",
+      "categoryId": "layout",
+      "titleJa": "複数パネルの編集画面",
+      "sequence": 10,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-ai-ui-08",
+        "idea-design-systems-10"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-layout-11",
+      "categoryId": "layout",
+      "titleJa": "画面分割型ワークスペース",
+      "sequence": 11,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-ai-ui-04"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-layout-12",
+      "categoryId": "layout",
+      "titleJa": "高密度・低密度ダッシュボード比較",
+      "sequence": 12,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-review-01",
+        "idea-review-07"
+      ],
+      "relatedExisting": [
+        {
+          "kind": "style",
+          "id": "minimalism",
+          "label": "ミニマリズム（情報密度との比較）",
+          "href": "https://fragmenta-brown.vercel.app/#/styles"
+        }
+      ]
+    },
+    {
+      "id": "idea-typography-01",
+      "categoryId": "typography",
+      "titleJa": "日本語と欧文の混植",
+      "sequence": 1,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-typography-11"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-typography-02",
+      "categoryId": "typography",
+      "titleJa": "縦書きレイアウト",
+      "sequence": 2,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-use-cases-04"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-typography-03",
+      "categoryId": "typography",
+      "titleJa": "見出しの文字サイズ設計",
+      "sequence": 3,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-information-10",
+        "idea-review-06"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-typography-04",
+      "categoryId": "typography",
+      "titleJa": "可変フォント",
+      "sequence": 4,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-typography-10"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-typography-05",
+      "categoryId": "typography",
+      "titleJa": "長文の行長と行間",
+      "sequence": 5,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-information-02",
+        "idea-use-cases-10"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-typography-06",
+      "categoryId": "typography",
+      "titleJa": "ルビ・ふりがな",
+      "sequence": 6,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-accessibility-06"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-typography-07",
+      "categoryId": "typography",
+      "titleJa": "日本語の禁則処理",
+      "sequence": 7,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-accessibility-04"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-typography-08",
+      "categoryId": "typography",
+      "titleJa": "数字の等幅表示",
+      "sequence": 8,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-data-viz-04"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-typography-09",
+      "categoryId": "typography",
+      "titleJa": "明朝体とゴシック体の使い分け",
+      "sequence": 9,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-review-08",
+        "idea-visual-history-11"
+      ],
+      "relatedExisting": [
+        {
+          "kind": "style",
+          "id": "editorial",
+          "label": "エディトリアル（文字表現の比較）",
+          "href": "https://fragmenta-brown.vercel.app/#/styles"
+        }
+      ]
+    },
+    {
+      "id": "idea-typography-10",
+      "categoryId": "typography",
+      "titleJa": "ウェイトによる情報の階層化",
+      "sequence": 10,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-review-06",
+        "idea-typography-04"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-typography-11",
+      "categoryId": "typography",
+      "titleJa": "日本語・英語併記の組版",
+      "sequence": 11,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-accessibility-12",
+        "idea-ai-reference-03",
+        "idea-design-systems-03",
+        "idea-typography-01",
+        "idea-use-cases-03"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-typography-12",
+      "categoryId": "typography",
+      "titleJa": "小画面での長い見出しの処理",
+      "sequence": 12,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-accessibility-04"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-color-01",
+      "categoryId": "color",
+      "titleJa": "モノクローム配色",
+      "sequence": 1,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-review-03",
+        "idea-review-11"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-color-02",
+      "categoryId": "color",
+      "titleJa": "類似色配色",
+      "sequence": 2,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-use-cases-11",
+        "idea-visual-history-03",
+        "idea-visual-history-12"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-color-03",
+      "categoryId": "color",
+      "titleJa": "補色配色",
+      "sequence": 3,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-review-11",
+        "idea-visual-history-05"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-color-04",
+      "categoryId": "color",
+      "titleJa": "分割補色配色",
+      "sequence": 4,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-accessibility-07"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-color-05",
+      "categoryId": "color",
+      "titleJa": "デュオトーン",
+      "sequence": 5,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-use-cases-10"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-color-06",
+      "categoryId": "color",
+      "titleJa": "ライトモードとダークモード",
+      "sequence": 6,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-accessibility-10",
+        "idea-ai-reference-04"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-color-07",
+      "categoryId": "color",
+      "titleJa": "状態を伝える色の使い分け",
+      "sequence": 7,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-accessibility-07"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-color-08",
+      "categoryId": "color",
+      "titleJa": "色覚多様性を考慮した配色",
+      "sequence": 8,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-accessibility-07",
+        "idea-review-11"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-color-09",
+      "categoryId": "color",
+      "titleJa": "ハーフトーン表現",
+      "sequence": 9,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-visual-history-06"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-color-10",
+      "categoryId": "color",
+      "titleJa": "ノイズ・紙の質感",
+      "sequence": 10,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-visual-history-04",
+        "idea-visual-history-08"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-color-11",
+      "categoryId": "color",
+      "titleJa": "グラデーションの設計",
+      "sequence": 11,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-motion-04",
+        "idea-visual-history-07"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-color-12",
+      "categoryId": "color",
+      "titleJa": "影・輪郭線・透明度の組み合わせ",
+      "sequence": 12,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-review-12"
+      ],
+      "relatedExisting": [
+        {
+          "kind": "style",
+          "id": "glass",
+          "label": "グラスモーフィズム（質感の例）",
+          "href": "https://fragmenta-brown.vercel.app/#/styles"
+        }
+      ]
+    },
+    {
+      "id": "idea-components-01",
+      "categoryId": "components",
+      "titleJa": "メガメニュー",
+      "sequence": 1,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-design-systems-01",
+        "idea-information-09",
+        "idea-motion-02"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-components-02",
+      "categoryId": "components",
+      "titleJa": "コンボボックス",
+      "sequence": 2,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-forms-07"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-components-03",
+      "categoryId": "components",
+      "titleJa": "日付・時刻ピッカー",
+      "sequence": 3,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-forms-02"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-components-04",
+      "categoryId": "components",
+      "titleJa": "ツリービュー",
+      "sequence": 4,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-layout-01"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-components-05",
+      "categoryId": "components",
+      "titleJa": "ステッパー",
+      "sequence": 5,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-forms-01"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-components-06",
+      "categoryId": "components",
+      "titleJa": "ページネーション",
+      "sequence": 6,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-information-11"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-components-07",
+      "categoryId": "components",
+      "titleJa": "インライン編集",
+      "sequence": 7,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-ai-ui-08",
+        "idea-motion-10"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-components-08",
+      "categoryId": "components",
+      "titleJa": "スプリットボタン",
+      "sequence": 8,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-accessibility-05",
+        "idea-forms-10",
+        "idea-motion-12"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-components-09",
+      "categoryId": "components",
+      "titleJa": "カルーセル",
+      "sequence": 9,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-layout-09"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-components-10",
+      "categoryId": "components",
+      "titleJa": "階層型サイドナビゲーション",
+      "sequence": 10,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-accessibility-01",
+        "idea-information-09",
+        "idea-layout-03"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-components-11",
+      "categoryId": "components",
+      "titleJa": "ステータスバナー",
+      "sequence": 11,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-design-systems-09",
+        "idea-forms-11"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-components-12",
+      "categoryId": "components",
+      "titleJa": "権限に応じたアクションメニュー",
+      "sequence": 12,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-ai-ui-01",
+        "idea-ai-ui-06"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-forms-01",
+      "categoryId": "forms",
+      "titleJa": "複数ステップの申請フォーム",
+      "sequence": 1,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-components-05",
+        "idea-forms-03",
+        "idea-use-cases-01"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-forms-02",
+      "categoryId": "forms",
+      "titleJa": "日本の住所入力",
+      "sequence": 2,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-components-03",
+        "idea-use-cases-01",
+        "idea-use-cases-12"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-forms-03",
+      "categoryId": "forms",
+      "titleJa": "入力内容の確認・修正画面",
+      "sequence": 3,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-design-systems-07",
+        "idea-forms-01"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-forms-04",
+      "categoryId": "forms",
+      "titleJa": "入力途中の保存と再開",
+      "sequence": 4,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-forms-11"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-forms-05",
+      "categoryId": "forms",
+      "titleJa": "条件分岐する質問フォーム",
+      "sequence": 5,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-information-05"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-forms-06",
+      "categoryId": "forms",
+      "titleJa": "入力エラーからの復帰",
+      "sequence": 6,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-accessibility-08",
+        "idea-review-10"
+      ],
+      "relatedExisting": [
+        {
+          "kind": "pattern",
+          "id": "inline-validation",
+          "label": "入力エラーの実装例",
+          "href": "https://fragmenta-brown.vercel.app/#/p/inline-validation"
+        }
+      ]
+    },
+    {
+      "id": "idea-forms-07",
+      "categoryId": "forms",
+      "titleJa": "必須・任意項目の表示",
+      "sequence": 7,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-accessibility-11",
+        "idea-components-02"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-forms-08",
+      "categoryId": "forms",
+      "titleJa": "同意・確認の取得",
+      "sequence": 8,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-ai-ui-01",
+        "idea-review-09"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-forms-09",
+      "categoryId": "forms",
+      "titleJa": "削除操作の確認",
+      "sequence": 9,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-forms-10"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-forms-10",
+      "categoryId": "forms",
+      "titleJa": "重要な操作の再確認",
+      "sequence": 10,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-ai-ui-01",
+        "idea-components-08",
+        "idea-forms-09"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-forms-11",
+      "categoryId": "forms",
+      "titleJa": "セッション期限切れの案内",
+      "sequence": 11,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-ai-ui-10",
+        "idea-components-11",
+        "idea-forms-04"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-forms-12",
+      "categoryId": "forms",
+      "titleJa": "完了後の次の行動の提示",
+      "sequence": 12,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-information-06"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-motion-01",
+      "categoryId": "motion",
+      "titleJa": "ページ遷移アニメーション",
+      "sequence": 1,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-layout-06",
+        "idea-motion-03"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-motion-02",
+      "categoryId": "motion",
+      "titleJa": "ナビゲーションの状態変化",
+      "sequence": 2,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-components-01"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-motion-03",
+      "categoryId": "motion",
+      "titleJa": "コンテンツの出現・退出",
+      "sequence": 3,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-motion-01",
+        "idea-motion-11"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-motion-04",
+      "categoryId": "motion",
+      "titleJa": "スクロール連動の視覚効果",
+      "sequence": 4,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-accessibility-09",
+        "idea-color-11",
+        "idea-review-04"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-motion-05",
+      "categoryId": "motion",
+      "titleJa": "形状のモーフィング",
+      "sequence": 5,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-visual-history-02"
+      ],
+      "relatedExisting": [
+        {
+          "kind": "pattern",
+          "id": "morph-fab",
+          "label": "形状変化の実装例",
+          "href": "https://fragmenta-brown.vercel.app/#/p/morph-fab"
+        }
+      ]
+    },
+    {
+      "id": "idea-motion-06",
+      "categoryId": "motion",
+      "titleJa": "アニメーションの速度と緩急",
+      "sequence": 6,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-review-04"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-motion-07",
+      "categoryId": "motion",
+      "titleJa": "数値のカウントアップ",
+      "sequence": 7,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-data-viz-07"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-motion-08",
+      "categoryId": "motion",
+      "titleJa": "グラフのアニメーション",
+      "sequence": 8,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-data-viz-03"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-motion-09",
+      "categoryId": "motion",
+      "titleJa": "読み込み進捗の表現",
+      "sequence": 9,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-ai-ui-02"
+      ],
+      "relatedExisting": [
+        {
+          "kind": "pattern",
+          "id": "smart-skeleton",
+          "label": "読み込み状態の実装例",
+          "href": "https://fragmenta-brown.vercel.app/#/p/smart-skeleton"
+        }
+      ]
+    },
+    {
+      "id": "idea-motion-10",
+      "categoryId": "motion",
+      "titleJa": "ドラッグによる並べ替え",
+      "sequence": 10,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-components-07"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-motion-11",
+      "categoryId": "motion",
+      "titleJa": "動きを減らした代替表現",
+      "sequence": 11,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-accessibility-09",
+        "idea-motion-03"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-motion-12",
+      "categoryId": "motion",
+      "titleJa": "操作フィードバックの微細な動き",
+      "sequence": 12,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-components-08"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-data-viz-01",
+      "categoryId": "data-viz",
+      "titleJa": "棒グラフ",
+      "sequence": 1,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-ai-ui-05",
+        "idea-data-viz-02",
+        "idea-design-systems-02",
+        "idea-use-cases-07",
+        "idea-use-cases-08"
+      ],
+      "relatedExisting": [
+        {
+          "kind": "pattern",
+          "id": "metric-summary",
+          "label": "数値の表示パターン",
+          "href": "https://fragmenta-brown.vercel.app/#/p/metric-summary"
+        }
+      ]
+    },
+    {
+      "id": "idea-data-viz-02",
+      "categoryId": "data-viz",
+      "titleJa": "積み上げ棒グラフ",
+      "sequence": 2,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-data-viz-01",
+        "idea-data-viz-10"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-data-viz-03",
+      "categoryId": "data-viz",
+      "titleJa": "折れ線グラフ",
+      "sequence": 3,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-data-viz-04",
+        "idea-data-viz-12",
+        "idea-motion-08"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-data-viz-04",
+      "categoryId": "data-viz",
+      "titleJa": "スパークライン",
+      "sequence": 4,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-data-viz-03",
+        "idea-review-07",
+        "idea-typography-08",
+        "idea-use-cases-08"
+      ],
+      "relatedExisting": [
+        {
+          "kind": "pattern",
+          "id": "metric-summary",
+          "label": "小さな指標表示の参考",
+          "href": "https://fragmenta-brown.vercel.app/#/p/metric-summary"
+        }
+      ]
+    },
+    {
+      "id": "idea-data-viz-05",
+      "categoryId": "data-viz",
+      "titleJa": "散布図",
+      "sequence": 5,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-data-viz-06",
+        "idea-data-viz-08"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-data-viz-06",
+      "categoryId": "data-viz",
+      "titleJa": "ヒストグラム",
+      "sequence": 6,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-data-viz-05",
+        "idea-data-viz-07"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-data-viz-07",
+      "categoryId": "data-viz",
+      "titleJa": "箱ひげ図",
+      "sequence": 7,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-data-viz-06",
+        "idea-data-viz-12",
+        "idea-motion-07"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-data-viz-08",
+      "categoryId": "data-viz",
+      "titleJa": "ヒートマップ",
+      "sequence": 8,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-data-viz-05"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-data-viz-09",
+      "categoryId": "data-viz",
+      "titleJa": "ツリーマップ",
+      "sequence": 9,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-layout-05"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-data-viz-10",
+      "categoryId": "data-viz",
+      "titleJa": "ウォーターフォールチャート",
+      "sequence": 10,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-data-viz-02"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-data-viz-11",
+      "categoryId": "data-viz",
+      "titleJa": "ファネルチャート",
+      "sequence": 11,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-use-cases-06"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-data-viz-12",
+      "categoryId": "data-viz",
+      "titleJa": "信頼区間・不確実性の可視化",
+      "sequence": 12,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-ai-ui-07",
+        "idea-data-viz-03",
+        "idea-data-viz-07"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-information-01",
+      "categoryId": "information",
+      "titleJa": "用語集・定義の表示",
+      "sequence": 1,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-ai-reference-02",
+        "idea-information-07"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-information-02",
+      "categoryId": "information",
+      "titleJa": "出典・引用の表示",
+      "sequence": 2,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-ai-reference-11",
+        "idea-ai-ui-03",
+        "idea-layout-04",
+        "idea-typography-05",
+        "idea-use-cases-05"
+      ],
+      "relatedExisting": [
+        {
+          "kind": "pattern",
+          "id": "readable-article",
+          "label": "出典のある読み物の例",
+          "href": "https://fragmenta-brown.vercel.app/#/p/readable-article"
+        }
+      ]
+    },
+    {
+      "id": "idea-information-03",
+      "categoryId": "information",
+      "titleJa": "文書の改訂履歴",
+      "sequence": 3,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-ai-ui-09",
+        "idea-design-systems-11"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-information-04",
+      "categoryId": "information",
+      "titleJa": "関連情報の推薦",
+      "sequence": 4,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-ai-reference-07",
+        "idea-use-cases-09"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-information-05",
+      "categoryId": "information",
+      "titleJa": "判断フローチャート",
+      "sequence": 5,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-forms-05",
+        "idea-use-cases-02"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-information-06",
+      "categoryId": "information",
+      "titleJa": "ステップ別の操作ガイド",
+      "sequence": 6,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-forms-12"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-information-07",
+      "categoryId": "information",
+      "titleJa": "インラインヘルプ",
+      "sequence": 7,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-accessibility-11",
+        "idea-information-01"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-information-08",
+      "categoryId": "information",
+      "titleJa": "根拠・証拠の比較表示",
+      "sequence": 8,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-ai-ui-07",
+        "idea-ai-ui-12"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-information-09",
+      "categoryId": "information",
+      "titleJa": "作業別ナビゲーション",
+      "sequence": 9,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-components-01",
+        "idea-components-10"
+      ],
+      "relatedExisting": [
+        {
+          "kind": "pattern",
+          "id": "breadcrumb-trail",
+          "label": "ナビゲーションの実装例",
+          "href": "https://fragmenta-brown.vercel.app/#/p/breadcrumb-trail"
+        }
+      ]
+    },
+    {
+      "id": "idea-information-10",
+      "categoryId": "information",
+      "titleJa": "段階的な情報開示",
+      "sequence": 10,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-accessibility-11",
+        "idea-typography-03"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-information-11",
+      "categoryId": "information",
+      "titleJa": "検索結果のグルーピング",
+      "sequence": 11,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-components-06",
+        "idea-layout-01"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-information-12",
+      "categoryId": "information",
+      "titleJa": "複雑な規則の条件・例外表示",
+      "sequence": 12,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-use-cases-02"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-accessibility-01",
+      "categoryId": "accessibility",
+      "titleJa": "キーボード操作とフォーカス",
+      "sequence": 1,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-components-10",
+        "idea-design-systems-12"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-accessibility-02",
+      "categoryId": "accessibility",
+      "titleJa": "スキップリンク",
+      "sequence": 2,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-layout-03"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-accessibility-03",
+      "categoryId": "accessibility",
+      "titleJa": "高コントラスト表示",
+      "sequence": 3,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-design-systems-06",
+        "idea-review-03",
+        "idea-visual-history-06"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-accessibility-04",
+      "categoryId": "accessibility",
+      "titleJa": "文字拡大・200%ズーム",
+      "sequence": 4,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-typography-07",
+        "idea-typography-12"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-accessibility-05",
+      "categoryId": "accessibility",
+      "titleJa": "タッチ操作領域の確保",
+      "sequence": 5,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-components-08",
+        "idea-design-systems-04"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-accessibility-06",
+      "categoryId": "accessibility",
+      "titleJa": "スクリーンリーダー向けの見出し構造",
+      "sequence": 6,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-typography-06"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-accessibility-07",
+      "categoryId": "accessibility",
+      "titleJa": "アイコンと文字の併用",
+      "sequence": 7,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-color-04",
+        "idea-color-07",
+        "idea-color-08",
+        "idea-use-cases-11"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-accessibility-08",
+      "categoryId": "accessibility",
+      "titleJa": "エラー通知のアクセシビリティ",
+      "sequence": 8,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-forms-06"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-accessibility-09",
+      "categoryId": "accessibility",
+      "titleJa": "動きを減らす設定への対応",
+      "sequence": 9,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-motion-04",
+        "idea-motion-11"
+      ],
+      "relatedExisting": [
+        {
+          "kind": "pattern",
+          "id": "glitch-text",
+          "label": "継続アニメーションの注意点",
+          "href": "https://fragmenta-brown.vercel.app/#/p/glitch-text"
+        }
+      ]
+    },
+    {
+      "id": "idea-accessibility-10",
+      "categoryId": "accessibility",
+      "titleJa": "OSの強制配色モードへの対応",
+      "sequence": 10,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-color-06"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-accessibility-11",
+      "categoryId": "accessibility",
+      "titleJa": "認知負荷を抑えた画面構成",
+      "sequence": 11,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-forms-07",
+        "idea-information-07",
+        "idea-information-10",
+        "idea-review-02"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-accessibility-12",
+      "categoryId": "accessibility",
+      "titleJa": "右から左に読む言語への対応",
+      "sequence": 12,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-typography-11"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-ai-ui-01",
+      "categoryId": "ai-ui",
+      "titleJa": "AIの操作に対する人間の承認画面",
+      "sequence": 1,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-ai-ui-12",
+        "idea-components-12",
+        "idea-forms-08",
+        "idea-forms-10"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-ai-ui-02",
+      "categoryId": "ai-ui",
+      "titleJa": "ツール実行状況の表示",
+      "sequence": 2,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-motion-09"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-ai-ui-03",
+      "categoryId": "ai-ui",
+      "titleJa": "AI回答の出典表示",
+      "sequence": 3,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-information-02"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-ai-ui-04",
+      "categoryId": "ai-ui",
+      "titleJa": "JSONなどの構造化出力の表示",
+      "sequence": 4,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-ai-reference-01",
+        "idea-ai-reference-10",
+        "idea-layout-11"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-ai-ui-05",
+      "categoryId": "ai-ui",
+      "titleJa": "使用量・制限の表示",
+      "sequence": 5,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-data-viz-01"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-ai-ui-06",
+      "categoryId": "ai-ui",
+      "titleJa": "AIモデルの選択画面",
+      "sequence": 6,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-components-12"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-ai-ui-07",
+      "categoryId": "ai-ui",
+      "titleJa": "不確実性の伝え方",
+      "sequence": 7,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-data-viz-12",
+        "idea-information-08"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-ai-ui-08",
+      "categoryId": "ai-ui",
+      "titleJa": "AIが提案したコードの差分表示",
+      "sequence": 8,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-components-07",
+        "idea-design-systems-08",
+        "idea-layout-10",
+        "idea-review-06"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-ai-ui-09",
+      "categoryId": "ai-ui",
+      "titleJa": "AIの操作履歴",
+      "sequence": 9,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-information-03"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-ai-ui-10",
+      "categoryId": "ai-ui",
+      "titleJa": "失敗時の再試行・修正",
+      "sequence": 10,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-forms-11"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-ai-ui-11",
+      "categoryId": "ai-ui",
+      "titleJa": "AIメモリの確認・制御",
+      "sequence": 11,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-ai-ui-12"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-ai-ui-12",
+      "categoryId": "ai-ui",
+      "titleJa": "AIに渡す資料・権限の管理",
+      "sequence": 12,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-ai-ui-01",
+        "idea-ai-ui-11",
+        "idea-information-08"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-use-cases-01",
+      "categoryId": "use-cases",
+      "titleJa": "自治体の電子申請サイト",
+      "sequence": 1,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-design-systems-05",
+        "idea-forms-01",
+        "idea-forms-02"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-use-cases-02",
+      "categoryId": "use-cases",
+      "titleJa": "法令・制度の情報サイト",
+      "sequence": 2,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-ai-reference-05",
+        "idea-information-05",
+        "idea-information-12"
+      ],
+      "relatedExisting": [
+        {
+          "kind": "pattern",
+          "id": "article-table-of-contents",
+          "label": "長い制度解説の目次例",
+          "href": "https://fragmenta-brown.vercel.app/#/p/article-table-of-contents"
+        }
+      ]
+    },
+    {
+      "id": "idea-use-cases-03",
+      "categoryId": "use-cases",
+      "titleJa": "オンライン学習サイト",
+      "sequence": 3,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-typography-11"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-use-cases-04",
+      "categoryId": "use-cases",
+      "titleJa": "博物館・美術館サイト",
+      "sequence": 4,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-layout-02",
+        "idea-typography-02",
+        "idea-visual-history-01",
+        "idea-visual-history-10"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-use-cases-05",
+      "categoryId": "use-cases",
+      "titleJa": "学術論文の検索サイト",
+      "sequence": 5,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-information-02"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-use-cases-06",
+      "categoryId": "use-cases",
+      "titleJa": "EC・商品販売サイト",
+      "sequence": 6,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-data-viz-11",
+        "idea-layout-07"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-use-cases-07",
+      "categoryId": "use-cases",
+      "titleJa": "SaaS管理画面",
+      "sequence": 7,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-data-viz-01"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-use-cases-08",
+      "categoryId": "use-cases",
+      "titleJa": "金融情報ダッシュボード",
+      "sequence": 8,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-data-viz-01",
+        "idea-data-viz-04"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-use-cases-09",
+      "categoryId": "use-cases",
+      "titleJa": "コミュニティサイト",
+      "sequence": 9,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-information-04"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-use-cases-10",
+      "categoryId": "use-cases",
+      "titleJa": "メディア・記事サイト",
+      "sequence": 10,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-ai-reference-09",
+        "idea-color-05",
+        "idea-typography-05"
+      ],
+      "relatedExisting": [
+        {
+          "kind": "pattern",
+          "id": "readable-article",
+          "label": "読み物レイアウトの例",
+          "href": "https://fragmenta-brown.vercel.app/#/p/readable-article"
+        }
+      ]
+    },
+    {
+      "id": "idea-use-cases-11",
+      "categoryId": "use-cases",
+      "titleJa": "医療・健康情報サイト",
+      "sequence": 11,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-accessibility-07",
+        "idea-color-02"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-use-cases-12",
+      "categoryId": "use-cases",
+      "titleJa": "旅行計画サイト",
+      "sequence": 12,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-forms-02"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-design-systems-01",
+      "categoryId": "design-systems",
+      "titleJa": "Material Design",
+      "sequence": 1,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-components-01"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-design-systems-02",
+      "categoryId": "design-systems",
+      "titleJa": "Carbon Design System",
+      "sequence": 2,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-data-viz-01"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-design-systems-03",
+      "categoryId": "design-systems",
+      "titleJa": "Fluent",
+      "sequence": 3,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-typography-11"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-design-systems-04",
+      "categoryId": "design-systems",
+      "titleJa": "Apple Human Interface Guidelines",
+      "sequence": 4,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-accessibility-05"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-design-systems-05",
+      "categoryId": "design-systems",
+      "titleJa": "GOV.UK Design System",
+      "sequence": 5,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-use-cases-01"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-design-systems-06",
+      "categoryId": "design-systems",
+      "titleJa": "U.S. Web Design System",
+      "sequence": 6,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-accessibility-03"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-design-systems-07",
+      "categoryId": "design-systems",
+      "titleJa": "Shopify Polaris",
+      "sequence": 7,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-forms-03"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-design-systems-08",
+      "categoryId": "design-systems",
+      "titleJa": "GitHub Primer",
+      "sequence": 8,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-ai-ui-08"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-design-systems-09",
+      "categoryId": "design-systems",
+      "titleJa": "Salesforce Lightning Design System",
+      "sequence": 9,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-components-11"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-design-systems-10",
+      "categoryId": "design-systems",
+      "titleJa": "Atlassian Design System",
+      "sequence": 10,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-layout-10"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-design-systems-11",
+      "categoryId": "design-systems",
+      "titleJa": "SAP Fiori",
+      "sequence": 11,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-information-03"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-design-systems-12",
+      "categoryId": "design-systems",
+      "titleJa": "Ant Design",
+      "sequence": 12,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-accessibility-01"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-review-01",
+      "categoryId": "review",
+      "titleJa": "ミニマリズムと情報不足の違い",
+      "sequence": 1,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-layout-12"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-review-02",
+      "categoryId": "review",
+      "titleJa": "美しい画面と使いやすい画面の違い",
+      "sequence": 2,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-accessibility-11"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-review-03",
+      "categoryId": "review",
+      "titleJa": "コントラスト不足の改善例",
+      "sequence": 3,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-accessibility-03",
+        "idea-color-01"
+      ],
+      "relatedExisting": [
+        {
+          "kind": "pattern",
+          "id": "readable-article",
+          "label": "文字の読みやすさの比較",
+          "href": "https://fragmenta-brown.vercel.app/#/p/readable-article"
+        }
+      ]
+    },
+    {
+      "id": "idea-review-04",
+      "categoryId": "review",
+      "titleJa": "アニメーション過多の改善例",
+      "sequence": 4,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-motion-04",
+        "idea-motion-06"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-review-05",
+      "categoryId": "review",
+      "titleJa": "スマホで崩れるレイアウトの修正",
+      "sequence": 5,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-layout-04"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-review-06",
+      "categoryId": "review",
+      "titleJa": "視覚的な情報階層の改善前後",
+      "sequence": 6,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-ai-ui-08",
+        "idea-typography-03",
+        "idea-typography-10"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-review-07",
+      "categoryId": "review",
+      "titleJa": "情報密度の調整",
+      "sequence": 7,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-data-viz-04",
+        "idea-layout-12"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-review-08",
+      "categoryId": "review",
+      "titleJa": "似た書体・スタイルの見分け方",
+      "sequence": 8,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-typography-09"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-review-09",
+      "categoryId": "review",
+      "titleJa": "ダークパターンと適切なUI",
+      "sequence": 9,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-forms-08"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-review-10",
+      "categoryId": "review",
+      "titleJa": "エラー表示の悪い例・良い例",
+      "sequence": 10,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-forms-06"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-review-11",
+      "categoryId": "review",
+      "titleJa": "配色の失敗と修正",
+      "sequence": 11,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-color-01",
+        "idea-color-03",
+        "idea-color-08"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-review-12",
+      "categoryId": "review",
+      "titleJa": "異なるスタイルの組み合わせ失敗例",
+      "sequence": 12,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-ai-reference-06",
+        "idea-ai-reference-08",
+        "idea-color-12"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-ai-reference-01",
+      "categoryId": "ai-reference",
+      "titleJa": "スタイル定義のJSON",
+      "sequence": 1,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-ai-reference-12",
+        "idea-ai-ui-04",
+        "idea-visual-history-02"
+      ],
+      "relatedExisting": [
+        {
+          "kind": "style",
+          "id": "minimalism",
+          "label": "既存のスタイル定義例",
+          "href": "https://fragmenta-brown.vercel.app/#/styles"
+        }
+      ]
+    },
+    {
+      "id": "idea-ai-reference-02",
+      "categoryId": "ai-reference",
+      "titleJa": "スタイルごとのMarkdown参照資料",
+      "sequence": 2,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-information-01"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-ai-reference-03",
+      "categoryId": "ai-reference",
+      "titleJa": "日本語・英語の別名・同義語辞書",
+      "sequence": 3,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-typography-11"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-ai-reference-04",
+      "categoryId": "ai-reference",
+      "titleJa": "色・文字・余白などのデザイントークン",
+      "sequence": 4,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-color-06"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-ai-reference-05",
+      "categoryId": "ai-reference",
+      "titleJa": "用途と制約に基づく適合性の一覧",
+      "sequence": 5,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-use-cases-02"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-ai-reference-06",
+      "categoryId": "ai-reference",
+      "titleJa": "非推奨の表現・条件",
+      "sequence": 6,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-review-12"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-ai-reference-07",
+      "categoryId": "ai-reference",
+      "titleJa": "関連・対照スタイルの参照情報",
+      "sequence": 7,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-information-04"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-ai-reference-08",
+      "categoryId": "ai-reference",
+      "titleJa": "A/Bデザイン組み合わせのレシピ",
+      "sequence": 8,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-review-12"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-ai-reference-09",
+      "categoryId": "ai-reference",
+      "titleJa": "画面用途別のAIプロンプト",
+      "sequence": 9,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-use-cases-10"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-ai-reference-10",
+      "categoryId": "ai-reference",
+      "titleJa": "サンプル実装と検証条件",
+      "sequence": 10,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-ai-ui-04"
+      ],
+      "relatedExisting": [
+        {
+          "kind": "pattern",
+          "id": "responsive-data-table",
+          "label": "コード・実例の構造",
+          "href": "https://fragmenta-brown.vercel.app/#/p/responsive-data-table"
+        }
+      ]
+    },
+    {
+      "id": "idea-ai-reference-11",
+      "categoryId": "ai-reference",
+      "titleJa": "出典・ライセンス・更新履歴",
+      "sequence": 11,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-information-02"
+      ],
+      "relatedExisting": []
+    },
+    {
+      "id": "idea-ai-reference-12",
+      "categoryId": "ai-reference",
+      "titleJa": "AI向けの検索・取得用インデックス",
+      "sequence": 12,
+      "status": "proposal",
+      "relatedIdeaIds": [
+        "idea-ai-reference-01"
+      ],
+      "relatedExisting": []
+    }
+  ]
+}
