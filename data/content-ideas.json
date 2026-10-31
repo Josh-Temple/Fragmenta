@@ -94,7 +94,24 @@
       "relatedIdeaIds": [
         "idea-use-cases-04"
       ],
-      "relatedExisting": []
+      "relatedExisting": [],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "曲線・植物的な装飾を手掛かりに、アール・ヌーヴォーの造形的特徴を調べる。",
+        "appropriateUses": [
+          "展覧会案内",
+          "装飾的な見出し"
+        ],
+        "pitfalls": [
+          "歴史的作品をそのまま複製しない",
+          "本文の可読性を装飾で損なわない"
+        ],
+        "reviewChecks": [
+          "典型例と成立背景を出典で確認",
+          "長文と狭い画面での表示を評価"
+        ],
+        "evidenceStatus": "not_checked"
+      }
     },
     {
       "id": "idea-visual-history-02",
@@ -114,7 +131,24 @@
           "label": "バウハウス（同時代の造形思想の対照）",
           "href": "https://fragmenta-brown.vercel.app/#/styles?style=bauhaus"
         }
-      ]
+      ],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "直線・色面・構成の関係を手掛かりに、デ・ステイルの特徴と他の様式との差を調べる。",
+        "appropriateUses": [
+          "構成的なポスター",
+          "色面で区切る紹介ページ"
+        ],
+        "pitfalls": [
+          "三原色を使うだけで同様式と断定しない",
+          "装飾より情報順を優先"
+        ],
+        "reviewChecks": [
+          "歴史的な根拠を一次資料で確かめる",
+          "配色だけでなく構成を比較"
+        ],
+        "evidenceStatus": "not_checked"
+      }
     },
     {
       "id": "idea-visual-history-03",
@@ -132,7 +166,24 @@
           "label": "北欧モダン（現代的な方向性との比較）",
           "href": "https://fragmenta-brown.vercel.app/#/styles?style=scandinavian"
         }
-      ]
+      ],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "家具・建築・グラフィックの事例を参照し、ミッドセンチュリー・モダンの共通する特徴を整理する。",
+        "appropriateUses": [
+          "文化施設の紹介",
+          "製品の編集ページ"
+        ],
+        "pitfalls": [
+          "時代区分を一意に断定しない",
+          "古典的な作品の正確な複製を避ける"
+        ],
+        "reviewChecks": [
+          "用語の範囲と出典を確認",
+          "日本語本文との相性を比較"
+        ],
+        "evidenceStatus": "not_checked"
+      }
     },
     {
       "id": "idea-visual-history-04",
@@ -274,7 +325,8 @@
         "reviewChecks": [
           "スマートフォン幅で一覧→詳細→戻るを試す",
           "キーボードとスクリーンリーダーで読み順を確かめる"
-        ]
+        ],
+        "evidenceStatus": "not_checked"
       }
     },
     {
@@ -287,7 +339,24 @@
         "idea-use-cases-04",
         "idea-visual-history-09"
       ],
-      "relatedExisting": []
+      "relatedExisting": [],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "高さの異なるカードを詰めて配置する構成。視覚的な一覧性と読み順の両立を検討する。",
+        "appropriateUses": [
+          "写真ギャラリー",
+          "多様なサイズの作品一覧"
+        ],
+        "pitfalls": [
+          "見た目と読み上げ順序をずらさない",
+          "重要な情報を表示順の偶然に任せない"
+        ],
+        "reviewChecks": [
+          "スマホで並び順を確認",
+          "キーボード・読み上げ順序を比較"
+        ],
+        "evidenceStatus": "not_checked"
+      }
     },
     {
       "id": "idea-layout-03",
@@ -299,7 +368,24 @@
         "idea-accessibility-02",
         "idea-components-10"
       ],
-      "relatedExisting": []
+      "relatedExisting": [],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "側面のナビゲーションを常時見せ、内容領域との関係を明確にする。",
+        "appropriateUses": [
+          "資料閲覧アプリ",
+          "作業が複数画面にまたがる管理UI"
+        ],
+        "pitfalls": [
+          "狭い画面で本文幅を圧迫しない",
+          "ナビゲーションの現在位置を見失わせない"
+        ],
+        "reviewChecks": [
+          "横幅ごとの折り畳みを確認",
+          "キーボード操作で移動できるか試す"
+        ],
+        "evidenceStatus": "not_checked"
+      }
     },
     {
       "id": "idea-layout-04",
@@ -311,7 +397,24 @@
         "idea-information-02",
         "idea-review-05"
       ],
-      "relatedExisting": []
+      "relatedExisting": [],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "左の目次・中央本文・右の補助情報などを分ける長文資料向け構成。",
+        "appropriateUses": [
+          "技術ドキュメント",
+          "制度・規則の解説"
+        ],
+        "pitfalls": [
+          "小画面で3列を固定しない",
+          "補助情報が本文より先に読まれないようにする"
+        ],
+        "reviewChecks": [
+          "見出しアンカーで移動を確認",
+          "200%ズーム時の再配置を確認"
+        ],
+        "evidenceStatus": "not_checked"
+      }
     },
     {
       "id": "idea-layout-05",
@@ -435,7 +538,8 @@
         "reviewChecks": [
           "数字・記号・半角英語・漢字を同じ段落で確認する",
           "OS別の代替フォントと200%ズームで表示する"
-        ]
+        ],
+        "evidenceStatus": "not_checked"
       }
     },
     {
@@ -447,7 +551,24 @@
       "relatedIdeaIds": [
         "idea-use-cases-04"
       ],
-      "relatedExisting": []
+      "relatedExisting": [],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "縦書きの本文、句読点、欧数字、ルビの扱いを比較して読書体験を検討する。",
+        "appropriateUses": [
+          "文学作品の展示",
+          "日本語の編集記事"
+        ],
+        "pitfalls": [
+          "操作UIを無理に縦書きにしない",
+          "文字の向きとルビを未確認のまま公開しない"
+        ],
+        "reviewChecks": [
+          "異なるブラウザで組版を確認",
+          "縦横混在時の読み順を検証"
+        ],
+        "evidenceStatus": "not_checked"
+      }
     },
     {
       "id": "idea-typography-03",
@@ -459,7 +580,24 @@
         "idea-information-10",
         "idea-review-06"
       ],
-      "relatedExisting": []
+      "relatedExisting": [],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "見出し階層をフォントサイズ・太さ・余白で分け、読み手が文書構造を追えるようにする。",
+        "appropriateUses": [
+          "長い記事",
+          "ダッシュボードの情報区分"
+        ],
+        "pitfalls": [
+          "サイズだけで意味上の見出し階層を示さない",
+          "小画面で見出しが過度に折り返さないようにする"
+        ],
+        "reviewChecks": [
+          "H1〜H3の構造と外観を照合",
+          "スマホと200%ズームで見出しを確認"
+        ],
+        "evidenceStatus": "not_checked"
+      }
     },
     {
       "id": "idea-typography-04",
@@ -470,7 +608,24 @@
       "relatedIdeaIds": [
         "idea-typography-10"
       ],
-      "relatedExisting": []
+      "relatedExisting": [],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "文字幅や太さを連続的に変えられる可変フォントの特徴と利用条件を整理する。",
+        "appropriateUses": [
+          "柔軟な見出し",
+          "レスポンシブなブランド表現"
+        ],
+        "pitfalls": [
+          "対応していない軸を前提にしない",
+          "Webフォントの読み込み性能を無視しない"
+        ],
+        "reviewChecks": [
+          "フォントのライセンス・軸を確認",
+          "フォールバック時の崩れを確認"
+        ],
+        "evidenceStatus": "not_checked"
+      }
     },
     {
       "id": "idea-typography-05",
@@ -584,7 +739,24 @@
         "idea-review-03",
         "idea-review-11"
       ],
-      "relatedExisting": []
+      "relatedExisting": [],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "明度差と階層設計を中心に、少数の色で情報を伝える配色を比較する。",
+        "appropriateUses": [
+          "管理画面",
+          "編集記事"
+        ],
+        "pitfalls": [
+          "コントラストを落としすぎない",
+          "色なしで状態の差が消える設計にしない"
+        ],
+        "reviewChecks": [
+          "文字と背景のコントラストを測る",
+          "操作状態や警告も区別できるか確認"
+        ],
+        "evidenceStatus": "not_checked"
+      }
     },
     {
       "id": "idea-color-02",
@@ -597,7 +769,24 @@
         "idea-visual-history-03",
         "idea-visual-history-12"
       ],
-      "relatedExisting": []
+      "relatedExisting": [],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "色相が近い色を使う配色のまとまりと識別性を比較する。",
+        "appropriateUses": [
+          "落ち着いたブランドページ",
+          "情報量が少ない紹介UI"
+        ],
+        "pitfalls": [
+          "隣接色の差だけで情報を区別しない",
+          "重要操作が背景に埋もれないようにする"
+        ],
+        "reviewChecks": [
+          "色覚の違いを想定して確認",
+          "本文とボタンの識別性を測定"
+        ],
+        "evidenceStatus": "not_checked"
+      }
     },
     {
       "id": "idea-color-03",
@@ -609,7 +798,24 @@
         "idea-review-11",
         "idea-visual-history-05"
       ],
-      "relatedExisting": []
+      "relatedExisting": [],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "色相環上で対照的な色を用い、アクセントと背景の役割を整理する。",
+        "appropriateUses": [
+          "注意を引く見出し",
+          "強調したいアクション"
+        ],
+        "pitfalls": [
+          "補色を広い面積に乱用しない",
+          "強い刺激で本文の読みやすさを損なわない"
+        ],
+        "reviewChecks": [
+          "実画面で優先順位を比較",
+          "コントラストと彩度を別々に評価"
+        ],
+        "evidenceStatus": "not_checked"
+      }
     },
     {
       "id": "idea-color-04",
@@ -658,7 +864,8 @@
         "reviewChecks": [
           "本文・リンク・フォーム・警告の双方を確認する",
           "OS設定切替時のちらつきや可読性を確認する"
-        ]
+        ],
+        "evidenceStatus": "not_checked"
       }
     },
     {
@@ -748,7 +955,24 @@
         "idea-information-09",
         "idea-motion-02"
       ],
-      "relatedExisting": []
+      "relatedExisting": [],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "多数のカテゴリやリンクを大きな展開領域に整理するナビゲーション。",
+        "appropriateUses": [
+          "情報量の多いEC",
+          "サービスカテゴリが多いサイト"
+        ],
+        "pitfalls": [
+          "開閉方法にホバーだけを使わない",
+          "項目が長すぎて選べない状態を避ける"
+        ],
+        "reviewChecks": [
+          "タッチ・キーボード操作を確認",
+          "展開後にフォーカスが迷子にならないか試す"
+        ],
+        "evidenceStatus": "not_checked"
+      }
     },
     {
       "id": "idea-components-02",
@@ -759,7 +983,24 @@
       "relatedIdeaIds": [
         "idea-forms-07"
       ],
-      "relatedExisting": []
+      "relatedExisting": [],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "候補の検索と選択を組み合わせる入力コンポーネント。",
+        "appropriateUses": [
+          "項目数の多い選択",
+          "検索可能な候補一覧"
+        ],
+        "pitfalls": [
+          "通常のselectと役割を混同しない",
+          "入力候補を操作不能な見た目だけにしない"
+        ],
+        "reviewChecks": [
+          "ARIAの設計パターンと照合",
+          "候補数ゼロと選択確定の動作を試す"
+        ],
+        "evidenceStatus": "not_checked"
+      }
     },
     {
       "id": "idea-components-03",
@@ -770,7 +1011,24 @@
       "relatedIdeaIds": [
         "idea-forms-02"
       ],
-      "relatedExisting": []
+      "relatedExisting": [],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "日付と時刻を適切な範囲・単位で選べる入力画面。",
+        "appropriateUses": [
+          "予約日時の指定",
+          "申請期限の入力"
+        ],
+        "pitfalls": [
+          "タイムゾーンや日付形式を曖昧にしない",
+          "選べない日時を選択可能に見せない"
+        ],
+        "reviewChecks": [
+          "キーボードと画面読み上げを確認",
+          "日付境界・未選択・エラー状態を試す"
+        ],
+        "evidenceStatus": "not_checked"
+      }
     },
     {
       "id": "idea-components-04",
@@ -904,7 +1162,8 @@
         "reviewChecks": [
           "途中離脱・戻る・エラー・再開を実画面で試す",
           "現在の工程と総工程数が理解できるか確認する"
-        ]
+        ],
+        "evidenceStatus": "not_checked"
       }
     },
     {
@@ -918,7 +1177,24 @@
         "idea-use-cases-01",
         "idea-use-cases-12"
       ],
-      "relatedExisting": []
+      "relatedExisting": [],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "郵便番号、都道府県、市区町村、町域、建物情報の入力負荷を整理する。",
+        "appropriateUses": [
+          "自治体申請",
+          "配送先・居住地の登録"
+        ],
+        "pitfalls": [
+          "郵便番号で必ず住所が確定すると扱わない",
+          "固有の住所表記を一律に補正しない"
+        ],
+        "reviewChecks": [
+          "例外的な住所や文字種で試す",
+          "自動入力後も利用者が修正できるか確認"
+        ],
+        "evidenceStatus": "not_checked"
+      }
     },
     {
       "id": "idea-forms-03",
@@ -930,7 +1206,24 @@
         "idea-design-systems-07",
         "idea-forms-01"
       ],
-      "relatedExisting": []
+      "relatedExisting": [],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "送信前に入力内容を確認し、必要箇所へ戻って修正できる構成。",
+        "appropriateUses": [
+          "行政手続き",
+          "金銭に関わる入力"
+        ],
+        "pitfalls": [
+          "確認画面で誤認させる省略をしない",
+          "戻ると入力が消える設計にしない"
+        ],
+        "reviewChecks": [
+          "修正→戻る→送信の順に試す",
+          "必須同意と実行ボタンの区別を確認"
+        ],
+        "evidenceStatus": "not_checked"
+      }
     },
     {
       "id": "idea-forms-04",
@@ -941,7 +1234,24 @@
       "relatedIdeaIds": [
         "idea-forms-11"
       ],
-      "relatedExisting": []
+      "relatedExisting": [],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "途中入力を保持し、再開できる仕組みの設計上の注意を整理する。",
+        "appropriateUses": [
+          "長い申請",
+          "作業を中断しやすいフォーム"
+        ],
+        "pitfalls": [
+          "自動保存の成功を確認せず断定しない",
+          "保存データの期限と削除方法を隠さない"
+        ],
+        "reviewChecks": [
+          "離脱・再接続・別端末を検証",
+          "保存失敗時の通知を確認"
+        ],
+        "evidenceStatus": "not_checked"
+      }
     },
     {
       "id": "idea-forms-05",
@@ -1055,7 +1365,24 @@
         "idea-layout-06",
         "idea-motion-03"
       ],
-      "relatedExisting": []
+      "relatedExisting": [],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "画面が切り替わる際の文脈維持と動きの必要性を比較する。",
+        "appropriateUses": [
+          "アプリの階層移動",
+          "複数ステップの作業"
+        ],
+        "pitfalls": [
+          "動きが原因で操作遅延や方向の混乱を作らない",
+          "動きを減らす設定を無視しない"
+        ],
+        "reviewChecks": [
+          "切替中のフォーカス移動を試す",
+          "reduced-motionで代替表現を確認"
+        ],
+        "evidenceStatus": "not_checked"
+      }
     },
     {
       "id": "idea-motion-02",
@@ -1066,7 +1393,24 @@
       "relatedIdeaIds": [
         "idea-components-01"
       ],
-      "relatedExisting": []
+      "relatedExisting": [],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "ナビゲーションの選択・開閉・現在位置を小さな動きで伝える方法。",
+        "appropriateUses": [
+          "タブ切替",
+          "サイドメニュー"
+        ],
+        "pitfalls": [
+          "動きだけで現在地を示さない",
+          "開閉状態とキーボード操作を不一致にしない"
+        ],
+        "reviewChecks": [
+          "操作後のaria-expanded等を確認",
+          "動きを減らした場合の状態表示を確認"
+        ],
+        "evidenceStatus": "not_checked"
+      }
     },
     {
       "id": "idea-motion-03",
@@ -1078,7 +1422,24 @@
         "idea-motion-01",
         "idea-motion-11"
       ],
-      "relatedExisting": []
+      "relatedExisting": [],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "要素の出現・退出が読み順と操作に与える影響を検討する。",
+        "appropriateUses": [
+          "条件付き説明",
+          "サイドパネル"
+        ],
+        "pitfalls": [
+          "消えた要素にフォーカスを残さない",
+          "重要内容をアニメーション完了まで隠し続けない"
+        ],
+        "reviewChecks": [
+          "途中の操作・連打を試す",
+          "非表示状態と読み上げを確認"
+        ],
+        "evidenceStatus": "not_checked"
+      }
     },
     {
       "id": "idea-motion-04",
@@ -1175,7 +1536,8 @@
         "reviewChecks": [
           "失敗・長時間処理・完了時の表示を試す",
           "動きを減らすOS設定での代替表現を確認する"
-        ]
+        ],
+        "evidenceStatus": "not_checked"
       }
     },
     {
@@ -1247,7 +1609,8 @@
         "reviewChecks": [
           "数値・単位・軸の範囲と出典を明示する",
           "小画面でラベルが読めるか確認する"
-        ]
+        ],
+        "evidenceStatus": "not_checked"
       }
     },
     {
@@ -1260,7 +1623,24 @@
         "idea-data-viz-01",
         "idea-data-viz-10"
       ],
-      "relatedExisting": []
+      "relatedExisting": [],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "各カテゴリ内の内訳を積み上げて示すグラフ。総量と構成比のどちらを比較するかを明確にする。",
+        "appropriateUses": [
+          "構成要素を持つ件数",
+          "部門別の内訳"
+        ],
+        "pitfalls": [
+          "小さい区分の比較に不向きな場合を示す",
+          "系列数が多すぎる表示を避ける"
+        ],
+        "reviewChecks": [
+          "総量と部分の解釈を利用者に試す",
+          "凡例とラベルが対応するか確認"
+        ],
+        "evidenceStatus": "not_checked"
+      }
     },
     {
       "id": "idea-data-viz-03",
@@ -1273,7 +1653,24 @@
         "idea-data-viz-12",
         "idea-motion-08"
       ],
-      "relatedExisting": []
+      "relatedExisting": [],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "時系列データの変化と複数系列の関係を線で示すグラフ。",
+        "appropriateUses": [
+          "日別推移",
+          "継続的な指標の比較"
+        ],
+        "pitfalls": [
+          "欠測値を連続したデータに見せない",
+          "非等間隔の時間を等間隔で誤表示しない"
+        ],
+        "reviewChecks": [
+          "時間軸と単位を確認",
+          "欠測・急変・長期間の表示を試す"
+        ],
+        "evidenceStatus": "not_checked"
+      }
     },
     {
       "id": "idea-data-viz-04",
@@ -1294,7 +1691,24 @@
           "label": "小さな指標表示の参考",
           "href": "https://fragmenta-brown.vercel.app/#/p/metric-summary"
         }
-      ]
+      ],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "小さな面積に変化の概形を示す補助的な折れ線表示。",
+        "appropriateUses": [
+          "KPIのカード",
+          "一覧のトレンド列"
+        ],
+        "pitfalls": [
+          "軸・単位がない数値を誤認させない",
+          "装飾だけのグラフにしない"
+        ],
+        "reviewChecks": [
+          "別の詳細図へ辿れるか確認",
+          "同一尺度で比較するかを検証"
+        ],
+        "evidenceStatus": "not_checked"
+      }
     },
     {
       "id": "idea-data-viz-05",
@@ -1400,7 +1814,24 @@
         "idea-ai-reference-02",
         "idea-information-07"
       ],
-      "relatedExisting": []
+      "relatedExisting": [],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "専門用語の説明を本文の文脈から参照できる設計。",
+        "appropriateUses": [
+          "制度案内",
+          "技術ドキュメント"
+        ],
+        "pitfalls": [
+          "本文から用語定義が切り離されないようにする",
+          "独自定義を一般定義と混同しない"
+        ],
+        "reviewChecks": [
+          "定義への直リンクを確認",
+          "用語の更新・参照元の管理を試す"
+        ],
+        "evidenceStatus": "not_checked"
+      }
     },
     {
       "id": "idea-information-02",
@@ -1422,7 +1853,24 @@
           "label": "出典のある読み物の例",
           "href": "https://fragmenta-brown.vercel.app/#/p/readable-article"
         }
-      ]
+      ],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "本文の主張と原資料の該当箇所を対応付ける見せ方。",
+        "appropriateUses": [
+          "調査記事",
+          "規則や制度の解説"
+        ],
+        "pitfalls": [
+          "出典リンクを付けただけで支持根拠としない",
+          "参照時点を隠さない"
+        ],
+        "reviewChecks": [
+          "リンク先の該当箇所を再確認",
+          "引用と解釈が区別されるか点検"
+        ],
+        "evidenceStatus": "not_checked"
+      }
     },
     {
       "id": "idea-information-03",
@@ -1434,7 +1882,24 @@
         "idea-ai-ui-09",
         "idea-design-systems-11"
       ],
-      "relatedExisting": []
+      "relatedExisting": [],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "何がいつ変わったかを、旧版と新版で確認できる表示方法。",
+        "appropriateUses": [
+          "改正情報",
+          "製品の更新履歴"
+        ],
+        "pitfalls": [
+          "最新内容と過去版を混ぜない",
+          "意味の変化を色だけで示さない"
+        ],
+        "reviewChecks": [
+          "改訂日・適用日を分けて記録",
+          "差分と原文の双方を確認"
+        ],
+        "evidenceStatus": "not_checked"
+      }
     },
     {
       "id": "idea-information-04",
@@ -1562,7 +2027,8 @@
         "reviewChecks": [
           "各判断条件から一次資料へ戻れるか確認する",
           "例外ケースを使って誤解が生じないか検証する"
-        ]
+        ],
+        "evidenceStatus": "not_checked"
       }
     },
     {
@@ -1590,7 +2056,8 @@
         "reviewChecks": [
           "Tab・Shift+Tab・Enter・Escapeを実際に試す",
           "順序と表示位置が一致するか確認する"
-        ]
+        ],
+        "evidenceStatus": "not_checked"
       }
     },
     {
@@ -1602,7 +2069,24 @@
       "relatedIdeaIds": [
         "idea-layout-03"
       ],
-      "relatedExisting": []
+      "relatedExisting": [],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "本文への移動を短縮するリンクを見つけやすくする。",
+        "appropriateUses": [
+          "共通ナビゲーションが長いサイト",
+          "複数ページのサービス"
+        ],
+        "pitfalls": [
+          "見えるのに移動できないリンクにしない",
+          "固定ヘッダで移動先を隠さない"
+        ],
+        "reviewChecks": [
+          "Tabで出現しEnterで動くか試す",
+          "移動後のフォーカス位置を確認"
+        ],
+        "evidenceStatus": "not_checked"
+      }
     },
     {
       "id": "idea-accessibility-03",
@@ -1615,7 +2099,24 @@
         "idea-review-03",
         "idea-visual-history-06"
       ],
-      "relatedExisting": []
+      "relatedExisting": [],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "高コントラスト設定でも主要要素を識別できる表示を検討する。",
+        "appropriateUses": [
+          "長時間利用する管理画面",
+          "低視力利用者に配慮するアプリ"
+        ],
+        "pitfalls": [
+          "単純な色反転だけで十分と判断しない",
+          "境界線やフォーカスを消さない"
+        ],
+        "reviewChecks": [
+          "実際のOS設定で確認",
+          "状態の違いを色以外でも確認"
+        ],
+        "evidenceStatus": "not_checked"
+      }
     },
     {
       "id": "idea-accessibility-04",
@@ -1627,7 +2128,24 @@
         "idea-typography-07",
         "idea-typography-12"
       ],
-      "relatedExisting": []
+      "relatedExisting": [],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "200%ズーム等で文字を拡大しても情報や操作が欠落しない画面。",
+        "appropriateUses": [
+          "長文記事",
+          "入力フォーム"
+        ],
+        "pitfalls": [
+          "拡大時に固定高さで内容を切らない",
+          "横スクロールを必要以上に発生させない"
+        ],
+        "reviewChecks": [
+          "ズームと狭い幅での折返しを検証",
+          "ボタン・フォームの操作を試す"
+        ],
+        "evidenceStatus": "not_checked"
+      }
     },
     {
       "id": "idea-accessibility-05",
@@ -1744,7 +2262,24 @@
         "idea-forms-08",
         "idea-forms-10"
       ],
-      "relatedExisting": []
+      "relatedExisting": [],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "AIが外部への送信やデータ変更を行う前に、利用者が対象・範囲を理解し承認できる画面。",
+        "appropriateUses": [
+          "代理操作",
+          "重要な内容の送信"
+        ],
+        "pitfalls": [
+          "広範囲な権限を無説明で承認させない",
+          "確認前に実行したように見せない"
+        ],
+        "reviewChecks": [
+          "対象・権限・効果が表示されるか確認",
+          "拒否・取消操作を試す"
+        ],
+        "evidenceStatus": "not_checked"
+      }
     },
     {
       "id": "idea-ai-ui-02",
@@ -1755,7 +2290,24 @@
       "relatedIdeaIds": [
         "idea-motion-09"
       ],
-      "relatedExisting": []
+      "relatedExisting": [],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "AIが参照・検索・処理を行っている状態を分かる範囲で示す。",
+        "appropriateUses": [
+          "ツール呼出しを伴うAI",
+          "長時間処理"
+        ],
+        "pitfalls": [
+          "未観測の進捗を推測で表示しない",
+          "内部情報を不用意に公開しない"
+        ],
+        "reviewChecks": [
+          "実際の状態と表示を対応確認",
+          "失敗・中断・再開の扱いを試す"
+        ],
+        "evidenceStatus": "not_checked"
+      }
     },
     {
       "id": "idea-ai-ui-03",
@@ -1781,7 +2333,8 @@
         "reviewChecks": [
           "表示された出典リンクが参照先を開くか確かめる",
           "主張と出典の対応をサンプル回答で点検する"
-        ]
+        ],
+        "evidenceStatus": "not_checked"
       }
     },
     {
@@ -1795,7 +2348,24 @@
         "idea-ai-reference-10",
         "idea-layout-11"
       ],
-      "relatedExisting": []
+      "relatedExisting": [],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "AIが返したJSONや表を原文・解釈の区別を保ちながら見せる。",
+        "appropriateUses": [
+          "データ分析支援",
+          "機械可読な成果物の確認"
+        ],
+        "pitfalls": [
+          "不正なJSONを黙って補完しない",
+          "表示上の整形で元データを変えない"
+        ],
+        "reviewChecks": [
+          "構文エラーと空値を試す",
+          "コピー結果が原文と一致するか確認"
+        ],
+        "evidenceStatus": "not_checked"
+      }
     },
     {
       "id": "idea-ai-ui-05",
@@ -1902,7 +2472,24 @@
         "idea-forms-01",
         "idea-forms-02"
       ],
-      "relatedExisting": []
+      "relatedExisting": [],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "手続きの対象者、必要書類、入力、完了の道筋を整理した自治体申請画面の構成。",
+        "appropriateUses": [
+          "オンライン届出",
+          "申請手続き"
+        ],
+        "pitfalls": [
+          "制度にない条件をUIの都合で追加しない",
+          "スマホ利用者の入力負荷を過小評価しない"
+        ],
+        "reviewChecks": [
+          "実際の申請シナリオで通し操作",
+          "根拠と更新日の管理を確認"
+        ],
+        "evidenceStatus": "not_checked"
+      }
     },
     {
       "id": "idea-use-cases-02",
@@ -1937,7 +2524,8 @@
         "reviewChecks": [
           "制度の例外と出典へ迷わず到達できるか試す",
           "スマートフォンで長文と表の表示を確認する"
-        ]
+        ],
+        "evidenceStatus": "not_checked"
       }
     },
     {
@@ -1949,7 +2537,24 @@
       "relatedIdeaIds": [
         "idea-typography-11"
       ],
-      "relatedExisting": []
+      "relatedExisting": [],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "学習目標・教材・進捗・復習の導線を整理した学習画面。",
+        "appropriateUses": [
+          "オンライン講義",
+          "自主学習アプリ"
+        ],
+        "pitfalls": [
+          "達成率だけで理解を判断しない",
+          "読むことだけで学習完了と見せない"
+        ],
+        "reviewChecks": [
+          "教材の再開・見直しを試す",
+          "小画面で学習内容を追えるか確認"
+        ],
+        "evidenceStatus": "not_checked"
+      }
     },
     {
       "id": "idea-use-cases-04",
@@ -1963,7 +2568,24 @@
         "idea-visual-history-01",
         "idea-visual-history-10"
       ],
-      "relatedExisting": []
+      "relatedExisting": [],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "作品情報、鑑賞の文脈、アクセス情報をつなぐ文化施設のサイト構成。",
+        "appropriateUses": [
+          "展示紹介",
+          "収蔵品データベース"
+        ],
+        "pitfalls": [
+          "作品の画像利用権を推測で判断しない",
+          "展示の日時・場所を曖昧にしない"
+        ],
+        "reviewChecks": [
+          "作品情報の出典を確認",
+          "画像代替テキストと拡大表示を試す"
+        ],
+        "evidenceStatus": "not_checked"
+      }
     },
     {
       "id": "idea-use-cases-05",
@@ -2074,7 +2696,24 @@
       "relatedIdeaIds": [
         "idea-components-01"
       ],
-      "relatedExisting": []
+      "relatedExisting": [],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "Material Designの公式資料を起点に、原則・コンポーネント・利用条件を比較可能な項目として整理する。",
+        "appropriateUses": [
+          "デザインシステム調査",
+          "既存UIの仕様比較"
+        ],
+        "pitfalls": [
+          "独自のサンプルを公式準拠と表示しない",
+          "バージョンが異なる資料を混在させない"
+        ],
+        "reviewChecks": [
+          "公式原典と更新日を記録",
+          "ライセンス条件と実装例を分離"
+        ],
+        "evidenceStatus": "not_checked"
+      }
     },
     {
       "id": "idea-design-systems-02",
@@ -2085,7 +2724,24 @@
       "relatedIdeaIds": [
         "idea-data-viz-01"
       ],
-      "relatedExisting": []
+      "relatedExisting": [],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "Carbon Design Systemの公式情報を起点に、パターンとデザイン原則を参照用に整理する。",
+        "appropriateUses": [
+          "業務アプリの設計比較",
+          "公式ドキュメントの調査"
+        ],
+        "pitfalls": [
+          "独自解釈を公式の仕様と混同しない",
+          "特定の製品版に固定しない"
+        ],
+        "reviewChecks": [
+          "公式の一次資料を確認",
+          "利用条件と対応コンポーネントを記録"
+        ],
+        "evidenceStatus": "not_checked"
+      }
     },
     {
       "id": "idea-design-systems-03",
@@ -2096,7 +2752,24 @@
       "relatedIdeaIds": [
         "idea-typography-11"
       ],
-      "relatedExisting": []
+      "relatedExisting": [],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "Fluentの公式資料に沿って、Microsoftのデザイン指針と実装資料の適用範囲を整理する。",
+        "appropriateUses": [
+          "製品UIの比較",
+          "マルチプラットフォーム設計の調査"
+        ],
+        "pitfalls": [
+          "異なる世代のガイドを混在させない",
+          "Fragmentaのプレビューを公式実装としない"
+        ],
+        "reviewChecks": [
+          "参照した仕様の版とURLを記録",
+          "対象プラットフォームを明記"
+        ],
+        "evidenceStatus": "not_checked"
+      }
     },
     {
       "id": "idea-design-systems-04",
@@ -2206,7 +2879,24 @@
       "relatedIdeaIds": [
         "idea-layout-12"
       ],
-      "relatedExisting": []
+      "relatedExisting": [],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "要素数を抑えることと、必要な情報を削りすぎることを比較する。",
+        "appropriateUses": [
+          "ダッシュボード改善",
+          "シンプルな記事画面の設計"
+        ],
+        "pitfalls": [
+          "少ない要素だけを正解としない",
+          "重要機能の発見性を損なわない"
+        ],
+        "reviewChecks": [
+          "利用者のタスク達成を観察",
+          "情報の欠落を点検"
+        ],
+        "evidenceStatus": "not_checked"
+      }
     },
     {
       "id": "idea-review-02",
@@ -2217,7 +2907,24 @@
       "relatedIdeaIds": [
         "idea-accessibility-11"
       ],
-      "relatedExisting": []
+      "relatedExisting": [],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "視覚的な魅力と操作の明快さを、同じタスクで比較する。",
+        "appropriateUses": [
+          "UIレビュー",
+          "デザイン案の選定"
+        ],
+        "pitfalls": [
+          "好みだけで操作性を断定しない",
+          "見た目の評価とユーザー評価を混同しない"
+        ],
+        "reviewChecks": [
+          "実際の操作時間・迷いを観察",
+          "見た目の評価とタスク結果を分ける"
+        ],
+        "evidenceStatus": "not_checked"
+      }
     },
     {
       "id": "idea-review-03",
@@ -2251,7 +2958,8 @@
         "reviewChecks": [
           "実際の色値でコントラストを測る",
           "フォーカス・非文字要素・実際の利用環境を確認する"
-        ]
+        ],
+        "evidenceStatus": "not_checked"
       }
     },
     {
@@ -2264,7 +2972,24 @@
         "idea-motion-04",
         "idea-motion-06"
       ],
-      "relatedExisting": []
+      "relatedExisting": [],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "動きが説明・反応・装飾のどれに寄与しているか区別し、過剰な動きを調整する。",
+        "appropriateUses": [
+          "インタラクション改善",
+          "サイト演出の見直し"
+        ],
+        "pitfalls": [
+          "動きの多さを品質の高さと見なさない",
+          "停止設定を外観の劣化と誤認しない"
+        ],
+        "reviewChecks": [
+          "動きを減らした画面と比較",
+          "操作遅延や集中への影響を確認"
+        ],
+        "evidenceStatus": "not_checked"
+      }
     },
     {
       "id": "idea-review-05",
@@ -2394,7 +3119,8 @@
         "reviewChecks": [
           "JSONのスキーマとリンク整合性を検証する",
           "公開データが画面表示と一致するか確認する"
-        ]
+        ],
+        "evidenceStatus": "not_checked"
       }
     },
     {
@@ -2406,7 +3132,24 @@
       "relatedIdeaIds": [
         "idea-information-01"
       ],
-      "relatedExisting": []
+      "relatedExisting": [],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "同一の台帳をMarkdown形式でも読み取りやすく表現し、説明・状態・リンクを欠落させない。",
+        "appropriateUses": [
+          "AIへの資料提示",
+          "人間による原典の閲覧"
+        ],
+        "pitfalls": [
+          "JSONとMarkdownを別々に手編集しない",
+          "公開前の企画を完成知識として扱わせない"
+        ],
+        "reviewChecks": [
+          "両形式のIDと項目数を比較",
+          "日本語と記号のエスケープを検証"
+        ],
+        "evidenceStatus": "not_checked"
+      }
     },
     {
       "id": "idea-ai-reference-03",
@@ -2417,7 +3160,24 @@
       "relatedIdeaIds": [
         "idea-typography-11"
       ],
-      "relatedExisting": []
+      "relatedExisting": [],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "日本語・英語の別名を同じ固有IDへ関連付け、異なる名称から同じ項目へ到達する。",
+        "appropriateUses": [
+          "多言語検索",
+          "AIからのスタイル指定"
+        ],
+        "pitfalls": [
+          "似た概念を同義語と断定しない",
+          "歴史的名称と現代の通称を混同しない"
+        ],
+        "reviewChecks": [
+          "同義語と関連語を分類",
+          "誤った検索ヒットをレビュー"
+        ],
+        "evidenceStatus": "not_checked"
+      }
     },
     {
       "id": "idea-ai-reference-04",
@@ -2428,7 +3188,24 @@
       "relatedIdeaIds": [
         "idea-color-06"
       ],
-      "relatedExisting": []
+      "relatedExisting": [],
+      "editorial": {
+        "reviewStatus": "draft_unreviewed",
+        "summary": "色、文字、間隔、境界線などの値を再利用可能な形式で表し、用途と適用範囲を示す。",
+        "appropriateUses": [
+          "CSSスタイル生成",
+          "AIへの画面仕様引継ぎ"
+        ],
+        "pitfalls": [
+          "トークンだけで完成UIとしない",
+          "色値からアクセシビリティ適合を推測しない"
+        ],
+        "reviewChecks": [
+          "実装で適用した箇所を比較",
+          "変数の範囲と既定値を確認"
+        ],
+        "evidenceStatus": "not_checked"
+      }
     },
     {
       "id": "idea-ai-reference-05",
@@ -2526,5 +3303,5 @@
       "relatedExisting": []
     }
   ],
-  "editorialNote": "editorial.reviewStatus=draft_unreviewed は編集上の仮案。出典照合・デザイン検証・公開受入を経た完成資料ではありません。"
+  "editorialNote": "editorial.reviewStatus=draft_unreviewed と editorial.evidenceStatus=not_checked は、編集上の下書きで出典確認も未了であることを意味する。企画案を検証済みガイドや公式仕様として扱わない。"
 }
