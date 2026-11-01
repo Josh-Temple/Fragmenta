@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "status": "candidate_snapshot_unreviewed",
+  "relationCount": 152,
+  "directedCount": 34,
+  "sourceCatalogCount": 26,
+  "sourcedIdeaCount": 48,
+  "relationDigest": "586d94aabdaca4e227526c92123895e59a50ee24edc29aa47d8fd6f376aae6a1",
+  "sourceCatalogDigest": "5a7a281bb9518ba4e3e4782dd171c8daafafa535c04d18dc5d703c384294e72a",
+  "sourceAssignmentsDigest": "207a61cf8c1fa01786d4c5c0c4f4f399d5e88eedbb8314725d8932a2a91154f8",
+  "noteJa": "第8段階の未レビュー候補の差分を固定する検査用記録。独立受入・公開承認を意味しない。更新には根拠付きの差分審査が必要。"
+}

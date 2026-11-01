@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Static knowledge exports generated from data/content-ideas.json
+/public/knowledge/
+/public/llms.txt

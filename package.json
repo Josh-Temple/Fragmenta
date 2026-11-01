@@ -7,11 +7,19 @@
     "dev": "vite",
     "typecheck": "tsc --noEmit",
     "lint": "node scripts/lint.cjs",
-    "prebuild": "npm run typecheck && npm run lint && npm run design:verify && npm run tools:verify",
+    "prebuild": "npm run typecheck && npm run lint && npm run design:verify && npm run tools:verify && npm run catalog:export && npm run catalog:verify && npm run catalog:graph && npm run catalog:regression && npm run catalog:exports && npm run catalog:focus && npm run catalog:smoke",
     "build": "vite build",
     "preview": "vite preview",
     "design:verify": "node scripts/check-design-styles.cjs",
-    "tools:verify": "node scripts/check-tools.cjs"
+    "tools:verify": "node scripts/check-tools.cjs",
+    "predev": "npm run catalog:export",
+    "catalog:verify": "node scripts/check-content-ideas.cjs",
+    "catalog:export": "node scripts/check-knowledge-graph.cjs && node scripts/export-knowledge.cjs",
+    "catalog:smoke": "node scripts/check-knowledge-ui.cjs",
+    "catalog:regression": "node scripts/test-knowledge-guards.cjs && node scripts/test-knowledge-graph.cjs",
+    "catalog:graph": "node scripts/check-knowledge-graph.cjs",
+    "catalog:exports": "node scripts/check-knowledge-exports.cjs && node scripts/test-knowledge-exports.cjs",
+    "catalog:focus": "node scripts/test-knowledge-focus.cjs"
   },
   "dependencies": {
     "react": "^19.2.3",
@@ -26,6 +34,6 @@
     "postcss": "8.5.29",
     "tailwindcss": "4.3.3",
     "typescript": "~5.8.2",
-    "vite": "^6.2.0"
+    "vite": "^6.4.5"
   }
 }
