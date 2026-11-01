@@ -8,19 +8,20 @@ import UpcomingTools from './pages/UpcomingTools';
 import Tools from './pages/Tools';
 import ContrastTool from './pages/ContrastTool';
 import TypographyTool from './pages/TypographyTool';
-import DesignStyles from './pages/DesignStyles';
-import KnowledgeBase from './pages/KnowledgeBase';
-import KnowledgeDetail from './pages/KnowledgeDetail';
-import PatternDetail from './pages/AnimationDetail';
+const DesignStyles = React.lazy(() => import('./pages/DesignStyles'));
+const KnowledgeBase = React.lazy(() => import('./pages/KnowledgeBase'));
+const KnowledgeDetail = React.lazy(() => import('./pages/KnowledgeDetail'));
+const PatternDetail = React.lazy(() => import('./pages/AnimationDetail'));
 import Collections from './pages/Collections';
 import CollectionDetail from './pages/CollectionDetail';
 import Licenses from './pages/Licenses';
-import SearchResults from './pages/SearchResults';
+const SearchResults = React.lazy(() => import('./pages/SearchResults'));
 import BestPractices from './pages/BestPractices';
 
 const App: React.FC = () => {
   return (
     <HashRouter>
+      <React.Suspense fallback={<p role="status" className="p-5 text-sm">ページを読み込んでいます…</p>}>
       <Routes>
         <Route path="/" element={<Layout><Home /></Layout>} />
         <Route path="/browse" element={<Layout><Browse /></Layout>} />
@@ -43,6 +44,7 @@ const App: React.FC = () => {
         <Route path="/settings" element={<Navigate to="/" replace />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+      </React.Suspense>
     </HashRouter>
   );
 };
