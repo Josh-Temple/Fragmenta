@@ -72,6 +72,11 @@ const routes = [
   ['/a/glitch-text', 'Glitch Text'],
   ['/p/warm-neo-brutalist-editorial', 'Warm Neo-Brutalist'],
   ['/search', 'Search'],
+  ['/knowledge', 'デザインを、つながりから探す'],
+  ['/knowledge?category=typography', '12件該当'],
+  ['/knowledge?q=__fragmenta_no_results_2026__', '一致する企画案はありません'],
+  ['/knowledge/idea-visual-history-01', 'アール・ヌーヴォー'],
+  ['/knowledge/nonexistent-item', '項目が見つかりません'],
   ['/collections', 'Collections'],
   ['/collections/motion-essentials', 'Motion Essentials'],
   ['/licenses', 'Licensing information'],
@@ -94,6 +99,19 @@ const routes = [
 ];
 
 await poll(async () => (await fetch(baseUrl)).ok, 'built Vite preview server');
+
+// The built site must serve machine-readable, explicitly unreviewed knowledge exports.
+for (const [pathname, marker] of [
+  ['/knowledge/ideas.json', '"schemaVersion"'],
+  ['/knowledge/ideas.md', '# Fragmenta'],
+  ['/llms.txt', '# Fragmenta'],
+]) {
+  const response = await fetch(baseUrl + pathname);
+  if (!response.ok) throw new Error('Knowledge export HTTP ' + response.status + ': ' + pathname);
+  const content = await response.text();
+  if (!content.includes(marker)) throw new Error('Knowledge export missing marker: ' + pathname);
+  console.log('PASS knowledge export HTTP 200 ' + pathname);
+}
 const profile = await mkdtemp(join(tmpdir(), 'fragmenta-browser-smoke-'));
 const browser = spawn(chrome, [
   '--headless=new', '--no-sandbox', '--disable-gpu', '--no-first-run',
@@ -219,6 +237,24 @@ try {
     }
   }
   await page.send('Emulation.clearDeviceMetricsOverride');
+
+  // The knowledge detail heading should receive focus after client-side navigation.
+  for (const [route, heading] of [
+    ['/knowledge/idea-visual-history-01', 'アール・ヌーヴォー'],
+    ['/knowledge/nonexistent-item', '項目が見つかりません'],
+  ]) {
+    await page.send('Runtime.evaluate', {
+      expression: 'location.hash = ' + JSON.stringify('#' + route),
+    });
+    await poll(async () => {
+      const response = await page.send('Runtime.evaluate', {
+        expression: 'Boolean(document.activeElement?.matches(\'h1[tabindex="-1"]\') && document.activeElement.textContent?.includes(' + JSON.stringify(heading) + '))',
+        returnByValue: true,
+      });
+      return response.result?.value;
+    }, 'Knowledge heading focus ' + route);
+    console.log('PASS knowledge heading focus ' + route);
+  }
 
   // Search input must have an explicit accessible name, not placeholder-only text.
   await page.send('Runtime.evaluate', { expression: "location.hash = '#/search'" });
