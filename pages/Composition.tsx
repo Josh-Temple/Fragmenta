@@ -83,6 +83,7 @@ const Composition: React.FC = () => {
             <p className="mt-2 text-sm leading-relaxed">{guide.contrast}</p></div>
         </div>
         {guide.comparisonPoint && <p className="mt-4 rounded-lg border border-ink-border bg-surface p-3 text-sm leading-relaxed"><strong>見比べるポイント：</strong>{guide.comparisonPoint}</p>}
+        {guide.diagramNote && <p className="mt-3 text-sm leading-relaxed text-ink-muted"><strong>模式図の限界：</strong>{guide.diagramNote}</p>}
         <p className="mt-3 text-xs leading-relaxed text-ink-muted">模式図は位置・大きさ・明暗の違いを簡略化したものです。対照例も、目的によっては適切な構図になります。</p>
       </section>
       <section aria-labelledby="composition-ai" className="mt-7 border-t border-ink-border pt-5">

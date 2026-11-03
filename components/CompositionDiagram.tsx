@@ -11,6 +11,9 @@ function draw(shape: Shape, index: number): React.ReactNode {
   if (kind === 'line') return <line key={index} x1={n(0)} y1={n(1)} x2={n(2)} y2={n(3)}
     stroke={colors[n(4)]} strokeWidth={n(5)} strokeLinecap="square" />;
   if (kind === 'poly') return <polygon key={index} points={String(values[0])} fill={colors[n(1)]} />;
+  if (kind === 'text') return <text key={index} x={n(0)} y={n(1)}
+    fill={colors[n(3)]} fontSize={n(4)} fontFamily="sans-serif" fontWeight="600"
+    aria-hidden="true">{String(values[2])}</text>;
   return null;
 }
 const CompositionDiagram: React.FC<{ guide: CompositionGuide; variant: Variant }> = ({ guide, variant }) => {

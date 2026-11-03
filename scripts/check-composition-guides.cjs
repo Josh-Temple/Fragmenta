@@ -29,8 +29,8 @@ for(const guide of source.guides) {
   const diagram=guide.diagram[v];
   assert(Array.isArray(diagram)&&diagram.length>0,'empty '+v+' diagram: '+guide.id);
   for(const sh of diagram) {
-   assert(Array.isArray(sh)&&['rect','circle','line','poly'].includes(sh[0]),'unknown shape: '+guide.id);
-   assert(sh.slice(1).every(x=>typeof x==='number'||(sh[0]==='poly'&&typeof x==='string')),'invalid geometry: '+guide.id);
+   assert(Array.isArray(sh)&&['rect','circle','line','poly','text'].includes(sh[0]),'unknown shape: '+guide.id);
+   assert(sh.slice(1).every(x=>typeof x==='number'||(['poly','text'].includes(sh[0])&&typeof x==='string')),'invalid geometry: '+guide.id);
    assert(sh.slice(1).filter(x=>typeof x==='number').every(Number.isFinite),'NaN geometry: '+guide.id);
   }
  }
@@ -69,6 +69,12 @@ for (const guide of source.guides) {
           [y,y2].every(v=>v>=0&&v<=150) && width > 0 &&
           Number.isInteger(color) && color >= 0 && color <= 4,
           'invalid line geometry: ' + guide.id + '/' + variant);
+      } else if (type === 'text') {
+        const [,x,y,caption,color,fontSize] = shape;
+        assert(shape.length===6 && typeof caption==='string' && caption.trim().length>0 &&
+          caption.length<=16 && x>=0 && x<=240 && y>=0 && y<=150 &&
+          fontSize>=8 && fontSize<=18 && Number.isInteger(color) && color>=0 && color<=4,
+          'invalid text geometry: ' + guide.id + '/' + variant);
       } else if (type === 'poly') {
         const [,coords,color] = shape;
         const pairs = coords.trim().split(/\s+/).map(pair=>pair.split(',').map(Number));
@@ -82,10 +88,46 @@ for (const guide of source.guides) {
   }
 }
 assert(read('pages/Composition.tsx').includes('guide.comparisonPoint'), 'comparison point not rendered');
+assert(read('pages/Composition.tsx').includes('guide.diagramNote'), 'diagram limitation not rendered');
+assert(read('components/CompositionDiagram.tsx').includes("if (kind === 'text')"), 'text annotation renderer missing');
 assert(read('pages/Composition.tsx').includes('composition-atlas-title'),'atlas view missing');
 for(const [id,ref] of Object.entries(source.sources)) {
   const url = new URL(ref.url);
   assert(url.protocol==='https:' && !url.username && !url.password &&
     url.hostname!=='localhost' && !url.hostname.endsWith('.localhost'), 'unsafe source: '+id);
 }
-console.log('PASS: 120 draft guides / 10 categories, 240 diagrams, geometry bounds, comparison points, route and export hook');
+
+const highRisk = ['C-012','C-036','C-039','C-060','C-090','C-092','C-120'];
+for(const id of highRisk) {
+ const guide=source.guides.find(g=>g.id===id);
+ assert(guide?.diagramNote?.length>=28,'missing limitation on high-risk diagram: '+id);
+}
+const semanticPairs = {
+ 'C-012': ['golden-ratio-review'],
+ 'C-039': ['adobe-architecture-perspective'],
+ 'C-060': ['camera-perspective-distance'],
+ 'C-092': ['adobe-180']
+};
+for(const [id,refs] of Object.entries(semanticPairs)){
+ const guide=source.guides.find(g=>g.id===id);
+ for(const ref of refs) assert(guide.sourceIds.includes(ref),'missing scoped evidence: '+id+'/'+ref);
+}
+const figureA=source.guides.find(g=>g.id==='C-036').diagram.example.filter(s=>s[0]==='text').map(s=>s[3]);
+const figureB=source.guides.find(g=>g.id==='C-036').diagram.comparison.filter(s=>s[0]==='text').map(s=>s[3]);
+assert(figureA.join('')==='住住住連連連','semantic grouping example labels');
+assert(figureB.join('')==='住連住連住連','semantic grouping counterexample labels');
+const p39=source.guides.find(g=>g.id==='C-039');
+assert(p39.diagram.example.filter(s=>s[0]==='poly').length>=2,'3-point perspective faces missing');
+const cam=source.guides.find(g=>g.id==='C-092');
+const cameras=v=>cam.diagram[v].filter(s=>s[0]==='poly').map(s=>
+  s[1].split(' ').map(q=>Number(q.split(',')[1])).reduce((a,b)=>a+b,0)/3);
+assert(cameras('example').every(y=>y<75),'both cameras must be same side');
+assert(cameras('comparison').some(y=>y<75)&&cameras('comparison').some(y=>y>75),
+  'camera must cross axis for example');
+const scene=source.guides.find(g=>g.id==='C-060');
+assert(JSON.stringify(scene.diagram.example.filter(s=>s[0]==='circle')) ===
+  JSON.stringify(scene.diagram.comparison.filter(s=>s[0]==='circle')),
+  'foreground person must be fixed across camera distance cases');
+assert(source.guides.find(g=>g.id==='C-120').definition.includes('判定できない'),
+  'copyright eligibility cannot be inferred from diagrams');
+console.log('PASS: 120 draft guides / 10 categories, 240 diagrams, geometry and captions, comparison points, route and export hook');

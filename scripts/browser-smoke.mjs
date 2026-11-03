@@ -76,6 +76,12 @@ const routes = [
   ['/composition', '構図を比較して学ぶ'],
   ['/composition?id=C-062', '黒い面の連結'],
   ['/composition?id=C-120', '参照画像と権利の管理'],
+  ['/composition?id=C-012', '黄金比・黄金螺旋'],
+  ['/composition?id=C-036', '意味のあるグループ分け'],
+  ['/composition?id=C-039', '三点透視図法'],
+  ['/composition?id=C-060', '焦点距離と撮影距離'],
+  ['/composition?id=C-090', 'コマをまたぐ視線誘導'],
+  ['/composition?id=C-092', '映画の180度ルール'],
   ['/composition?view=atlas', '構図の一覧'],
   ['/composition?view=atlas&category=sequence', '12件'],
   ['/composition?q=__fragmenta_no_results_2026__', '該当する項目がありません'],
@@ -294,6 +300,28 @@ try {
   if(atlasResponse.result?.value?.cards!==48 || atlasResponse.result?.value?.diagrams!==48)
     throw new Error('Composition atlas pagination failed: '+JSON.stringify(atlasResponse.result?.value));
   console.log('PASS composition atlas 24-to-48 pagination');
+
+  // Semantics and warning language must be visibly present in rendered SVG/HTML.
+  for (const [id, expected, minLabels] of [
+    ['C-012','黄金螺旋そのものは示していない',2],
+    ['C-036','住所欄',6],
+    ['C-039','三点透視を正確に描く',0],
+    ['C-060','焦点距離だけを変更した結果と混同しない',4],
+    ['C-090','読み順',6],
+    ['C-092','赤い三角形がカメラ',8],
+    ['C-120','著作権侵害の有無は判定できない',4],
+  ]) {
+    await page.send('Runtime.evaluate', { expression: 'location.hash = ' + JSON.stringify('#/composition?id=' + id) });
+    await poll(async () => {
+      const result = await page.send('Runtime.evaluate', {
+        expression: "JSON.stringify({text:document.querySelector('article')?.innerText||'',labels:document.querySelectorAll('article svg text').length})",
+        returnByValue: true,
+      });
+      const observed=JSON.parse(result.result?.value||'{}');
+      return observed.text.includes(expected) && observed.labels >= minLabels;
+    }, 'composition high-risk review '+id);
+    console.log('PASS composition high-risk labels/limitation '+id);
+  }
 
   // The knowledge detail heading should receive focus after client-side navigation.
   for (const [route, heading] of [
