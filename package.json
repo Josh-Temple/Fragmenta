@@ -20,7 +20,7 @@
     "catalog:graph": "node scripts/check-knowledge-graph.cjs",
     "catalog:exports": "node scripts/check-knowledge-exports.cjs && node scripts/test-knowledge-exports.cjs",
     "catalog:focus": "node scripts/test-knowledge-focus.cjs",
-    "composition:verify": "node scripts/check-composition-guides.cjs"
+    "composition:verify": "node scripts/check-composition-guides.cjs && node scripts/check-composition-discovery.cjs"
   },
   "dependencies": {
     "react": "^19.2.3",

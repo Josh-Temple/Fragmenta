@@ -301,6 +301,41 @@ try {
     throw new Error('Composition atlas pagination failed: '+JSON.stringify(atlasResponse.result?.value));
   console.log('PASS composition atlas 24-to-48 pagination and side-by-side comparisons');
 
+  // Purpose-based discovery: curated choices, rationale, direct link, 390px and zero results.
+  await page.send('Runtime.evaluate', { expression: "location.hash = '#/composition?view=atlas&purpose=solitude'" });
+  await poll(async () => {
+    const response = await page.send('Runtime.evaluate', {
+      expression: "document.querySelectorAll('#composition-purpose-choices button').length===8 && document.querySelectorAll('a[data-composition-card]').length===6 && document.body.innerText.includes('選択理由') && document.body.innerText.includes('不向きな条件')",
+      returnByValue: true,
+    });
+    return response.result?.value;
+  }, 'composition purpose choices and caveats');
+  await page.send('Runtime.evaluate', { expression: "location.hash = '#/composition?id=C-073&purpose=solitude'" });
+  await poll(async () => {
+    const response = await page.send('Runtime.evaluate', {
+      expression: "document.querySelector('#composition-title')?.textContent==='孤独を示す小さな人物' && document.querySelector('#composition-purpose-reason')?.textContent.includes('孤独感')",
+      returnByValue: true,
+    });
+    return response.result?.value;
+  }, 'composition purpose deep link');
+  await page.send('Emulation.setDeviceMetricsOverride', { width: 390, height: 844, deviceScaleFactor: 1, mobile: true });
+  const portrait = await page.send('Runtime.evaluate', {
+    expression: "({overflow:document.documentElement.scrollWidth-innerWidth,touch:[...document.querySelectorAll('#composition-purpose-choices button')].every(x=>x.getBoundingClientRect().height>=44)})",
+    returnByValue: true,
+  });
+  if(portrait.result?.value?.overflow > 1 || !portrait.result?.value?.touch)
+    throw new Error('Purpose 390px layout '+JSON.stringify(portrait.result?.value));
+  await page.send('Emulation.clearDeviceMetricsOverride');
+  await page.send('Runtime.evaluate', { expression: "location.hash = '#/composition?view=atlas&purpose=solitude&q=__fragmenta_no_results_2026__'" });
+  await poll(async () => {
+    const response = await page.send('Runtime.evaluate', {
+      expression: "document.body.innerText.includes('検索条件に一致する構図はありません')",
+      returnByValue: true,
+    });
+    return response.result?.value;
+  }, 'composition purpose empty result');
+  console.log('PASS discovery purpose, reason, direct URL, 390px and empty state');
+
   // Semantics and warning language must be visibly present in rendered SVG/HTML.
   for (const [id, expected, minLabels] of [
     ['C-012','黄金螺旋そのものは示していない',2],

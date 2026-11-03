@@ -1,0 +1,537 @@
+{
+  "schemaVersion": 1,
+  "kind": "composition-discovery",
+  "status": "draft_unreviewed",
+  "note": "用途・媒体・被写体・印象の対応は未レビューの編集候補であり、効果を保証しない。本文・図版の正本はdata/composition-guides.json。",
+  "purposes": [
+    {
+      "id": "solitude",
+      "titleJa": "孤独感",
+      "description": "人物の小ささ・周囲の余白・建築の尺度差を比べる。印象は文脈に依存します。",
+      "choices": [
+        {
+          "guideId": "C-014",
+          "reasonJa": "主役を取り巻く空白を使って距離感を設計できる。",
+          "cautionJa": "余白だけでは感情を確定できない。"
+        },
+        {
+          "guideId": "C-017",
+          "reasonJa": "主役の画面占有率を下げ、環境を大きく見せられる。",
+          "cautionJa": "主役が小さすぎると識別しづらい。"
+        },
+        {
+          "guideId": "C-073",
+          "reasonJa": "広い環境に小さな人物を置く演出を比較できる。",
+          "cautionJa": "壮大さとして受け取られる場合もある。"
+        },
+        {
+          "guideId": "C-075",
+          "reasonJa": "人と巨大建築の尺度差を強調できる。",
+          "cautionJa": "尺度差だけで孤独を保証しない。"
+        },
+        {
+          "guideId": "C-081",
+          "reasonJa": "人物の後ろ姿によって匿名性を試せる。",
+          "cautionJa": "表情から感情を伝えたい場合は不向き。"
+        },
+        {
+          "guideId": "C-082",
+          "reasonJa": "静止した広い空間を演出に使える。",
+          "cautionJa": "静けさと孤独は同じ意味ではない。"
+        }
+      ]
+    },
+    {
+      "id": "calm",
+      "titleJa": "静けさ",
+      "description": "余白・均衡・静止を比較する候補。静かに見えるかは状況によります。",
+      "choices": [
+        {
+          "guideId": "C-002",
+          "reasonJa": "中心軸を意識して画面の均衡を整えられる。",
+          "cautionJa": "中央配置が必ず落ち着いて見えるわけではない。"
+        },
+        {
+          "guideId": "C-014",
+          "reasonJa": "大きな余白を残して要素数を整理できる。",
+          "cautionJa": "必要な情報まで減らさない。"
+        },
+        {
+          "guideId": "C-021",
+          "reasonJa": "反復の間隔によって穏やかなリズムを検討できる。",
+          "cautionJa": "反復が多いと密度が高くなる。"
+        },
+        {
+          "guideId": "C-048",
+          "reasonJa": "平面的な形と重なりで空間を簡潔に示せる。",
+          "cautionJa": "立体的な精度が必要なら向かない。"
+        },
+        {
+          "guideId": "C-061",
+          "reasonJa": "二値の明暗に還元して構成を整理できる。",
+          "cautionJa": "強い明暗差は緊張感も生む。"
+        },
+        {
+          "guideId": "C-082",
+          "reasonJa": "動作を抑えた広い場面を直接検討できる。",
+          "cautionJa": "静止が退屈に見える場合もある。"
+        }
+      ]
+    },
+    {
+      "id": "unease",
+      "titleJa": "不穏さ",
+      "description": "傾き・囲い・画面端の緊張を比較する。特定の心理効果は保証しません。",
+      "choices": [
+        {
+          "guideId": "C-005",
+          "reasonJa": "対角線の偏りを使って不安定な配置を試せる。",
+          "cautionJa": "斜線は速度感にも使われる。"
+        },
+        {
+          "guideId": "C-023",
+          "reasonJa": "画面端に寄せて緊張を作る候補になる。",
+          "cautionJa": "切れ方が意図不明だと読みづらい。"
+        },
+        {
+          "guideId": "C-056",
+          "reasonJa": "傾いた画角を比較できる。",
+          "cautionJa": "過度の傾きは情報を読みにくくする。"
+        },
+        {
+          "guideId": "C-074",
+          "reasonJa": "囲われた主役と周囲の関係を調整できる。",
+          "cautionJa": "圧迫的な画面が不向きな用途もある。"
+        },
+        {
+          "guideId": "C-077",
+          "reasonJa": "画面外の存在を視線などで示唆できる。",
+          "cautionJa": "手掛かりが不足すると意味が伝わらない。"
+        },
+        {
+          "guideId": "C-078",
+          "reasonJa": "中心からのずれによる偏りを試せる。",
+          "cautionJa": "非中央の構図そのものは誤りではない。"
+        },
+        {
+          "guideId": "C-084",
+          "reasonJa": "対称な環境内に一つ異物を置ける。",
+          "cautionJa": "違和感の理由は物語次第で変わる。"
+        }
+      ]
+    },
+    {
+      "id": "power",
+      "titleJa": "力強さ",
+      "description": "占有率・低い視点・輪郭・動作を検討する候補です。",
+      "choices": [
+        {
+          "guideId": "C-006",
+          "reasonJa": "三角の頂点関係で大きな量感を整理できる。",
+          "cautionJa": "三角構図だけで力強さは決まらない。"
+        },
+        {
+          "guideId": "C-017",
+          "reasonJa": "主役の占有率を高める選択肢がある。",
+          "cautionJa": "環境が伝わらない場合がある。"
+        },
+        {
+          "guideId": "C-054",
+          "reasonJa": "低い視点で主役の見え方を比較できる。",
+          "cautionJa": "ローアングルが常に威圧的とは限らない。"
+        },
+        {
+          "guideId": "C-063",
+          "reasonJa": "輪郭と背景の境界を大きな形で読ませられる。",
+          "cautionJa": "輪郭を優先して必要情報を消さない。"
+        },
+        {
+          "guideId": "C-067",
+          "reasonJa": "主役付近へ明暗差を集中できる。",
+          "cautionJa": "コントラストだけでは動きは伝わらない。"
+        },
+        {
+          "guideId": "C-086",
+          "reasonJa": "身体の流れとアクションラインを対応させられる。",
+          "cautionJa": "線と実際のポーズの整合を確認する。"
+        }
+      ]
+    },
+    {
+      "id": "depth",
+      "titleJa": "奥行き",
+      "description": "収束線・遮蔽・空間の層を比較します。厳密な投影図とは区別してください。",
+      "choices": [
+        {
+          "guideId": "C-010",
+          "reasonJa": "道路などの線で奥へ注意を導ける。",
+          "cautionJa": "線の終点と主役が一致するか確認する。"
+        },
+        {
+          "guideId": "C-011",
+          "reasonJa": "窓や扉などの枠から前後関係を作れる。",
+          "cautionJa": "枠だけで奥行きが生じるとは限らない。"
+        },
+        {
+          "guideId": "C-037",
+          "reasonJa": "一点透視の消失点を意識して検討できる。",
+          "cautionJa": "実際の投影を正確に検証した図ではない。"
+        },
+        {
+          "guideId": "C-038",
+          "reasonJa": "左右二方向の消失点を区別できる。",
+          "cautionJa": "収束方向を混同しない。"
+        },
+        {
+          "guideId": "C-041",
+          "reasonJa": "前景・中景・背景の三層を比較できる。",
+          "cautionJa": "主役を遮りすぎない。"
+        },
+        {
+          "guideId": "C-043",
+          "reasonJa": "遮蔽によって前後関係を説明できる。",
+          "cautionJa": "重要な形が隠れすぎる場合には不向き。"
+        },
+        {
+          "guideId": "C-048",
+          "reasonJa": "透視図法以外の平面的な奥行きを選べる。",
+          "cautionJa": "厳密な空間再現には向かないことがある。"
+        }
+      ]
+    },
+    {
+      "id": "gaze",
+      "titleJa": "視線誘導",
+      "description": "線・視線・コントラストから注意の経路を考えます。閲覧者の視線を保証するものではありません。",
+      "choices": [
+        {
+          "guideId": "C-010",
+          "reasonJa": "道や影の線を目標へ収束させられる。",
+          "cautionJa": "線の方向と誘導先が矛盾しないか確認する。"
+        },
+        {
+          "guideId": "C-013",
+          "reasonJa": "主題と副題の優先順位を調整できる。",
+          "cautionJa": "副題に必要な情報まで抑えない。"
+        },
+        {
+          "guideId": "C-030",
+          "reasonJa": "輪郭の連続で見る方向を示せる。",
+          "cautionJa": "全閲覧者が同じ順序で見るわけではない。"
+        },
+        {
+          "guideId": "C-067",
+          "reasonJa": "見せたい場所へ明暗差を集められる。",
+          "cautionJa": "他の情報も読めるコントラストを維持する。"
+        },
+        {
+          "guideId": "C-079",
+          "reasonJa": "画面奥の一点に注意を集める候補になる。",
+          "cautionJa": "目標が小さすぎると気付かれない。"
+        },
+        {
+          "guideId": "C-088",
+          "reasonJa": "群像の視線を主題へ向けられる。",
+          "cautionJa": "人物の向きに不整合がないか確認する。"
+        }
+      ]
+    },
+    {
+      "id": "text-space",
+      "titleJa": "文字の余白",
+      "description": "文字を重ねる場所を確保する候補。文字の読みやすさを別途確認してください。",
+      "choices": [
+        {
+          "guideId": "C-014",
+          "reasonJa": "主題から離れた空白を確保できる。",
+          "cautionJa": "背景とのコントラストは別に必要。"
+        },
+        {
+          "guideId": "C-018",
+          "reasonJa": "余白の向きと見出し位置を調整できる。",
+          "cautionJa": "横幅やトリミングに注意する。"
+        },
+        {
+          "guideId": "C-057",
+          "reasonJa": "人物の視線先に余白を設計できる。",
+          "cautionJa": "視線の先が文字に適するとは限らない。"
+        },
+        {
+          "guideId": "C-105",
+          "reasonJa": "表紙で画像とタイトルの関係を検討できる。",
+          "cautionJa": "タイトルの長さによって必要幅が変わる。"
+        },
+        {
+          "guideId": "C-106",
+          "reasonJa": "Webのヒーロー画像に文字余白を確保できる。",
+          "cautionJa": "レスポンシブ時は別途確認が必要。"
+        },
+        {
+          "guideId": "C-115",
+          "reasonJa": "AI指示に文字用の領域を具体的に書ける。",
+          "cautionJa": "AIが正確な文字を描けるという保証はない。"
+        }
+      ]
+    },
+    {
+      "id": "mobile",
+      "titleJa": "モバイル縦長",
+      "description": "小さな画面での主役の大きさ・余白・クロップを考える候補です。",
+      "choices": [
+        {
+          "guideId": "C-017",
+          "reasonJa": "縦長画面の主役占有率を調整できる。",
+          "cautionJa": "主役が小さいと識別しづらい。"
+        },
+        {
+          "guideId": "C-024",
+          "reasonJa": "縮小表示でも大きな形が読めるかを確認できる。",
+          "cautionJa": "細部まで判読できる保証はない。"
+        },
+        {
+          "guideId": "C-057",
+          "reasonJa": "視線方向の余白を縦長に合わせて考えられる。",
+          "cautionJa": "左右余白が足りない場合がある。"
+        },
+        {
+          "guideId": "C-097",
+          "reasonJa": "立ち絵の全身とトリミングを比較できる。",
+          "cautionJa": "頭・足が不自然に切れないようにする。"
+        },
+        {
+          "guideId": "C-107",
+          "reasonJa": "モバイル縦長構図に直接進める。",
+          "cautionJa": "端末固有の安全領域を確認する。"
+        },
+        {
+          "guideId": "C-112",
+          "reasonJa": "人物の大きさをAIへ具体的に指示できる。",
+          "cautionJa": "画像比率を固定してから比較する。"
+        }
+      ]
+    }
+  ],
+  "mediaByCategory": {
+    "basics": [
+      "illustration",
+      "photography",
+      "graphic_design"
+    ],
+    "balance": [
+      "illustration",
+      "graphic_design",
+      "photography"
+    ],
+    "perception": [
+      "graphic_design",
+      "web_ui",
+      "illustration"
+    ],
+    "depth": [
+      "illustration",
+      "photography",
+      "cinema"
+    ],
+    "camera": [
+      "photography",
+      "cinema",
+      "illustration"
+    ],
+    "value": [
+      "illustration",
+      "graphic_design",
+      "photography"
+    ],
+    "narrative": [
+      "illustration",
+      "cinema",
+      "photography"
+    ],
+    "sequence": [
+      "comics",
+      "cinema",
+      "illustration"
+    ],
+    "application": [
+      "illustration",
+      "graphic_design",
+      "photography"
+    ],
+    "ai": [
+      "ai_image_generation",
+      "illustration",
+      "graphic_design"
+    ]
+  },
+  "subjectsByCategory": {
+    "basics": [
+      "people",
+      "architecture",
+      "objects"
+    ],
+    "balance": [
+      "people",
+      "objects",
+      "typography"
+    ],
+    "perception": [
+      "shapes",
+      "interface_elements"
+    ],
+    "depth": [
+      "architecture",
+      "landscapes"
+    ],
+    "camera": [
+      "people",
+      "architecture"
+    ],
+    "value": [
+      "shapes",
+      "people",
+      "architecture"
+    ],
+    "narrative": [
+      "people",
+      "architecture",
+      "landscapes"
+    ],
+    "sequence": [
+      "people",
+      "actions"
+    ],
+    "application": [
+      "people",
+      "animals",
+      "architecture",
+      "products"
+    ],
+    "ai": [
+      "people",
+      "objects",
+      "scenes"
+    ]
+  },
+  "relatedComposition": [
+    {
+      "sourceId": "C-014",
+      "targetId": "C-073",
+      "relationType": "complement",
+      "reasonJa": "余白と小さな人物を組み合わせられる。"
+    },
+    {
+      "sourceId": "C-014",
+      "targetId": "C-115",
+      "relationType": "complement",
+      "reasonJa": "空白の配置をAI向け指示へ具体化する。"
+    },
+    {
+      "sourceId": "C-017",
+      "targetId": "C-112",
+      "relationType": "complement",
+      "reasonJa": "主役の画面占有率をAIに指定する。"
+    },
+    {
+      "sourceId": "C-023",
+      "targetId": "C-078",
+      "relationType": "similar",
+      "reasonJa": "中心から外す配置の狙いを比べる。"
+    },
+    {
+      "sourceId": "C-037",
+      "targetId": "C-038",
+      "relationType": "contrast",
+      "reasonJa": "一点と二点の消失点を比較する。"
+    },
+    {
+      "sourceId": "C-038",
+      "targetId": "C-039",
+      "relationType": "contrast",
+      "reasonJa": "二点と三点の透視関係を区別する。"
+    },
+    {
+      "sourceId": "C-041",
+      "targetId": "C-048",
+      "relationType": "complement",
+      "reasonJa": "三層の空間を平面的な色面で整理する。"
+    },
+    {
+      "sourceId": "C-054",
+      "targetId": "C-075",
+      "relationType": "complement",
+      "reasonJa": "低い視点と建築の尺度差を組み合わせる。"
+    },
+    {
+      "sourceId": "C-057",
+      "targetId": "C-018",
+      "relationType": "similar",
+      "reasonJa": "視線方向の余白と一般的な余白を比べる。"
+    },
+    {
+      "sourceId": "C-061",
+      "targetId": "C-062",
+      "relationType": "complement",
+      "reasonJa": "二値の明暗を連続する大きな黒面にまとめる。"
+    },
+    {
+      "sourceId": "C-062",
+      "targetId": "C-063",
+      "relationType": "complement",
+      "reasonJa": "暗部の連結とシルエットの読ませ方を考える。"
+    },
+    {
+      "sourceId": "C-063",
+      "targetId": "C-119",
+      "relationType": "prerequisite",
+      "reasonJa": "シルエットを縮小・白黒検査で点検する。"
+    },
+    {
+      "sourceId": "C-067",
+      "targetId": "C-079",
+      "relationType": "complement",
+      "reasonJa": "奥の目標に局所的な明暗差を与える。"
+    },
+    {
+      "sourceId": "C-073",
+      "targetId": "C-075",
+      "relationType": "complement",
+      "reasonJa": "小さな人物と巨大建築の尺度差を組み合わせる。"
+    },
+    {
+      "sourceId": "C-077",
+      "targetId": "C-057",
+      "relationType": "complement",
+      "reasonJa": "画面外の気配を視線先の余白に結びつける。"
+    },
+    {
+      "sourceId": "C-085",
+      "targetId": "C-086",
+      "relationType": "complement",
+      "reasonJa": "動く方向の余白と身体の軸を整合させる。"
+    },
+    {
+      "sourceId": "C-090",
+      "targetId": "C-089",
+      "relationType": "complement",
+      "reasonJa": "コマの読み順とコマ割りを連動させる。"
+    },
+    {
+      "sourceId": "C-106",
+      "targetId": "C-115",
+      "relationType": "complement",
+      "reasonJa": "ヒーロー画像の文字余白をAI指示に変換する。"
+    },
+    {
+      "sourceId": "C-107",
+      "targetId": "C-024",
+      "relationType": "complement",
+      "reasonJa": "縦長の画面を縮小しても読めるか確認する。"
+    },
+    {
+      "sourceId": "C-110",
+      "targetId": "C-117",
+      "relationType": "complement",
+      "reasonJa": "構図固定で画風の差を比較できる。"
+    }
+  ]
+}
