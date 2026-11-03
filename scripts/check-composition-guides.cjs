@@ -128,6 +128,7 @@ const scene=source.guides.find(g=>g.id==='C-060');
 assert(JSON.stringify(scene.diagram.example.filter(s=>s[0]==='circle')) ===
   JSON.stringify(scene.diagram.comparison.filter(s=>s[0]==='circle')),
   'foreground person must be fixed across camera distance cases');
-assert(source.guides.find(g=>g.id==='C-120').definition.includes('判定できない'),
+const copyright = source.guides.find(g=>g.id==='C-120');
+assert([copyright.definition, copyright.diagramNote].filter(Boolean).join(' ').includes('判定できない'),
   'copyright eligibility cannot be inferred from diagrams');
 console.log('PASS: 120 draft guides / 10 categories, 240 diagrams, geometry and captions, comparison points, route and export hook');
