@@ -73,6 +73,9 @@ const routes = [
   ['/p/warm-neo-brutalist-editorial', 'Warm Neo-Brutalist'],
   ['/search', 'Search'],
   ['/knowledge', 'デザインを、つながりから探す'],
+  ['/composition', '構図を比較して学ぶ'],
+  ['/composition?id=C-062', '黒い面の連結'],
+  ['/composition?q=__fragmenta_no_results_2026__', '該当する項目がありません'],
   ['/knowledge?category=typography', '12件該当'],
   ['/knowledge?q=__fragmenta_no_results_2026__', '一致する企画案はありません'],
   ['/knowledge/idea-visual-history-01', 'アール・ヌーヴォー'],
@@ -103,6 +106,7 @@ await poll(async () => (await fetch(baseUrl)).ok, 'built Vite preview server');
 // The built site must serve machine-readable, explicitly unreviewed knowledge exports.
 for (const [pathname, marker] of [
   ['/knowledge/ideas.json', '"schemaVersion"'],
+  ['/knowledge/composition-guides.json', '"composition-guides"'],
   ['/knowledge/ideas.md', '# Fragmenta'],
   ['/llms.txt', '# Fragmenta'],
 ]) {
@@ -237,6 +241,31 @@ try {
     }
   }
   await page.send('Emulation.clearDeviceMetricsOverride');
+
+
+  // New composition route: two diagrams, mobile-friendly select and clipboard feedback.
+  await page.send('Runtime.evaluate', { expression: "location.hash = '#/composition?id=C-062'" });
+  await poll(async () => {
+    const response = await page.send('Runtime.evaluate', {
+      expression: "document.querySelector('#composition-title')?.textContent === '黒い面の連結' && document.querySelectorAll('svg[role=img]').length === 2",
+      returnByValue: true,
+    });
+    return response.result?.value;
+  }, 'composition comparison diagrams');
+  const compositionInteraction = await page.send('Runtime.evaluate', {
+    expression: "(async () => {\n      const selector = document.querySelector('#composition-item');\n      if (!selector || selector.options.length !== 24) throw new Error('Composition selector missing 24 items');\n      selector.value = 'C-001';\n      selector.dispatchEvent(new Event('change', { bubbles: true }));\n      await new Promise(resolve => setTimeout(resolve, 150));\n      const selected = document.querySelector('#composition-title')?.textContent;\n      const button = [...document.querySelectorAll('button')].find(b => b.textContent.trim() === '指示文をコピー');\n      if (!button) throw new Error('Composition copy button missing');\n      let copied = '';\n      Object.defineProperty(navigator, 'clipboard', { configurable: true,\n        value: { writeText: async text => { copied = text; } } });\n      button.click();\n      await new Promise(resolve => setTimeout(resolve, 150));\n      const success = [...document.querySelectorAll('[role=status]')].map(x => x.textContent).join(' ');\n      Object.defineProperty(navigator, 'clipboard', { configurable: true,\n        value: { writeText: async () => { throw new Error('Denied'); } } });\n      button.click();\n      await new Promise(resolve => setTimeout(resolve, 150));\n      const denied = [...document.querySelectorAll('[role=status]')].map(x => x.textContent).join(' ');\n      return { selected, copied, success, denied, svgCount: document.querySelectorAll('svg[role=img]').length };\n    })()",
+    awaitPromise: true,
+    returnByValue: true,
+  });
+  const compositionResult = compositionInteraction.result?.value;
+  if (compositionResult?.selected !== '三分割法' ||
+    !compositionResult.copied?.includes('三分割交点') ||
+    !compositionResult.success?.includes('コピーしました') ||
+    !compositionResult.denied?.includes('コピーできませんでした') ||
+    compositionResult.svgCount !== 2) {
+    throw new Error('Composition interaction failed: ' + JSON.stringify(compositionResult));
+  }
+  console.log('PASS composition diagrams, selector, copy success and failure');
 
   // The knowledge detail heading should receive focus after client-side navigation.
   for (const [route, heading] of [
