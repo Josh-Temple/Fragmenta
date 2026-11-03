@@ -9,14 +9,21 @@ export const getCompositionPurpose = (id: string) => compositionPurposes.find(p 
 export const getCompositionChoice = (purposeId: string, guideId: string) =>
   getCompositionPurpose(purposeId)?.choices.find(choice => choice.guideId === guideId);
 export const getCompositionRelations = (id: string) => compositionRelations.filter(r => r.sourceId === id);
-// Derived editorial metadata: the canonical source and all review/evidence states remain unchanged.
-export const getCompositionDiscovery = (g: CompositionGuide) => ({
-  useCases: [g.example],
-  limitations: [g.contrast, ...(g.diagramNote ? [g.diagramNote] : [])],
+// Purpose recommendations and cautions are unreviewed candidates, not established effects.
+// A contrasting diagram is not, by itself, an unsuitable use case.
+export const getCompositionDiscovery = (g: CompositionGuide) => {
+  const purposes = compositionPurposes.filter(p => p.choices.some(c => c.guideId === g.id));
+  const cautions = purposes.flatMap(p => p.choices.filter(c => c.guideId === g.id).map(c => c.cautionJa));
+  return {
+  useCases: purposes.map(p => p.titleJa + '（用途候補・未検証）'),
+  limitations: [...new Set([...cautions, ...(g.diagramNote ? [g.diagramNote] : [])])],
+  applicationExample: g.example,
+  comparisonExample: g.contrast,
   media: raw.mediaByCategory[g.categoryId as keyof typeof raw.mediaByCategory] ?? [],
   subjects: raw.subjectsByCategory[g.categoryId as keyof typeof raw.subjectsByCategory] ?? [],
   priorityConditions: [g.comparisonPoint ?? g.definition],
   relatedComposition: getCompositionRelations(g.id),
   aiGuidance: { composition: g.aiInstruction, style: null as null },
   discoveryStatus: 'draft_unreviewed' as const,
-});
+  };
+};

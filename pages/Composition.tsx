@@ -133,8 +133,8 @@ const Composition: React.FC = () => {
       </section>}
       <section aria-labelledby="composition-discovery-details" className="mt-5">
         <h3 id="composition-discovery-details" className="font-bold">用途と制約（編集下書き）</h3>
-        <p className="mt-2 text-sm"><strong>用途例：</strong>{discovery.useCases[0]}</p>
-        <p className="mt-2 text-sm"><strong>注意・不向きな条件：</strong>{discovery.limitations.join(' ')}</p>
+        <p className="mt-2 text-sm"><strong>用途候補：</strong>{discovery.useCases.length ? discovery.useCases.join('／') : '個別の用途は未校訂です。'}</p>
+        <p className="mt-2 text-sm"><strong>注意・不向きな条件：</strong>{discovery.limitations.length ? discovery.limitations.join(' ') : '個別の適用制約は未校訂です。対照例は誤りや不向きの証拠ではありません。'}</p>
         <p className="mt-2 text-sm"><strong>比較する構図条件：</strong>{discovery.priorityConditions[0]}</p>
         <p className="mt-2 text-xs text-ink-muted">媒体候補：{discovery.media.join(' / ')} ・ 被写体候補：{discovery.subjects.join(' / ')}（分野単位の未検証タグ）</p>
       </section>

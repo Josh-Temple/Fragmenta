@@ -29,8 +29,13 @@ for (const g of src.guides) {
  check(g.relatedLegacyIds.every(x=>old.has(x)),'broken 180-item link '+g.id);
  const x=out.guides.find(x=>x.id===g.id);
  check(x && x.reviewStatus===g.reviewStatus && x.evidenceStatus===g.evidenceStatus,'review state '+g.id);
- check(x.discovery.discoveryStatus==='draft_unreviewed' && x.discovery.useCases[0]===g.example &&
- x.discovery.limitations[0]===g.contrast,'editorial derivation '+g.id);
+ const purposes = d.purposes.filter(p => p.choices.some(c => c.guideId === g.id));
+ const cautions = purposes.flatMap(p => p.choices.filter(c => c.guideId === g.id).map(c => c.cautionJa));
+ check(x.discovery.discoveryStatus==='draft_unreviewed' &&
+  JSON.stringify(x.discovery.useCases)===JSON.stringify(purposes.map(p=>p.titleJa+'（用途候補・未検証）')) &&
+  JSON.stringify(x.discovery.limitations)===JSON.stringify([...new Set([...cautions,...(g.diagramNote?[g.diagramNote]:[])])]) &&
+  x.discovery.applicationExample===g.example && x.discovery.comparisonExample===g.contrast,
+  'purpose/contrast metadata contract '+g.id);
  check(x.discovery.aiGuidance.composition===g.aiInstruction && x.discovery.aiGuidance.style===null,'style separation '+g.id);
  check(x.discovery.relatedComposition.every(r=>ids.has(r.targetId)),'export relation '+g.id);
 }

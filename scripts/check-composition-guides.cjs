@@ -131,4 +131,21 @@ assert(JSON.stringify(scene.diagram.example.filter(s=>s[0]==='circle')) ===
 const copyright = source.guides.find(g=>g.id==='C-120');
 assert([copyright.definition, copyright.diagramNote].filter(Boolean).join(' ').includes('判定できない'),
   'copyright eligibility cannot be inferred from diagrams');
+
+const at = id => source.guides.find(g=>g.id===id);
+const vp037 = at('C-037').diagram.comparison.filter(s=>s[0]==='line').map(s=>s[3]+','+s[4]);
+assert(new Set(vp037).size>1,'C-037 comparison must not converge to one vanishing point');
+const p073=at('C-073'), head073=['example','comparison'].map(v=>p073.diagram[v].find(s=>s[0]==='circle'));
+const body073=['example','comparison'].map(v=>p073.diagram[v].find(s=>s[0]==='rect'&&s[5]===4));
+assert(head073[0][1]===head073[1][1] && Math.abs((body073[0][2]+body073[0][4])-(body073[1][2]+body073[1][4]))<0.01,
+  'C-073 only character size should vary, not x anchor or foot position');
+const p117=at('C-117');
+assert(['example','comparison'].every(v=>p117.diagram[v].filter(s=>s[0]==='rect'&&s[5]!==4).length===2),
+  'C-117 fixed backgrounds missing');
+const p118=at('C-118'), windows118=v=>p118.diagram[v].filter(s=>s[0]==='rect'&&s[5]===0);
+assert(windows118('comparison').length>windows118('example').length &&
+ JSON.stringify(p118.diagram.example.filter(s=>s[0]==='circle'||(s[0]==='rect'&&s[5]===4)))===
+ JSON.stringify(p118.diagram.comparison.filter(s=>s[0]==='circle'||(s[0]==='rect'&&s[5]===4))),
+ 'C-118 window-density comparison must keep character identical');
+
 console.log('PASS: 120 draft guides / 10 categories, 240 diagrams, geometry and captions, comparison points, route and export hook');

@@ -11,11 +11,16 @@ fs.writeFileSync(path.join(out, 'ideas.json'), JSON.stringify(catalog, null, 2) 
 const composition = JSON.parse(fs.readFileSync(path.join(root, 'data/composition-guides.json'), 'utf8'));
 const discovery = JSON.parse(fs.readFileSync(path.join(root, 'data/composition-discovery.json'), 'utf8'));
 composition.discovery = { schemaVersion: discovery.schemaVersion, status: discovery.status, note: discovery.note, purposes: discovery.purposes };
-composition.guides = composition.guides.map(g => ({
+composition.guides = composition.guides.map(g => {
+  const purposes = discovery.purposes.filter(p => p.choices.some(c => c.guideId === g.id));
+  const cautions = purposes.flatMap(p => p.choices.filter(c => c.guideId === g.id).map(c => c.cautionJa));
+  return {
   ...g,
   discovery: {
-    useCases: [g.example],
-    limitations: [g.contrast, ...(g.diagramNote ? [g.diagramNote] : [])],
+    useCases: purposes.map(p => p.titleJa + '（用途候補・未検証）'),
+    limitations: [...new Set([...cautions, ...(g.diagramNote ? [g.diagramNote] : [])])],
+    applicationExample: g.example,
+    comparisonExample: g.contrast,
     media: discovery.mediaByCategory[g.categoryId] || [],
     subjects: discovery.subjectsByCategory[g.categoryId] || [],
     priorityConditions: [g.comparisonPoint || g.definition],
@@ -24,7 +29,8 @@ composition.guides = composition.guides.map(g => ({
     aiGuidance: { composition: g.aiInstruction, style: null },
     discoveryStatus: 'draft_unreviewed',
   },
-}));
+  };
+});
 fs.writeFileSync(path.join(out, 'composition-guides.json'), JSON.stringify(composition, null, 2) + '\n');
 fs.writeFileSync(path.join(out, 'ideas.md'), renderExport(catalog));
 fs.writeFileSync(path.join(root, 'public', 'llms.txt'), [
