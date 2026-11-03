@@ -7,6 +7,7 @@ import { compositionCatalog, compositionGuides, compositionCategories,
 const Composition: React.FC = () => {
   const [params, setParams] = useSearchParams();
   const [input, setInput] = useState(params.get('q') ?? '');
+  const [copyStatus, setCopyStatus] = useState('');
   const query = params.get('q') ?? '';
   const category = compositionCategories.some(x => x.id === params.get('category'))
     ? params.get('category') ?? 'all' : 'all';
@@ -15,6 +16,7 @@ const Composition: React.FC = () => {
   const filtered = useMemo(() => compositionGuides.filter(item =>
     (category === 'all' || item.categoryId === category) && matchesComposition(item, query)), [category, query]);
   useEffect(() => setInput(query), [query]);
+  useEffect(() => setCopyStatus(''), [guide.id]);
   const setParam = (key: string, value: string) => {
     const next = new URLSearchParams(params);
     if (!value || value === 'all') next.delete(key);
@@ -44,7 +46,12 @@ const Composition: React.FC = () => {
         {compositionCategories.map(item => <option key={item.id} value={item.id}>{item.label}</option>)}
       </select>
       <p className="mt-3 text-sm text-ink-muted" role="status">{filtered.length}件 / 全{compositionGuides.length}件</p>
-      <div className="mt-3 flex gap-2 overflow-x-auto pb-2" aria-label="構図項目">
+      <label htmlFor="composition-item" className="mt-3 block text-sm font-semibold">表示する構図を選択</label>
+      <select id="composition-item" value={guide.id} onChange={event => setParam('id', event.target.value)}
+        className="mt-2 min-h-11 w-full rounded-lg border border-ink/40 bg-paper p-3 text-base">
+        {compositionGuides.map(item => <option key={item.id} value={item.id}>{item.id} ・ {item.titleJa}</option>)}
+      </select>
+      <div className="mt-3 flex gap-2 overflow-x-auto pb-2" aria-label="検索結果から構図を選択">
         {filtered.map(item => <Link key={item.id} to={'/composition?id=' + item.id + (query ? '&q=' + encodeURIComponent(query) : '') + (category !== 'all' ? '&category=' + encodeURIComponent(category) : '')}
           aria-current={guide.id === item.id ? 'page' : undefined}
           className={'flex min-h-11 shrink-0 items-center rounded-lg border px-3 text-sm font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 ' +
@@ -69,8 +76,13 @@ const Composition: React.FC = () => {
       <section aria-labelledby="composition-ai" className="mt-7 border-t border-ink-border pt-5">
         <h3 id="composition-ai" className="text-lg font-bold">AIへの指示例</h3>
         <p className="mt-3 rounded-lg bg-surface p-4 text-sm leading-relaxed">{guide.aiInstruction}</p>
-        <button type="button" onClick={() => { if (navigator.clipboard?.writeText) void navigator.clipboard.writeText(guide.aiInstruction).catch(() => {}); }}
+        <button type="button" onClick={async () => { try {
+          if (!navigator.clipboard?.writeText) throw new Error('Clipboard unavailable');
+          await navigator.clipboard.writeText(guide.aiInstruction);
+          setCopyStatus('指示文をコピーしました。');
+        } catch { setCopyStatus('コピーできませんでした。文章を選択してコピーしてください。'); } }}
           className="mt-3 min-h-11 rounded-lg border border-ink-border px-4 text-sm font-semibold">指示文をコピー</button>
+        <p role="status" aria-live="polite" className="mt-2 text-sm text-ink-muted">{copyStatus}</p>
       </section>
       {guide.relatedLegacyIds.length > 0 && <section className="mt-6 border-t border-ink-border pt-5">
         <h3 className="text-sm font-bold">既存Fragmentaの関連案（編集候補）</h3>
