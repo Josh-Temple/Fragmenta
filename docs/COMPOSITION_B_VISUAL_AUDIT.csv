@@ -35,7 +35,7 @@ C-033,"重なりと遮蔽",,B,not_run,NOT_RUN,NOT_RUN,NOT_RUN,NOT_RUN,NOT_RUN,NO
 C-034,"アラインメント",,B,not_run,NOT_RUN,NOT_RUN,NOT_RUN,NOT_RUN,NOT_RUN,NOT_RUN,NOT_CHECKED_BY_B,,,,NOT_RUN
 C-035,"近似した形のまとまり",,B,not_run,NOT_RUN,NOT_RUN,NOT_RUN,NOT_RUN,NOT_RUN,NOT_RUN,NOT_CHECKED_BY_B,,,,NOT_RUN
 C-036,"意味のあるグループ分け",,B,not_run,NOT_RUN,NOT_RUN,NOT_RUN,NOT_RUN,NOT_RUN,NOT_RUN,NOT_CHECKED_BY_B,,,,NOT_RUN
-C-037,"一点透視図法",,B,actual_render_svg_equivalent,seen,seen,FAIL_BEFORE_FIX,FAIL_BEFORE_FIX,NOT_RUN,NOT_RUN,NOT_CHECKED_BY_B,Single common vanishing point in old comparison; changed to separated endpoints,P1,B_BRANCH_COMMIT_PENDING,SOURCE_GEOMETRY_FIXED; POST_FIX_SVG_SEEN
+C-037,"一点透視図法",,B,actual_render_svg_equivalent,seen,seen,FAIL_BEFORE_FIX,FAIL_BEFORE_FIX,NOT_RUN,NOT_RUN,NOT_CHECKED_BY_B,Single common vanishing point in old comparison; changed to separated endpoints,P1,94f3a455a24d267543e6b458b42fcdcea99cb7bf,SOURCE_GEOMETRY_FIXED; POST_FIX_SVG_SEEN
 C-038,"二点透視図法",,B,not_run,NOT_RUN,NOT_RUN,NOT_RUN,NOT_RUN,NOT_RUN,NOT_RUN,NOT_CHECKED_BY_B,,,,NOT_RUN
 C-039,"三点透視図法",,B,not_run,NOT_RUN,NOT_RUN,NOT_RUN,NOT_RUN,NOT_RUN,NOT_RUN,NOT_CHECKED_BY_B,,,,NOT_RUN
 C-040,"地平線の高さ",,B,not_run,NOT_RUN,NOT_RUN,NOT_RUN,NOT_RUN,NOT_RUN,NOT_RUN,NOT_CHECKED_BY_B,,,,NOT_RUN
