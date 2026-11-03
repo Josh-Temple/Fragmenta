@@ -365,7 +365,7 @@ try {
     ['C-060','焦点距離だけを変更した結果と混同しない',4],
     ['C-090','読み順',6],
     ['C-092','赤い三角形がカメラ',8],
-    ['C-120','著作権侵害の有無は判定できない',4],
+    ['C-120','著作権侵害や利用許諾の要否は判定できない',4],
   ]) {
     await page.send('Runtime.evaluate', { expression: 'location.hash = ' + JSON.stringify('#/composition?id=' + id) });
     await poll(async () => {
