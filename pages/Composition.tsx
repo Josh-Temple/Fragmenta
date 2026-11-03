@@ -32,6 +32,11 @@ const Composition: React.FC = () => {
     next.set('id', id);
     return '/composition?' + next.toString();
   };
+  const atlasHref = () => {
+    const next = new URLSearchParams(params);
+    next.set('view', 'atlas');
+    return '/composition?' + next.toString();
+  };
   useEffect(() => setInput(query), [query]);
   useEffect(() => setVisibleCount(24), [query, category, purpose?.id]);
   useEffect(() => setCopyStatus(''), [guide.id]);
@@ -63,7 +68,12 @@ const Composition: React.FC = () => {
         <div id="composition-purpose-choices" className="mt-3 flex flex-wrap gap-2">
           {compositionPurposes.map(item => <button key={item.id} type="button"
             aria-pressed={purpose?.id === item.id}
-            onClick={() => setParam('purpose', purpose?.id === item.id ? '' : item.id)}
+            onClick={() => {
+              const next = new URLSearchParams(params);
+              if (purpose?.id === item.id) next.delete('purpose');
+              else { next.set('purpose', item.id); next.set('view', 'atlas'); next.delete('id'); }
+              setParams(next);
+            }}
             className={'min-h-11 rounded-lg border px-3 text-sm font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 ' +
               (purpose?.id === item.id ? 'border-ink bg-ink text-paper' : 'border-ink-border bg-surface')}>{item.titleJa}</button>)}
         </div>
@@ -87,9 +97,9 @@ const Composition: React.FC = () => {
       </select>
       <p className="mt-3 text-sm text-ink-muted" role="status">{filtered.length}件 / 全{compositionGuides.length}件</p>
       <nav aria-label="表示方法" className="mt-4 flex flex-wrap gap-3 text-sm">
-        <Link to={'/composition?view=atlas' + (query ? '&q=' + encodeURIComponent(query) : '') + (category !== 'all' ? '&category=' + encodeURIComponent(category) : '')}
+        <Link to={atlasHref()}
           aria-current={atlas ? 'page' : undefined} className={'inline-flex min-h-11 items-center rounded-lg border px-4 font-semibold ' + (atlas ? 'border-ink bg-ink text-paper' : 'border-ink-border')}>図解一覧で見る</Link>
-        <Link to={'/composition?id=' + guide.id} aria-current={!atlas ? 'page' : undefined}
+        <Link to={detailHref(guide.id)} aria-current={!atlas ? 'page' : undefined}
           className={'inline-flex min-h-11 items-center rounded-lg border px-4 font-semibold ' + (!atlas ? 'border-ink bg-ink text-paper' : 'border-ink-border')}>選んで詳しく見る</Link>
       </nav>
       {filtered.length > 0 && !filtered.some(item => item.id === guide.id) &&

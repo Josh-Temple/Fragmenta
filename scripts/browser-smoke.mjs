@@ -318,6 +318,27 @@ try {
     });
     return response.result?.value;
   }, 'composition purpose deep link');
+  // View switch must preserve chosen intent and guide through HashRouter navigation.
+  await page.send('Runtime.evaluate', {
+    expression: "([...document.querySelectorAll('a')].find(x=>x.textContent.trim()==='図解一覧で見る'))?.click()",
+  });
+  await poll(async () => {
+    const result = await page.send('Runtime.evaluate', {
+      expression: "location.hash.includes('purpose=solitude') && location.hash.includes('view=atlas') && document.querySelectorAll('a[data-composition-card]').length===6",
+      returnByValue: true,
+    });
+    return result.result?.value;
+  }, 'composition purpose persistence on atlas navigation');
+  await page.send('Runtime.evaluate', {
+    expression: "([...document.querySelectorAll('a')].find(x=>x.textContent.trim()==='選んで詳しく見る'))?.click()",
+  });
+  await poll(async () => {
+    const result = await page.send('Runtime.evaluate', {
+      expression: "location.hash.includes('purpose=solitude') && document.querySelector('#composition-title')?.textContent==='孤独を示す小さな人物'",
+      returnByValue: true,
+    });
+    return result.result?.value;
+  }, 'composition purpose persistence on detail navigation');
   await page.send('Emulation.setDeviceMetricsOverride', { width: 390, height: 844, deviceScaleFactor: 1, mobile: true });
   const portrait = await page.send('Runtime.evaluate', {
     expression: "({overflow:document.documentElement.scrollWidth-innerWidth,touch:[...document.querySelectorAll('#composition-purpose-choices button')].every(x=>x.getBoundingClientRect().height>=44)})",
