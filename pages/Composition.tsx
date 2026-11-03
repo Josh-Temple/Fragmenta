@@ -41,11 +41,13 @@ const Composition: React.FC = () => {
       </form>
       <label htmlFor="composition-category" className="mt-4 block text-sm font-semibold">分野</label>
       <select id="composition-category" value={category} onChange={event => setParam('category', event.target.value)}
-        className="mt-2 min-h-11 w-full rounded-lg border border-ink/40 bg-paper p-3 text-base">
+        className="mt-2 min-h-11 w-full rounded-lg border border-ink/40 bg-paper p-3 text-base focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
         <option value="all">すべての分野</option>
         {compositionCategories.map(item => <option key={item.id} value={item.id}>{item.label}</option>)}
       </select>
       <p className="mt-3 text-sm text-ink-muted" role="status">{filtered.length}件 / 全{compositionGuides.length}件</p>
+      {filtered.length > 0 && !filtered.some(item => item.id === guide.id) &&
+        <p className="mt-2 text-sm text-ink-muted">現在表示中の項目は検索結果の対象外です。結果一覧から別の項目を選んでください。</p>}
       <label htmlFor="composition-item" className="mt-3 block text-sm font-semibold">表示する構図を選択</label>
       <select id="composition-item" value={guide.id} onChange={event => setParam('id', event.target.value)}
         className="mt-2 min-h-11 w-full rounded-lg border border-ink/40 bg-paper p-3 text-base">
@@ -66,11 +68,12 @@ const Composition: React.FC = () => {
       <section aria-labelledby="composition-visual" className="mt-6">
         <h3 id="composition-visual" className="text-lg font-bold">構図の模式図</h3>
         <div className="mt-3 grid gap-4 sm:grid-cols-2">
-          <div><p className="mb-2 text-sm font-semibold">配置例</p><CompositionDiagram guide={guide} variant="example" />
+          <div><p className="mb-2 text-sm font-semibold">{guide.id === 'C-110' ? '画風A' : '配置例'}</p><CompositionDiagram guide={guide} variant="example" />
             <p className="mt-2 text-sm leading-relaxed">{guide.example}</p></div>
-          <div><p className="mb-2 text-sm font-semibold">対照例</p><CompositionDiagram guide={guide} variant="comparison" />
+          <div><p className="mb-2 text-sm font-semibold">{guide.id === 'C-110' ? '画風B' : '対照例'}</p><CompositionDiagram guide={guide} variant="comparison" />
             <p className="mt-2 text-sm leading-relaxed">{guide.contrast}</p></div>
         </div>
+        {guide.comparisonPoint && <p className="mt-4 rounded-lg border border-ink-border bg-surface p-3 text-sm leading-relaxed"><strong>見比べるポイント：</strong>{guide.comparisonPoint}</p>}
         <p className="mt-3 text-xs leading-relaxed text-ink-muted">模式図は位置・大きさ・明暗の違いを簡略化したものです。対照例も、目的によっては適切な構図になります。</p>
       </section>
       <section aria-labelledby="composition-ai" className="mt-7 border-t border-ink-border pt-5">
@@ -81,7 +84,7 @@ const Composition: React.FC = () => {
           await navigator.clipboard.writeText(guide.aiInstruction);
           setCopyStatus('指示文をコピーしました。');
         } catch { setCopyStatus('コピーできませんでした。文章を選択してコピーしてください。'); } }}
-          className="mt-3 min-h-11 rounded-lg border border-ink-border px-4 text-sm font-semibold">指示文をコピー</button>
+          className="mt-3 min-h-11 rounded-lg border border-ink-border px-4 text-sm font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">指示文をコピー</button>
         <p role="status" aria-live="polite" className="mt-2 text-sm text-ink-muted">{copyStatus}</p>
       </section>
       {guide.relatedLegacyIds.length > 0 && <section className="mt-6 border-t border-ink-border pt-5">

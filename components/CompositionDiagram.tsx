@@ -2,7 +2,7 @@ import React from 'react';
 import type { CompositionGuide, Shape } from '../data/composition';
 
 type Variant = 'example' | 'comparison';
-const colors = ['#241e18', '#77716b', '#b6aca1', '#dfd6c9', '#b13c29'];
+const colors = ['#241e18', '#77716b', '#b6aca1', '#c9c0b4', '#b13c29'];
 function draw(shape: Shape, index: number): React.ReactNode {
   const [kind, ...values] = shape;
   const n = (i: number) => Number(values[i]);
@@ -14,7 +14,9 @@ function draw(shape: Shape, index: number): React.ReactNode {
   return null;
 }
 const CompositionDiagram: React.FC<{ guide: CompositionGuide; variant: Variant }> = ({ guide, variant }) => {
-  const label = variant === 'example' ? '配置例' : '対照例';
+  const label = guide.id === 'C-110'
+    ? (variant === 'example' ? '画風A' : '画風B')
+    : (variant === 'example' ? '配置例' : '対照例');
   return <svg viewBox="0 0 240 150" role="img" aria-label={guide.titleJa + 'の' + label + '。説明は図の下の文章を参照してください。'}
     className="w-full h-auto rounded-lg border border-ink-border" xmlns="http://www.w3.org/2000/svg">
     <title>{guide.titleJa + '・' + label}</title>

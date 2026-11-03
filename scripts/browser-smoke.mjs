@@ -266,6 +266,15 @@ try {
     throw new Error('Composition interaction failed: ' + JSON.stringify(compositionResult));
   }
   console.log('PASS composition diagrams, selector, copy success and failure');
+  await page.send('Runtime.evaluate', { expression: "location.hash = '#/composition?id=C-110'" });
+  await poll(async () => {
+    const response = await page.send('Runtime.evaluate', {
+      expression: "document.querySelector('#composition-title')?.textContent === '構図と画風の分離' && document.querySelector('article')?.textContent.includes('画風A') && document.querySelector('article')?.textContent.includes('画風B') && document.querySelector('article')?.textContent.includes('見比べるポイント')",
+      returnByValue: true,
+    });
+    return response.result?.value;
+  }, 'composition style-only comparison notes');
+  console.log('PASS composition labels and compare-what-changed notes');
 
   // The knowledge detail heading should receive focus after client-side navigation.
   for (const [route, heading] of [
