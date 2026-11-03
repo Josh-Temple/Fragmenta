@@ -2,32 +2,48 @@
   "schemaVersion": 1,
   "kind": "composition-guides",
   "status": "draft_unreviewed",
-  "intro": "構図の比較用の編集下書きです。図解は独自作成の模式図であり、効果の検証や正式な作例ではありません。",
+  "intro": "構図の120項目を横断する編集下書きです。定義・配置例・対照例・比較の視点・AI指示例・独自の模式図2点を備えます。模式図は実証済みの心理効果や絶対的な良否を表しません。",
   "issueUrl": "https://github.com/Josh-Temple/Fragmenta/issues/48",
   "categories": [
     {
       "id": "basics",
-      "label": "基本構図"
+      "label": "基本構図と画面分割"
     },
     {
       "id": "balance",
-      "label": "余白と重心"
+      "label": "余白・重心・優先順位"
     },
     {
       "id": "perception",
-      "label": "知覚と奥行き"
+      "label": "知覚・形のまとまり"
+    },
+    {
+      "id": "depth",
+      "label": "奥行き・遠近・空間構成"
+    },
+    {
+      "id": "camera",
+      "label": "画角・カメラ位置"
     },
     {
       "id": "value",
-      "label": "明暗とシルエット"
+      "label": "明暗・色面・シルエット"
     },
     {
       "id": "narrative",
-      "label": "空間と物語"
+      "label": "感情・物語・空間演出"
+    },
+    {
+      "id": "sequence",
+      "label": "動き・漫画・映像"
+    },
+    {
+      "id": "application",
+      "label": "媒体・被写体別"
     },
     {
       "id": "ai",
-      "label": "AI指定と評価"
+      "label": "AI指示・比較・品質評価"
     }
   ],
   "sources": {
@@ -58,6 +74,34 @@
       "url": "https://ixdf.org/literature/topics/gestalt-principles",
       "scope": "図と地・近接・類同・連続の概説",
       "rights": "参照情報のみ。掲載図版の再利用権を示すものではない。"
+    },
+    "nng-gestalt-proximity": {
+      "title": "Proximity Principle in Visual Design",
+      "publisher": "Nielsen Norman Group",
+      "url": "https://www.nngroup.com/articles/gestalt-proximity/",
+      "scope": "近接の法則に関する解説。項目全体の独立検証は未完了。",
+      "rights": "参考URLのみ。図版の再利用権を含まない。"
+    },
+    "nng-gestalt-similarity": {
+      "title": "Similarity Principle in Visual Design",
+      "publisher": "Nielsen Norman Group",
+      "url": "https://www.nngroup.com/articles/gestalt-similarity/",
+      "scope": "類同の法則に関する解説。項目全体の独立検証は未完了。",
+      "rights": "参考URLのみ。図版の再利用権を含まない。"
+    },
+    "nng-gestalt-common-region": {
+      "title": "The Principle of Common Region: Containers Create Groupings",
+      "publisher": "Nielsen Norman Group",
+      "url": "https://www.nngroup.com/articles/common-region/",
+      "scope": "共通領域の法則に関する解説。項目全体の独立検証は未完了。",
+      "rights": "参考URLのみ。図版の再利用権を含まない。"
+    },
+    "adobe-180": {
+      "title": "What is the 180-degree rule in filmmaking",
+      "publisher": "Adobe",
+      "url": "https://www.adobe.com/creativecloud/video/discover/what-is-the-180-degree-rule.html",
+      "scope": "対話場面の180度ルールに関する解説。項目全体の独立検証は未完了。",
+      "rights": "参考URLのみ。図版の再利用権を含まない。"
     }
   },
   "guides": [
@@ -164,7 +208,8 @@
         "nikon-composition"
       ],
       "reviewStatus": "draft_unreviewed",
-      "evidenceStatus": "not_checked"
+      "evidenceStatus": "not_checked",
+      "comparisonPoint": "交点は配置の選択肢であり、主題が明確なら外れていてもよい。"
     },
     {
       "id": "C-002",
@@ -239,7 +284,82 @@
         "nikon-composition"
       ],
       "reviewStatus": "draft_unreviewed",
-      "evidenceStatus": "not_checked"
+      "evidenceStatus": "not_checked",
+      "comparisonPoint": "中心軸からの位置の違いが安定感にどう関係するかを比べる。"
+    },
+    {
+      "id": "C-003",
+      "definition": "左右対称は、画面の中心軸に対して左右の形・距離・大きさを対応させる配置である。",
+      "example": "同じ大きさの二本の塔を門の左右に置き、中央に人物を立たせる。",
+      "contrast": "塔を片方だけ消すと対称の秩序が崩れ、偏りが生まれる。",
+      "aiInstruction": "中央に小さな旅人。左右に同じ塔と同じ余白。色数は三色以下。",
+      "comparisonPoint": "塔の有無だけを変え、左右が鏡像的に釣り合うか比べる。",
+      "diagram": {
+        "example": [
+          [
+            "rect",
+            25,
+            15,
+            55,
+            120,
+            0
+          ],
+          [
+            "rect",
+            160,
+            15,
+            55,
+            120,
+            0
+          ],
+          [
+            "circle",
+            120,
+            101,
+            3.6,
+            4
+          ],
+          [
+            "rect",
+            117.3,
+            104.6,
+            5.4,
+            14.4,
+            4
+          ]
+        ],
+        "comparison": [
+          [
+            "rect",
+            25,
+            15,
+            55,
+            120,
+            0
+          ],
+          [
+            "circle",
+            120,
+            101,
+            3.6,
+            4
+          ],
+          [
+            "rect",
+            117.3,
+            104.6,
+            5.4,
+            14.4,
+            4
+          ]
+        ]
+      },
+      "titleJa": "左右対称構図",
+      "categoryId": "basics",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
     },
     {
       "id": "C-004",
@@ -291,7 +411,8 @@
         "nikon-balance"
       ],
       "reviewStatus": "draft_unreviewed",
-      "evidenceStatus": "not_checked"
+      "evidenceStatus": "not_checked",
+      "comparisonPoint": "非対称な形と色の強さで視覚的な重みがどう変わるかを比べる。"
     },
     {
       "id": "C-005",
@@ -358,7 +479,472 @@
       "relatedLegacyIds": [],
       "sourceIds": [],
       "reviewStatus": "draft_unreviewed",
-      "evidenceStatus": "not_checked"
+      "evidenceStatus": "not_checked",
+      "comparisonPoint": "主要な斜線がどの方向へ注意を誘導するか確認する。"
+    },
+    {
+      "id": "C-006",
+      "definition": "三角構図は、三つの頂点や主要な要素を三角形の関係でまとめる配置である。",
+      "example": "山頂を頂点、地上の二人を底辺の両端とした三角形を作る。",
+      "contrast": "三者を水平に並べれば高さの変化が消え、別の印象になる。",
+      "aiInstruction": "人物二人を低い位置に、遠い塔を上側の頂点に配置する。",
+      "comparisonPoint": "同じ三要素を三角形と横一列へ並べ、安定感と方向性を比べる。",
+      "diagram": {
+        "example": [
+          [
+            "circle",
+            120,
+            25,
+            7,
+            4
+          ],
+          [
+            "circle",
+            45,
+            125,
+            7,
+            0
+          ],
+          [
+            "circle",
+            195,
+            125,
+            7,
+            0
+          ],
+          [
+            "line",
+            120,
+            25,
+            45,
+            125,
+            2,
+            2
+          ],
+          [
+            "line",
+            45,
+            125,
+            195,
+            125,
+            2,
+            2
+          ],
+          [
+            "line",
+            195,
+            125,
+            120,
+            25,
+            2,
+            2
+          ]
+        ],
+        "comparison": [
+          [
+            "circle",
+            40,
+            75,
+            7,
+            4
+          ],
+          [
+            "circle",
+            120,
+            75,
+            7,
+            0
+          ],
+          [
+            "circle",
+            200,
+            75,
+            7,
+            0
+          ],
+          [
+            "line",
+            40,
+            75,
+            200,
+            75,
+            2,
+            2
+          ]
+        ]
+      },
+      "titleJa": "三角構図",
+      "categoryId": "basics",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-007",
+      "definition": "放射状構図は、線や物体の向きが一つの中心から外へ広がる配置である。",
+      "example": "天窓を中心として梁を八方向へ伸ばす。",
+      "contrast": "梁を平行に並べると中心への集中は弱まる。",
+      "aiInstruction": "一点の光る天窓から太い梁が放射する構図。",
+      "comparisonPoint": "線の始点が同じ一点へ集まるかどうかを見る。",
+      "diagram": {
+        "example": [
+          [
+            "line",
+            120,
+            75,
+            120,
+            0,
+            0,
+            4
+          ],
+          [
+            "line",
+            120,
+            75,
+            240,
+            0,
+            0,
+            4
+          ],
+          [
+            "line",
+            120,
+            75,
+            240,
+            75,
+            0,
+            4
+          ],
+          [
+            "line",
+            120,
+            75,
+            240,
+            150,
+            0,
+            4
+          ],
+          [
+            "line",
+            120,
+            75,
+            120,
+            150,
+            0,
+            4
+          ],
+          [
+            "line",
+            120,
+            75,
+            0,
+            150,
+            0,
+            4
+          ],
+          [
+            "line",
+            120,
+            75,
+            0,
+            75,
+            0,
+            4
+          ],
+          [
+            "line",
+            120,
+            75,
+            0,
+            0,
+            0,
+            4
+          ],
+          [
+            "circle",
+            120,
+            75,
+            12,
+            4
+          ]
+        ],
+        "comparison": [
+          [
+            "line",
+            20,
+            0,
+            20,
+            150,
+            0,
+            4
+          ],
+          [
+            "line",
+            45,
+            0,
+            45,
+            150,
+            0,
+            4
+          ],
+          [
+            "line",
+            70,
+            0,
+            70,
+            150,
+            0,
+            4
+          ],
+          [
+            "line",
+            95,
+            0,
+            95,
+            150,
+            0,
+            4
+          ],
+          [
+            "line",
+            120,
+            0,
+            120,
+            150,
+            0,
+            4
+          ],
+          [
+            "line",
+            145,
+            0,
+            145,
+            150,
+            0,
+            4
+          ],
+          [
+            "line",
+            170,
+            0,
+            170,
+            150,
+            0,
+            4
+          ],
+          [
+            "line",
+            195,
+            0,
+            195,
+            150,
+            0,
+            4
+          ],
+          [
+            "circle",
+            120,
+            75,
+            12,
+            4
+          ]
+        ]
+      },
+      "titleJa": "放射状構図",
+      "categoryId": "basics",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-008",
+      "definition": "S字構図は、道や川の蛇行を通して視線を段階的に移す配置である。",
+      "example": "前景から左右へ曲がりながら奥の橋に続く川を描く。",
+      "contrast": "一直線の川にすると途中の曲がりで生まれるリズムが減る。",
+      "aiInstruction": "川を画面下から左右へ蛇行させ、奥の小さな橋へ導く。",
+      "comparisonPoint": "川の道筋以外は固定し、曲線と直線の視線の運びを比べる。",
+      "diagram": {
+        "example": [
+          [
+            "line",
+            120,
+            150,
+            72,
+            127,
+            1,
+            10
+          ],
+          [
+            "line",
+            72,
+            127,
+            52,
+            100,
+            1,
+            10
+          ],
+          [
+            "line",
+            52,
+            100,
+            115,
+            79,
+            1,
+            10
+          ],
+          [
+            "line",
+            115,
+            79,
+            160,
+            60,
+            1,
+            10
+          ],
+          [
+            "line",
+            160,
+            60,
+            129,
+            36,
+            1,
+            10
+          ],
+          [
+            "rect",
+            107,
+            26,
+            44,
+            5,
+            0
+          ]
+        ],
+        "comparison": [
+          [
+            "line",
+            120,
+            150,
+            120,
+            34,
+            1,
+            10
+          ],
+          [
+            "rect",
+            107,
+            26,
+            44,
+            5,
+            0
+          ]
+        ]
+      },
+      "titleJa": "S字構図",
+      "categoryId": "basics",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-009",
+      "definition": "L字構図は、直角に交わる二辺で視野を囲み、空いた側を強調する方法である。",
+      "example": "左壁と床で大きなL字の黒い面を作り、右の光の中に人物を置く。",
+      "contrast": "上下左右を囲いすぎると開いた側の余白が失われる。",
+      "aiInstruction": "左端の高い壁と下端の床を黒ベタで連結し、右上を明るく開ける。",
+      "comparisonPoint": "二辺の囲いと四辺の囲いを比較し開放方向を考える。",
+      "diagram": {
+        "example": [
+          [
+            "rect",
+            0,
+            0,
+            55,
+            150,
+            0
+          ],
+          [
+            "rect",
+            55,
+            115,
+            185,
+            35,
+            0
+          ],
+          [
+            "circle",
+            175,
+            88,
+            4.4,
+            4
+          ],
+          [
+            "rect",
+            171.7,
+            92.4,
+            6.6000000000000005,
+            17.6,
+            4
+          ]
+        ],
+        "comparison": [
+          [
+            "rect",
+            0,
+            0,
+            55,
+            150,
+            0
+          ],
+          [
+            "rect",
+            55,
+            115,
+            185,
+            35,
+            0
+          ],
+          [
+            "rect",
+            55,
+            0,
+            185,
+            25,
+            0
+          ],
+          [
+            "rect",
+            215,
+            25,
+            25,
+            90,
+            0
+          ],
+          [
+            "circle",
+            175,
+            88,
+            4.4,
+            4
+          ],
+          [
+            "rect",
+            171.7,
+            92.4,
+            6.6000000000000005,
+            17.6,
+            4
+          ]
+        ]
+      },
+      "titleJa": "L字構図",
+      "categoryId": "basics",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
     },
     {
       "id": "C-010",
@@ -445,7 +1031,288 @@
         "nikon-lines"
       ],
       "reviewStatus": "draft_unreviewed",
-      "evidenceStatus": "not_checked"
+      "evidenceStatus": "not_checked",
+      "comparisonPoint": "線の収束先が主役と一致するかどうかを見比べる。"
+    },
+    {
+      "id": "C-011",
+      "definition": "フレーム内フレームは、扉や窓を内側の枠にして対象へ視線を向ける方法である。",
+      "example": "大きな石造の門の開口部に小さな赤い人物を置く。",
+      "contrast": "同じ人物を開口部から外へ出すと、囲いによる強調は弱くなる。",
+      "aiInstruction": "黒い門の明るい開口の中央に小さな旅人を配置する。",
+      "comparisonPoint": "門と人物の形は変えず、人物の枠内外の位置だけを比較する。",
+      "diagram": {
+        "example": [
+          [
+            "rect",
+            30,
+            15,
+            40,
+            135,
+            0
+          ],
+          [
+            "rect",
+            170,
+            15,
+            40,
+            135,
+            0
+          ],
+          [
+            "rect",
+            70,
+            15,
+            100,
+            30,
+            0
+          ],
+          [
+            "circle",
+            120,
+            110,
+            4,
+            4
+          ],
+          [
+            "rect",
+            117,
+            114,
+            6,
+            16,
+            4
+          ]
+        ],
+        "comparison": [
+          [
+            "rect",
+            30,
+            15,
+            40,
+            135,
+            0
+          ],
+          [
+            "rect",
+            170,
+            15,
+            40,
+            135,
+            0
+          ],
+          [
+            "rect",
+            70,
+            15,
+            100,
+            30,
+            0
+          ],
+          [
+            "circle",
+            218,
+            110,
+            4,
+            4
+          ],
+          [
+            "rect",
+            215,
+            114,
+            6,
+            16,
+            4
+          ]
+        ]
+      },
+      "titleJa": "フレーム内フレーム",
+      "categoryId": "basics",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-012",
+      "definition": "黄金比は約1対1.618の比率であり、黄金螺旋はこれに関連する幾何学的な表現である。",
+      "example": "矩形を約0.618の位置で分割し主役の候補位置を可視化する。",
+      "contrast": "中央二等分も有効であり、黄金比が美しさを保証するわけではない。",
+      "aiInstruction": "画面に黄金比の分割線を薄く示し、主役の配置案を作る。",
+      "comparisonPoint": "黄金比に近い分割と二等分を比較する。普遍的な優劣は主張しない。",
+      "diagram": {
+        "example": [
+          [
+            "line",
+            148,
+            0,
+            148,
+            150,
+            1,
+            2
+          ],
+          [
+            "line",
+            0,
+            57,
+            240,
+            57,
+            1,
+            2
+          ],
+          [
+            "circle",
+            148,
+            57,
+            7,
+            4
+          ],
+          [
+            "circle",
+            148,
+            95,
+            3,
+            0
+          ],
+          [
+            "rect",
+            145.75,
+            98,
+            4.5,
+            12,
+            0
+          ]
+        ],
+        "comparison": [
+          [
+            "line",
+            120,
+            0,
+            120,
+            150,
+            1,
+            2
+          ],
+          [
+            "line",
+            0,
+            75,
+            240,
+            75,
+            1,
+            2
+          ],
+          [
+            "circle",
+            120,
+            75,
+            7,
+            4
+          ],
+          [
+            "circle",
+            148,
+            95,
+            3,
+            0
+          ],
+          [
+            "rect",
+            145.75,
+            98,
+            4.5,
+            12,
+            0
+          ]
+        ]
+      },
+      "titleJa": "黄金比・黄金螺旋",
+      "categoryId": "basics",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-013",
+      "definition": "主題と副題の分離は、最初に見せる対象と補助情報の視覚的な優先度を分ける。",
+      "example": "一人の赤い人物を大きくし、後方の建築を弱い灰色で置く。",
+      "contrast": "人物と建築を同じ大きさ・明度にすると二つの焦点が競合する。",
+      "aiInstruction": "主役の赤い人物だけ明度差を強くし、建築の線を少なくする。",
+      "comparisonPoint": "主役と副題の位置を変えず、主従のコントラストのみ比べる。",
+      "diagram": {
+        "example": [
+          [
+            "rect",
+            25,
+            40,
+            75,
+            95,
+            3
+          ],
+          [
+            "rect",
+            155,
+            25,
+            60,
+            110,
+            3
+          ],
+          [
+            "circle",
+            125,
+            92,
+            8,
+            4
+          ],
+          [
+            "rect",
+            119,
+            100,
+            12,
+            32,
+            4
+          ]
+        ],
+        "comparison": [
+          [
+            "rect",
+            25,
+            40,
+            75,
+            95,
+            0
+          ],
+          [
+            "rect",
+            155,
+            25,
+            60,
+            110,
+            0
+          ],
+          [
+            "circle",
+            125,
+            92,
+            8,
+            4
+          ],
+          [
+            "rect",
+            119,
+            100,
+            12,
+            32,
+            4
+          ]
+        ]
+      },
+      "titleJa": "主題と副題の分離",
+      "categoryId": "balance",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
     },
     {
       "id": "C-014",
@@ -658,7 +1525,74 @@
         "nikon-balance"
       ],
       "reviewStatus": "draft_unreviewed",
-      "evidenceStatus": "not_checked"
+      "evidenceStatus": "not_checked",
+      "comparisonPoint": "左右同じ形でなくても釣り合う配置があり得ることを示す。"
+    },
+    {
+      "id": "C-017",
+      "definition": "主役の画面占有率は、被写体が画面に占める面積を調整する比較軸である。",
+      "example": "広い広場の隅に画面の小部分だけを占める人物を置く。",
+      "contrast": "同じ人物を大きくすると環境より人物の情報が目立つ。",
+      "aiInstruction": "人物の高さを画面の15％程度に固定し、背景の大きさを見せる。",
+      "comparisonPoint": "背景を固定し、人物だけ小さくした版と大きくした版を比較する。",
+      "diagram": {
+        "example": [
+          [
+            "rect",
+            0,
+            105,
+            240,
+            45,
+            3
+          ],
+          [
+            "circle",
+            120,
+            76,
+            3.4,
+            4
+          ],
+          [
+            "rect",
+            117.45,
+            79.4,
+            5.1,
+            13.6,
+            4
+          ]
+        ],
+        "comparison": [
+          [
+            "rect",
+            0,
+            105,
+            240,
+            45,
+            3
+          ],
+          [
+            "circle",
+            120,
+            45,
+            12.4,
+            4
+          ],
+          [
+            "rect",
+            110.7,
+            57.4,
+            18.6,
+            49.6,
+            4
+          ]
+        ]
+      },
+      "titleJa": "主役の画面占有率",
+      "categoryId": "balance",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
     },
     {
       "id": "C-018",
@@ -727,7 +1661,8 @@
         "nikon-composition"
       ],
       "reviewStatus": "draft_unreviewed",
-      "evidenceStatus": "not_checked"
+      "evidenceStatus": "not_checked",
+      "comparisonPoint": "人物の向きを固定し、視線前方の余白を比較する。"
     },
     {
       "id": "C-019",
@@ -832,7 +1767,706 @@
         "nikon-balance"
       ],
       "reviewStatus": "draft_unreviewed",
-      "evidenceStatus": "not_checked"
+      "evidenceStatus": "not_checked",
+      "comparisonPoint": "同じ形でも他の形から離すと焦点になり得る。"
+    },
+    {
+      "id": "C-020",
+      "definition": "密度の対比は、細部が集中する領域と簡素な領域を一画面に共存させる。",
+      "example": "左側に小窓を密集させ、右側は大きな無地の壁にする。",
+      "contrast": "画面全体を細部で埋めると密度の差が曖昧になる。",
+      "aiInstruction": "左の三分の一に細部を集中し、残りを描き込まない大きな壁にする。",
+      "comparisonPoint": "細部の総量を揃え、集中と均等配置による差を比べる。",
+      "diagram": {
+        "example": [
+          [
+            "rect",
+            10,
+            12,
+            12,
+            17,
+            0
+          ],
+          [
+            "rect",
+            29,
+            12,
+            12,
+            17,
+            0
+          ],
+          [
+            "rect",
+            48,
+            12,
+            12,
+            17,
+            0
+          ],
+          [
+            "rect",
+            10,
+            38,
+            12,
+            17,
+            0
+          ],
+          [
+            "rect",
+            29,
+            38,
+            12,
+            17,
+            0
+          ],
+          [
+            "rect",
+            48,
+            38,
+            12,
+            17,
+            0
+          ],
+          [
+            "rect",
+            10,
+            64,
+            12,
+            17,
+            0
+          ],
+          [
+            "rect",
+            29,
+            64,
+            12,
+            17,
+            0
+          ],
+          [
+            "rect",
+            48,
+            64,
+            12,
+            17,
+            0
+          ],
+          [
+            "rect",
+            10,
+            90,
+            12,
+            17,
+            0
+          ],
+          [
+            "rect",
+            29,
+            90,
+            12,
+            17,
+            0
+          ],
+          [
+            "rect",
+            48,
+            90,
+            12,
+            17,
+            0
+          ],
+          [
+            "rect",
+            105,
+            20,
+            125,
+            110,
+            3
+          ]
+        ],
+        "comparison": [
+          [
+            "rect",
+            15,
+            22,
+            12,
+            17,
+            0
+          ],
+          [
+            "rect",
+            51,
+            22,
+            12,
+            17,
+            0
+          ],
+          [
+            "rect",
+            87,
+            22,
+            12,
+            17,
+            0
+          ],
+          [
+            "rect",
+            123,
+            22,
+            12,
+            17,
+            0
+          ],
+          [
+            "rect",
+            159,
+            22,
+            12,
+            17,
+            0
+          ],
+          [
+            "rect",
+            195,
+            22,
+            12,
+            17,
+            0
+          ],
+          [
+            "rect",
+            15,
+            80,
+            12,
+            17,
+            0
+          ],
+          [
+            "rect",
+            51,
+            80,
+            12,
+            17,
+            0
+          ],
+          [
+            "rect",
+            87,
+            80,
+            12,
+            17,
+            0
+          ],
+          [
+            "rect",
+            123,
+            80,
+            12,
+            17,
+            0
+          ],
+          [
+            "rect",
+            159,
+            80,
+            12,
+            17,
+            0
+          ],
+          [
+            "rect",
+            195,
+            80,
+            12,
+            17,
+            0
+          ]
+        ]
+      },
+      "titleJa": "密度の対比",
+      "categoryId": "balance",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-021",
+      "definition": "反復とリズムは、似た形を繰り返し等間隔に置くことで規則性を作る。",
+      "example": "同じ大きさの柱を五本、一定間隔で横一列に並べる。",
+      "contrast": "柱の間隔をばらつかせると規則性が薄れる。",
+      "aiInstruction": "同じ太さの柱五本を、端まで均等な間隔で並べる。",
+      "comparisonPoint": "柱の形と本数は固定し、間隔だけを変える。",
+      "diagram": {
+        "example": [
+          [
+            "rect",
+            15,
+            28,
+            19,
+            105,
+            0
+          ],
+          [
+            "rect",
+            61,
+            28,
+            19,
+            105,
+            0
+          ],
+          [
+            "rect",
+            107,
+            28,
+            19,
+            105,
+            0
+          ],
+          [
+            "rect",
+            153,
+            28,
+            19,
+            105,
+            0
+          ],
+          [
+            "rect",
+            199,
+            28,
+            19,
+            105,
+            0
+          ]
+        ],
+        "comparison": [
+          [
+            "rect",
+            15,
+            28,
+            19,
+            105,
+            0
+          ],
+          [
+            "rect",
+            46,
+            28,
+            19,
+            105,
+            0
+          ],
+          [
+            "rect",
+            94,
+            28,
+            19,
+            105,
+            0
+          ],
+          [
+            "rect",
+            155,
+            28,
+            19,
+            105,
+            0
+          ],
+          [
+            "rect",
+            211,
+            28,
+            19,
+            105,
+            0
+          ]
+        ]
+      },
+      "titleJa": "反復とリズム",
+      "categoryId": "balance",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-022",
+      "definition": "反復の破れは、繰り返しの中から一つを変化させ注目を集める。",
+      "example": "同じ窓が並ぶ中で一つだけ赤い灯りを点ける。",
+      "contrast": "多数の窓を赤くすると例外の効果が弱くなる。",
+      "aiInstruction": "八個の黒い窓のうち右から三番目だけ赤くする。",
+      "comparisonPoint": "同じ窓配置で異なる要素が一つか複数か比較する。",
+      "diagram": {
+        "example": [
+          [
+            "rect",
+            17,
+            52,
+            14,
+            16,
+            0
+          ],
+          [
+            "rect",
+            44,
+            52,
+            14,
+            16,
+            0
+          ],
+          [
+            "rect",
+            71,
+            52,
+            14,
+            16,
+            0
+          ],
+          [
+            "rect",
+            98,
+            52,
+            14,
+            16,
+            0
+          ],
+          [
+            "rect",
+            125,
+            52,
+            14,
+            16,
+            0
+          ],
+          [
+            "rect",
+            152,
+            52,
+            14,
+            16,
+            0
+          ],
+          [
+            "rect",
+            179,
+            52,
+            14,
+            16,
+            0
+          ],
+          [
+            "rect",
+            206,
+            52,
+            14,
+            16,
+            0
+          ],
+          [
+            "rect",
+            152,
+            52,
+            14,
+            16,
+            4
+          ]
+        ],
+        "comparison": [
+          [
+            "rect",
+            17,
+            52,
+            14,
+            16,
+            0
+          ],
+          [
+            "rect",
+            44,
+            52,
+            14,
+            16,
+            0
+          ],
+          [
+            "rect",
+            71,
+            52,
+            14,
+            16,
+            0
+          ],
+          [
+            "rect",
+            98,
+            52,
+            14,
+            16,
+            0
+          ],
+          [
+            "rect",
+            125,
+            52,
+            14,
+            16,
+            0
+          ],
+          [
+            "rect",
+            152,
+            52,
+            14,
+            16,
+            0
+          ],
+          [
+            "rect",
+            179,
+            52,
+            14,
+            16,
+            0
+          ],
+          [
+            "rect",
+            206,
+            52,
+            14,
+            16,
+            0
+          ],
+          [
+            "rect",
+            44,
+            52,
+            14,
+            16,
+            4
+          ],
+          [
+            "rect",
+            98,
+            52,
+            14,
+            16,
+            4
+          ],
+          [
+            "rect",
+            152,
+            52,
+            14,
+            16,
+            4
+          ]
+        ]
+      },
+      "titleJa": "反復の破れ",
+      "categoryId": "balance",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-023",
+      "definition": "画面端の緊張は、被写体を端に寄せたり途中で切り取ったりする演出である。",
+      "example": "巨大な顔の片側が画面の左外へ続くように切る。",
+      "contrast": "顔を中央に収めれば正面性の強い安定した肖像になる。",
+      "aiInstruction": "顔の半分が左端からはみ出す大胆な切り取りを試す。",
+      "comparisonPoint": "被写体の大きさを固定し、画面端での切り取りと中央を比較する。",
+      "diagram": {
+        "example": [
+          [
+            "rect",
+            0,
+            15,
+            45,
+            120,
+            0
+          ],
+          [
+            "rect",
+            0,
+            55,
+            82,
+            45,
+            0
+          ]
+        ],
+        "comparison": [
+          [
+            "rect",
+            83,
+            15,
+            45,
+            120,
+            0
+          ],
+          [
+            "rect",
+            83,
+            55,
+            82,
+            45,
+            0
+          ]
+        ]
+      },
+      "titleJa": "画面端の緊張",
+      "categoryId": "balance",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-024",
+      "definition": "サムネイル可読性は、小さくした表示でも主役と大形を識別できることをいう。",
+      "example": "黒い門と小さな赤い人物を二つの明確な形にする。",
+      "contrast": "細かな窓や同じ明度の形を増やすと縮小時に埋もれる。",
+      "aiInstruction": "小さく表示しても門と人物が分かるよう、太い色面に整理する。",
+      "comparisonPoint": "同じ場面の簡素な版と細部過多の版を縮小して比べる。",
+      "diagram": {
+        "example": [
+          [
+            "rect",
+            18,
+            18,
+            73,
+            113,
+            0
+          ],
+          [
+            "circle",
+            166,
+            101,
+            4.8,
+            4
+          ],
+          [
+            "rect",
+            162.4,
+            105.8,
+            7.199999999999999,
+            19.2,
+            4
+          ]
+        ],
+        "comparison": [
+          [
+            "rect",
+            18,
+            18,
+            73,
+            113,
+            2
+          ],
+          [
+            "rect",
+            104,
+            25,
+            14,
+            16,
+            1
+          ],
+          [
+            "rect",
+            128,
+            25,
+            14,
+            16,
+            1
+          ],
+          [
+            "rect",
+            152,
+            25,
+            14,
+            16,
+            1
+          ],
+          [
+            "rect",
+            176,
+            25,
+            14,
+            16,
+            1
+          ],
+          [
+            "rect",
+            200,
+            25,
+            14,
+            16,
+            1
+          ],
+          [
+            "rect",
+            104,
+            65,
+            14,
+            16,
+            1
+          ],
+          [
+            "rect",
+            128,
+            65,
+            14,
+            16,
+            1
+          ],
+          [
+            "rect",
+            152,
+            65,
+            14,
+            16,
+            1
+          ],
+          [
+            "rect",
+            176,
+            65,
+            14,
+            16,
+            1
+          ],
+          [
+            "rect",
+            200,
+            65,
+            14,
+            16,
+            1
+          ],
+          [
+            "circle",
+            166,
+            101,
+            2.6,
+            3
+          ],
+          [
+            "rect",
+            164.05,
+            103.6,
+            3.9000000000000004,
+            10.4,
+            3
+          ]
+        ]
+      },
+      "titleJa": "サムネイル可読性",
+      "categoryId": "balance",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
     },
     {
       "id": "C-025",
@@ -876,7 +2510,972 @@
         "ixdf-gestalt"
       ],
       "reviewStatus": "draft_unreviewed",
-      "evidenceStatus": "not_checked"
+      "evidenceStatus": "not_checked",
+      "comparisonPoint": "前景の形と背景の境目の読みやすさを比較する。"
+    },
+    {
+      "id": "C-026",
+      "definition": "図と地の反転は、同じ境界を前景と背景の両方として読む現象である。",
+      "example": "両側の黒い形と中央の白い形が異なる物体にも読める図にする。",
+      "contrast": "境界の一方だけを強調すると前景と背景の切替は弱まる。",
+      "aiInstruction": "左右の黒い形で中央の白い形も読み取れる単純な図案を作る。",
+      "comparisonPoint": "輪郭位置を固定し、背景の明度変更で前景が入れ替わるか比べる。",
+      "diagram": {
+        "example": [
+          [
+            "poly",
+            "0,0 70,0 70,47 56,60 70,75 70,150 0,150",
+            0
+          ],
+          [
+            "poly",
+            "240,0 170,0 170,47 184,60 170,75 170,150 240,150",
+            0
+          ]
+        ],
+        "comparison": [
+          [
+            "poly",
+            "0,0 70,0 70,47 56,60 70,75 70,150 0,150",
+            3
+          ],
+          [
+            "poly",
+            "240,0 170,0 170,47 184,60 170,75 170,150 240,150",
+            3
+          ],
+          [
+            "rect",
+            80,
+            42,
+            80,
+            75,
+            0
+          ]
+        ]
+      },
+      "titleJa": "図と地の反転",
+      "categoryId": "perception",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-027",
+      "definition": "近接の法則は、距離の近い要素を同じグループに見やすい知覚傾向である。",
+      "example": "黒い丸を三個ずつ近くに置き、左右二群に見せる。",
+      "contrast": "六個を等間隔に置くと二群の区切りは弱くなる。",
+      "aiInstruction": "同じ大きさの丸六個を、三個ずつ近接させて二群に分ける。",
+      "comparisonPoint": "丸の色と個数を固定し、間隔だけを変える。",
+      "diagram": {
+        "example": [
+          [
+            "circle",
+            34,
+            60,
+            7,
+            0
+          ],
+          [
+            "circle",
+            62,
+            60,
+            7,
+            0
+          ],
+          [
+            "circle",
+            90,
+            60,
+            7,
+            0
+          ],
+          [
+            "circle",
+            155,
+            60,
+            7,
+            0
+          ],
+          [
+            "circle",
+            183,
+            60,
+            7,
+            0
+          ],
+          [
+            "circle",
+            211,
+            60,
+            7,
+            0
+          ]
+        ],
+        "comparison": [
+          [
+            "circle",
+            30,
+            60,
+            7,
+            0
+          ],
+          [
+            "circle",
+            66,
+            60,
+            7,
+            0
+          ],
+          [
+            "circle",
+            102,
+            60,
+            7,
+            0
+          ],
+          [
+            "circle",
+            138,
+            60,
+            7,
+            0
+          ],
+          [
+            "circle",
+            174,
+            60,
+            7,
+            0
+          ],
+          [
+            "circle",
+            210,
+            60,
+            7,
+            0
+          ]
+        ]
+      },
+      "titleJa": "近接の法則",
+      "categoryId": "perception",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [
+        "nng-gestalt-proximity"
+      ],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-028",
+      "definition": "類同の法則は、色や形などが似た要素を関連付けて見る知覚傾向である。",
+      "example": "赤い丸と黒い丸が同じ画面にあっても色ごとの集まりとして認識される。",
+      "contrast": "全部同じ色にすると色による群分けの手掛かりがなくなる。",
+      "aiInstruction": "同じ大きさの丸を黒と赤で交互に並べ、色の類似による関係を作る。",
+      "comparisonPoint": "位置と大きさを固定し、色の分類だけを比べる。",
+      "diagram": {
+        "example": [
+          [
+            "circle",
+            35,
+            50,
+            7,
+            4
+          ],
+          [
+            "circle",
+            91,
+            50,
+            7,
+            0
+          ],
+          [
+            "circle",
+            147,
+            50,
+            7,
+            4
+          ],
+          [
+            "circle",
+            203,
+            50,
+            7,
+            0
+          ],
+          [
+            "circle",
+            35,
+            100,
+            7,
+            4
+          ],
+          [
+            "circle",
+            91,
+            100,
+            7,
+            0
+          ],
+          [
+            "circle",
+            147,
+            100,
+            7,
+            4
+          ],
+          [
+            "circle",
+            203,
+            100,
+            7,
+            0
+          ]
+        ],
+        "comparison": [
+          [
+            "circle",
+            35,
+            50,
+            7,
+            0
+          ],
+          [
+            "circle",
+            91,
+            50,
+            7,
+            0
+          ],
+          [
+            "circle",
+            147,
+            50,
+            7,
+            0
+          ],
+          [
+            "circle",
+            203,
+            50,
+            7,
+            0
+          ],
+          [
+            "circle",
+            35,
+            100,
+            7,
+            0
+          ],
+          [
+            "circle",
+            91,
+            100,
+            7,
+            0
+          ],
+          [
+            "circle",
+            147,
+            100,
+            7,
+            0
+          ],
+          [
+            "circle",
+            203,
+            100,
+            7,
+            0
+          ]
+        ]
+      },
+      "titleJa": "類同の法則",
+      "categoryId": "perception",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [
+        "nng-gestalt-similarity"
+      ],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-029",
+      "definition": "閉合の法則は、輪郭の一部がなくても全体の形を補って捉える傾向である。",
+      "example": "四隅に短いL字を置き、中央の四角形を想像させる。",
+      "contrast": "線同士が離れすぎると閉じた形が読み取りにくい。",
+      "aiInstruction": "四隅に直角の短い輪郭だけを置き、四角形全体を暗示する。",
+      "comparisonPoint": "線の長さと間隔を変え、形の補完が起きるかを比べる。",
+      "diagram": {
+        "example": [
+          [
+            "line",
+            75,
+            38,
+            75,
+            70,
+            0,
+            5
+          ],
+          [
+            "line",
+            75,
+            38,
+            107,
+            38,
+            0,
+            5
+          ],
+          [
+            "line",
+            165,
+            38,
+            165,
+            70,
+            0,
+            5
+          ],
+          [
+            "line",
+            133,
+            38,
+            165,
+            38,
+            0,
+            5
+          ],
+          [
+            "line",
+            75,
+            110,
+            75,
+            80,
+            0,
+            5
+          ],
+          [
+            "line",
+            75,
+            110,
+            107,
+            110,
+            0,
+            5
+          ],
+          [
+            "line",
+            165,
+            110,
+            165,
+            80,
+            0,
+            5
+          ],
+          [
+            "line",
+            133,
+            110,
+            165,
+            110,
+            0,
+            5
+          ]
+        ],
+        "comparison": [
+          [
+            "line",
+            25,
+            38,
+            25,
+            70,
+            0,
+            5
+          ],
+          [
+            "line",
+            25,
+            38,
+            57,
+            38,
+            0,
+            5
+          ],
+          [
+            "line",
+            215,
+            38,
+            215,
+            70,
+            0,
+            5
+          ],
+          [
+            "line",
+            183,
+            38,
+            215,
+            38,
+            0,
+            5
+          ],
+          [
+            "line",
+            25,
+            110,
+            25,
+            80,
+            0,
+            5
+          ],
+          [
+            "line",
+            25,
+            110,
+            57,
+            110,
+            0,
+            5
+          ],
+          [
+            "line",
+            215,
+            110,
+            215,
+            80,
+            0,
+            5
+          ],
+          [
+            "line",
+            183,
+            110,
+            215,
+            110,
+            0,
+            5
+          ]
+        ]
+      },
+      "titleJa": "閉合の法則",
+      "categoryId": "perception",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-030",
+      "definition": "良い連続は、交差している線を滑らかにつながる流れとして見やすい傾向である。",
+      "example": "二本の直線を交差させ、交点の前後で同じ方向を続ける。",
+      "contrast": "交点で角度を変えると視線は折れた線へ移りやすい。",
+      "aiInstruction": "交点を挟んでもそれぞれの線が同じ傾きを保つようにする。",
+      "comparisonPoint": "線が連続する図と交点で折れる図を並べる。",
+      "diagram": {
+        "example": [
+          [
+            "line",
+            35,
+            25,
+            205,
+            125,
+            0,
+            5
+          ],
+          [
+            "line",
+            35,
+            125,
+            205,
+            25,
+            1,
+            5
+          ]
+        ],
+        "comparison": [
+          [
+            "line",
+            35,
+            25,
+            120,
+            75,
+            0,
+            5
+          ],
+          [
+            "line",
+            120,
+            75,
+            205,
+            25,
+            0,
+            5
+          ],
+          [
+            "line",
+            35,
+            125,
+            120,
+            75,
+            1,
+            5
+          ],
+          [
+            "line",
+            120,
+            75,
+            205,
+            125,
+            1,
+            5
+          ]
+        ]
+      },
+      "titleJa": "良い連続",
+      "categoryId": "perception",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-031",
+      "definition": "共通領域は、同じ境界に囲まれた要素を関連付けて知覚しやすい原則である。",
+      "example": "同じ間隔の丸を二つの薄い枠に分けて置く。",
+      "contrast": "全要素を一つの枠で囲うと二群の区別は消える。",
+      "aiInstruction": "六つの丸を固定し、枠だけで三個ずつ二群にまとめる。",
+      "comparisonPoint": "要素の位置は変えず、二つの枠と一つの枠を比較する。",
+      "diagram": {
+        "example": [
+          [
+            "line",
+            18,
+            30,
+            103,
+            30,
+            2,
+            2
+          ],
+          [
+            "line",
+            103,
+            30,
+            103,
+            80,
+            2,
+            2
+          ],
+          [
+            "line",
+            103,
+            80,
+            18,
+            80,
+            2,
+            2
+          ],
+          [
+            "line",
+            18,
+            80,
+            18,
+            30,
+            2,
+            2
+          ],
+          [
+            "line",
+            138,
+            30,
+            223,
+            30,
+            2,
+            2
+          ],
+          [
+            "line",
+            223,
+            30,
+            223,
+            80,
+            2,
+            2
+          ],
+          [
+            "line",
+            223,
+            80,
+            138,
+            80,
+            2,
+            2
+          ],
+          [
+            "line",
+            138,
+            80,
+            138,
+            30,
+            2,
+            2
+          ],
+          [
+            "circle",
+            30,
+            54,
+            7,
+            0
+          ],
+          [
+            "circle",
+            60,
+            54,
+            7,
+            0
+          ],
+          [
+            "circle",
+            90,
+            54,
+            7,
+            0
+          ],
+          [
+            "circle",
+            150,
+            54,
+            7,
+            0
+          ],
+          [
+            "circle",
+            180,
+            54,
+            7,
+            0
+          ],
+          [
+            "circle",
+            210,
+            54,
+            7,
+            0
+          ]
+        ],
+        "comparison": [
+          [
+            "line",
+            18,
+            30,
+            223,
+            30,
+            2,
+            2
+          ],
+          [
+            "line",
+            223,
+            30,
+            223,
+            80,
+            2,
+            2
+          ],
+          [
+            "line",
+            223,
+            80,
+            18,
+            80,
+            2,
+            2
+          ],
+          [
+            "line",
+            18,
+            80,
+            18,
+            30,
+            2,
+            2
+          ],
+          [
+            "circle",
+            30,
+            54,
+            7,
+            0
+          ],
+          [
+            "circle",
+            60,
+            54,
+            7,
+            0
+          ],
+          [
+            "circle",
+            90,
+            54,
+            7,
+            0
+          ],
+          [
+            "circle",
+            150,
+            54,
+            7,
+            0
+          ],
+          [
+            "circle",
+            180,
+            54,
+            7,
+            0
+          ],
+          [
+            "circle",
+            210,
+            54,
+            7,
+            0
+          ]
+        ]
+      },
+      "titleJa": "共通領域",
+      "categoryId": "perception",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [
+        "nng-gestalt-common-region"
+      ],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-032",
+      "definition": "共通運命は、同じ方向に動く要素を一群として見やすい知覚の手掛かりである。",
+      "example": "同方向に移動する三つの点を小さな矢印で表す。",
+      "contrast": "矢印がばらばらの方向だと同じ動きの印象は弱まる。",
+      "aiInstruction": "点三個の脇に同じ方向の矢印を添える。静止画は動きを記号で表す。",
+      "comparisonPoint": "点の配置を固定し、動く方向だけを変える。",
+      "diagram": {
+        "example": [
+          [
+            "circle",
+            50,
+            45,
+            7,
+            0
+          ],
+          [
+            "line",
+            60,
+            45,
+            87,
+            45,
+            4,
+            3
+          ],
+          [
+            "line",
+            87,
+            45,
+            79,
+            41,
+            4,
+            2
+          ],
+          [
+            "line",
+            87,
+            45,
+            79,
+            49,
+            4,
+            2
+          ],
+          [
+            "circle",
+            100,
+            75,
+            7,
+            0
+          ],
+          [
+            "line",
+            110,
+            75,
+            137,
+            75,
+            4,
+            3
+          ],
+          [
+            "line",
+            137,
+            75,
+            129,
+            71,
+            4,
+            2
+          ],
+          [
+            "line",
+            137,
+            75,
+            129,
+            79,
+            4,
+            2
+          ],
+          [
+            "circle",
+            150,
+            105,
+            7,
+            0
+          ],
+          [
+            "line",
+            160,
+            105,
+            187,
+            105,
+            4,
+            3
+          ],
+          [
+            "line",
+            187,
+            105,
+            179,
+            101,
+            4,
+            2
+          ],
+          [
+            "line",
+            187,
+            105,
+            179,
+            109,
+            4,
+            2
+          ]
+        ],
+        "comparison": [
+          [
+            "circle",
+            50,
+            45,
+            7,
+            0
+          ],
+          [
+            "line",
+            60,
+            45,
+            87,
+            45,
+            4,
+            3
+          ],
+          [
+            "line",
+            87,
+            45,
+            79,
+            41,
+            4,
+            2
+          ],
+          [
+            "line",
+            87,
+            45,
+            79,
+            49,
+            4,
+            2
+          ],
+          [
+            "circle",
+            100,
+            75,
+            7,
+            0
+          ],
+          [
+            "line",
+            110,
+            75,
+            98,
+            53,
+            4,
+            3
+          ],
+          [
+            "line",
+            98,
+            53,
+            90,
+            49,
+            4,
+            2
+          ],
+          [
+            "line",
+            98,
+            53,
+            90,
+            57,
+            4,
+            2
+          ],
+          [
+            "circle",
+            150,
+            105,
+            7,
+            0
+          ],
+          [
+            "line",
+            160,
+            105,
+            187,
+            105,
+            4,
+            3
+          ],
+          [
+            "line",
+            187,
+            105,
+            179,
+            101,
+            4,
+            2
+          ],
+          [
+            "line",
+            187,
+            105,
+            179,
+            109,
+            4,
+            2
+          ]
+        ]
+      },
+      "titleJa": "共通運命",
+      "categoryId": "perception",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
     },
     {
       "id": "C-033",
@@ -957,12 +3556,660 @@
       "relatedLegacyIds": [],
       "sourceIds": [],
       "reviewStatus": "draft_unreviewed",
-      "evidenceStatus": "not_checked"
+      "evidenceStatus": "not_checked",
+      "comparisonPoint": "重なりのある配置と離れた配置の前後の見え方を比べる。"
+    },
+    {
+      "id": "C-034",
+      "definition": "アラインメントは、共通の水平・垂直の軸に要素を揃えて秩序を作る方法である。",
+      "example": "見出しと三枚のカードの左端を同じ軸に揃える。",
+      "contrast": "左端が少しずつずれると読み順の規則性が弱まる。",
+      "aiInstruction": "縦に並ぶカード三枚を同じ左端に揃え、余白を統一する。",
+      "comparisonPoint": "大きさと間隔を固定し、左端の座標のみ変更する。",
+      "diagram": {
+        "example": [
+          [
+            "rect",
+            24,
+            25,
+            160,
+            25,
+            2
+          ],
+          [
+            "rect",
+            24,
+            63,
+            160,
+            25,
+            2
+          ],
+          [
+            "rect",
+            24,
+            101,
+            160,
+            25,
+            2
+          ],
+          [
+            "line",
+            24,
+            12,
+            24,
+            137,
+            4,
+            1
+          ]
+        ],
+        "comparison": [
+          [
+            "rect",
+            20,
+            25,
+            160,
+            25,
+            2
+          ],
+          [
+            "rect",
+            40,
+            63,
+            160,
+            25,
+            2
+          ],
+          [
+            "rect",
+            60,
+            101,
+            160,
+            25,
+            2
+          ],
+          [
+            "line",
+            24,
+            12,
+            24,
+            137,
+            4,
+            1
+          ]
+        ]
+      },
+      "titleJa": "アラインメント",
+      "categoryId": "perception",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-035",
+      "definition": "近似した形のまとまりは、局所の細部より外形の大きな塊を先に見せる考え方である。",
+      "example": "ビル群を三つの大きな矩形に整理して遠景として見せる。",
+      "contrast": "全窓を細かく描き込むと大きな形の把握を妨げやすい。",
+      "aiInstruction": "都市のビル群は三つの単純な黒い塊とし、窓はほぼ描かない。",
+      "comparisonPoint": "外形を固定し、細部の数だけを変えた図を比較する。",
+      "diagram": {
+        "example": [
+          [
+            "rect",
+            10,
+            50,
+            60,
+            88,
+            0
+          ],
+          [
+            "rect",
+            83,
+            25,
+            64,
+            113,
+            0
+          ],
+          [
+            "rect",
+            158,
+            62,
+            69,
+            76,
+            0
+          ]
+        ],
+        "comparison": [
+          [
+            "rect",
+            10,
+            50,
+            60,
+            88,
+            0
+          ],
+          [
+            "rect",
+            83,
+            25,
+            64,
+            113,
+            0
+          ],
+          [
+            "rect",
+            158,
+            62,
+            69,
+            76,
+            0
+          ],
+          [
+            "rect",
+            17,
+            67,
+            14,
+            16,
+            3
+          ],
+          [
+            "rect",
+            41,
+            67,
+            14,
+            16,
+            3
+          ],
+          [
+            "rect",
+            89,
+            45,
+            14,
+            16,
+            3
+          ],
+          [
+            "rect",
+            114,
+            45,
+            14,
+            16,
+            3
+          ],
+          [
+            "rect",
+            165,
+            81,
+            14,
+            16,
+            3
+          ],
+          [
+            "rect",
+            190,
+            81,
+            14,
+            16,
+            3
+          ],
+          [
+            "rect",
+            17,
+            102,
+            14,
+            16,
+            3
+          ],
+          [
+            "rect",
+            41,
+            102,
+            14,
+            16,
+            3
+          ],
+          [
+            "rect",
+            89,
+            84,
+            14,
+            16,
+            3
+          ],
+          [
+            "rect",
+            114,
+            84,
+            14,
+            16,
+            3
+          ]
+        ]
+      },
+      "titleJa": "近似した形のまとまり",
+      "categoryId": "perception",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-036",
+      "definition": "意味のあるグループ分けは、視覚的なまとまりを内容のまとまりと一致させる設計である。",
+      "example": "住所欄と連絡先欄を別の枠にまとめる。",
+      "contrast": "無関係な入力を同じ枠に混ぜると関係が誤解される。",
+      "aiInstruction": "住所用の入力三つと連絡先用の入力三つを別領域に配置する。",
+      "comparisonPoint": "要素を固定し、意味に沿ったまとまりと混在配置を比較する。",
+      "diagram": {
+        "example": [
+          [
+            "rect",
+            18,
+            23,
+            95,
+            102,
+            3
+          ],
+          [
+            "rect",
+            131,
+            23,
+            95,
+            102,
+            2
+          ],
+          [
+            "rect",
+            29,
+            43,
+            28,
+            15,
+            0
+          ],
+          [
+            "rect",
+            69,
+            43,
+            28,
+            15,
+            0
+          ],
+          [
+            "rect",
+            29,
+            78,
+            28,
+            15,
+            0
+          ],
+          [
+            "rect",
+            143,
+            43,
+            28,
+            15,
+            0
+          ],
+          [
+            "rect",
+            183,
+            43,
+            28,
+            15,
+            0
+          ],
+          [
+            "rect",
+            143,
+            78,
+            28,
+            15,
+            0
+          ]
+        ],
+        "comparison": [
+          [
+            "rect",
+            18,
+            23,
+            95,
+            102,
+            3
+          ],
+          [
+            "rect",
+            131,
+            23,
+            95,
+            102,
+            2
+          ],
+          [
+            "rect",
+            29,
+            43,
+            28,
+            15,
+            0
+          ],
+          [
+            "rect",
+            69,
+            43,
+            28,
+            15,
+            4
+          ],
+          [
+            "rect",
+            29,
+            78,
+            28,
+            15,
+            0
+          ],
+          [
+            "rect",
+            143,
+            43,
+            28,
+            15,
+            4
+          ],
+          [
+            "rect",
+            183,
+            43,
+            28,
+            15,
+            0
+          ],
+          [
+            "rect",
+            143,
+            78,
+            28,
+            15,
+            4
+          ]
+        ]
+      },
+      "titleJa": "意味のあるグループ分け",
+      "categoryId": "perception",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-037",
+      "definition": "一点透視図法は、奥行き方向の平行線を画面上の一つの消失点へ収束させる図法である。",
+      "example": "正面の廊下の床と天井の線を中央の一点へ向ける。",
+      "contrast": "奥行き線が複数の場所に散ると一点透視の整合が崩れる。",
+      "aiInstruction": "正面から見た廊下。床と天井の主要線を奥の中央一点に収束させる。",
+      "comparisonPoint": "線の方向と消失点の位置が一致するかを比較する。",
+      "diagram": {
+        "example": [
+          [
+            "line",
+            0,
+            0,
+            120,
+            75,
+            0,
+            2
+          ],
+          [
+            "line",
+            240,
+            0,
+            120,
+            75,
+            0,
+            2
+          ],
+          [
+            "line",
+            0,
+            150,
+            120,
+            75,
+            0,
+            2
+          ],
+          [
+            "line",
+            240,
+            150,
+            120,
+            75,
+            0,
+            2
+          ],
+          [
+            "rect",
+            113,
+            60,
+            14,
+            30,
+            4
+          ]
+        ],
+        "comparison": [
+          [
+            "line",
+            0,
+            0,
+            75,
+            75,
+            0,
+            2
+          ],
+          [
+            "line",
+            240,
+            0,
+            75,
+            75,
+            0,
+            2
+          ],
+          [
+            "line",
+            0,
+            150,
+            75,
+            75,
+            0,
+            2
+          ],
+          [
+            "line",
+            240,
+            150,
+            75,
+            75,
+            0,
+            2
+          ],
+          [
+            "rect",
+            113,
+            60,
+            14,
+            30,
+            4
+          ]
+        ]
+      },
+      "titleJa": "一点透視図法",
+      "categoryId": "depth",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-038",
+      "definition": "二点透視図法は、水平面内の異なる二方向を別々の消失点で表す図法である。",
+      "example": "ビルの角を手前に置き、左右の壁面を異なる方向へ収束させる。",
+      "contrast": "左右の面の線が一方向だけに収束すると角からの見え方が不自然になる。",
+      "aiInstruction": "建物の手前の角を中央に、左右二面を別々の消失方向へ伸ばす。",
+      "comparisonPoint": "建物の角を固定し、二方向の収束が識別できるか比べる。",
+      "diagram": {
+        "example": [
+          [
+            "poly",
+            "120,15 120,140 30,113 30,40",
+            0
+          ],
+          [
+            "poly",
+            "120,15 210,40 210,113 120,140",
+            2
+          ]
+        ],
+        "comparison": [
+          [
+            "poly",
+            "120,15 120,140 30,140 30,15",
+            0
+          ],
+          [
+            "poly",
+            "120,15 210,15 210,140 120,140",
+            2
+          ]
+        ]
+      },
+      "titleJa": "二点透視図法",
+      "categoryId": "depth",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-039",
+      "definition": "三点透視図法は、水平面内の二方向に加え高さ方向にも消失点を設ける図法である。",
+      "example": "近くの高層ビルを見上げ、縦の辺も上へ収束させる。",
+      "contrast": "縦線を平行にすると高さ方向の誇張は弱まる。",
+      "aiInstruction": "下から見上げるビルを描き、縦の線も上方へすぼめる。",
+      "comparisonPoint": "高さ方向の線を平行にした版と収束させた版を比較する。",
+      "diagram": {
+        "example": [
+          [
+            "poly",
+            "115,16 130,16 198,142 42,142",
+            0
+          ],
+          [
+            "line",
+            122,
+            16,
+            122,
+            142,
+            3,
+            2
+          ]
+        ],
+        "comparison": [
+          [
+            "rect",
+            65,
+            16,
+            111,
+            126,
+            0
+          ],
+          [
+            "line",
+            122,
+            16,
+            122,
+            142,
+            3,
+            2
+          ]
+        ]
+      },
+      "titleJa": "三点透視図法",
+      "categoryId": "depth",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-040",
+      "definition": "地平線の高さは、目線の位置と空や地面の画面占有率を考える要素である。",
+      "example": "低い地平線に置くことで広い空と小さな人物を見せる。",
+      "contrast": "高い地平線にすると空より地面の割合が増える。",
+      "aiInstruction": "画面の下三分の一付近に地平線を置き、空の大きな面を残す。",
+      "comparisonPoint": "同じ主題を保ち、地平線を上下に動かして比べる。",
+      "diagram": {
+        "example": [
+          [
+            "rect",
+            0,
+            113,
+            240,
+            37,
+            2
+          ],
+          [
+            "circle",
+            120,
+            98,
+            3,
+            4
+          ],
+          [
+            "rect",
+            117.75,
+            101,
+            4.5,
+            12,
+            4
+          ]
+        ],
+        "comparison": [
+          [
+            "rect",
+            0,
+            58,
+            240,
+            92,
+            2
+          ],
+          [
+            "circle",
+            120,
+            98,
+            3,
+            4
+          ],
+          [
+            "rect",
+            117.75,
+            101,
+            4.5,
+            12,
+            4
+          ]
+        ]
+      },
+      "titleJa": "地平線の高さ",
+      "categoryId": "depth",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
     },
     {
       "id": "C-041",
       "titleJa": "前景・中景・背景",
-      "categoryId": "perception",
+      "categoryId": "depth",
       "definition": "画面を距離の異なる層に分け、要素の重なりと明暗で奥行きを作る。",
       "example": "近景に黒い手すり、中景に人物、遠景に薄い山並みを置く。",
       "contrast": "どの層も同じ濃さや大きさだと距離の手掛かりが弱くなる。",
@@ -1026,12 +4273,457 @@
       ],
       "sourceIds": [],
       "reviewStatus": "draft_unreviewed",
-      "evidenceStatus": "not_checked"
+      "evidenceStatus": "not_checked",
+      "comparisonPoint": "近景・中景・遠景の重なりがあると距離を感じやすい。"
+    },
+    {
+      "id": "C-042",
+      "definition": "大きさの遠近手掛かりは、同じ実寸とみなせる物が遠いほど小さく見える関係である。",
+      "example": "同じ街路灯を奥へ行くほど小さく描く。",
+      "contrast": "全ての街路灯を同じ大きさにすると距離の差が弱まる。",
+      "aiInstruction": "道沿いに同じ形の街路灯を三本、奥へ行くほど小さくする。",
+      "comparisonPoint": "街路灯の位置を保ち、見かけの大きさの変化だけを比べる。",
+      "diagram": {
+        "example": [
+          [
+            "circle",
+            38,
+            38,
+            12.25,
+            0
+          ],
+          [
+            "rect",
+            34.5,
+            50.25,
+            7,
+            61.25,
+            0
+          ],
+          [
+            "circle",
+            135,
+            65,
+            7,
+            0
+          ],
+          [
+            "rect",
+            133,
+            72,
+            4,
+            35,
+            0
+          ],
+          [
+            "circle",
+            203,
+            83,
+            3.8500000000000005,
+            0
+          ],
+          [
+            "rect",
+            201.9,
+            86.85,
+            2.2,
+            19.25,
+            0
+          ]
+        ],
+        "comparison": [
+          [
+            "circle",
+            38,
+            38,
+            7,
+            0
+          ],
+          [
+            "rect",
+            36,
+            45,
+            4,
+            35,
+            0
+          ],
+          [
+            "circle",
+            135,
+            65,
+            7,
+            0
+          ],
+          [
+            "rect",
+            133,
+            72,
+            4,
+            35,
+            0
+          ],
+          [
+            "circle",
+            203,
+            83,
+            7,
+            0
+          ],
+          [
+            "rect",
+            201,
+            90,
+            4,
+            35,
+            0
+          ]
+        ]
+      },
+      "titleJa": "大きさの遠近手掛かり",
+      "categoryId": "depth",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-043",
+      "definition": "遮蔽による奥行きは、前の物体が後ろの物体の一部を隠すことで前後を示す。",
+      "example": "手前の柱が人物の半身を隠し、奥には灰色の建物がある。",
+      "contrast": "柱・人物・建築を離して置くと遮蔽の手掛かりが減る。",
+      "aiInstruction": "前景に大きな黒い柱、中景に人物、背景に灰色の建築。",
+      "comparisonPoint": "物体を重ねた状態と離した状態で前後関係を比較する。",
+      "diagram": {
+        "example": [
+          [
+            "rect",
+            65,
+            26,
+            135,
+            112,
+            3
+          ],
+          [
+            "circle",
+            125,
+            87,
+            6.8,
+            4
+          ],
+          [
+            "rect",
+            119.9,
+            93.8,
+            10.2,
+            27.2,
+            4
+          ],
+          [
+            "rect",
+            113,
+            16,
+            26,
+            134,
+            0
+          ]
+        ],
+        "comparison": [
+          [
+            "rect",
+            65,
+            26,
+            135,
+            112,
+            3
+          ],
+          [
+            "circle",
+            125,
+            87,
+            6.8,
+            4
+          ],
+          [
+            "rect",
+            119.9,
+            93.8,
+            10.2,
+            27.2,
+            4
+          ],
+          [
+            "rect",
+            11,
+            16,
+            26,
+            134,
+            0
+          ]
+        ]
+      },
+      "titleJa": "遮蔽による奥行き",
+      "categoryId": "depth",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-044",
+      "definition": "大気遠近法は、遠方の形ほどコントラストや彩度が下がって見える現象を利用する。",
+      "example": "遠景の山を淡く、近景の山を濃く描く。",
+      "contrast": "全ての山を濃い黒にすると前後の違いが弱くなることがある。",
+      "aiInstruction": "近景は濃い黒、中景は灰色、遠景は明るい灰色の山並み。",
+      "comparisonPoint": "山の輪郭を固定して前後の明度差だけを変える。",
+      "diagram": {
+        "example": [
+          [
+            "poly",
+            "0,150 0,95 55,55 102,92 151,40 214,82 240,68 240,150",
+            3
+          ],
+          [
+            "poly",
+            "0,150 0,120 55,80 102,117 151,65 214,107 240,93 240,150",
+            2
+          ],
+          [
+            "poly",
+            "0,150 0,150 55,110 102,147 151,95 214,137 240,123 240,150",
+            0
+          ]
+        ],
+        "comparison": [
+          [
+            "poly",
+            "0,150 0,95 55,55 102,92 151,40 214,82 240,68 240,150",
+            0
+          ],
+          [
+            "poly",
+            "0,150 0,120 55,80 102,117 151,65 214,107 240,93 240,150",
+            0
+          ],
+          [
+            "poly",
+            "0,150 0,150 55,110 102,147 151,95 214,137 240,123 240,150",
+            0
+          ]
+        ]
+      },
+      "titleJa": "大気遠近法",
+      "categoryId": "depth",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-045",
+      "definition": "収束線の使い方は、奥行きに沿う線を注目対象へ誘導するように調整する。",
+      "example": "地下通路の床線が奥の明るい扉へ向かう。",
+      "contrast": "扉とは別の場所に線が集まると視線の焦点が分散する。",
+      "aiInstruction": "床と天井の四本の線を奥の小さな赤い扉へ収束させる。",
+      "comparisonPoint": "扉は固定し、線の収束する先だけを比較する。",
+      "diagram": {
+        "example": [
+          [
+            "line",
+            0,
+            150,
+            120,
+            70,
+            0,
+            4
+          ],
+          [
+            "line",
+            240,
+            150,
+            120,
+            70,
+            0,
+            4
+          ],
+          [
+            "rect",
+            112,
+            58,
+            16,
+            30,
+            4
+          ]
+        ],
+        "comparison": [
+          [
+            "line",
+            0,
+            150,
+            52,
+            70,
+            0,
+            4
+          ],
+          [
+            "line",
+            240,
+            150,
+            52,
+            70,
+            0,
+            4
+          ],
+          [
+            "rect",
+            112,
+            58,
+            16,
+            30,
+            4
+          ]
+        ]
+      },
+      "titleJa": "収束線の使い方",
+      "categoryId": "depth",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-046",
+      "definition": "前景での切り取りは、大きな手前の要素で奥の空間を囲う構成である。",
+      "example": "左右の木の幹の間から奥の人物と小道を見る。",
+      "contrast": "手前の木を外すと覗き込むような奥行きが減る。",
+      "aiInstruction": "左右に太い黒い樹木、中央に明るい道、その奥に小さな人物。",
+      "comparisonPoint": "背景と人物を固定し、前景の囲いだけを変更する。",
+      "diagram": {
+        "example": [
+          [
+            "rect",
+            88,
+            55,
+            64,
+            70,
+            3
+          ],
+          [
+            "circle",
+            119,
+            93,
+            4.4,
+            4
+          ],
+          [
+            "rect",
+            115.7,
+            97.4,
+            6.6000000000000005,
+            17.6,
+            4
+          ],
+          [
+            "rect",
+            0,
+            0,
+            49,
+            150,
+            0
+          ],
+          [
+            "rect",
+            190,
+            0,
+            50,
+            150,
+            0
+          ]
+        ],
+        "comparison": [
+          [
+            "rect",
+            88,
+            55,
+            64,
+            70,
+            3
+          ],
+          [
+            "circle",
+            119,
+            93,
+            4.4,
+            4
+          ],
+          [
+            "rect",
+            115.7,
+            97.4,
+            6.6000000000000005,
+            17.6,
+            4
+          ]
+        ]
+      },
+      "titleJa": "前景での切り取り",
+      "categoryId": "depth",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-047",
+      "definition": "遠近の誇張は、自然な形の投影を意図的に変えて高さ・迫力を強調する。",
+      "example": "巨大な塔の根元を広く描き、先端を極端に細くする。",
+      "contrast": "先端と根元の幅が近い塔は高さの印象が異なる。",
+      "aiInstruction": "見上げる塔の足元を大きく広げ、上へ鋭く収束する形にする。",
+      "comparisonPoint": "塔の高さを保ち、根元と頂部の幅の比だけ変える。",
+      "diagram": {
+        "example": [
+          [
+            "poly",
+            "110,12 131,12 197,145 43,145",
+            0
+          ],
+          [
+            "line",
+            120,
+            12,
+            120,
+            145,
+            3,
+            2
+          ]
+        ],
+        "comparison": [
+          [
+            "poly",
+            "102,12 139,12 165,145 75,145",
+            0
+          ],
+          [
+            "line",
+            120,
+            12,
+            120,
+            145,
+            3,
+            2
+          ]
+        ]
+      },
+      "titleJa": "遠近の誇張",
+      "categoryId": "depth",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
     },
     {
       "id": "C-048",
       "titleJa": "平面的な奥行き",
-      "categoryId": "perception",
+      "categoryId": "depth",
       "definition": "消失点を強調せず、大きな形の重なりや明度差で空間を組み立てる。",
       "example": "手前の黒い建物、中間の灰色の屋根、奥の明るい空を面として重ねる。",
       "contrast": "同じ建物に収束線や窓の描写を追加すると、平面的な重なりより透視線や細部が目立つ。",
@@ -1146,6 +4838,936 @@
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
       "comparisonPoint": "左は大きな面の重なりだけ。右は同じ建築の輪郭に収束線と窓を足して情報量を増やす。"
+    },
+    {
+      "id": "C-049",
+      "definition": "ロングショットは、被写体の全体と周囲の環境を広く含むショットサイズである。",
+      "example": "大きな駅前広場に旅人の全身を小さく置く。",
+      "contrast": "顔に寄ると駅前の広さは画面内から失われる。",
+      "aiInstruction": "人物を画面の一割程度の高さとし、広場と駅舎を見せる。",
+      "comparisonPoint": "同じ場所で人物と環境の占有率を変える。",
+      "diagram": {
+        "example": [
+          [
+            "rect",
+            0,
+            102,
+            240,
+            48,
+            3
+          ],
+          [
+            "rect",
+            18,
+            36,
+            72,
+            65,
+            2
+          ],
+          [
+            "rect",
+            160,
+            12,
+            58,
+            89,
+            2
+          ],
+          [
+            "circle",
+            122,
+            106,
+            2.8,
+            4
+          ],
+          [
+            "rect",
+            119.9,
+            108.8,
+            4.199999999999999,
+            11.2,
+            4
+          ]
+        ],
+        "comparison": [
+          [
+            "rect",
+            0,
+            102,
+            240,
+            48,
+            3
+          ],
+          [
+            "rect",
+            18,
+            36,
+            72,
+            65,
+            2
+          ],
+          [
+            "rect",
+            160,
+            12,
+            58,
+            89,
+            2
+          ],
+          [
+            "circle",
+            122,
+            48,
+            14,
+            4
+          ],
+          [
+            "rect",
+            111.5,
+            62,
+            21,
+            56,
+            4
+          ]
+        ]
+      },
+      "titleJa": "ロングショット",
+      "categoryId": "camera",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-050",
+      "definition": "ミディアムショットは、人物の動作と背景の関係をほどよく見せる画面サイズである。",
+      "example": "人物を腰より上で見せ、背後に街灯と建物を少し残す。",
+      "contrast": "顔だけに寄ると手元や身振りの情報が消える。",
+      "aiInstruction": "人物の腰から上を中心に、周囲の位置関係も少し示す。",
+      "comparisonPoint": "顔だけの構図と腰から上の構図で情報量を比べる。",
+      "diagram": {
+        "example": [
+          [
+            "circle",
+            120,
+            43,
+            18,
+            4
+          ],
+          [
+            "rect",
+            94,
+            62,
+            52,
+            87,
+            4
+          ],
+          [
+            "rect",
+            80,
+            103,
+            14,
+            42,
+            4
+          ],
+          [
+            "rect",
+            146,
+            103,
+            14,
+            42,
+            4
+          ]
+        ],
+        "comparison": [
+          [
+            "circle",
+            120,
+            72,
+            57,
+            4
+          ],
+          [
+            "circle",
+            101,
+            61,
+            4,
+            0
+          ],
+          [
+            "circle",
+            139,
+            61,
+            4,
+            0
+          ]
+        ]
+      },
+      "titleJa": "ミディアムショット",
+      "categoryId": "camera",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-051",
+      "definition": "クローズアップは、顔や物の一部を大きくし細部に注意を集めるショットサイズである。",
+      "example": "仮面の顔を画面の大半に置き、背景の要素を省く。",
+      "contrast": "全身を写すと目元の細かな変化は目立ちにくい。",
+      "aiInstruction": "仮面の顔を大きく切り取り、背景は単純な色面だけにする。",
+      "comparisonPoint": "被写体の位置を保ち、寄り方と情報の焦点を比べる。",
+      "diagram": {
+        "example": [
+          [
+            "circle",
+            120,
+            77,
+            58,
+            0
+          ],
+          [
+            "circle",
+            100,
+            65,
+            5,
+            3
+          ],
+          [
+            "circle",
+            141,
+            65,
+            5,
+            3
+          ],
+          [
+            "line",
+            108,
+            107,
+            135,
+            107,
+            3,
+            4
+          ]
+        ],
+        "comparison": [
+          [
+            "circle",
+            120,
+            38,
+            12,
+            0
+          ],
+          [
+            "rect",
+            111,
+            50,
+            18,
+            48,
+            0
+          ]
+        ]
+      },
+      "titleJa": "クローズアップ",
+      "categoryId": "camera",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-052",
+      "definition": "アイレベルは、被写体の目の高さに近い位置から見る視点である。",
+      "example": "人物とほぼ同じ目線で正面から向き合う。",
+      "contrast": "見下ろすと頭頂と床面の見え方が変化する。",
+      "aiInstruction": "カメラ位置を人物の目の高さに合わせ、正面から見る。",
+      "comparisonPoint": "人物の位置を固定し、カメラの高さだけを変更する。",
+      "diagram": {
+        "example": [
+          [
+            "circle",
+            177,
+            79,
+            6,
+            0
+          ],
+          [
+            "rect",
+            172.5,
+            85,
+            9,
+            24,
+            0
+          ],
+          [
+            "circle",
+            40,
+            79,
+            8,
+            4
+          ],
+          [
+            "line",
+            48,
+            79,
+            165,
+            79,
+            2,
+            2
+          ]
+        ],
+        "comparison": [
+          [
+            "circle",
+            177,
+            79,
+            6,
+            0
+          ],
+          [
+            "rect",
+            172.5,
+            85,
+            9,
+            24,
+            0
+          ],
+          [
+            "circle",
+            40,
+            26,
+            8,
+            4
+          ],
+          [
+            "line",
+            48,
+            30,
+            165,
+            77,
+            2,
+            2
+          ]
+        ]
+      },
+      "titleJa": "アイレベル",
+      "categoryId": "camera",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-053",
+      "definition": "ハイアングルは、被写体より高い位置から見下ろす画面の視点である。",
+      "example": "階段上から小さな人物と広い床面を見下ろす。",
+      "contrast": "下から見ると床面より天井や上方の建築が目立つ。",
+      "aiInstruction": "人物より高い位置から斜め下を見て、広場の地面を多く見せる。",
+      "comparisonPoint": "同じ対象を見下ろす版と見上げる版で比較する。",
+      "diagram": {
+        "example": [
+          [
+            "circle",
+            45,
+            21,
+            9,
+            4
+          ],
+          [
+            "circle",
+            182,
+            103,
+            5.6,
+            0
+          ],
+          [
+            "rect",
+            177.8,
+            108.6,
+            8.399999999999999,
+            22.4,
+            0
+          ],
+          [
+            "line",
+            54,
+            26,
+            168,
+            100,
+            1,
+            3
+          ]
+        ],
+        "comparison": [
+          [
+            "circle",
+            45,
+            129,
+            9,
+            4
+          ],
+          [
+            "circle",
+            182,
+            103,
+            5.6,
+            0
+          ],
+          [
+            "rect",
+            177.8,
+            108.6,
+            8.399999999999999,
+            22.4,
+            0
+          ],
+          [
+            "line",
+            54,
+            127,
+            168,
+            105,
+            1,
+            3
+          ]
+        ]
+      },
+      "titleJa": "ハイアングル",
+      "categoryId": "camera",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-054",
+      "definition": "ローアングルは、被写体より低い位置から見上げる視点である。",
+      "example": "足元の高さから人物と巨大な門を見上げる。",
+      "contrast": "高い位置から見ると建築の上方の量感は変わる。",
+      "aiInstruction": "カメラを地面近くに置き、人物の全身と上方の大きな門を入れる。",
+      "comparisonPoint": "カメラの高さと見上げ方向だけを変えて比べる。",
+      "diagram": {
+        "example": [
+          [
+            "circle",
+            45,
+            129,
+            9,
+            4
+          ],
+          [
+            "circle",
+            182,
+            63,
+            8.8,
+            0
+          ],
+          [
+            "rect",
+            175.4,
+            71.8,
+            13.200000000000001,
+            35.2,
+            0
+          ],
+          [
+            "line",
+            54,
+            123,
+            160,
+            63,
+            1,
+            3
+          ]
+        ],
+        "comparison": [
+          [
+            "circle",
+            45,
+            21,
+            9,
+            4
+          ],
+          [
+            "circle",
+            182,
+            63,
+            8.8,
+            0
+          ],
+          [
+            "rect",
+            175.4,
+            71.8,
+            13.200000000000001,
+            35.2,
+            0
+          ],
+          [
+            "line",
+            54,
+            26,
+            160,
+            63,
+            1,
+            3
+          ]
+        ]
+      },
+      "titleJa": "ローアングル",
+      "categoryId": "camera",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-055",
+      "definition": "俯瞰・真上の視点は、物体を平面上の配置や模様として見せる見方である。",
+      "example": "広場の道と人物をほぼ地図のように上から見る。",
+      "contrast": "斜め上から見ると建物の高さや側面が現れる。",
+      "aiInstruction": "広場の中央を真上から捉え、道と人物の位置関係を明確にする。",
+      "comparisonPoint": "真上と斜めからの視点で見える面の違いを比較する。",
+      "diagram": {
+        "example": [
+          [
+            "rect",
+            0,
+            65,
+            240,
+            26,
+            2
+          ],
+          [
+            "rect",
+            105,
+            0,
+            30,
+            150,
+            3
+          ],
+          [
+            "circle",
+            110,
+            82,
+            9,
+            4
+          ]
+        ],
+        "comparison": [
+          [
+            "poly",
+            "0,150 55,15 184,15 240,150",
+            3
+          ],
+          [
+            "rect",
+            94,
+            55,
+            55,
+            77,
+            0
+          ],
+          [
+            "circle",
+            170,
+            95,
+            4,
+            4
+          ],
+          [
+            "rect",
+            167,
+            99,
+            6,
+            16,
+            4
+          ]
+        ]
+      },
+      "titleJa": "俯瞰・真上の視点",
+      "categoryId": "camera",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-056",
+      "definition": "ダッチアングルは、カメラを左右に傾け、水平・垂直線を画面に対して斜めにする撮影法である。",
+      "example": "高層ビルと地平線を全体として傾ける。",
+      "contrast": "水平なカメラなら建物の垂直線は基準に近づく。",
+      "aiInstruction": "建物と地平線を同じ角度で傾け、画面全体が斜めになる構図。",
+      "comparisonPoint": "対象の配置は変えずカメラの傾きだけを比較する。",
+      "diagram": {
+        "example": [
+          [
+            "poly",
+            "70,34 151,10 181,117 100,140",
+            0
+          ],
+          [
+            "line",
+            0,
+            128,
+            240,
+            58,
+            1,
+            4
+          ]
+        ],
+        "comparison": [
+          [
+            "rect",
+            81,
+            20,
+            84,
+            117,
+            0
+          ],
+          [
+            "line",
+            0,
+            105,
+            240,
+            105,
+            1,
+            4
+          ]
+        ]
+      },
+      "titleJa": "ダッチアングル",
+      "categoryId": "camera",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-057",
+      "definition": "視線の先の余白は、人物の見ている方向に開いた空間を残す配置である。",
+      "example": "右を見ている旅人を左側に置き、右の道を広く見せる。",
+      "contrast": "人物の視線のすぐ先で切ると窮屈に感じられる場合がある。",
+      "aiInstruction": "右向きの人物を画面左三分の一に置き、右側は空ける。",
+      "comparisonPoint": "人物は右向きのまま、位置を左右に変えて比較する。",
+      "diagram": {
+        "example": [
+          [
+            "circle",
+            50,
+            79,
+            7.6,
+            4
+          ],
+          [
+            "rect",
+            44.3,
+            86.6,
+            11.399999999999999,
+            30.4,
+            4
+          ],
+          [
+            "line",
+            80,
+            81,
+            115,
+            81,
+            4,
+            2
+          ],
+          [
+            "line",
+            115,
+            81,
+            110,
+            78,
+            4,
+            1
+          ],
+          [
+            "line",
+            115,
+            81,
+            110,
+            84,
+            4,
+            1
+          ]
+        ],
+        "comparison": [
+          [
+            "circle",
+            190,
+            79,
+            7.6,
+            4
+          ],
+          [
+            "rect",
+            184.3,
+            86.6,
+            11.399999999999999,
+            30.4,
+            4
+          ],
+          [
+            "line",
+            203,
+            81,
+            237,
+            81,
+            4,
+            2
+          ],
+          [
+            "line",
+            237,
+            81,
+            232,
+            78,
+            4,
+            1
+          ],
+          [
+            "line",
+            237,
+            81,
+            232,
+            84,
+            4,
+            1
+          ]
+        ]
+      },
+      "titleJa": "視線の先の余白",
+      "categoryId": "camera",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-058",
+      "definition": "頭上の余白は、頭頂から画面上端までの距離を調整することである。",
+      "example": "肩上の人物を頭頂から少し離した位置で収める。",
+      "contrast": "頭上を大きく空けると人物が画面下へ沈む場合がある。",
+      "aiInstruction": "肩上の肖像。頭上に小さな余白が残る位置で顔を収める。",
+      "comparisonPoint": "人物の拡大率を固定し、上下位置だけを変える。",
+      "diagram": {
+        "example": [
+          [
+            "circle",
+            120,
+            38,
+            25,
+            0
+          ],
+          [
+            "rect",
+            90,
+            66,
+            60,
+            75,
+            0
+          ]
+        ],
+        "comparison": [
+          [
+            "circle",
+            120,
+            79,
+            25,
+            0
+          ],
+          [
+            "rect",
+            90,
+            107,
+            60,
+            42,
+            0
+          ]
+        ]
+      },
+      "titleJa": "頭上の余白",
+      "categoryId": "camera",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-059",
+      "definition": "主観ショットは登場人物が見る景色に近い画面、肩越しは手前に人物の肩を入れる画面である。",
+      "example": "手前の暗い肩越しに奥の人物を見る。",
+      "contrast": "肩を除くと見る側の人物の存在は直接には表れない。",
+      "aiInstruction": "前景に黒い肩の塊、奥の明るい空間に対話相手を配置する。",
+      "comparisonPoint": "肩の有無だけを変え、視点の存在が伝わるか比較する。",
+      "diagram": {
+        "example": [
+          [
+            "rect",
+            94,
+            22,
+            61,
+            110,
+            3
+          ],
+          [
+            "circle",
+            142,
+            85,
+            6.8,
+            4
+          ],
+          [
+            "rect",
+            136.9,
+            91.8,
+            10.2,
+            27.2,
+            4
+          ],
+          [
+            "poly",
+            "0,150 0,44 54,30 115,150",
+            0
+          ]
+        ],
+        "comparison": [
+          [
+            "rect",
+            94,
+            22,
+            61,
+            110,
+            3
+          ],
+          [
+            "circle",
+            142,
+            85,
+            6.8,
+            4
+          ],
+          [
+            "rect",
+            136.9,
+            91.8,
+            10.2,
+            27.2,
+            4
+          ]
+        ]
+      },
+      "titleJa": "主観ショットと肩越し",
+      "categoryId": "camera",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-060",
+      "definition": "焦点距離と撮影距離は異なる条件で、遠近感の変化にはカメラ位置も関係する。",
+      "example": "近距離の広角と遠距離の狭い画角を別条件で比較する。",
+      "contrast": "焦点距離だけの変更で遠近の圧縮が必ず起きるとは説明しない。",
+      "aiInstruction": "撮影距離と画角を別々に指定し、近景と遠景の見かけを比較する。",
+      "comparisonPoint": "焦点距離とカメラ位置を混同せず、条件を記録する。",
+      "diagram": {
+        "example": [
+          [
+            "circle",
+            28,
+            72,
+            7,
+            4
+          ],
+          [
+            "line",
+            35,
+            72,
+            120,
+            22,
+            0,
+            2
+          ],
+          [
+            "line",
+            35,
+            72,
+            120,
+            122,
+            0,
+            2
+          ],
+          [
+            "rect",
+            100,
+            48,
+            15,
+            49,
+            2
+          ],
+          [
+            "rect",
+            176,
+            60,
+            20,
+            31,
+            0
+          ]
+        ],
+        "comparison": [
+          [
+            "circle",
+            16,
+            72,
+            7,
+            4
+          ],
+          [
+            "line",
+            23,
+            72,
+            175,
+            55,
+            0,
+            2
+          ],
+          [
+            "line",
+            23,
+            72,
+            175,
+            100,
+            0,
+            2
+          ],
+          [
+            "rect",
+            100,
+            48,
+            15,
+            49,
+            2
+          ],
+          [
+            "rect",
+            176,
+            60,
+            20,
+            31,
+            0
+          ]
+        ]
+      },
+      "titleJa": "焦点距離と撮影距離",
+      "categoryId": "camera",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
     },
     {
       "id": "C-061",
@@ -1417,6 +6039,241 @@
       "comparisonPoint": "人物の位置と大きさを固定し、内部の描写・明度の有無を比較する。外形が先に読めるかが確認点。"
     },
     {
+      "id": "C-064",
+      "definition": "キアロスクーロは、強い明暗の差で立体感や主題を強調する表現である。",
+      "example": "暗い部屋で人物の片側の顔と肩だけを明るく照らす。",
+      "contrast": "均等な照明では明暗による焦点の印象が弱くなる。",
+      "aiInstruction": "画面の大半は黒。人物の片側にだけ鋭い光を当てる。",
+      "comparisonPoint": "人物と構図を固定し、光の偏りを比較する。",
+      "diagram": {
+        "example": [
+          [
+            "rect",
+            0,
+            0,
+            240,
+            150,
+            0
+          ],
+          [
+            "poly",
+            "58,0 153,0 178,150 109,150",
+            3
+          ],
+          [
+            "circle",
+            120,
+            84,
+            8,
+            0
+          ],
+          [
+            "rect",
+            114,
+            92,
+            12,
+            32,
+            0
+          ]
+        ],
+        "comparison": [
+          [
+            "rect",
+            0,
+            0,
+            240,
+            150,
+            2
+          ],
+          [
+            "circle",
+            120,
+            84,
+            8,
+            0
+          ],
+          [
+            "rect",
+            114,
+            92,
+            12,
+            32,
+            0
+          ]
+        ]
+      },
+      "titleJa": "キアロスクーロ",
+      "categoryId": "value",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-065",
+      "definition": "ローキーは、暗い明度を主体にしながら必要な明部を残す画面設計である。",
+      "example": "ほぼ黒い路地の奥に光る一つの窓を置く。",
+      "contrast": "全体を均等に明るくすると暗部主体の印象は減る。",
+      "aiInstruction": "暗部を画面の多くに置き、窓から漏れる小さな光を焦点にする。",
+      "comparisonPoint": "光る面積の割合だけを変え、明暗の階層を比較する。",
+      "diagram": {
+        "example": [
+          [
+            "rect",
+            0,
+            0,
+            240,
+            150,
+            0
+          ],
+          [
+            "rect",
+            166,
+            35,
+            33,
+            43,
+            3
+          ],
+          [
+            "circle",
+            83,
+            105,
+            3.2,
+            4
+          ],
+          [
+            "rect",
+            80.6,
+            108.2,
+            4.800000000000001,
+            12.8,
+            4
+          ]
+        ],
+        "comparison": [
+          [
+            "rect",
+            0,
+            0,
+            240,
+            150,
+            2
+          ],
+          [
+            "rect",
+            166,
+            35,
+            33,
+            43,
+            3
+          ],
+          [
+            "circle",
+            83,
+            105,
+            3.2,
+            4
+          ],
+          [
+            "rect",
+            80.6,
+            108.2,
+            4.800000000000001,
+            12.8,
+            4
+          ]
+        ]
+      },
+      "titleJa": "ローキーの画面設計",
+      "categoryId": "value",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-066",
+      "definition": "ハイキーは、明るい明度を主体にしながら形の区別を残す画面設計である。",
+      "example": "明るい白い廊下に薄い灰色の柱と人物を置く。",
+      "contrast": "明度差を全てなくすと背景と主題が見分けにくい。",
+      "aiInstruction": "ほぼ白い背景、薄い灰色の建築、人物だけ小さな濃い形。",
+      "comparisonPoint": "明部主体を維持し、主題の輪郭が識別できるかを比べる。",
+      "diagram": {
+        "example": [
+          [
+            "rect",
+            15,
+            15,
+            65,
+            115,
+            3
+          ],
+          [
+            "rect",
+            150,
+            15,
+            65,
+            115,
+            3
+          ],
+          [
+            "circle",
+            115,
+            100,
+            4.4,
+            0
+          ],
+          [
+            "rect",
+            111.7,
+            104.4,
+            6.6000000000000005,
+            17.6,
+            0
+          ]
+        ],
+        "comparison": [
+          [
+            "rect",
+            15,
+            15,
+            65,
+            115,
+            0
+          ],
+          [
+            "rect",
+            150,
+            15,
+            65,
+            115,
+            0
+          ],
+          [
+            "circle",
+            115,
+            100,
+            4.4,
+            0
+          ],
+          [
+            "rect",
+            111.7,
+            104.4,
+            6.6000000000000005,
+            17.6,
+            0
+          ]
+        ]
+      },
+      "titleJa": "ハイキーの画面設計",
+      "categoryId": "value",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
       "id": "C-067",
       "titleJa": "局所的なコントラスト",
       "categoryId": "value",
@@ -1481,7 +6338,417 @@
       "relatedLegacyIds": [],
       "sourceIds": [],
       "reviewStatus": "draft_unreviewed",
-      "evidenceStatus": "not_checked"
+      "evidenceStatus": "not_checked",
+      "comparisonPoint": "明部を一つに限定するときと複数に分けるときの差を見る。"
+    },
+    {
+      "id": "C-068",
+      "definition": "光源位置と影の方向は、光が来る場所と物体の落とす影の関係を使う。",
+      "example": "左上の光源で柱の影を右下へ伸ばす。",
+      "contrast": "影が光源側に伸びると空間の整合が崩れる。",
+      "aiInstruction": "左上に光源、柱から反対側の右下へ長い影を落とす。",
+      "comparisonPoint": "光源と影の向きが一致する図とずれた図を比較する。",
+      "diagram": {
+        "example": [
+          [
+            "circle",
+            45,
+            25,
+            13,
+            4
+          ],
+          [
+            "rect",
+            108,
+            55,
+            30,
+            67,
+            0
+          ],
+          [
+            "poly",
+            "138,100 211,142 171,142 138,116",
+            1
+          ]
+        ],
+        "comparison": [
+          [
+            "circle",
+            45,
+            25,
+            13,
+            4
+          ],
+          [
+            "rect",
+            108,
+            55,
+            30,
+            67,
+            0
+          ],
+          [
+            "poly",
+            "108,100 35,142 75,142 108,116",
+            1
+          ]
+        ]
+      },
+      "titleJa": "光源位置と影の方向",
+      "categoryId": "value",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-069",
+      "definition": "逆光は、被写体の後ろを明るくすることで外輪郭を浮かび上がらせる。",
+      "example": "明るい出口の前に暗い人物を置く。",
+      "contrast": "出口と人物が同じ暗さだと輪郭は読みにくくなる。",
+      "aiInstruction": "明るい門の開口部に真っ黒な人物の全身を置く。",
+      "comparisonPoint": "人物を固定して背景の明度だけを変える。",
+      "diagram": {
+        "example": [
+          [
+            "rect",
+            0,
+            0,
+            240,
+            150,
+            0
+          ],
+          [
+            "rect",
+            80,
+            19,
+            83,
+            121,
+            3
+          ],
+          [
+            "circle",
+            121,
+            90,
+            6,
+            0
+          ],
+          [
+            "rect",
+            116.5,
+            96,
+            9,
+            24,
+            0
+          ]
+        ],
+        "comparison": [
+          [
+            "rect",
+            0,
+            0,
+            240,
+            150,
+            0
+          ],
+          [
+            "rect",
+            80,
+            19,
+            83,
+            121,
+            1
+          ],
+          [
+            "circle",
+            121,
+            90,
+            6,
+            0
+          ],
+          [
+            "rect",
+            116.5,
+            96,
+            9,
+            24,
+            0
+          ]
+        ]
+      },
+      "titleJa": "逆光による輪郭",
+      "categoryId": "value",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-070",
+      "definition": "色面の大きさの配分は、主要色・補助色・アクセント色の占有率を調整することをいう。",
+      "example": "ほぼ黒い建築に中程度の灰色と小さな赤い灯りを足す。",
+      "contrast": "赤を大きな面に広げると焦点としての意味が変わる。",
+      "aiInstruction": "黒い面を最大、灰色を中、赤い面を一点に限定する。",
+      "comparisonPoint": "色の種類は変えず、面積配分だけを比較する。",
+      "diagram": {
+        "example": [
+          [
+            "rect",
+            0,
+            0,
+            147,
+            150,
+            0
+          ],
+          [
+            "rect",
+            147,
+            0,
+            93,
+            150,
+            2
+          ],
+          [
+            "circle",
+            194,
+            65,
+            9,
+            4
+          ]
+        ],
+        "comparison": [
+          [
+            "rect",
+            0,
+            0,
+            110,
+            150,
+            0
+          ],
+          [
+            "rect",
+            110,
+            0,
+            70,
+            150,
+            2
+          ],
+          [
+            "rect",
+            180,
+            0,
+            60,
+            150,
+            4
+          ]
+        ]
+      },
+      "titleJa": "色面の大きさの配分",
+      "categoryId": "value",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-071",
+      "definition": "一点のアクセントカラーは、他の色を抑えて一か所だけ異なる色を使う方法である。",
+      "example": "無彩色の建物群の中に赤い標識を一つだけ置く。",
+      "contrast": "赤い標識が多数あると一点への注目は分散する。",
+      "aiInstruction": "黒と灰の建物に、入口の小さな標識だけ赤を使う。",
+      "comparisonPoint": "赤い場所が一つか複数かを比較する。",
+      "diagram": {
+        "example": [
+          [
+            "circle",
+            34,
+            50,
+            10,
+            2
+          ],
+          [
+            "circle",
+            90,
+            50,
+            10,
+            2
+          ],
+          [
+            "circle",
+            145,
+            50,
+            10,
+            2
+          ],
+          [
+            "circle",
+            200,
+            50,
+            10,
+            2
+          ],
+          [
+            "circle",
+            62,
+            101,
+            10,
+            4
+          ],
+          [
+            "circle",
+            118,
+            101,
+            10,
+            2
+          ],
+          [
+            "circle",
+            174,
+            101,
+            10,
+            2
+          ]
+        ],
+        "comparison": [
+          [
+            "circle",
+            34,
+            50,
+            10,
+            2
+          ],
+          [
+            "circle",
+            90,
+            50,
+            10,
+            4
+          ],
+          [
+            "circle",
+            145,
+            50,
+            10,
+            2
+          ],
+          [
+            "circle",
+            200,
+            50,
+            10,
+            4
+          ],
+          [
+            "circle",
+            62,
+            101,
+            10,
+            4
+          ],
+          [
+            "circle",
+            118,
+            101,
+            10,
+            2
+          ],
+          [
+            "circle",
+            174,
+            101,
+            10,
+            4
+          ]
+        ]
+      },
+      "titleJa": "一点のアクセントカラー",
+      "categoryId": "value",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-072",
+      "definition": "エッジの硬さと消失は、主題の境界を強くし、不要な境界を背景になじませる方法である。",
+      "example": "人物の外輪郭だけ鋭く、遠くの建物を薄い灰色で描く。",
+      "contrast": "全ての輪郭を同じ強さで描くと主従がつきにくい。",
+      "aiInstruction": "人物の外形は硬く、遠景は背景に近い明度で輪郭を弱くする。",
+      "comparisonPoint": "人物を固定し、背景輪郭の明瞭さだけを比較する。",
+      "diagram": {
+        "example": [
+          [
+            "rect",
+            0,
+            25,
+            75,
+            105,
+            3
+          ],
+          [
+            "rect",
+            155,
+            38,
+            75,
+            92,
+            3
+          ],
+          [
+            "circle",
+            120,
+            78,
+            8,
+            0
+          ],
+          [
+            "rect",
+            114,
+            86,
+            12,
+            32,
+            0
+          ]
+        ],
+        "comparison": [
+          [
+            "rect",
+            0,
+            25,
+            75,
+            105,
+            0
+          ],
+          [
+            "rect",
+            155,
+            38,
+            75,
+            92,
+            0
+          ],
+          [
+            "circle",
+            120,
+            78,
+            8,
+            0
+          ],
+          [
+            "rect",
+            114,
+            86,
+            12,
+            32,
+            0
+          ]
+        ]
+      },
+      "titleJa": "エッジの硬さと消失",
+      "categoryId": "value",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
     },
     {
       "id": "C-073",
@@ -1598,6 +6865,96 @@
       "comparisonPoint": "建物と広場の位置を固定し、人物の見かけの大きさだけを変える。"
     },
     {
+      "id": "C-074",
+      "definition": "圧迫感のある囲いは、上下左右から大きな面を迫らせて空間を狭く感じさせる演出である。",
+      "example": "大きな天井と左右の壁の隙間に小さな人物を置く。",
+      "contrast": "開口を広げると閉塞より開放の印象が強まり得る。",
+      "aiInstruction": "左右に厚い黒い壁、上にも低い天井を置き、その隙間に人物を描く。",
+      "comparisonPoint": "人物の大きさを固定し、囲いの開口幅を変更する。",
+      "diagram": {
+        "example": [
+          [
+            "rect",
+            0,
+            0,
+            70,
+            150,
+            0
+          ],
+          [
+            "rect",
+            170,
+            0,
+            70,
+            150,
+            0
+          ],
+          [
+            "rect",
+            70,
+            0,
+            100,
+            48,
+            0
+          ],
+          [
+            "circle",
+            120,
+            103,
+            4.8,
+            4
+          ],
+          [
+            "rect",
+            116.4,
+            107.8,
+            7.199999999999999,
+            19.2,
+            4
+          ]
+        ],
+        "comparison": [
+          [
+            "rect",
+            0,
+            0,
+            40,
+            150,
+            0
+          ],
+          [
+            "rect",
+            200,
+            0,
+            40,
+            150,
+            0
+          ],
+          [
+            "circle",
+            120,
+            103,
+            4.8,
+            4
+          ],
+          [
+            "rect",
+            116.4,
+            107.8,
+            7.199999999999999,
+            19.2,
+            4
+          ]
+        ]
+      },
+      "titleJa": "圧迫感のある囲い",
+      "categoryId": "narrative",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
       "id": "C-075",
       "titleJa": "巨大建築との尺度差",
       "categoryId": "narrative",
@@ -1679,6 +7036,3720 @@
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
       "comparisonPoint": "同じ巨大な建物を描き、人物による尺度の手掛かりがある画面とない画面を比べる。"
+    },
+    {
+      "id": "C-076",
+      "definition": "閉塞と開放の対比は、狭い通路とその先の広い空間を続けて見せる構成である。",
+      "example": "暗い通路の出口に広い空と光を開く。",
+      "contrast": "出口も暗い壁で塞ぐと開放の対比が失われる。",
+      "aiInstruction": "黒い廊下の奥に大きく明るい開口部を作り、小さな旅人を置く。",
+      "comparisonPoint": "廊下を固定し、明るい開口の広さを比較する。",
+      "diagram": {
+        "example": [
+          [
+            "rect",
+            0,
+            0,
+            70,
+            150,
+            0
+          ],
+          [
+            "rect",
+            170,
+            0,
+            70,
+            150,
+            0
+          ],
+          [
+            "rect",
+            70,
+            0,
+            100,
+            40,
+            0
+          ],
+          [
+            "rect",
+            70,
+            40,
+            100,
+            110,
+            3
+          ],
+          [
+            "circle",
+            120,
+            94,
+            4.8,
+            4
+          ],
+          [
+            "rect",
+            116.4,
+            98.8,
+            7.199999999999999,
+            19.2,
+            4
+          ]
+        ],
+        "comparison": [
+          [
+            "rect",
+            0,
+            0,
+            70,
+            150,
+            0
+          ],
+          [
+            "rect",
+            170,
+            0,
+            70,
+            150,
+            0
+          ],
+          [
+            "rect",
+            70,
+            0,
+            100,
+            40,
+            0
+          ],
+          [
+            "rect",
+            70,
+            40,
+            100,
+            110,
+            1
+          ],
+          [
+            "circle",
+            120,
+            94,
+            4.8,
+            4
+          ],
+          [
+            "rect",
+            116.4,
+            98.8,
+            7.199999999999999,
+            19.2,
+            4
+          ]
+        ]
+      },
+      "titleJa": "閉塞と開放の対比",
+      "categoryId": "narrative",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-077",
+      "definition": "画面外の気配は、視線・影・切れた形によって外側の存在を示唆する。",
+      "example": "旅人が右端の外へ目を向け、画面外から影だけが伸びる。",
+      "contrast": "見ている対象を画面内に全部置けば謎は少なくなる。",
+      "aiInstruction": "人物を右へ向かせ、右端の外から伸びる長い影だけを見せる。",
+      "comparisonPoint": "外側の対象を描かず、影と向きだけで気配を残す。",
+      "diagram": {
+        "example": [
+          [
+            "circle",
+            70,
+            95,
+            5.6,
+            4
+          ],
+          [
+            "rect",
+            65.8,
+            100.6,
+            8.399999999999999,
+            22.4,
+            4
+          ],
+          [
+            "line",
+            97,
+            95,
+            216,
+            95,
+            0,
+            2
+          ],
+          [
+            "line",
+            216,
+            95,
+            210,
+            92,
+            0,
+            1
+          ],
+          [
+            "line",
+            216,
+            95,
+            210,
+            98,
+            0,
+            1
+          ],
+          [
+            "poly",
+            "240,80 193,120 193,150 240,150",
+            1
+          ]
+        ],
+        "comparison": [
+          [
+            "circle",
+            70,
+            95,
+            5.6,
+            4
+          ],
+          [
+            "rect",
+            65.8,
+            100.6,
+            8.399999999999999,
+            22.4,
+            4
+          ],
+          [
+            "line",
+            97,
+            95,
+            177,
+            95,
+            0,
+            2
+          ],
+          [
+            "line",
+            177,
+            95,
+            171,
+            92,
+            0,
+            1
+          ],
+          [
+            "line",
+            177,
+            95,
+            171,
+            98,
+            0,
+            1
+          ],
+          [
+            "circle",
+            200,
+            95,
+            17,
+            0
+          ]
+        ]
+      },
+      "titleJa": "画面外の気配",
+      "categoryId": "narrative",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-078",
+      "definition": "中心から外した不安は、中央軸から主役をあえて離して不均衡を演出する。",
+      "example": "左右対称の廊下で人物だけ右端近くに置く。",
+      "contrast": "中央の軸上へ人物を置くと秩序が際立ちやすい。",
+      "aiInstruction": "廊下は中央対称のまま、旅人を右下の端寄りに配置する。",
+      "comparisonPoint": "廊下を固定して人物の横位置だけを比較する。",
+      "diagram": {
+        "example": [
+          [
+            "rect",
+            0,
+            0,
+            70,
+            150,
+            0
+          ],
+          [
+            "rect",
+            170,
+            0,
+            70,
+            150,
+            0
+          ],
+          [
+            "circle",
+            203,
+            103,
+            4,
+            4
+          ],
+          [
+            "rect",
+            200,
+            107,
+            6,
+            16,
+            4
+          ]
+        ],
+        "comparison": [
+          [
+            "rect",
+            0,
+            0,
+            70,
+            150,
+            0
+          ],
+          [
+            "rect",
+            170,
+            0,
+            70,
+            150,
+            0
+          ],
+          [
+            "circle",
+            120,
+            103,
+            4,
+            4
+          ],
+          [
+            "rect",
+            117,
+            107,
+            6,
+            16,
+            4
+          ]
+        ]
+      },
+      "titleJa": "中心から外した不安",
+      "categoryId": "narrative",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-079",
+      "definition": "奥の一点への誘導は、遠方の小さな目的地へ線や明暗を集中させる方法である。",
+      "example": "道の消失点に小さな赤い扉を一つ置く。",
+      "contrast": "光る扉を複数置くと遠方の焦点は分散する。",
+      "aiInstruction": "二本の道路線を奥の赤い扉へ収束させ、周辺は黒い面に整理する。",
+      "comparisonPoint": "道路は固定し、遠い焦点が一つか複数か比較する。",
+      "diagram": {
+        "example": [
+          [
+            "line",
+            0,
+            150,
+            120,
+            59,
+            0,
+            4
+          ],
+          [
+            "line",
+            240,
+            150,
+            120,
+            59,
+            0,
+            4
+          ],
+          [
+            "rect",
+            110,
+            49,
+            20,
+            31,
+            4
+          ]
+        ],
+        "comparison": [
+          [
+            "line",
+            0,
+            150,
+            120,
+            59,
+            0,
+            4
+          ],
+          [
+            "line",
+            240,
+            150,
+            120,
+            59,
+            0,
+            4
+          ],
+          [
+            "rect",
+            60,
+            49,
+            20,
+            31,
+            4
+          ],
+          [
+            "rect",
+            110,
+            49,
+            20,
+            31,
+            4
+          ],
+          [
+            "rect",
+            160,
+            49,
+            20,
+            31,
+            4
+          ]
+        ]
+      },
+      "titleJa": "奥の一点への誘導",
+      "categoryId": "narrative",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-080",
+      "definition": "遮られた主役は、前景の物体で対象を一部隠し、見せる情報を制御する。",
+      "example": "柱の向こうに旅人の半身だけ見せる。",
+      "contrast": "柱を除くと人物が全身すぐに見える。",
+      "aiInstruction": "画面手前に太い黒い柱、奥に旅人、顔の一部だけを見せる。",
+      "comparisonPoint": "人物は固定して前景の柱の有無を変える。",
+      "diagram": {
+        "example": [
+          [
+            "rect",
+            43,
+            20,
+            150,
+            120,
+            3
+          ],
+          [
+            "circle",
+            122,
+            85,
+            8,
+            4
+          ],
+          [
+            "rect",
+            116,
+            93,
+            12,
+            32,
+            4
+          ],
+          [
+            "rect",
+            110,
+            0,
+            26,
+            150,
+            0
+          ]
+        ],
+        "comparison": [
+          [
+            "rect",
+            43,
+            20,
+            150,
+            120,
+            3
+          ],
+          [
+            "circle",
+            122,
+            85,
+            8,
+            4
+          ],
+          [
+            "rect",
+            116,
+            93,
+            12,
+            32,
+            4
+          ]
+        ]
+      },
+      "titleJa": "遮られた主役",
+      "categoryId": "narrative",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-081",
+      "definition": "背中を見せる人物は、顔よりも姿勢と向く先の関係で状況を伝える配置である。",
+      "example": "旅人の背中を下端に置き、目線の先に高い塔を描く。",
+      "contrast": "正面へ向けると顔の情報が前に出やすい。",
+      "aiInstruction": "背中を向けた小さな旅人が遠くの巨大建築を見上げる。",
+      "comparisonPoint": "同じ背景で人物の向きだけを変える。",
+      "diagram": {
+        "example": [
+          [
+            "rect",
+            0,
+            0,
+            70,
+            150,
+            0
+          ],
+          [
+            "rect",
+            170,
+            0,
+            70,
+            150,
+            0
+          ],
+          [
+            "circle",
+            120,
+            102,
+            7.2,
+            1
+          ],
+          [
+            "rect",
+            114.6,
+            109.2,
+            10.8,
+            28.8,
+            1
+          ]
+        ],
+        "comparison": [
+          [
+            "rect",
+            0,
+            0,
+            70,
+            150,
+            0
+          ],
+          [
+            "rect",
+            170,
+            0,
+            70,
+            150,
+            0
+          ],
+          [
+            "circle",
+            120,
+            102,
+            7.2,
+            1
+          ],
+          [
+            "rect",
+            114.6,
+            109.2,
+            10.8,
+            28.8,
+            1
+          ],
+          [
+            "circle",
+            115,
+            98,
+            2,
+            0
+          ],
+          [
+            "circle",
+            125,
+            98,
+            2,
+            0
+          ]
+        ]
+      },
+      "titleJa": "背中を見せる人物",
+      "categoryId": "narrative",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-082",
+      "definition": "静止した広い空間は、動く物を少なくし環境の形や間を見せる演出である。",
+      "example": "誰も歩かない駅のホームを長く描く。",
+      "contrast": "大きな走者を入れると視線は動作へ移りやすい。",
+      "aiInstruction": "空のホームと止まった電車を大きな平面で描き、人は極小にする。",
+      "comparisonPoint": "背景を保ち、動きを示す人物や線の有無を比較する。",
+      "diagram": {
+        "example": [
+          [
+            "rect",
+            0,
+            119,
+            240,
+            31,
+            2
+          ],
+          [
+            "rect",
+            0,
+            36,
+            55,
+            83,
+            3
+          ],
+          [
+            "rect",
+            185,
+            36,
+            55,
+            83,
+            3
+          ],
+          [
+            "circle",
+            123,
+            102,
+            3.2,
+            4
+          ],
+          [
+            "rect",
+            120.6,
+            105.2,
+            4.800000000000001,
+            12.8,
+            4
+          ]
+        ],
+        "comparison": [
+          [
+            "rect",
+            0,
+            119,
+            240,
+            31,
+            2
+          ],
+          [
+            "rect",
+            0,
+            36,
+            55,
+            83,
+            3
+          ],
+          [
+            "rect",
+            185,
+            36,
+            55,
+            83,
+            3
+          ],
+          [
+            "circle",
+            123,
+            89,
+            6.8,
+            4
+          ],
+          [
+            "rect",
+            117.9,
+            95.8,
+            10.2,
+            27.2,
+            4
+          ],
+          [
+            "line",
+            140,
+            95,
+            190,
+            95,
+            0,
+            2
+          ],
+          [
+            "line",
+            190,
+            95,
+            184,
+            92,
+            0,
+            1
+          ],
+          [
+            "line",
+            190,
+            95,
+            184,
+            98,
+            0,
+            1
+          ]
+        ]
+      },
+      "titleJa": "静止した広い空間",
+      "categoryId": "narrative",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-083",
+      "definition": "群衆と単独人物は、人数・向き・距離の差で集団と個人の関係を示す。",
+      "example": "同じ向きの群衆から一人の赤い人物だけ離す。",
+      "contrast": "全員を同じ色と向きにすると例外が見えにくい。",
+      "aiInstruction": "黒い群衆を左側に集め、赤い人物を右側に一人だけ置く。",
+      "comparisonPoint": "単独人物の色と群衆からの距離を比べる。",
+      "diagram": {
+        "example": [
+          [
+            "circle",
+            28,
+            74,
+            3.6,
+            0
+          ],
+          [
+            "rect",
+            25.3,
+            77.6,
+            5.4,
+            14.4,
+            0
+          ],
+          [
+            "circle",
+            48,
+            74,
+            3.6,
+            0
+          ],
+          [
+            "rect",
+            45.3,
+            77.6,
+            5.4,
+            14.4,
+            0
+          ],
+          [
+            "circle",
+            69,
+            74,
+            3.6,
+            0
+          ],
+          [
+            "rect",
+            66.3,
+            77.6,
+            5.4,
+            14.4,
+            0
+          ],
+          [
+            "circle",
+            32,
+            105,
+            3.6,
+            0
+          ],
+          [
+            "rect",
+            29.3,
+            108.6,
+            5.4,
+            14.4,
+            0
+          ],
+          [
+            "circle",
+            59,
+            105,
+            3.6,
+            0
+          ],
+          [
+            "rect",
+            56.3,
+            108.6,
+            5.4,
+            14.4,
+            0
+          ],
+          [
+            "circle",
+            187,
+            94,
+            5.2,
+            4
+          ],
+          [
+            "rect",
+            183.1,
+            99.2,
+            7.800000000000001,
+            20.8,
+            4
+          ]
+        ],
+        "comparison": [
+          [
+            "circle",
+            28,
+            74,
+            3.6,
+            0
+          ],
+          [
+            "rect",
+            25.3,
+            77.6,
+            5.4,
+            14.4,
+            0
+          ],
+          [
+            "circle",
+            48,
+            74,
+            3.6,
+            0
+          ],
+          [
+            "rect",
+            45.3,
+            77.6,
+            5.4,
+            14.4,
+            0
+          ],
+          [
+            "circle",
+            69,
+            74,
+            3.6,
+            0
+          ],
+          [
+            "rect",
+            66.3,
+            77.6,
+            5.4,
+            14.4,
+            0
+          ],
+          [
+            "circle",
+            32,
+            105,
+            3.6,
+            0
+          ],
+          [
+            "rect",
+            29.3,
+            108.6,
+            5.4,
+            14.4,
+            0
+          ],
+          [
+            "circle",
+            59,
+            105,
+            3.6,
+            0
+          ],
+          [
+            "rect",
+            56.3,
+            108.6,
+            5.4,
+            14.4,
+            0
+          ],
+          [
+            "circle",
+            90,
+            94,
+            5.2,
+            0
+          ],
+          [
+            "rect",
+            86.1,
+            99.2,
+            7.800000000000001,
+            20.8,
+            0
+          ]
+        ]
+      },
+      "titleJa": "群衆と単独人物",
+      "categoryId": "narrative",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-084",
+      "definition": "対称空間の異物は、整った配置に一つだけ不規則な形を加える演出である。",
+      "example": "左右対称の柱列の一か所だけ赤い物体を置く。",
+      "contrast": "異物を多くすると秩序と例外の差が弱まる。",
+      "aiInstruction": "対称な空間を保ち、その片側に一つの赤い塊だけ置く。",
+      "comparisonPoint": "背景は固定し、異物の有無と個数を比較する。",
+      "diagram": {
+        "example": [
+          [
+            "rect",
+            15,
+            0,
+            45,
+            140,
+            0
+          ],
+          [
+            "rect",
+            180,
+            0,
+            45,
+            140,
+            0
+          ],
+          [
+            "rect",
+            77,
+            25,
+            23,
+            110,
+            2
+          ],
+          [
+            "rect",
+            140,
+            25,
+            23,
+            110,
+            2
+          ],
+          [
+            "circle",
+            193,
+            120,
+            9,
+            4
+          ]
+        ],
+        "comparison": [
+          [
+            "rect",
+            15,
+            0,
+            45,
+            140,
+            0
+          ],
+          [
+            "rect",
+            180,
+            0,
+            45,
+            140,
+            0
+          ],
+          [
+            "rect",
+            77,
+            25,
+            23,
+            110,
+            2
+          ],
+          [
+            "rect",
+            140,
+            25,
+            23,
+            110,
+            2
+          ],
+          [
+            "circle",
+            120,
+            120,
+            9,
+            2
+          ]
+        ]
+      },
+      "titleJa": "対称空間の異物",
+      "categoryId": "narrative",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-085",
+      "definition": "動きの方向と空間は、進行方向に余白を残し次の動作を想像させる配置である。",
+      "example": "右へ走る人物を左に置き、右に広い空間を取る。",
+      "contrast": "進行方向のすぐ先を画面端にすると動きが詰まる場合がある。",
+      "aiInstruction": "右に走る人物を画面左三分の一に配置し、前方を空ける。",
+      "comparisonPoint": "姿勢は同じまま、人物の横位置を変えて比較する。",
+      "diagram": {
+        "example": [
+          [
+            "circle",
+            47,
+            85,
+            7.2,
+            4
+          ],
+          [
+            "rect",
+            41.6,
+            92.2,
+            10.8,
+            28.8,
+            4
+          ],
+          [
+            "line",
+            70,
+            89,
+            183,
+            89,
+            0,
+            2
+          ],
+          [
+            "line",
+            183,
+            89,
+            177,
+            86,
+            0,
+            1
+          ],
+          [
+            "line",
+            183,
+            89,
+            177,
+            92,
+            0,
+            1
+          ]
+        ],
+        "comparison": [
+          [
+            "circle",
+            201,
+            85,
+            7.2,
+            4
+          ],
+          [
+            "rect",
+            195.6,
+            92.2,
+            10.8,
+            28.8,
+            4
+          ],
+          [
+            "line",
+            211,
+            89,
+            237,
+            89,
+            0,
+            2
+          ],
+          [
+            "line",
+            237,
+            89,
+            231,
+            86,
+            0,
+            1
+          ],
+          [
+            "line",
+            237,
+            89,
+            231,
+            92,
+            0,
+            1
+          ]
+        ]
+      },
+      "titleJa": "動きの方向と空間",
+      "categoryId": "sequence",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-086",
+      "definition": "アクションラインは、身体の動きを貫く主な流れを一本の曲線や軸として捉える作画上の考え方である。",
+      "example": "跳ぶ人物の頭から足までを斜めの大きな流れで結ぶ。",
+      "contrast": "身体の各部を別方向に向けると一続きの動勢は読みにくい。",
+      "aiInstruction": "頭・胴・脚が一つの斜線の流れになる跳躍ポーズ。",
+      "comparisonPoint": "身体の外形と主要な動線の一致を比べる。",
+      "diagram": {
+        "example": [
+          [
+            "line",
+            35,
+            131,
+            112,
+            76,
+            4,
+            6
+          ],
+          [
+            "line",
+            112,
+            76,
+            210,
+            20,
+            4,
+            6
+          ],
+          [
+            "circle",
+            148,
+            55,
+            12,
+            0
+          ],
+          [
+            "line",
+            135,
+            70,
+            88,
+            90,
+            0,
+            8
+          ],
+          [
+            "line",
+            166,
+            52,
+            210,
+            30,
+            0,
+            8
+          ]
+        ],
+        "comparison": [
+          [
+            "line",
+            35,
+            131,
+            112,
+            76,
+            4,
+            6
+          ],
+          [
+            "line",
+            112,
+            76,
+            210,
+            101,
+            4,
+            6
+          ],
+          [
+            "circle",
+            148,
+            55,
+            12,
+            0
+          ],
+          [
+            "line",
+            135,
+            70,
+            88,
+            90,
+            0,
+            8
+          ],
+          [
+            "line",
+            166,
+            52,
+            210,
+            30,
+            0,
+            8
+          ]
+        ]
+      },
+      "titleJa": "アクションライン",
+      "categoryId": "sequence",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-087",
+      "definition": "動きに対する斜線は、移動の向きに沿う線を使い静止画に方向を与える。",
+      "example": "斜めに走る人物の後ろへ三本の動線を添える。",
+      "contrast": "無関係な向きの線は動きの方向を曖昧にする。",
+      "aiInstruction": "左下から右上へ走る人物、動線はその軸に平行な三本のみ。",
+      "comparisonPoint": "主役は固定し、線の方向だけを変える。",
+      "diagram": {
+        "example": [
+          [
+            "circle",
+            128,
+            75,
+            8,
+            4
+          ],
+          [
+            "rect",
+            122,
+            83,
+            12,
+            32,
+            4
+          ],
+          [
+            "line",
+            10,
+            135,
+            80,
+            88,
+            0,
+            4
+          ],
+          [
+            "line",
+            25,
+            110,
+            92,
+            64,
+            0,
+            4
+          ],
+          [
+            "line",
+            30,
+            145,
+            102,
+            98,
+            0,
+            4
+          ]
+        ],
+        "comparison": [
+          [
+            "circle",
+            128,
+            75,
+            8,
+            4
+          ],
+          [
+            "rect",
+            122,
+            83,
+            12,
+            32,
+            4
+          ],
+          [
+            "line",
+            10,
+            135,
+            80,
+            135,
+            0,
+            4
+          ],
+          [
+            "line",
+            25,
+            110,
+            92,
+            110,
+            0,
+            4
+          ],
+          [
+            "line",
+            30,
+            145,
+            102,
+            145,
+            0,
+            4
+          ]
+        ]
+      },
+      "titleJa": "動きに対する斜線",
+      "categoryId": "sequence",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-088",
+      "definition": "群像の視線の流れは、複数人の向きを使い一人の主役へ注意を集める構成である。",
+      "example": "周囲の三人が中央の赤い人物を見つめる。",
+      "contrast": "全員が別方向を見ると焦点は分散する。",
+      "aiInstruction": "三人の視線方向を中央の赤い人物へ向ける。",
+      "comparisonPoint": "人物の位置を固定し、視線だけを変えて比べる。",
+      "diagram": {
+        "example": [
+          [
+            "circle",
+            120,
+            75,
+            10,
+            4
+          ],
+          [
+            "circle",
+            40,
+            42,
+            10,
+            0
+          ],
+          [
+            "circle",
+            200,
+            42,
+            10,
+            0
+          ],
+          [
+            "circle",
+            120,
+            126,
+            10,
+            0
+          ],
+          [
+            "line",
+            50,
+            47,
+            108,
+            70,
+            1,
+            2
+          ],
+          [
+            "line",
+            190,
+            47,
+            132,
+            70,
+            1,
+            2
+          ],
+          [
+            "line",
+            120,
+            116,
+            120,
+            86,
+            1,
+            2
+          ]
+        ],
+        "comparison": [
+          [
+            "circle",
+            120,
+            75,
+            10,
+            4
+          ],
+          [
+            "circle",
+            40,
+            42,
+            10,
+            0
+          ],
+          [
+            "circle",
+            200,
+            42,
+            10,
+            0
+          ],
+          [
+            "circle",
+            120,
+            126,
+            10,
+            0
+          ],
+          [
+            "line",
+            50,
+            47,
+            22,
+            17,
+            1,
+            2
+          ],
+          [
+            "line",
+            190,
+            47,
+            221,
+            17,
+            1,
+            2
+          ],
+          [
+            "line",
+            120,
+            116,
+            177,
+            141,
+            1,
+            2
+          ]
+        ]
+      },
+      "titleJa": "群像の視線の流れ",
+      "categoryId": "sequence",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-089",
+      "definition": "漫画のコマ割りは、コマの大きさと並びで時間感覚や重要度を組み立てる。",
+      "example": "小さな導入二コマのあと大きな一コマで事件を見せる。",
+      "contrast": "すべて同じ面積だと大きな転換を強調しにくい。",
+      "aiInstruction": "上段に小コマ二つ、下段に大コマ一つのページ構成。",
+      "comparisonPoint": "コマ数は同じまま面積配分を変える。",
+      "diagram": {
+        "example": [
+          [
+            "rect",
+            10,
+            10,
+            100,
+            52,
+            2
+          ],
+          [
+            "rect",
+            129,
+            10,
+            101,
+            52,
+            2
+          ],
+          [
+            "rect",
+            10,
+            72,
+            220,
+            68,
+            0
+          ],
+          [
+            "circle",
+            120,
+            103,
+            11,
+            4
+          ]
+        ],
+        "comparison": [
+          [
+            "rect",
+            10,
+            10,
+            220,
+            39,
+            2
+          ],
+          [
+            "rect",
+            10,
+            56,
+            220,
+            39,
+            2
+          ],
+          [
+            "rect",
+            10,
+            102,
+            220,
+            38,
+            0
+          ],
+          [
+            "circle",
+            120,
+            122,
+            11,
+            4
+          ]
+        ]
+      },
+      "titleJa": "漫画のコマ割り",
+      "categoryId": "sequence",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-090",
+      "definition": "コマをまたぐ視線誘導は、絵と吹き出しを読む順番に沿って置く設計である。",
+      "example": "日本語漫画の右上から左上、下段へ読む流れを示す。",
+      "contrast": "吹き出しを逆方向に置くと順番が迷いやすくなる。",
+      "aiInstruction": "三コマの吹き出しを右上から左上、下へ続く順で配置する。",
+      "comparisonPoint": "コマ自体を固定し、吹き出しの位置だけ変えて比較する。",
+      "diagram": {
+        "example": [
+          [
+            "rect",
+            10,
+            10,
+            100,
+            52,
+            3
+          ],
+          [
+            "rect",
+            129,
+            10,
+            101,
+            52,
+            3
+          ],
+          [
+            "rect",
+            10,
+            76,
+            220,
+            64,
+            2
+          ],
+          [
+            "circle",
+            175,
+            30,
+            7,
+            4
+          ],
+          [
+            "circle",
+            60,
+            30,
+            7,
+            4
+          ],
+          [
+            "line",
+            169,
+            67,
+            69,
+            67,
+            0,
+            2
+          ],
+          [
+            "line",
+            69,
+            67,
+            63,
+            64,
+            0,
+            1
+          ],
+          [
+            "line",
+            69,
+            67,
+            63,
+            70,
+            0,
+            1
+          ],
+          [
+            "line",
+            64,
+            70,
+            97,
+            103,
+            0,
+            2
+          ],
+          [
+            "line",
+            97,
+            103,
+            91,
+            100,
+            0,
+            1
+          ],
+          [
+            "line",
+            97,
+            103,
+            91,
+            106,
+            0,
+            1
+          ]
+        ],
+        "comparison": [
+          [
+            "rect",
+            10,
+            10,
+            100,
+            52,
+            3
+          ],
+          [
+            "rect",
+            129,
+            10,
+            101,
+            52,
+            3
+          ],
+          [
+            "rect",
+            10,
+            76,
+            220,
+            64,
+            2
+          ],
+          [
+            "circle",
+            175,
+            30,
+            7,
+            4
+          ],
+          [
+            "circle",
+            60,
+            30,
+            7,
+            4
+          ],
+          [
+            "line",
+            64,
+            67,
+            164,
+            67,
+            0,
+            2
+          ],
+          [
+            "line",
+            164,
+            67,
+            158,
+            64,
+            0,
+            1
+          ],
+          [
+            "line",
+            164,
+            67,
+            158,
+            70,
+            0,
+            1
+          ],
+          [
+            "line",
+            169,
+            70,
+            136,
+            103,
+            0,
+            2
+          ],
+          [
+            "line",
+            136,
+            103,
+            130,
+            100,
+            0,
+            1
+          ],
+          [
+            "line",
+            136,
+            103,
+            130,
+            106,
+            0,
+            1
+          ]
+        ]
+      },
+      "titleJa": "コマをまたぐ視線誘導",
+      "categoryId": "sequence",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-091",
+      "definition": "見開きの構図は、二ページと中央の綴じ目を一画面として設計する。",
+      "example": "重要な人物を綴じ目から離して左右へ配置する。",
+      "contrast": "重要な顔を綴じ目の上に置くと読みづらい場合がある。",
+      "aiInstruction": "見開き中央は綴じ目の余白を残し、大きな形を左右へ寄せる。",
+      "comparisonPoint": "人物の位置を変え、綴じ目を横断するか比べる。",
+      "diagram": {
+        "example": [
+          [
+            "rect",
+            117,
+            0,
+            6,
+            150,
+            2
+          ],
+          [
+            "rect",
+            15,
+            22,
+            82,
+            110,
+            0
+          ],
+          [
+            "rect",
+            142,
+            22,
+            82,
+            110,
+            0
+          ],
+          [
+            "circle",
+            65,
+            104,
+            4,
+            4
+          ],
+          [
+            "rect",
+            62,
+            108,
+            6,
+            16,
+            4
+          ]
+        ],
+        "comparison": [
+          [
+            "rect",
+            117,
+            0,
+            6,
+            150,
+            2
+          ],
+          [
+            "rect",
+            15,
+            22,
+            82,
+            110,
+            0
+          ],
+          [
+            "rect",
+            142,
+            22,
+            82,
+            110,
+            0
+          ],
+          [
+            "circle",
+            120,
+            104,
+            4,
+            4
+          ],
+          [
+            "rect",
+            117,
+            108,
+            6,
+            16,
+            4
+          ]
+        ]
+      },
+      "titleJa": "見開きの構図",
+      "categoryId": "sequence",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-092",
+      "definition": "映画の180度ルールは、対話などの軸の一方側から撮影し画面方向を連続させる慣行である。",
+      "example": "二人を結ぶ軸の同じ側にカメラを置き左右位置を揃える。",
+      "contrast": "軸を越える切替では人物の左右が反転して見える場合がある。",
+      "aiInstruction": "二人の対話の軸を示し、カメラを軸の片側に二点置く。",
+      "comparisonPoint": "カメラが軸の片側にある版と両側にある版を比べる。",
+      "diagram": {
+        "example": [
+          [
+            "line",
+            18,
+            75,
+            222,
+            75,
+            0,
+            3
+          ],
+          [
+            "circle",
+            68,
+            75,
+            12,
+            0
+          ],
+          [
+            "circle",
+            172,
+            75,
+            12,
+            0
+          ],
+          [
+            "circle",
+            81,
+            24,
+            8,
+            4
+          ],
+          [
+            "circle",
+            162,
+            24,
+            8,
+            4
+          ]
+        ],
+        "comparison": [
+          [
+            "line",
+            18,
+            75,
+            222,
+            75,
+            0,
+            3
+          ],
+          [
+            "circle",
+            68,
+            75,
+            12,
+            0
+          ],
+          [
+            "circle",
+            172,
+            75,
+            12,
+            0
+          ],
+          [
+            "circle",
+            81,
+            24,
+            8,
+            4
+          ],
+          [
+            "circle",
+            162,
+            124,
+            8,
+            4
+          ]
+        ]
+      },
+      "titleJa": "映画の180度ルール",
+      "categoryId": "sequence",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [
+        "adobe-180"
+      ],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-093",
+      "definition": "視線の一致は、見る人物と次のショットの対象を方向でつなぐ編集手法である。",
+      "example": "右を向く人物の次に右側の扉を見せる。",
+      "contrast": "方向が矛盾するとどの対象を見ているか分かりにくい。",
+      "aiInstruction": "一コマ目に右を見る人物、二コマ目にその先の扉を置く。",
+      "comparisonPoint": "人物の向きと次の対象の位置を揃えた版と違う版を比べる。",
+      "diagram": {
+        "example": [
+          [
+            "rect",
+            5,
+            10,
+            110,
+            130,
+            3
+          ],
+          [
+            "rect",
+            125,
+            10,
+            110,
+            130,
+            3
+          ],
+          [
+            "circle",
+            54,
+            77,
+            8,
+            0
+          ],
+          [
+            "rect",
+            48,
+            85,
+            12,
+            32,
+            0
+          ],
+          [
+            "line",
+            80,
+            82,
+            108,
+            82,
+            4,
+            2
+          ],
+          [
+            "line",
+            108,
+            82,
+            102,
+            79,
+            4,
+            1
+          ],
+          [
+            "line",
+            108,
+            82,
+            102,
+            85,
+            4,
+            1
+          ],
+          [
+            "rect",
+            181,
+            56,
+            29,
+            62,
+            4
+          ]
+        ],
+        "comparison": [
+          [
+            "rect",
+            5,
+            10,
+            110,
+            130,
+            3
+          ],
+          [
+            "rect",
+            125,
+            10,
+            110,
+            130,
+            3
+          ],
+          [
+            "circle",
+            54,
+            77,
+            8,
+            0
+          ],
+          [
+            "rect",
+            48,
+            85,
+            12,
+            32,
+            0
+          ],
+          [
+            "line",
+            80,
+            82,
+            108,
+            82,
+            4,
+            2
+          ],
+          [
+            "line",
+            108,
+            82,
+            102,
+            79,
+            4,
+            1
+          ],
+          [
+            "line",
+            108,
+            82,
+            102,
+            85,
+            4,
+            1
+          ],
+          [
+            "rect",
+            132,
+            56,
+            29,
+            62,
+            4
+          ]
+        ]
+      },
+      "titleJa": "視線の一致",
+      "categoryId": "sequence",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-094",
+      "definition": "ショットサイズの切替は、広い場面と細部の画面を組み合わせ情報の順序を作る。",
+      "example": "駅全景の次に手元の鍵へ寄る二コマで場所と行為を示す。",
+      "contrast": "鍵だけを示すと何処の行為か不明確になる場合がある。",
+      "aiInstruction": "最初に広場全景、次に手に持つ鍵を大きく示す二コマ。",
+      "comparisonPoint": "広い画面と寄った画面の順序の違いを比較する。",
+      "diagram": {
+        "example": [
+          [
+            "rect",
+            5,
+            10,
+            110,
+            130,
+            3
+          ],
+          [
+            "rect",
+            125,
+            10,
+            110,
+            130,
+            3
+          ],
+          [
+            "rect",
+            16,
+            40,
+            28,
+            93,
+            0
+          ],
+          [
+            "rect",
+            81,
+            23,
+            25,
+            110,
+            0
+          ],
+          [
+            "circle",
+            65,
+            105,
+            2.8,
+            4
+          ],
+          [
+            "rect",
+            62.9,
+            107.8,
+            4.199999999999999,
+            11.2,
+            4
+          ],
+          [
+            "rect",
+            164,
+            60,
+            25,
+            63,
+            0
+          ],
+          [
+            "circle",
+            176,
+            82,
+            12,
+            4
+          ]
+        ],
+        "comparison": [
+          [
+            "rect",
+            5,
+            10,
+            110,
+            130,
+            3
+          ],
+          [
+            "rect",
+            125,
+            10,
+            110,
+            130,
+            3
+          ],
+          [
+            "rect",
+            164,
+            60,
+            25,
+            63,
+            0
+          ],
+          [
+            "circle",
+            176,
+            82,
+            12,
+            4
+          ],
+          [
+            "circle",
+            65,
+            105,
+            2.8,
+            4
+          ],
+          [
+            "rect",
+            62.9,
+            107.8,
+            4.199999999999999,
+            11.2,
+            4
+          ]
+        ]
+      },
+      "titleJa": "ショットサイズの切替",
+      "categoryId": "sequence",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-095",
+      "definition": "静止と動作の対比は、静かな背景に動く要素を対置して主役を際立たせる。",
+      "example": "静止した柱列の前を一人だけ斜めに走らせる。",
+      "contrast": "背景にも動線を多く入れると運動が競合する。",
+      "aiInstruction": "柱は水平垂直の大きな形、人物だけ斜めに動く。",
+      "comparisonPoint": "人物を固定し、背景にも動線を入れるかどうか比べる。",
+      "diagram": {
+        "example": [
+          [
+            "rect",
+            10,
+            20,
+            22,
+            125,
+            0
+          ],
+          [
+            "rect",
+            76,
+            20,
+            22,
+            125,
+            0
+          ],
+          [
+            "rect",
+            142,
+            20,
+            22,
+            125,
+            0
+          ],
+          [
+            "rect",
+            208,
+            20,
+            22,
+            125,
+            0
+          ],
+          [
+            "circle",
+            120,
+            87,
+            5.6,
+            4
+          ],
+          [
+            "rect",
+            115.8,
+            92.6,
+            8.399999999999999,
+            22.4,
+            4
+          ],
+          [
+            "line",
+            130,
+            87,
+            185,
+            49,
+            4,
+            2
+          ],
+          [
+            "line",
+            185,
+            49,
+            179,
+            46,
+            4,
+            1
+          ],
+          [
+            "line",
+            185,
+            49,
+            179,
+            52,
+            4,
+            1
+          ]
+        ],
+        "comparison": [
+          [
+            "rect",
+            10,
+            20,
+            22,
+            125,
+            0
+          ],
+          [
+            "rect",
+            76,
+            20,
+            22,
+            125,
+            0
+          ],
+          [
+            "rect",
+            142,
+            20,
+            22,
+            125,
+            0
+          ],
+          [
+            "rect",
+            208,
+            20,
+            22,
+            125,
+            0
+          ],
+          [
+            "circle",
+            120,
+            87,
+            5.6,
+            4
+          ],
+          [
+            "rect",
+            115.8,
+            92.6,
+            8.399999999999999,
+            22.4,
+            4
+          ],
+          [
+            "line",
+            130,
+            87,
+            185,
+            49,
+            4,
+            2
+          ],
+          [
+            "line",
+            185,
+            49,
+            179,
+            46,
+            4,
+            1
+          ],
+          [
+            "line",
+            185,
+            49,
+            179,
+            52,
+            4,
+            1
+          ],
+          [
+            "line",
+            10,
+            140,
+            180,
+            35,
+            1,
+            4
+          ],
+          [
+            "line",
+            30,
+            140,
+            220,
+            40,
+            1,
+            4
+          ]
+        ]
+      },
+      "titleJa": "静止と動作の対比",
+      "categoryId": "sequence",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-096",
+      "definition": "場面転換での構図の反復は、別の時間・場所で同じ配置を使い意味を結ぶ手法である。",
+      "example": "昼と夜の同じ廊下で人物と扉の位置を固定する。",
+      "contrast": "配置を毎回変えると対応する関係が見えにくい。",
+      "aiInstruction": "二コマとも人物を左下、扉を右奥に固定し、色だけ変える。",
+      "comparisonPoint": "場面の変化と構図の変化を区別して比較する。",
+      "diagram": {
+        "example": [
+          [
+            "rect",
+            5,
+            5,
+            108,
+            140,
+            3
+          ],
+          [
+            "rect",
+            126,
+            5,
+            108,
+            140,
+            1
+          ],
+          [
+            "rect",
+            68,
+            23,
+            30,
+            113,
+            0
+          ],
+          [
+            "rect",
+            189,
+            23,
+            30,
+            113,
+            0
+          ],
+          [
+            "circle",
+            34,
+            112,
+            2.8,
+            4
+          ],
+          [
+            "rect",
+            31.9,
+            114.8,
+            4.199999999999999,
+            11.2,
+            4
+          ],
+          [
+            "circle",
+            155,
+            112,
+            2.8,
+            4
+          ],
+          [
+            "rect",
+            152.9,
+            114.8,
+            4.199999999999999,
+            11.2,
+            4
+          ]
+        ],
+        "comparison": [
+          [
+            "rect",
+            5,
+            5,
+            108,
+            140,
+            3
+          ],
+          [
+            "rect",
+            126,
+            5,
+            108,
+            140,
+            1
+          ],
+          [
+            "rect",
+            68,
+            23,
+            30,
+            113,
+            0
+          ],
+          [
+            "rect",
+            189,
+            23,
+            30,
+            113,
+            0
+          ],
+          [
+            "circle",
+            34,
+            112,
+            2.8,
+            4
+          ],
+          [
+            "rect",
+            31.9,
+            114.8,
+            4.199999999999999,
+            11.2,
+            4
+          ],
+          [
+            "circle",
+            215,
+            112,
+            2.8,
+            4
+          ],
+          [
+            "rect",
+            212.9,
+            114.8,
+            4.199999999999999,
+            11.2,
+            4
+          ]
+        ]
+      },
+      "titleJa": "場面転換での構図の反復",
+      "categoryId": "sequence",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-097",
+      "definition": "人物の立ち絵は、全身の輪郭や姿勢を一度に見せるための画面設計である。",
+      "example": "旅人の頭から足先までを収め、外形の周囲を空ける。",
+      "contrast": "頭や足先を不用意に切ると全身の特徴が伝わりにくい。",
+      "aiInstruction": "人物の全身を中央よりやや右に置き、上下にも少し余白を残す。",
+      "comparisonPoint": "同じ人物の全身版と切り取り版を比べる。",
+      "diagram": {
+        "example": [
+          [
+            "circle",
+            120,
+            43,
+            16,
+            0
+          ],
+          [
+            "rect",
+            108,
+            59,
+            24,
+            64,
+            0
+          ]
+        ],
+        "comparison": [
+          [
+            "circle",
+            120,
+            26,
+            16,
+            0
+          ],
+          [
+            "rect",
+            98,
+            46,
+            44,
+            102,
+            0
+          ]
+        ]
+      },
+      "titleJa": "人物の立ち絵",
+      "categoryId": "application",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-098",
+      "definition": "二人の対話場面は、人物の向き・高さ・距離で相互関係を示す構成である。",
+      "example": "同じ高さの二人を少し離して向かい合わせる。",
+      "contrast": "二人が無関係な方向を向くと会話が伝わりにくい。",
+      "aiInstruction": "二人の人物を画面左右に配置し、相互に向かい合う。",
+      "comparisonPoint": "位置は固定し、向きと間隔の違いを比べる。",
+      "diagram": {
+        "example": [
+          [
+            "circle",
+            59,
+            77,
+            8,
+            0
+          ],
+          [
+            "rect",
+            53,
+            85,
+            12,
+            32,
+            0
+          ],
+          [
+            "circle",
+            181,
+            77,
+            8,
+            4
+          ],
+          [
+            "rect",
+            175,
+            85,
+            12,
+            32,
+            4
+          ],
+          [
+            "line",
+            85,
+            85,
+            128,
+            85,
+            1,
+            2
+          ],
+          [
+            "line",
+            128,
+            85,
+            122,
+            82,
+            1,
+            1
+          ],
+          [
+            "line",
+            128,
+            85,
+            122,
+            88,
+            1,
+            1
+          ],
+          [
+            "line",
+            154,
+            85,
+            122,
+            85,
+            1,
+            2
+          ],
+          [
+            "line",
+            122,
+            85,
+            116,
+            82,
+            1,
+            1
+          ],
+          [
+            "line",
+            122,
+            85,
+            116,
+            88,
+            1,
+            1
+          ]
+        ],
+        "comparison": [
+          [
+            "circle",
+            59,
+            77,
+            8,
+            0
+          ],
+          [
+            "rect",
+            53,
+            85,
+            12,
+            32,
+            0
+          ],
+          [
+            "circle",
+            181,
+            77,
+            8,
+            4
+          ],
+          [
+            "rect",
+            175,
+            85,
+            12,
+            32,
+            4
+          ],
+          [
+            "line",
+            85,
+            85,
+            47,
+            85,
+            1,
+            2
+          ],
+          [
+            "line",
+            47,
+            85,
+            41,
+            82,
+            1,
+            1
+          ],
+          [
+            "line",
+            47,
+            85,
+            41,
+            88,
+            1,
+            1
+          ],
+          [
+            "line",
+            154,
+            85,
+            190,
+            85,
+            1,
+            2
+          ],
+          [
+            "line",
+            190,
+            85,
+            184,
+            82,
+            1,
+            1
+          ],
+          [
+            "line",
+            190,
+            85,
+            184,
+            88,
+            1,
+            1
+          ]
+        ]
+      },
+      "titleJa": "二人の対話場面",
+      "categoryId": "application",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-099",
+      "definition": "動物・妖怪の構図は、特徴的な外形を保ちつつ姿勢と全身の動きを見せる。",
+      "example": "角を持つ妖怪を逆光のシルエットで全身見せる。",
+      "contrast": "顔の細部を増やしすぎると全身の動勢が弱まる。",
+      "aiInstruction": "大きな角と肩の輪郭を残した妖怪を、低い視点から全身で描く。",
+      "comparisonPoint": "外形の大きさと内部の描き込み量を比較する。",
+      "diagram": {
+        "example": [
+          [
+            "poly",
+            "54,43 41,6 89,32 120,22 158,32 199,6 185,43 189,121 50,121",
+            0
+          ],
+          [
+            "rect",
+            89,
+            121,
+            22,
+            26,
+            0
+          ],
+          [
+            "rect",
+            139,
+            121,
+            22,
+            26,
+            0
+          ]
+        ],
+        "comparison": [
+          [
+            "poly",
+            "54,43 41,6 89,32 120,22 158,32 199,6 185,43 189,121 50,121",
+            0
+          ],
+          [
+            "rect",
+            89,
+            121,
+            22,
+            26,
+            0
+          ],
+          [
+            "rect",
+            139,
+            121,
+            22,
+            26,
+            0
+          ],
+          [
+            "circle",
+            91,
+            59,
+            7,
+            4
+          ],
+          [
+            "circle",
+            146,
+            59,
+            7,
+            4
+          ],
+          [
+            "rect",
+            88,
+            85,
+            63,
+            9,
+            2
+          ],
+          [
+            "rect",
+            87,
+            106,
+            64,
+            5,
+            2
+          ]
+        ]
+      },
+      "titleJa": "動物・妖怪の構図",
+      "categoryId": "application",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-100",
+      "definition": "都市風景は、建物・道路・人の尺度を組み合わせて街の広がりを示す。",
+      "example": "左右の高層建築の間の道の奥に小さな人物を置く。",
+      "contrast": "建物だけ並べると道の奥行きが伝わりにくい。",
+      "aiInstruction": "高いビルは左右の黒面、道を中央奥へ伸ばし遠方に人物。",
+      "comparisonPoint": "建物を固定し、奥へ続く道の線の有無を比べる。",
+      "diagram": {
+        "example": [
+          [
+            "rect",
+            0,
+            0,
+            73,
+            150,
+            0
+          ],
+          [
+            "rect",
+            175,
+            0,
+            65,
+            150,
+            0
+          ],
+          [
+            "line",
+            73,
+            150,
+            122,
+            65,
+            1,
+            4
+          ],
+          [
+            "line",
+            175,
+            150,
+            122,
+            65,
+            1,
+            4
+          ],
+          [
+            "circle",
+            122,
+            80,
+            2.8,
+            4
+          ],
+          [
+            "rect",
+            119.9,
+            82.8,
+            4.199999999999999,
+            11.2,
+            4
+          ]
+        ],
+        "comparison": [
+          [
+            "rect",
+            0,
+            0,
+            73,
+            150,
+            0
+          ],
+          [
+            "rect",
+            175,
+            0,
+            65,
+            150,
+            0
+          ],
+          [
+            "rect",
+            73,
+            127,
+            102,
+            23,
+            3
+          ],
+          [
+            "circle",
+            122,
+            80,
+            2.8,
+            4
+          ],
+          [
+            "rect",
+            119.9,
+            82.8,
+            4.199999999999999,
+            11.2,
+            4
+          ]
+        ]
+      },
+      "titleJa": "都市風景",
+      "categoryId": "application",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-101",
+      "definition": "自然風景は、地平線・山並み・樹木など大きな形の重なりを設計する。",
+      "example": "広い空の下に明るい遠山と暗い近山を二層に重ねる。",
+      "contrast": "山の輪郭を細かく分解しすぎるとまとまりが弱まる。",
+      "aiInstruction": "上半分を空、遠山は灰、近山は黒の大きな輪郭で構成する。",
+      "comparisonPoint": "山の前後の明度差と輪郭の細かさを比較する。",
+      "diagram": {
+        "example": [
+          [
+            "poly",
+            "0,150 0,86 55,40 108,89 151,50 210,85 240,70 240,150",
+            3
+          ],
+          [
+            "poly",
+            "0,150 0,121 54,87 129,122 175,83 240,112 240,150",
+            0
+          ],
+          [
+            "rect",
+            18,
+            43,
+            7,
+            107,
+            1
+          ]
+        ],
+        "comparison": [
+          [
+            "poly",
+            "0,150 0,121 54,87 129,122 175,83 240,112 240,150",
+            0
+          ],
+          [
+            "rect",
+            18,
+            43,
+            7,
+            107,
+            1
+          ],
+          [
+            "line",
+            60,
+            90,
+            91,
+            61,
+            0,
+            2
+          ],
+          [
+            "line",
+            91,
+            61,
+            137,
+            119,
+            0,
+            2
+          ]
+        ]
+      },
+      "titleJa": "自然風景",
+      "categoryId": "application",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-102",
+      "definition": "室内と建築は、窓・扉・家具で人の位置と通路を示す構成である。",
+      "example": "手前の家具を左右に寄せ、奥の明るい扉へ視線を通す。",
+      "contrast": "通路を家具で塞ぐと奥行きの経路が読みにくい。",
+      "aiInstruction": "室内の左右に暗い家具、中央奥に明るい扉と旅人。",
+      "comparisonPoint": "同じ家具を通路の外と中央に置いて比べる。",
+      "diagram": {
+        "example": [
+          [
+            "rect",
+            101,
+            20,
+            40,
+            96,
+            3
+          ],
+          [
+            "rect",
+            0,
+            121,
+            240,
+            29,
+            2
+          ],
+          [
+            "circle",
+            121,
+            98,
+            3.2,
+            4
+          ],
+          [
+            "rect",
+            118.6,
+            101.2,
+            4.800000000000001,
+            12.8,
+            4
+          ],
+          [
+            "rect",
+            8,
+            91,
+            68,
+            36,
+            0
+          ],
+          [
+            "rect",
+            166,
+            91,
+            62,
+            36,
+            0
+          ]
+        ],
+        "comparison": [
+          [
+            "rect",
+            101,
+            20,
+            40,
+            96,
+            3
+          ],
+          [
+            "rect",
+            0,
+            121,
+            240,
+            29,
+            2
+          ],
+          [
+            "circle",
+            121,
+            98,
+            3.2,
+            4
+          ],
+          [
+            "rect",
+            118.6,
+            101.2,
+            4.800000000000001,
+            12.8,
+            4
+          ],
+          [
+            "rect",
+            8,
+            91,
+            68,
+            36,
+            0
+          ],
+          [
+            "rect",
+            106,
+            91,
+            62,
+            36,
+            0
+          ]
+        ]
+      },
+      "titleJa": "室内と建築",
+      "categoryId": "application",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-103",
+      "definition": "静物画とプロダクトの構図は、物の大きさ・重なり・余白を整理する。",
+      "example": "大きな瓶の手前に小さな器を少し重ねる。",
+      "contrast": "すべて横並びに置くと重なりによる前後感が減る。",
+      "aiInstruction": "左に大きな瓶、右手前に小さな器を重ね、背景を簡素にする。",
+      "comparisonPoint": "物の大きさを固定し重なりの有無だけを変える。",
+      "diagram": {
+        "example": [
+          [
+            "rect",
+            47,
+            27,
+            52,
+            107,
+            0
+          ],
+          [
+            "rect",
+            117,
+            95,
+            81,
+            36,
+            2
+          ],
+          [
+            "circle",
+            157,
+            95,
+            34,
+            2
+          ]
+        ],
+        "comparison": [
+          [
+            "rect",
+            47,
+            27,
+            52,
+            107,
+            0
+          ],
+          [
+            "rect",
+            151,
+            95,
+            81,
+            36,
+            2
+          ],
+          [
+            "circle",
+            191,
+            95,
+            34,
+            2
+          ]
+        ]
+      },
+      "titleJa": "静物画とプロダクト",
+      "categoryId": "application",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-104",
+      "definition": "映画ポスターの構図は、主役と題名の領域を整理して視覚階層をつくる。",
+      "example": "上部は大きな題名領域、下部に小さな人物を置く。",
+      "contrast": "中央の大きな人物が題名を覆うと競合しやすい。",
+      "aiInstruction": "上部四割をタイトル用余白、下部に孤独な人物のシルエット。",
+      "comparisonPoint": "文字領域と人物の重なりの有無を比べる。",
+      "diagram": {
+        "example": [
+          [
+            "rect",
+            67,
+            10,
+            106,
+            130,
+            3
+          ],
+          [
+            "rect",
+            76,
+            23,
+            88,
+            28,
+            2
+          ],
+          [
+            "circle",
+            120,
+            102,
+            4.4,
+            0
+          ],
+          [
+            "rect",
+            116.7,
+            106.4,
+            6.6000000000000005,
+            17.6,
+            0
+          ]
+        ],
+        "comparison": [
+          [
+            "rect",
+            67,
+            10,
+            106,
+            130,
+            3
+          ],
+          [
+            "circle",
+            120,
+            48,
+            12,
+            0
+          ],
+          [
+            "rect",
+            111,
+            60,
+            18,
+            48,
+            0
+          ],
+          [
+            "rect",
+            76,
+            23,
+            88,
+            28,
+            2
+          ]
+        ]
+      },
+      "titleJa": "映画ポスター",
+      "categoryId": "application",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-105",
+      "definition": "書籍表紙・アルバムアートは、小さい表示でも主題と文字が認識できるよう構成する。",
+      "example": "暗い正方形に赤い記号を一つだけ置く。",
+      "contrast": "細かな模様を増やすと小さな表示で主役が消える。",
+      "aiInstruction": "正方形の画面で大きな黒面と赤い一点を主役にする。",
+      "comparisonPoint": "同じ画面で細部の数を変えて縮小時に比べる。",
+      "diagram": {
+        "example": [
+          [
+            "rect",
+            55,
+            5,
+            130,
+            140,
+            0
+          ],
+          [
+            "circle",
+            120,
+            78,
+            12,
+            4
+          ]
+        ],
+        "comparison": [
+          [
+            "rect",
+            55,
+            5,
+            130,
+            140,
+            0
+          ],
+          [
+            "rect",
+            64,
+            22,
+            12,
+            12,
+            3
+          ],
+          [
+            "rect",
+            93,
+            22,
+            12,
+            12,
+            3
+          ],
+          [
+            "rect",
+            122,
+            22,
+            12,
+            12,
+            3
+          ],
+          [
+            "rect",
+            151,
+            22,
+            12,
+            12,
+            3
+          ],
+          [
+            "rect",
+            64,
+            54,
+            12,
+            12,
+            3
+          ],
+          [
+            "rect",
+            93,
+            54,
+            12,
+            12,
+            4
+          ],
+          [
+            "rect",
+            122,
+            54,
+            12,
+            12,
+            3
+          ],
+          [
+            "rect",
+            151,
+            54,
+            12,
+            12,
+            3
+          ],
+          [
+            "rect",
+            64,
+            86,
+            12,
+            12,
+            3
+          ],
+          [
+            "rect",
+            93,
+            86,
+            12,
+            12,
+            3
+          ],
+          [
+            "rect",
+            122,
+            86,
+            12,
+            12,
+            3
+          ],
+          [
+            "rect",
+            151,
+            86,
+            12,
+            12,
+            3
+          ]
+        ]
+      },
+      "titleJa": "書籍表紙・アルバムアート",
+      "categoryId": "application",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-106",
+      "definition": "Webのヒーロー画像は、被写体と見出しの重なりを避けるため空間を配分する。",
+      "example": "左に文字用の明るい空白、右に人物を置く。",
+      "contrast": "人物を中央へ置くとタイトルが顔に重なる場合がある。",
+      "aiInstruction": "横長画面の左四割を文字用、右六割を人物と建築に分ける。",
+      "comparisonPoint": "文字領域の確保と被写体の位置を比較する。",
+      "diagram": {
+        "example": [
+          [
+            "rect",
+            0,
+            20,
+            93,
+            16,
+            3
+          ],
+          [
+            "rect",
+            0,
+            46,
+            86,
+            11,
+            3
+          ],
+          [
+            "rect",
+            0,
+            65,
+            75,
+            11,
+            3
+          ],
+          [
+            "rect",
+            136,
+            0,
+            104,
+            150,
+            0
+          ],
+          [
+            "circle",
+            183,
+            69,
+            12,
+            4
+          ],
+          [
+            "rect",
+            174,
+            81,
+            18,
+            48,
+            4
+          ]
+        ],
+        "comparison": [
+          [
+            "rect",
+            0,
+            20,
+            93,
+            16,
+            3
+          ],
+          [
+            "rect",
+            0,
+            46,
+            86,
+            11,
+            3
+          ],
+          [
+            "rect",
+            0,
+            65,
+            75,
+            11,
+            3
+          ],
+          [
+            "rect",
+            70,
+            0,
+            106,
+            150,
+            0
+          ],
+          [
+            "circle",
+            115,
+            69,
+            12,
+            4
+          ],
+          [
+            "rect",
+            106,
+            81,
+            18,
+            48,
+            4
+          ]
+        ]
+      },
+      "titleJa": "Webのヒーロー画像",
+      "categoryId": "application",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-107",
+      "definition": "モバイル縦長画像は、縦方向の主役位置と端末でのトリミングを考える。",
+      "example": "縦長の中央下に小さな旅人を置き上を広く空ける。",
+      "contrast": "横長画像を中央で切り取ると人物が欠ける場合がある。",
+      "aiInstruction": "9対16相当の縦長画面に全身の旅人を収め、上下の余白を作る。",
+      "comparisonPoint": "再構図した縦版と単純な切り抜きを比べる。",
+      "diagram": {
+        "example": [
+          [
+            "rect",
+            76,
+            5,
+            88,
+            140,
+            2
+          ],
+          [
+            "rect",
+            81,
+            10,
+            78,
+            130,
+            3
+          ],
+          [
+            "circle",
+            119,
+            91,
+            6,
+            4
+          ],
+          [
+            "rect",
+            114.5,
+            97,
+            9,
+            24,
+            4
+          ]
+        ],
+        "comparison": [
+          [
+            "rect",
+            76,
+            5,
+            88,
+            140,
+            2
+          ],
+          [
+            "rect",
+            81,
+            10,
+            78,
+            130,
+            3
+          ],
+          [
+            "circle",
+            158,
+            91,
+            6,
+            4
+          ],
+          [
+            "rect",
+            153.5,
+            97,
+            9,
+            24,
+            4
+          ]
+        ]
+      },
+      "titleJa": "モバイル縦長画像",
+      "categoryId": "application",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-108",
+      "definition": "横長・パノラマ構図は、横への広がりと両端の要素を利用する配置である。",
+      "example": "長いホームの左から右奥の人物へ視線を運ぶ。",
+      "contrast": "中央だけに要素を集中させると横幅を活かしにくい。",
+      "aiInstruction": "横長のホームを画面いっぱいに描き、右奥に小さな人物を置く。",
+      "comparisonPoint": "同じ横長画面で線が横へ導く版と中央集中を比較する。",
+      "diagram": {
+        "example": [
+          [
+            "rect",
+            0,
+            15,
+            240,
+            120,
+            3
+          ],
+          [
+            "line",
+            0,
+            126,
+            227,
+            82,
+            0,
+            5
+          ],
+          [
+            "circle",
+            215,
+            77,
+            3.2,
+            4
+          ],
+          [
+            "rect",
+            212.6,
+            80.2,
+            4.800000000000001,
+            12.8,
+            4
+          ]
+        ],
+        "comparison": [
+          [
+            "rect",
+            0,
+            15,
+            240,
+            120,
+            3
+          ],
+          [
+            "rect",
+            75,
+            18,
+            90,
+            115,
+            0
+          ],
+          [
+            "circle",
+            120,
+            77,
+            3.2,
+            4
+          ],
+          [
+            "rect",
+            117.6,
+            80.2,
+            4.800000000000001,
+            12.8,
+            4
+          ]
+        ]
+      },
+      "titleJa": "横長・パノラマ構図",
+      "categoryId": "application",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
     },
     {
       "id": "C-109",
@@ -1769,7 +10840,8 @@
       ],
       "sourceIds": [],
       "reviewStatus": "draft_unreviewed",
-      "evidenceStatus": "not_checked"
+      "evidenceStatus": "not_checked",
+      "comparisonPoint": "主役だけ目立たせる配置と複数を強調する配置を比べる。"
     },
     {
       "id": "C-110",
@@ -1864,6 +10936,376 @@
       "comparisonPoint": "人物と建物の位置・大きさを固定し、建物の描法・色面だけを変えた対照。構図と画風を切り分ける。"
     },
     {
+      "id": "C-111",
+      "definition": "主役の位置指定は、相対位置を明確にして配置の再現性を高める指示方法である。",
+      "example": "人物の中心を横20％・縦75％に指定する。",
+      "contrast": "単に左とだけ指示すると大きな位置の揺れが生じる。",
+      "aiInstruction": "人物は左下、中心位置は横20％・縦75％。背景は固定する。",
+      "comparisonPoint": "相対位置を数値で指定する版と曖昧な指定を比べる。",
+      "diagram": {
+        "example": [
+          [
+            "line",
+            48,
+            0,
+            48,
+            150,
+            3,
+            1
+          ],
+          [
+            "line",
+            0,
+            112,
+            240,
+            112,
+            3,
+            1
+          ],
+          [
+            "circle",
+            48,
+            100,
+            4,
+            4
+          ],
+          [
+            "rect",
+            45,
+            104,
+            6,
+            16,
+            4
+          ]
+        ],
+        "comparison": [
+          [
+            "line",
+            48,
+            0,
+            48,
+            150,
+            3,
+            1
+          ],
+          [
+            "line",
+            0,
+            112,
+            240,
+            112,
+            3,
+            1
+          ],
+          [
+            "circle",
+            120,
+            75,
+            4,
+            4
+          ],
+          [
+            "rect",
+            117,
+            79,
+            6,
+            16,
+            4
+          ]
+        ]
+      },
+      "titleJa": "主役の位置指定",
+      "categoryId": "ai",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-112",
+      "definition": "被写体の大きさ指定は、画面に占める割合を伝え環境との尺度差を調整する。",
+      "example": "旅人の全身を画面の高さ20％程度に収める。",
+      "contrast": "大きさを指定しないと建築との比例関係が変わりやすい。",
+      "aiInstruction": "人物の身長は画面高さの約20％、全身を収める。",
+      "comparisonPoint": "背景を固定し人物の大きさだけを変えて比較する。",
+      "diagram": {
+        "example": [
+          [
+            "rect",
+            0,
+            119,
+            240,
+            31,
+            2
+          ],
+          [
+            "rect",
+            5,
+            24,
+            65,
+            95,
+            0
+          ],
+          [
+            "circle",
+            155,
+            88,
+            3,
+            4
+          ],
+          [
+            "rect",
+            152.75,
+            91,
+            4.5,
+            12,
+            4
+          ]
+        ],
+        "comparison": [
+          [
+            "rect",
+            0,
+            119,
+            240,
+            31,
+            2
+          ],
+          [
+            "rect",
+            5,
+            24,
+            65,
+            95,
+            0
+          ],
+          [
+            "circle",
+            155,
+            45,
+            12,
+            4
+          ],
+          [
+            "rect",
+            146,
+            57,
+            18,
+            48,
+            4
+          ]
+        ]
+      },
+      "titleJa": "被写体の大きさ指定",
+      "categoryId": "ai",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-113",
+      "definition": "カメラと視点の指定は、高さ・角度・距離を分けて矛盾なく伝える方法である。",
+      "example": "地面近くから少し上向きに遠くの旅人とビルを見る。",
+      "contrast": "俯瞰と見上げを同時指定すると意図が曖昧になる。",
+      "aiInstruction": "カメラは地面近く、少し上向き、全身が見える距離に配置する。",
+      "comparisonPoint": "複数の視点条件が整合しているか比較する。",
+      "diagram": {
+        "example": [
+          [
+            "circle",
+            23,
+            118,
+            9,
+            4
+          ],
+          [
+            "line",
+            36,
+            112,
+            136,
+            57,
+            0,
+            2
+          ],
+          [
+            "line",
+            136,
+            57,
+            130,
+            54,
+            0,
+            1
+          ],
+          [
+            "line",
+            136,
+            57,
+            130,
+            60,
+            0,
+            1
+          ],
+          [
+            "rect",
+            164,
+            16,
+            49,
+            121,
+            0
+          ]
+        ],
+        "comparison": [
+          [
+            "circle",
+            23,
+            118,
+            9,
+            4
+          ],
+          [
+            "line",
+            36,
+            112,
+            136,
+            57,
+            0,
+            2
+          ],
+          [
+            "line",
+            136,
+            57,
+            130,
+            54,
+            0,
+            1
+          ],
+          [
+            "line",
+            136,
+            57,
+            130,
+            60,
+            0,
+            1
+          ],
+          [
+            "line",
+            36,
+            112,
+            136,
+            147,
+            0,
+            2
+          ],
+          [
+            "line",
+            136,
+            147,
+            130,
+            144,
+            0,
+            1
+          ],
+          [
+            "line",
+            136,
+            147,
+            130,
+            150,
+            0,
+            1
+          ],
+          [
+            "rect",
+            164,
+            16,
+            49,
+            121,
+            0
+          ]
+        ]
+      },
+      "titleJa": "カメラと視点の指定",
+      "categoryId": "ai",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-114",
+      "definition": "明暗の配分指定は、黒面と明部の場所・量を文章化し焦点を確保する方法である。",
+      "example": "画面の大半を暗くして人物の背後だけ明るく抜く。",
+      "contrast": "ただ暗くと指定すると人物まで背景に埋もれやすい。",
+      "aiInstruction": "暗部を画面の七割程度、人物の背後には細い明るい帯を残す。",
+      "comparisonPoint": "黒い面積と焦点の明るさの割合を比較する。",
+      "diagram": {
+        "example": [
+          [
+            "rect",
+            0,
+            0,
+            240,
+            150,
+            0
+          ],
+          [
+            "poly",
+            "84,0 153,0 179,150 100,150",
+            3
+          ],
+          [
+            "circle",
+            121,
+            85,
+            5.2,
+            4
+          ],
+          [
+            "rect",
+            117.1,
+            90.2,
+            7.800000000000001,
+            20.8,
+            4
+          ]
+        ],
+        "comparison": [
+          [
+            "rect",
+            0,
+            0,
+            240,
+            150,
+            0
+          ],
+          [
+            "circle",
+            121,
+            85,
+            5.2,
+            1
+          ],
+          [
+            "rect",
+            117.1,
+            90.2,
+            7.800000000000001,
+            20.8,
+            1
+          ]
+        ]
+      },
+      "titleJa": "明暗の配分指定",
+      "categoryId": "ai",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
       "id": "C-115",
       "titleJa": "余白の用途指定",
       "categoryId": "ai",
@@ -1944,7 +11386,454 @@
       ],
       "sourceIds": [],
       "reviewStatus": "draft_unreviewed",
-      "evidenceStatus": "not_checked"
+      "evidenceStatus": "not_checked",
+      "comparisonPoint": "空白の目的を定めて残すか、埋めるかを比較する。"
+    },
+    {
+      "id": "C-116",
+      "definition": "描き込み量の制御は、焦点以外の細部を省いて大きな形の階層を守る方法である。",
+      "example": "人物の顔だけ少し線を残し、建築は大きな黒面で表す。",
+      "contrast": "建物の窓を細かく描くほど焦点が分散する場合がある。",
+      "aiInstruction": "背景の窓と模様を減らし、建築は三つの黒い塊にする。",
+      "comparisonPoint": "同じ構図で背景細部の数だけを変える。",
+      "diagram": {
+        "example": [
+          [
+            "rect",
+            0,
+            20,
+            74,
+            115,
+            0
+          ],
+          [
+            "rect",
+            163,
+            20,
+            77,
+            115,
+            0
+          ],
+          [
+            "circle",
+            120,
+            87,
+            6.8,
+            4
+          ],
+          [
+            "rect",
+            114.9,
+            93.8,
+            10.2,
+            27.2,
+            4
+          ]
+        ],
+        "comparison": [
+          [
+            "rect",
+            0,
+            20,
+            74,
+            115,
+            0
+          ],
+          [
+            "rect",
+            163,
+            20,
+            77,
+            115,
+            0
+          ],
+          [
+            "circle",
+            120,
+            87,
+            6.8,
+            4
+          ],
+          [
+            "rect",
+            114.9,
+            93.8,
+            10.2,
+            27.2,
+            4
+          ],
+          [
+            "rect",
+            5,
+            37,
+            10,
+            12,
+            3
+          ],
+          [
+            "rect",
+            24,
+            37,
+            10,
+            12,
+            3
+          ],
+          [
+            "rect",
+            43,
+            37,
+            10,
+            12,
+            3
+          ],
+          [
+            "rect",
+            62,
+            37,
+            10,
+            12,
+            3
+          ],
+          [
+            "rect",
+            5,
+            61,
+            10,
+            12,
+            3
+          ],
+          [
+            "rect",
+            24,
+            61,
+            10,
+            12,
+            3
+          ],
+          [
+            "rect",
+            43,
+            61,
+            10,
+            12,
+            3
+          ],
+          [
+            "rect",
+            62,
+            61,
+            10,
+            12,
+            3
+          ],
+          [
+            "rect",
+            169,
+            37,
+            10,
+            12,
+            3
+          ],
+          [
+            "rect",
+            188,
+            37,
+            10,
+            12,
+            3
+          ],
+          [
+            "rect",
+            207,
+            37,
+            10,
+            12,
+            3
+          ],
+          [
+            "rect",
+            226,
+            37,
+            10,
+            12,
+            3
+          ],
+          [
+            "rect",
+            169,
+            61,
+            10,
+            12,
+            3
+          ],
+          [
+            "rect",
+            188,
+            61,
+            10,
+            12,
+            3
+          ],
+          [
+            "rect",
+            207,
+            61,
+            10,
+            12,
+            3
+          ],
+          [
+            "rect",
+            226,
+            61,
+            10,
+            12,
+            3
+          ]
+        ]
+      },
+      "titleJa": "描き込み量の制御",
+      "categoryId": "ai",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-117",
+      "definition": "構図の固定比較は、題材・色・画風を変えず配置だけを動かす比較方法である。",
+      "example": "同じ旅人を左三分の一と中央に置いて比べる。",
+      "contrast": "色や画風まで変えると構図差だけを評価しにくい。",
+      "aiInstruction": "題材・色・画風を固定し、人物の横位置だけ二案で変える。",
+      "comparisonPoint": "被写体の形や色が固定されているかを点検する。",
+      "diagram": {
+        "example": [
+          [
+            "rect",
+            15,
+            25,
+            68,
+            115,
+            0
+          ],
+          [
+            "rect",
+            157,
+            25,
+            68,
+            115,
+            2
+          ],
+          [
+            "circle",
+            58,
+            98,
+            5.2,
+            4
+          ],
+          [
+            "rect",
+            54.1,
+            103.2,
+            7.800000000000001,
+            20.8,
+            4
+          ]
+        ],
+        "comparison": [
+          [
+            "rect",
+            15,
+            25,
+            68,
+            115,
+            0
+          ],
+          [
+            "rect",
+            157,
+            25,
+            68,
+            115,
+            2
+          ],
+          [
+            "circle",
+            120,
+            98,
+            5.2,
+            4
+          ],
+          [
+            "rect",
+            116.1,
+            103.2,
+            7.800000000000001,
+            20.8,
+            4
+          ]
+        ]
+      },
+      "titleJa": "構図の固定比較",
+      "categoryId": "ai",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
+    },
+    {
+      "id": "C-118",
+      "definition": "失敗例と修正指示は、問題となる配置を特定し実際に変える条件へ言い換える。",
+      "example": "人物が背景に埋もれた絵から、背後の窓を減らす。",
+      "contrast": "もっと良くとだけ指示しても変更対象が不明確になる。",
+      "aiInstruction": "人物は維持し背景の窓を半分に減らして明暗差を上げる。",
+      "comparisonPoint": "変更した要素と改善の対象を明記して比較する。",
+      "diagram": {
+        "example": [
+          [
+            "rect",
+            10,
+            20,
+            10,
+            12,
+            0
+          ],
+          [
+            "rect",
+            29,
+            20,
+            10,
+            12,
+            0
+          ],
+          [
+            "rect",
+            48,
+            20,
+            10,
+            12,
+            0
+          ],
+          [
+            "rect",
+            67,
+            20,
+            10,
+            12,
+            0
+          ],
+          [
+            "rect",
+            10,
+            44,
+            10,
+            12,
+            0
+          ],
+          [
+            "rect",
+            29,
+            44,
+            10,
+            12,
+            0
+          ],
+          [
+            "rect",
+            48,
+            44,
+            10,
+            12,
+            0
+          ],
+          [
+            "rect",
+            67,
+            44,
+            10,
+            12,
+            0
+          ],
+          [
+            "rect",
+            10,
+            68,
+            10,
+            12,
+            0
+          ],
+          [
+            "rect",
+            29,
+            68,
+            10,
+            12,
+            0
+          ],
+          [
+            "rect",
+            48,
+            68,
+            10,
+            12,
+            0
+          ],
+          [
+            "rect",
+            67,
+            68,
+            10,
+            12,
+            0
+          ],
+          [
+            "circle",
+            158,
+            94,
+            8.4,
+            4
+          ],
+          [
+            "rect",
+            151.7,
+            102.4,
+            12.600000000000001,
+            33.6,
+            4
+          ]
+        ],
+        "comparison": [
+          [
+            "rect",
+            10,
+            20,
+            67,
+            120,
+            3
+          ],
+          [
+            "circle",
+            158,
+            94,
+            8.4,
+            4
+          ],
+          [
+            "rect",
+            151.7,
+            102.4,
+            12.600000000000001,
+            33.6,
+            4
+          ]
+        ]
+      },
+      "titleJa": "失敗例と修正指示",
+      "categoryId": "ai",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
     },
     {
       "id": "C-119",
@@ -2036,7 +11925,58 @@
       "relatedLegacyIds": [],
       "sourceIds": [],
       "reviewStatus": "draft_unreviewed",
-      "evidenceStatus": "not_checked"
+      "evidenceStatus": "not_checked",
+      "comparisonPoint": "縮小した際の大きな形と細部の残り方を比べる。"
+    },
+    {
+      "id": "C-120",
+      "definition": "参照画像と権利の管理は、構図の一般的原理と固有作品の表現を分けて扱う。",
+      "example": "既存の参照作品から余白や視線誘導だけを抽出し別の題材へ適用する。",
+      "contrast": "固有の人物と画面全体をそのまま写すと近似性が高まる。",
+      "aiInstruction": "一般的な構図原理を抽出し、別の主題・色・レイアウトで新たな絵を作る。",
+      "comparisonPoint": "原理の応用と固有作品の再現を区別する。",
+      "diagram": {
+        "example": [
+          [
+            "rect",
+            23,
+            25,
+            60,
+            92,
+            0
+          ],
+          [
+            "circle",
+            181,
+            111,
+            15,
+            4
+          ]
+        ],
+        "comparison": [
+          [
+            "rect",
+            80,
+            25,
+            60,
+            92,
+            0
+          ],
+          [
+            "circle",
+            181,
+            111,
+            15,
+            4
+          ]
+        ]
+      },
+      "titleJa": "参照画像と権利の管理",
+      "categoryId": "ai",
+      "reviewStatus": "draft_unreviewed",
+      "evidenceStatus": "not_checked",
+      "sourceIds": [],
+      "relatedLegacyIds": []
     }
   ]
 }

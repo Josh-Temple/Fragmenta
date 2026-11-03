@@ -75,6 +75,9 @@ const routes = [
   ['/knowledge', 'デザインを、つながりから探す'],
   ['/composition', '構図を比較して学ぶ'],
   ['/composition?id=C-062', '黒い面の連結'],
+  ['/composition?id=C-120', '参照画像と権利の管理'],
+  ['/composition?view=atlas', '構図の一覧'],
+  ['/composition?view=atlas&category=sequence', '12件'],
   ['/composition?q=__fragmenta_no_results_2026__', '該当する項目がありません'],
   ['/knowledge?category=typography', '12件該当'],
   ['/knowledge?q=__fragmenta_no_results_2026__', '一致する企画案はありません'],
@@ -253,7 +256,7 @@ try {
     return response.result?.value;
   }, 'composition comparison diagrams');
   const compositionInteraction = await page.send('Runtime.evaluate', {
-    expression: "(async () => {\n      const selector = document.querySelector('#composition-item');\n      if (!selector || selector.options.length !== 24) throw new Error('Composition selector missing 24 items');\n      selector.value = 'C-001';\n      selector.dispatchEvent(new Event('change', { bubbles: true }));\n      await new Promise(resolve => setTimeout(resolve, 150));\n      const selected = document.querySelector('#composition-title')?.textContent;\n      const button = [...document.querySelectorAll('button')].find(b => b.textContent.trim() === '指示文をコピー');\n      if (!button) throw new Error('Composition copy button missing');\n      let copied = '';\n      Object.defineProperty(navigator, 'clipboard', { configurable: true,\n        value: { writeText: async text => { copied = text; } } });\n      button.click();\n      await new Promise(resolve => setTimeout(resolve, 150));\n      const success = [...document.querySelectorAll('[role=status]')].map(x => x.textContent).join(' ');\n      Object.defineProperty(navigator, 'clipboard', { configurable: true,\n        value: { writeText: async () => { throw new Error('Denied'); } } });\n      button.click();\n      await new Promise(resolve => setTimeout(resolve, 150));\n      const denied = [...document.querySelectorAll('[role=status]')].map(x => x.textContent).join(' ');\n      return { selected, copied, success, denied, svgCount: document.querySelectorAll('svg[role=img]').length };\n    })()",
+    expression: "(async () => {\n      const selector = document.querySelector('#composition-item');\n      if (!selector || selector.options.length !== 120) throw new Error('Composition selector missing 120 items');\n      selector.value = 'C-001';\n      selector.dispatchEvent(new Event('change', { bubbles: true }));\n      await new Promise(resolve => setTimeout(resolve, 150));\n      const selected = document.querySelector('#composition-title')?.textContent;\n      const button = [...document.querySelectorAll('button')].find(b => b.textContent.trim() === '指示文をコピー');\n      if (!button) throw new Error('Composition copy button missing');\n      let copied = '';\n      Object.defineProperty(navigator, 'clipboard', { configurable: true,\n        value: { writeText: async text => { copied = text; } } });\n      button.click();\n      await new Promise(resolve => setTimeout(resolve, 150));\n      const success = [...document.querySelectorAll('[role=status]')].map(x => x.textContent).join(' ');\n      Object.defineProperty(navigator, 'clipboard', { configurable: true,\n        value: { writeText: async () => { throw new Error('Denied'); } } });\n      button.click();\n      await new Promise(resolve => setTimeout(resolve, 150));\n      const denied = [...document.querySelectorAll('[role=status]')].map(x => x.textContent).join(' ');\n      return { selected, copied, success, denied, svgCount: document.querySelectorAll('svg[role=img]').length };\n    })()",
     awaitPromise: true,
     returnByValue: true,
   });
@@ -275,6 +278,22 @@ try {
     return response.result?.value;
   }, 'composition style-only comparison notes');
   console.log('PASS composition labels and compare-what-changed notes');
+  await page.send('Runtime.evaluate', { expression: "location.hash = '#/composition?view=atlas'" });
+  await poll(async () => {
+    const response = await page.send('Runtime.evaluate', {
+      expression: "document.querySelectorAll('a[data-composition-card]').length === 24 && document.querySelector('#composition-atlas-title')?.textContent === '構図の一覧'",
+      returnByValue: true,
+    });
+    return response.result?.value;
+  }, 'composition atlas initial page');
+  const atlasResponse = await page.send('Runtime.evaluate', {
+    expression: "(async()=>{const b=[...document.querySelectorAll('button')].find(x=>x.textContent.includes('さらに表示'));if(!b)throw new Error('missing pagination');b.click();await new Promise(r=>setTimeout(r,150));return {cards:document.querySelectorAll('a[data-composition-card]').length,diagrams:document.querySelectorAll('svg[role=img]').length}})()",
+    awaitPromise: true,
+    returnByValue: true,
+  });
+  if(atlasResponse.result?.value?.cards!==48 || atlasResponse.result?.value?.diagrams!==48)
+    throw new Error('Composition atlas pagination failed: '+JSON.stringify(atlasResponse.result?.value));
+  console.log('PASS composition atlas 24-to-48 pagination');
 
   // The knowledge detail heading should receive focus after client-side navigation.
   for (const [route, heading] of [

@@ -6,18 +6,25 @@ const root = path.resolve(__dirname, '..');
 const read = p => fs.readFileSync(path.join(root, p), 'utf8');
 const source = JSON.parse(read('data/composition-guides.json'));
 function assert(ok, msg) { if (!ok) throw Error('Composition: ' + msg); }
-const expected = [1,2,4,5,10,14,15,16,18,19,25,33,41,48,61,62,63,67,73,75,109,110,115,119].map(n => 'C-'+String(n).padStart(3,'0'));
+const expected = Array.from({length:120},(_,i) => 'C-'+String(i+1).padStart(3,'0'));
 assert(source.schemaVersion === 1 && source.status === 'draft_unreviewed', 'metadata');
-assert(source.guides.length === 24, 'expected 24 priority entries');
-assert(new Set(source.guides.map(g=>g.id)).size===24, 'duplicate IDs');
+assert(source.guides.length === 120, 'expected 120 composition entries');
+assert(new Set(source.guides.map(g=>g.id)).size===120, 'duplicate IDs');
 assert(expected.every(id=>source.guides.some(g=>g.id===id)), 'priority inventory');
+assert(source.categories.length===10,'expected 10 categories');
+assert(source.kind==='composition-guides','unexpected catalog kind');
 const cats = new Set(source.categories.map(g=>g.id));
+assert(cats.size===10,'duplicate categories');
+for(const cat of source.categories) assert(source.guides.filter(g=>g.categoryId===cat.id).length===12,
+  'expected 12 entries in category: '+cat.id);
 for(const guide of source.guides) {
  assert(cats.has(guide.categoryId), 'unknown category: '+guide.id);
  assert(typeof guide.titleJa === 'string' && guide.titleJa.length >= 3, 'missing title: '+guide.id);
  assert([guide.definition,guide.example,guide.contrast,guide.aiInstruction]
    .every(s=>typeof s==='string'&&s.length>=15), 'incomplete editorial guidance: '+guide.id);
  assert(guide.reviewStatus==='draft_unreviewed'&&guide.evidenceStatus==='not_checked','draft status: '+guide.id);
+ assert(typeof guide.comparisonPoint==='string'&&guide.comparisonPoint.length>=15,'missing comparison point: '+guide.id);
+ assert(JSON.stringify(guide.diagram.example)!==JSON.stringify(guide.diagram.comparison),'identical diagrams: '+guide.id);
  for(const v of ['example','comparison']) {
   const diagram=guide.diagram[v];
   assert(Array.isArray(diagram)&&diagram.length>0,'empty '+v+' diagram: '+guide.id);
@@ -35,10 +42,10 @@ assert(app.includes('path="/composition"')&&listing.includes('to="/composition"'
 assert(read('pages/Composition.tsx').includes('CompositionDiagram'),'visual comparison missing');
 assert(read('scripts/export-knowledge.cjs').includes('composition-guides.json'),'public export missing');
 
-const revised = ['C-014','C-015','C-048','C-061','C-062','C-063','C-073','C-075','C-110'];
+const revised = expected;
 for (const id of revised) {
   const guide = source.guides.find(item => item.id === id);
-  assert(guide?.comparisonPoint?.length >= 22, 'missing comparison explanation: ' + id);
+  assert(guide?.comparisonPoint?.length >= 15, 'missing comparison explanation: ' + id);
   assert(JSON.stringify(guide.diagram.example) !== JSON.stringify(guide.diagram.comparison),
     'comparison must differ: ' + id);
 }
@@ -75,4 +82,10 @@ for (const guide of source.guides) {
   }
 }
 assert(read('pages/Composition.tsx').includes('guide.comparisonPoint'), 'comparison point not rendered');
-console.log('PASS: 24 draft guides, geometry bounds, 9 explained pairs, route and export hook');
+assert(read('pages/Composition.tsx').includes('composition-atlas-title'),'atlas view missing');
+for(const [id,ref] of Object.entries(source.sources)) {
+  const url = new URL(ref.url);
+  assert(url.protocol==='https:' && !url.username && !url.password &&
+    url.hostname!=='localhost' && !url.hostname.endsWith('.localhost'), 'unsafe source: '+id);
+}
+console.log('PASS: 120 draft guides / 10 categories, 240 diagrams, geometry bounds, comparison points, route and export hook');
