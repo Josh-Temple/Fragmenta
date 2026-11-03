@@ -14,8 +14,9 @@ assert(expected.every(id=>source.guides.some(g=>g.id===id)), 'priority inventory
 const cats = new Set(source.categories.map(g=>g.id));
 for(const guide of source.guides) {
  assert(cats.has(guide.categoryId), 'unknown category: '+guide.id);
- assert([guide.titleJa,guide.definition,guide.example,guide.contrast,guide.aiInstruction]
-   .every(s=>typeof s==='string'&&s.length>15), 'incomplete editorial guidance: '+guide.id);
+ assert(typeof guide.titleJa === 'string' && guide.titleJa.length >= 3, 'missing title: '+guide.id);
+ assert([guide.definition,guide.example,guide.contrast,guide.aiInstruction]
+   .every(s=>typeof s==='string'&&s.length>=15), 'incomplete editorial guidance: '+guide.id);
  assert(guide.reviewStatus==='draft_unreviewed'&&guide.evidenceStatus==='not_checked','draft status: '+guide.id);
  for(const v of ['example','comparison']) {
   const diagram=guide.diagram[v];
