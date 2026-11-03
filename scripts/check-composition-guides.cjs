@@ -97,6 +97,19 @@ for(const [id,ref] of Object.entries(source.sources)) {
     url.hostname!=='localhost' && !url.hostname.endsWith('.localhost'), 'unsafe source: '+id);
 }
 
+// Regression: C-037 is a one-point example versus nonconvergent counterexample.
+// A shared shifted endpoint in the comparison would incorrectly depict a second
+// valid one-point perspective while the description says the endpoints diverge.
+const onePoint = source.guides.find(g => g.id === 'C-037');
+const lineEndpoints = v => onePoint.diagram[v].filter(sh => sh[0] === 'line')
+  .map(sh => sh[3] + ',' + sh[4]);
+assert(lineEndpoints('example').length === 4 &&
+  new Set(lineEndpoints('example')).size === 1,
+  'C-037 example must converge to one vanishing point');
+assert(lineEndpoints('comparison').length === 4 &&
+  new Set(lineEndpoints('comparison')).size > 1,
+  'C-037 comparison must not converge to another single point');
+
 const highRisk = ['C-012','C-036','C-039','C-060','C-090','C-092','C-120'];
 for(const id of highRisk) {
  const guide=source.guides.find(g=>g.id===id);
