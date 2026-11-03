@@ -287,7 +287,7 @@ try {
   await page.send('Runtime.evaluate', { expression: "location.hash = '#/composition?view=atlas'" });
   await poll(async () => {
     const response = await page.send('Runtime.evaluate', {
-      expression: "document.querySelectorAll('a[data-composition-card]').length === 24 && document.querySelector('#composition-atlas-title')?.textContent === '構図の一覧'",
+      expression: "document.querySelectorAll('a[data-composition-card]').length === 24 && document.querySelectorAll('section[aria-labelledby=composition-atlas-title] svg[role=img]').length === 48 && document.querySelector('#composition-atlas-title')?.textContent === '構図の一覧'",
       returnByValue: true,
     });
     return response.result?.value;
@@ -297,9 +297,9 @@ try {
     awaitPromise: true,
     returnByValue: true,
   });
-  if(atlasResponse.result?.value?.cards!==48 || atlasResponse.result?.value?.diagrams!==48)
+  if(atlasResponse.result?.value?.cards!==48 || atlasResponse.result?.value?.diagrams!==96)
     throw new Error('Composition atlas pagination failed: '+JSON.stringify(atlasResponse.result?.value));
-  console.log('PASS composition atlas 24-to-48 pagination');
+  console.log('PASS composition atlas 24-to-48 pagination and side-by-side comparisons');
 
   // Semantics and warning language must be visibly present in rendered SVG/HTML.
   for (const [id, expected, minLabels] of [
@@ -320,7 +320,12 @@ try {
       const observed=JSON.parse(result.result?.value||'{}');
       return observed.text.includes(expected) && observed.labels >= minLabels;
     }, 'composition high-risk review '+id);
-    console.log('PASS composition high-risk labels/limitation '+id);
+    const focus = await page.send('Runtime.evaluate', {
+      expression: "document.activeElement?.id==='composition-title'",
+      returnByValue: true,
+    });
+    if(!focus.result?.value) throw new Error('Detail heading did not receive focus: '+id);
+    console.log('PASS composition high-risk labels/limitation and heading focus '+id);
   }
 
   // The knowledge detail heading should receive focus after client-side navigation.

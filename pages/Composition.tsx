@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import CompositionDiagram from '../components/CompositionDiagram';
 import { compositionCatalog, compositionGuides, compositionCategories,
@@ -9,6 +9,8 @@ const Composition: React.FC = () => {
   const [input, setInput] = useState(params.get('q') ?? '');
   const [copyStatus, setCopyStatus] = useState('');
   const [visibleCount, setVisibleCount] = useState(24);
+  const detailHeadingRef = useRef<HTMLHeadingElement>(null);
+  const previousDetailIdRef = useRef<string | null>(null);
   const query = params.get('q') ?? '';
   const atlas = params.get('view') === 'atlas';
   const category = compositionCategories.some(x => x.id === params.get('category'))
@@ -20,6 +22,12 @@ const Composition: React.FC = () => {
   useEffect(() => setInput(query), [query]);
   useEffect(() => setVisibleCount(24), [query, category]);
   useEffect(() => setCopyStatus(''), [guide.id]);
+  useEffect(() => {
+    if (!atlas && previousDetailIdRef.current !== guide.id) {
+      previousDetailIdRef.current = guide.id;
+      detailHeadingRef.current?.focus();
+    }
+  }, [atlas, guide.id]);
   const setParam = (key: string, value: string) => {
     const next = new URLSearchParams(params);
     if (!value || value === 'all') next.delete(key);
@@ -72,7 +80,8 @@ const Composition: React.FC = () => {
     </section>
     {!atlas ? <article className="py-6" aria-labelledby="composition-title" key={guide.id}>
       <p className="text-xs font-mono text-primary">{guide.id} ・ {compositionCategoryLabel(guide.categoryId)}</p>
-      <h2 id="composition-title" className="mt-2 text-2xl font-bold">{guide.titleJa}</h2>
+      <h2 id="composition-title" ref={detailHeadingRef} tabIndex={-1}
+        className="mt-2 text-2xl font-bold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">{guide.titleJa}</h2>
       <p className="mt-3 text-sm leading-relaxed">{guide.definition}</p>
       <section aria-labelledby="composition-visual" className="mt-6">
         <h3 id="composition-visual" className="text-lg font-bold">構図の模式図</h3>
@@ -112,12 +121,23 @@ const Composition: React.FC = () => {
     </article> : <section className="py-6" aria-labelledby="composition-atlas-title">
       <h2 id="composition-atlas-title" className="text-xl font-bold">構図の一覧</h2>
       <p className="mt-2 text-sm text-ink-muted">図を見ながら選択できます。図解と説明はいずれも未レビューの編集案です。</p>
-      {filtered.length > 0 ? <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
+      {filtered.length > 0 ? <div className="mt-5 grid grid-cols-1 gap-4 lg:grid-cols-2">
         {filtered.slice(0, visibleCount).map(item => <article key={item.id} className="min-w-0 rounded-xl border border-ink-border bg-surface p-4">
           <p className="text-xs text-primary">{item.id} ・ {compositionCategoryLabel(item.categoryId)}</p>
           <h3 className="mt-2 text-base font-bold">{item.titleJa}</h3>
-          <div className="mt-3"><CompositionDiagram guide={item} variant="example" /></div>
+          <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <div className="min-w-0">
+              <p className="mb-2 text-xs font-semibold">{item.id === 'C-110' ? '画風A' : '配置例'}</p>
+              <CompositionDiagram guide={item} variant="example" />
+            </div>
+            <div className="min-w-0">
+              <p className="mb-2 text-xs font-semibold">{item.id === 'C-110' ? '画風B' : '対照例'}</p>
+              <CompositionDiagram guide={item} variant="comparison" />
+            </div>
+          </div>
           <p className="mt-3 text-sm leading-relaxed text-ink-muted">{item.definition}</p>
+          <p className="mt-2 text-sm leading-relaxed"><strong>見比べるポイント：</strong>{item.comparisonPoint}</p>
+          {item.diagramNote && <p className="mt-2 text-xs leading-relaxed text-ink-muted"><strong>模式図の限界：</strong>{item.diagramNote}</p>}
           <Link data-composition-card="true" to={'/composition?id=' + item.id}
             className="mt-3 inline-flex min-h-11 items-center text-sm font-semibold underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2">比較図とAI指示例を見る</Link>
         </article>)}
