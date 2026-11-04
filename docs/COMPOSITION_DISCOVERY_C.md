@@ -29,7 +29,7 @@
 | --- | --- | --- |
 | GitHub正本取得・C差分保存 | 実施 | C作業ブランチのコミットとファイルの読戻しで確認 |
 | 50候補・20関連の人手読み比べ | 実施 | 定義・比較点との編集確認。個別原典による立証ではない |
-| 120件AI出力の全属性検査 | テスト強化 | 検査コードを追加。最終統合HEADでのコマンド実行はEの担当 |
+| 120件AI出力の全属性検査 | メモリ上での検証PASS／実CLIはNOT_RUN | 元JSONとsidecarから生成規約を再構成して検査関数を実行。正例PASS、関連種別・画風分離・対照例の意図的改変3件をFAIL検出。npm実行は未実施 |
 | 120件一覧・240 SVGのDOM検査 | テスト強化 | ブラウザsmokeへ追加。画像の全件視認ではない |
 | 360/390/768/1280px・HashRouter・フォーカス | テスト強化 | 自動ブラウザコードへ追加。今回このセッションで実ブラウザは未実行 |
 | 200%ブラウザズーム・実Clipboard readback | NOT_RUN | スタブのコピー成功とは区別。E/Dで実ブラウザ確認が必要 |
@@ -37,6 +37,8 @@
 | 240図実目視・出典の原典確認・専門監修 | Cの対象外／未完 | B・A・Dの証拠と混同しない |
 
 `public/knowledge/composition-guides.json` はGit追跡ファイルではなく、`npm run catalog:export` で生成される。Cでは生成済みファイルをGitに別途追加しない。最終HEADの検査順序は `npm run catalog:export` → `npm run composition:verify` → `npm run build` → ブラウザsmoke。
+
+ブラウザsmoke本体と検査スクリプトは、GitHub読戻し後にJavaScriptとして静的構文解析を行い、どちらもPASS。Chromiumを実行した証拠ではない。
 
 ## Eへの引継ぎ
 
