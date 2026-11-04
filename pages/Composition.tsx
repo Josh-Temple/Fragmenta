@@ -15,15 +15,18 @@ const Composition: React.FC = () => {
   const previousDetailIdRef = useRef<string | null>(null);
   const query = params.get('q') ?? '';
   const atlas = params.get('view') === 'atlas';
+  const previousAtlasRef = useRef(atlas);
   const category = compositionCategories.some(x => x.id === params.get('category'))
     ? params.get('category') ?? 'all' : 'all';
   const purpose = getCompositionPurpose(params.get('purpose') ?? '');
   const chosen = params.get('id') ?? '';
+  const missingGuide = Boolean(chosen && !compositionById.has(chosen));
   const guide = compositionById.get(chosen) ?? compositionGuides[0];
   const purposeIds = useMemo(() => new Set(purpose?.choices.map(c => c.guideId) ?? []), [purpose]);
   const filtered = useMemo(() => compositionGuides.filter(item =>
     (category === 'all' || item.categoryId === category) && matchesComposition(item, query) &&
     (!purpose || purposeIds.has(item.id))), [category, query, purpose, purposeIds]);
+  const preferredGuideId = filtered.some(item => item.id === guide.id) ? guide.id : (filtered[0]?.id ?? guide.id);
   const discovery = getCompositionDiscovery(guide);
   const selectedChoice = purpose && getCompositionChoice(purpose.id, guide.id);
   const detailHref = (id: string) => {
@@ -41,10 +44,11 @@ const Composition: React.FC = () => {
   useEffect(() => setVisibleCount(24), [query, category, purpose?.id]);
   useEffect(() => setCopyStatus(''), [guide.id]);
   useEffect(() => {
-    if (!atlas && previousDetailIdRef.current !== guide.id) {
+    if (!atlas && (previousDetailIdRef.current !== guide.id || previousAtlasRef.current)) {
       previousDetailIdRef.current = guide.id;
       detailHeadingRef.current?.focus();
     }
+    previousAtlasRef.current = atlas;
   }, [atlas, guide.id]);
   const setParam = (key: string, value: string) => {
     const next = new URLSearchParams(params);
@@ -99,9 +103,10 @@ const Composition: React.FC = () => {
       <nav aria-label="表示方法" className="mt-4 flex flex-wrap gap-3 text-sm">
         <Link to={atlasHref()}
           aria-current={atlas ? 'page' : undefined} className={'inline-flex min-h-11 items-center rounded-lg border px-4 font-semibold ' + (atlas ? 'border-ink bg-ink text-paper' : 'border-ink-border')}>図解一覧で見る</Link>
-        <Link to={detailHref(guide.id)} aria-current={!atlas ? 'page' : undefined}
+        <Link to={detailHref(preferredGuideId)} aria-current={!atlas ? 'page' : undefined}
           className={'inline-flex min-h-11 items-center rounded-lg border px-4 font-semibold ' + (!atlas ? 'border-ink bg-ink text-paper' : 'border-ink-border')}>選んで詳しく見る</Link>
       </nav>
+      {missingGuide && <p role="alert" className="mt-3 text-sm text-ink-muted">指定された構図IDは見つかりません。先頭の項目を仮表示しています。上の検索・一覧から構図を選び直してください。</p>}
       {filtered.length > 0 && !filtered.some(item => item.id === guide.id) &&
         <p className="mt-2 text-sm text-ink-muted">現在表示中の項目は検索結果の対象外です。結果一覧から別の項目を選んでください。</p>}
       <label htmlFor="composition-item" className="mt-3 block text-sm font-semibold">表示する構図を選択</label>
@@ -129,12 +134,12 @@ const Composition: React.FC = () => {
       {selectedChoice && <section className="mt-4 rounded-lg border border-ink-border bg-surface p-4">
         <h3 id="composition-purpose-reason" className="font-bold">「{purpose?.titleJa}」から選んだ理由</h3>
         <p className="mt-2 text-sm">{selectedChoice.reasonJa}</p>
-        <p className="mt-2 text-sm"><strong>注意・不向きな条件：</strong>{selectedChoice.cautionJa}</p>
+        <p className="mt-2 text-sm"><strong>注意点・適用条件：</strong>{selectedChoice.cautionJa}</p>
       </section>}
       <section aria-labelledby="composition-discovery-details" className="mt-5">
         <h3 id="composition-discovery-details" className="font-bold">用途と制約（編集下書き）</h3>
         <p className="mt-2 text-sm"><strong>用途候補：</strong>{discovery.useCases.length ? discovery.useCases.join('／') : '個別の用途は未校訂です。'}</p>
-        <p className="mt-2 text-sm"><strong>注意・不向きな条件：</strong>{discovery.limitations.length ? discovery.limitations.join(' ') : '個別の適用制約は未校訂です。対照例は誤りや不向きの証拠ではありません。'}</p>
+        <p className="mt-2 text-sm"><strong>注意点・適用条件：</strong>{discovery.limitations.length ? discovery.limitations.join(' ') : '個別の適用制約は未校訂です。対照例は誤りや不向きの証拠ではありません。'}</p>
         <p className="mt-2 text-sm"><strong>比較する構図条件：</strong>{discovery.priorityConditions[0]}</p>
         <p className="mt-2 text-xs text-ink-muted">媒体候補：{discovery.media.join(' / ')} ・ 被写体候補：{discovery.subjects.join(' / ')}（分野単位の未検証タグ）</p>
       </section>
@@ -152,8 +157,8 @@ const Composition: React.FC = () => {
       </section>
       <section aria-labelledby="composition-ai" className="mt-7 border-t border-ink-border pt-5">
         <h3 id="composition-ai" className="text-lg font-bold">AIへの指示例</h3>
-        <p className="mt-3 rounded-lg bg-surface p-4 text-sm leading-relaxed">{guide.aiInstruction}</p>
-        <button type="button" onClick={async () => { try {
+        <p data-composition-ai-text="true" className="mt-3 rounded-lg bg-surface p-4 text-sm leading-relaxed">{guide.aiInstruction}</p>
+        <button data-composition-ai-copy="true" type="button" onClick={async () => { try {
           if (!navigator.clipboard?.writeText) throw new Error('Clipboard unavailable');
           await navigator.clipboard.writeText(guide.aiInstruction);
           setCopyStatus('指示文をコピーしました。');
@@ -201,7 +206,7 @@ const Composition: React.FC = () => {
           <p className="mt-3 text-sm leading-relaxed text-ink-muted">{item.definition}</p>
           {purpose && getCompositionChoice(purpose.id, item.id) && <div className="mt-3 border-t border-ink-border pt-3">
             <p className="text-sm"><strong>選択理由：</strong>{getCompositionChoice(purpose.id, item.id)?.reasonJa}</p>
-            <p className="mt-2 text-sm"><strong>注意・不向きな条件：</strong>{getCompositionChoice(purpose.id, item.id)?.cautionJa}</p>
+            <p className="mt-2 text-sm"><strong>注意点・適用条件：</strong>{getCompositionChoice(purpose.id, item.id)?.cautionJa}</p>
           </div>}
           <p className="mt-2 text-sm leading-relaxed"><strong>見比べるポイント：</strong>{item.comparisonPoint}</p>
           {item.diagramNote && <p className="mt-2 text-xs leading-relaxed text-ink-muted"><strong>模式図の限界：</strong>{item.diagramNote}</p>}

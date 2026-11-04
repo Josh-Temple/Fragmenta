@@ -82,3 +82,17 @@
 - **公開統制**：`HOLD_NO_MERGE / NO_DEPLOY`。PR #49をDraftに保ち、ユーザー確認と次Waveの明示許可までマージ・公開しない。
 
 E修正後のHEADとテスト結果はPR #49コメントで確定させる。
+
+
+## 2026-11-04 第2Wave E統合（A/B/C成果とD暫定指摘）
+
+- **統合基点**：`fbd5fc79564637c44018b387ac9cb021654fb9d3`。A=`d23f50cbc5847f9bf1cc17c7d7fa733b7592931d`、B=`9477dd62f574f9b3c931f2d1bff15c2b52603bea`、C=`54daa42c8a6947542f6513b3491e0a2bb3e74ce0`。最終SHAとCI結果はPR #49のEコメントを参照。
+- **A**：13項目の変更フィールドを限定統合し、出典2件を追加。7資料に関する限定的な主張照合の記録は `docs/COMPOSITION_GUIDES_A_EDITORIAL_AUDIT.md`。全面監修、出典リンク登録だけでの検証済み扱いはしない。
+- **B**：C-001/005/103の図形だけ採用。Bの120行原票とB報告を統合。Bの簡易PNG幾何ラスタによる**モデル視認120項目・240図**は旧HEADからの再構成で、実SVG/React画面を実見した数は**0図 / NOT_RUN**。42項目に対し本文・幾何の重点照合、残78の全文意味照合は未実施。原票の`target_head_sha`・`source_blob_sha`は実見時の**旧版**を示し、新統合HEADの実SVG受入とは異なる。B修正後3組の簡易ラスタ視認もSVG目視ではない。
+- **C**：sidecarと型・UI・検査2点・担当記録の6ファイルを採用。8目的・50候補・関連20を維持。C-017注意、C-110→117/C-063→119関連種別、目的別詳細・フォーカス・無効ID・AI JSONの全件一致検査・240 SVGのDOM確認とコピー元/スタブの一致を追加した。テストコードの追加を実行済みPASSとしない。
+- **D暫定P1 C-106**：文字領域と建物を固定し、人物だけを移動。対照図で顔が見出し領域に重なるよう図形座標と説明を修正し、文字矩形という模式図の限界を明示。修正後の実SVG再描画・視認、React画面、独立D再受入は**NOT_RUN**。
+- **保存前の構造検査**：120 unique ID、10分野各12、240図、図形1,275、出典16・guide→資料参照31（不明ID0）、全件`draft_unreviewed` / `not_checked`。これは静的JSONの検査であり、新HEADのCI/実画面証拠ではない。
+- **BのP2課題**：C-013/023/041/093/119、C-106の修正後実画像確認。用途候補の全120件の立証、専門家監修、実Clipboard readback、200% zoom、Android/支援技術、AI画像生成再現性、全240図の実SVG目視は未完了。
+- **再検証**：`npm ci`, `npm run typecheck`, `npm run lint`, `npm run composition:verify`, `npm run design:verify`, `npm run build`, Chromium smokeを**最終HEAD**で実施・確認。SVG接触シートは `node scripts/render-composition-contact-sheets.cjs --out /tmp/fragmenta-composition-review --capture` で再現可能。未実行は`NOT_RUN`。
+- **後日レビュー**：`docs/COMPOSITION_B_VISUAL_AUDIT.csv`、`docs/COMPOSITION_GUIDES_A_EDITORIAL_AUDIT.md`、`docs/COMPOSITION_DISCOVERY_C.md`、配信後の`/#/composition?view=atlas`。C-001/005/037/073/103/106/117/118/120を優先。
+- **公開制御**：`HOLD_NO_MERGE / NO_DEPLOY`。Draft維持、mainマージ・Preview/Production Deploy・Vercel設定変更なし。

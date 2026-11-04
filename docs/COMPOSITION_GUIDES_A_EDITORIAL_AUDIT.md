@@ -199,3 +199,53 @@
 - Issue #48: https://github.com/Josh-Temple/Fragmenta/issues/48
 - 原データ: `data/composition-guides.json`
 - 構図の図解一覧（変更を未公開のため本番URLには反映されない）: `/#/composition?view=atlas`
+
+## 2026-11-04 第2Wave A：専門用語・出典の追補校訂（統合前の独立差分）
+
+- **開始HEAD**：`fbd5fc79564637c44018b387ac9cb021654fb9d3`（PR #49）。AはBの図形・Cの探索sidecarと編集競合を避けるため、専用ブランチ `feature/20261104-composition-a-editorial` に変更を保存。**PR #49には直接反映しない**。Eがフィールド単位で統合すること。
+- **実際の差分**：`data/composition-guides.json` の本文・AI指示・比較ポイントを **13項目**（C-037, C-040, C-052, C-053, C-054, C-055, C-056, C-059, C-060, C-089, C-091, C-093, C-120）で校訂し、出典レコード2件追加。これらは本Waveの追加修正数で、前回の17項目とは別に数える。資料IDの追加対象はC-052〜056、059、093。
+- **静的に実施**：前回原票と現HEADの120件の一覧・重点項目の本文／例／対照／AI指示／出典状態の読戻し。保存前に120 ID、10分類×12件、全240図データ不変、出典参照整合、全件`draft_unreviewed`/`not_checked`をプログラム上で検査。**実SVG画像の目視はAとして0図**。
+- **判定**：`PARTIAL_EDITORIAL / NOT_INTEGRATED`。文章の妥当性を改善したが、120件全ての主張単位の原典照合、模式図の実見、実ブラウザでの確認、専門家監修は実施していない。構図と心理効果は固定的な因果として扱わない。
+- **禁止作業**：mainへのマージ・Preview/Production Deploy・Draft解除・Vercel設定変更・Actions手動再実行は実施しない。公開統制 `HOLD_NO_MERGE / NO_DEPLOY`。
+
+### 編集差分と理由（前回からの追加）
+
+| ID | 編集したフィールド | 目的と限定 |
+|---|---|---|
+| C-037 | comparisonPoint | 一点透視の収束先「位置違い」でなく、一つの消失点に揃うかを判断軸に変更。Bが修正した対照図は不変更。 |
+| C-040 | comparisonPoint | 地平線の画面位置と実際のカメラ高さの混同を回避。 |
+| C-052 | definition / sourceIds | アイレベルのカメラ高と、常に中立という心理的決めつけを区別。 |
+| C-053 | definition / sourceIds | ハイアングルは位置だけでなく下向き撮影を含む。心理効果は文脈依存。 |
+| C-054 | definition / comparisonPoint / sourceIds | ローアングルは見上げ方向を含み、比較は高さ・向きの複合変化と明記。 |
+| C-055 | definition / sourceIds | 俯瞰全般と真上の視点を区別。 |
+| C-056 | definition / comparisonPoint / sourceIds | 左右へのロールと上下へのチルトを区別。 |
+| C-059 | aiInstruction / sourceIds | 前景の肩の有無だけでは主観ショットにならないという前回修正をAI指示にも反映。 |
+| C-060 | definition / aiInstruction | 同一撮像条件での画角と撮影位置を区別し、背景の相対サイズ差を焦点距離だけに帰さない。 |
+| C-089 | definition / comparisonPoint | コマのサイズから読者の時間感覚を決定論的に推測しない。 |
+| C-091 | definition / aiInstruction | 紙の綴じ目と電子単ページ表示を混同しない。 |
+| C-093 | example / comparisonPoint / aiInstruction / sourceIds | 視線の一致は画面上の左右位置でなく前後ショットの空間的関係を要する。 |
+| C-120 | definition | 日本の著作権法という法域の限定を明記。個別の適法性を模式図から判断しない。 |
+
+### 2026-11-04（JST）主張単位の限定的な原典照合
+
+この表は**今回実際に閲覧したHTML記事と照合した狭い主張**だけを記す。「根拠URL登録」や「前回Aの資料アクセス」と足して全120件の独立監修済み件数にしない。以下の7資料（Adobeの技法解説4件・Cambridge in Colour・文化庁FAQ・黄金比レビュー）を閲覧したが、直接対応する主張のみ照合した。
+
+| 対象ID | 個別の主張 | 資料の該当箇所と結果 | 留保 |
+|---|---|---|---|
+| C-037〜039、040 | 一点／二点／三点透視は消失点の条件が異なり、地平線・第三消失点は別設定 | Adobe Illustrator Help「About perspective drawing」「Modify perspective grid settings」1/2/3-pointとThird Vanishing Point：概念整合を確認。https://helpx.adobe.com/illustrator/desktop/manage-objects/reshape-transform-objects/about-perspective-drawing.html | 各SVGの線の延長と消失点の同一性は未検証。 |
+| C-052〜056 | アイレベル・ハイ／ロー・俯瞰・ダッチの技法上の違い | Adobe「Different types of shots and camera angles in film」各角度の定義節：概念整合を確認。https://www.adobe.com/creativecloud/video/discover/types-of-shots-in-films.html | 作品ごとの心理効果の因果と全模式図の正確さは未検証。 |
+| C-059 | 肩越しショットは前景人物の肩・後頭部と奥の対象を含む | Adobe「How to use the over the shoulder shot in film」Over the shoulder shot definition：一致。https://www.adobe.com/in/creativecloud/video/production/cinematography/camera-shots-and-angles/over-the-shoulder-shot.html | 肩を除けば主観ショットになる、との同値は資料にない。 |
+| C-060 | 遠近関係は撮影位置に依存し、焦点距離だけに帰せない | Cambridge in Colour「Using Telephoto Lenses」Telephoto Perspective：一致。https://www.cambridgeincolour.com/tutorials/telephoto-lenses.htm | 撮像面・特殊レンズ条件を含む厳密な光学実験は未実施。 |
+| C-092 | 180度ルールは画面方向の連続性の慣行であり例外がある | Adobe日本語「映画における180-degree rule」会話におけるイマジナリーライン／ラインを破る：一致。https://www.adobe.com/jp/creativecloud/video/discover/what-is-the-180-degree-rule.html | 二カメラ位置のSVGを撮影映像と同一視しない。 |
+| C-012 | 黄金比が必ず美につながるという一般法則は検証されていない | Naini, The golden ratio—dispelling the myth (2024), Abstract/Conclusions：人体・顔面に関する限定的な否定的結果を確認。https://pmc.ncbi.nlm.nih.gov/articles/PMC10792139/ | 本論文は構図全般の優劣比較の実験ではない。 |
+| C-120 | 日本の著作権法はアイデアと創作的表現を区別する | 文化庁「よくあるご質問」著作物の要件・アイデア除外を確認。https://www.bunka.go.jp/seisaku/chosakuken/kaizoku/faq.html | 日本法中心。個別事案・他国法・許諾・契約・他の権利の判断は未確認。 |
+| C-089〜091、093〜094 | コマ順と映画編集の一般的な提案 | 今回は個別原典による強い因果関係の照合なし。日本の一般的な漫画の読順は前回資料に限定 | `source_not_checked`、心理効果の一般化不可。 |
+
+### E/B/C/Dへの実務的な引継ぎ
+
+- **E**：専用ブランチから `data/composition-guides.json` の上表フィールドと `sources` の2キー、対応する `sourceIds` のみ統合。Bが同一JSONの図形タプルを変更した場合、A側JSONを丸ごと上書きしてはいけない。Aの文言変更後、各IDの例／対照とAIエクスポートの再確認が必要。
+- **B**：特にC-037、040、052〜056、059〜060、089、091、093、120の実SVG図版を再照合し、比較点・図の説明が合わなければ修正依頼へ返す。
+- **C**：本文から生成された`aiGuidance`と用途候補を再取得して意味的な整合を確認。資料IDは出典の存在であって各用途の検証を意味しない。
+- **D**：最終統合HEADで角度・透視・権利を独立に反証する。A自体を「独立受入」に代用しない。
+- **未確認の全件状況**：構図120件は`draft_unreviewed`、`evidenceStatus:not_checked`を維持。追加で触れていない107件をレビュー済みへ昇格させない。全240図目視／Android実機／AI再現性／専門家の保証は未実施。
+

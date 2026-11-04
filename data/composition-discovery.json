@@ -133,7 +133,7 @@
         {
           "guideId": "C-017",
           "reasonJa": "主役の占有率を高める選択肢がある。",
-          "cautionJa": "環境が伝わらない場合がある。"
+          "cautionJa": "現行のAI指示例は人物を画面高の約15％にする小さな配置。力強さを狙う場合は占有率を上げる案も比較する。"
         },
         {
           "guideId": "C-054",
@@ -482,8 +482,8 @@
     {
       "sourceId": "C-063",
       "targetId": "C-119",
-      "relationType": "prerequisite",
-      "reasonJa": "シルエットを縮小・白黒検査で点検する。"
+      "relationType": "complement",
+      "reasonJa": "シルエットの識別しやすさを縮小・白黒・輪郭検査で確かめる。必須の前提技法ではない。"
     },
     {
       "sourceId": "C-067",
@@ -530,8 +530,8 @@
     {
       "sourceId": "C-110",
       "targetId": "C-117",
-      "relationType": "complement",
-      "reasonJa": "構図固定で画風の差を比較できる。"
+      "relationType": "contrast",
+      "reasonJa": "C-110は構図固定で画風を変え、C-117は画風固定で人物の位置を変える。比較で固定する条件が異なる。"
     }
   ]
 }
