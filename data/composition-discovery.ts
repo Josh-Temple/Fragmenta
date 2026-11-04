@@ -23,6 +23,7 @@ export const getCompositionDiscovery = (g: CompositionGuide) => {
   subjects: raw.subjectsByCategory[g.categoryId as keyof typeof raw.subjectsByCategory] ?? [],
   priorityConditions: [g.comparisonPoint ?? g.definition],
   relatedComposition: getCompositionRelations(g.id),
+  purposes: purposes.map(p => p.id),
   aiGuidance: { composition: g.aiInstruction, style: null as null },
   discoveryStatus: 'draft_unreviewed' as const,
   };
