@@ -1,5 +1,6 @@
 import { spawn } from 'node:child_process';
-import { mkdtemp, readFile, rm } from 'node:fs/promises';
+import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
@@ -262,7 +263,7 @@ try {
     return response.result?.value;
   }, 'composition comparison diagrams');
   const compositionInteraction = await page.send('Runtime.evaluate', {
-    expression: "(async () => {\n      const selector = document.querySelector('#composition-item');\n      if (!selector || selector.options.length !== 120) throw new Error('Composition selector missing 120 items');\n      selector.value = 'C-001';\n      selector.dispatchEvent(new Event('change', { bubbles: true }));\n      await new Promise(resolve => setTimeout(resolve, 150));\n      const selected = document.querySelector('#composition-title')?.textContent;\n      const button = [...document.querySelectorAll('button')].find(b => b.textContent.trim() === '指示文をコピー');\n      if (!button) throw new Error('Composition copy button missing');\n      let copied = '';\n      Object.defineProperty(navigator, 'clipboard', { configurable: true,\n        value: { writeText: async text => { copied = text; } } });\n      button.click();\n      await new Promise(resolve => setTimeout(resolve, 150));\n      const success = [...document.querySelectorAll('[role=status]')].map(x => x.textContent).join(' ');\n      Object.defineProperty(navigator, 'clipboard', { configurable: true,\n        value: { writeText: async () => { throw new Error('Denied'); } } });\n      button.click();\n      await new Promise(resolve => setTimeout(resolve, 150));\n      const denied = [...document.querySelectorAll('[role=status]')].map(x => x.textContent).join(' ');\n      return { selected, copied, visibleAi: document.querySelector('[data-composition-ai-text]')?.textContent, success, denied, svgCount: document.querySelectorAll('svg[role=img]').length };\n    })()",
+    expression: "(async () => {\n      const originalClipboard = Object.getOwnPropertyDescriptor(navigator, 'clipboard');\n      const selector = document.querySelector('#composition-item');\n      if (!selector || selector.options.length !== 120) throw new Error('Composition selector missing 120 items');\n      selector.value = 'C-001';\n      selector.dispatchEvent(new Event('change', { bubbles: true }));\n      await new Promise(resolve => setTimeout(resolve, 150));\n      const selected = document.querySelector('#composition-title')?.textContent;\n      const button = [...document.querySelectorAll('button')].find(b => b.textContent.trim() === '指示文をコピー');\n      if (!button) throw new Error('Composition copy button missing');\n      let copied = '';\n      Object.defineProperty(navigator, 'clipboard', { configurable: true,\n        value: { writeText: async text => { copied = text; } } });\n      button.click();\n      await new Promise(resolve => setTimeout(resolve, 150));\n      const success = [...document.querySelectorAll('[role=status]')].map(x => x.textContent).join(' ');\n      Object.defineProperty(navigator, 'clipboard', { configurable: true,\n        value: { writeText: async () => { throw new Error('Denied'); } } });\n      button.click();\n      await new Promise(resolve => setTimeout(resolve, 150));\n      const denied = [...document.querySelectorAll('[role=status]')].map(x => x.textContent).join(' ');\n      if (originalClipboard) Object.defineProperty(navigator, 'clipboard', originalClipboard);\n      else delete navigator.clipboard;\n      return { selected, copied, visibleAi: document.querySelector('[data-composition-ai-text]')?.textContent, success, denied, svgCount: document.querySelectorAll('svg[role=img]').length };\n    })()",
     awaitPromise: true,
     returnByValue: true,
   });
@@ -280,7 +281,48 @@ try {
     compositionResult.svgCount !== 2) {
     throw new Error('Composition interaction failed: ' + JSON.stringify(compositionResult));
   }
-  console.log('PASS composition diagrams, selector, copy success and failure');
+  console.log('PASS composition diagrams, selector, copy success and failure (stub)');
+
+  // Unlike the stub above, this exercises Chromium's own clipboard APIs. It
+  // does not establish that an external desktop OS clipboard can be accessed.
+  // Missing permissions/APIs are NOT_RUN, never a fake PASS.
+  try {
+    await control.send('Browser.grantPermissions', {
+      origin: new URL(baseUrl).origin,
+      permissions: ['clipboardReadWrite', 'clipboardSanitizedWrite'],
+    });
+    const actual = await page.send('Runtime.evaluate', {
+      expression: `(async () => {
+        const button = document.querySelector('[data-composition-ai-copy]');
+        const visible = document.querySelector('[data-composition-ai-text]')?.textContent;
+        if (!button || !navigator.clipboard?.writeText || !navigator.clipboard?.readText)
+          return { status:'NOT_RUN', reason:'browser clipboard API absent' };
+        try {
+          button.click();
+          await new Promise(resolve => setTimeout(resolve, 200));
+          const readback = await navigator.clipboard.readText();
+          return { status:'CHECKED', visible, readback };
+        } catch (error) {
+          return { status:'NOT_RUN', reason:String(error?.message || error) };
+        }
+      })()`,
+      awaitPromise: true,
+      returnByValue: true,
+    });
+    if (actual.exceptionDetails) throw new Error(actual.exceptionDetails.text);
+    const result = actual.result?.value;
+    if (result?.status === 'CHECKED') {
+      if (result.visible !== c001Instruction || result.readback !== c001Instruction)
+        throw new Error('Browser clipboard readback mismatch with C-001 source and UI text');
+      console.log('PASS Chromium Clipboard API writeText/readText, C-001 exact text');
+    } else {
+      console.log('NOT_RUN Chromium Clipboard API readback: ' + (result?.reason || 'no browser result'));
+    }
+  } catch (error) {
+    if (String(error).includes('readback mismatch')) throw error;
+    console.log('NOT_RUN Chromium Clipboard API readback: ' + String(error?.message || error));
+  }
+
   await page.send('Runtime.evaluate', { expression: "location.hash = '#/composition?id=C-110'" });
   await poll(async () => {
     const response = await page.send('Runtime.evaluate', {
@@ -356,6 +398,13 @@ try {
     });
     return result.result?.value;
   }, 'composition purpose persistence on detail navigation');
+  // Going from C-073 detail to atlas and back to the SAME C-073 must refocus its heading.
+  const sameGuideFocus = await page.send('Runtime.evaluate', {
+    expression: "document.activeElement?.id === 'composition-title'",
+    returnByValue: true,
+  });
+  if (!sameGuideFocus.result?.value) throw new Error('Same-ID atlas-to-detail heading did not regain focus');
+  console.log('PASS same-ID atlas/detail return heading focus');
   await page.send('Emulation.setDeviceMetricsOverride', { width: 390, height: 844, deviceScaleFactor: 1, mobile: true });
   const portrait = await page.send('Runtime.evaluate', {
     expression: "({overflow:document.documentElement.scrollWidth-innerWidth,touch:[...document.querySelectorAll('#composition-purpose-choices button')].every(x=>x.getBoundingClientRect().height>=44)})",
@@ -407,8 +456,57 @@ try {
     });
     if (state.result?.value?.overflow > 1 || !state.result?.value?.touch)
       throw new Error('Discovery responsive '+width+'px: '+JSON.stringify(state.result?.value));
+    // Optional durable evidence: 4 actual Chromium viewport screenshots, never
+    // just CSS transforms. The caller decides whether/where to save artifacts.
+    if (process.env.COMPOSITION_SCREENSHOT_DIR) {
+      await mkdir(process.env.COMPOSITION_SCREENSHOT_DIR, { recursive: true });
+      const capture = await page.send('Page.captureScreenshot', { format:'png', captureBeyondViewport:false });
+      const bytes = Buffer.from(capture.data, 'base64');
+      const name = 'composition-purpose-atlas-' + width + 'px.png';
+      await writeFile(join(process.env.COMPOSITION_SCREENSHOT_DIR, name), bytes);
+      console.log('SCREENSHOT ' + name + ' sha256=' + createHash('sha256').update(bytes).digest('hex'));
+    }
   }
   await page.send('Emulation.clearDeviceMetricsOverride');
+
+  // C-106: inspect real SVG geometry and responsive stacking in the rendered React page.
+  await page.send('Runtime.evaluate', { expression: "location.hash = '#/composition?id=C-106'" });
+  await poll(async () => {
+    const result = await page.send('Runtime.evaluate', {
+      expression: "document.querySelector('#composition-title')?.textContent === 'Webのヒーロー画像' && document.querySelectorAll('article svg[role=img]').length === 2",
+      returnByValue: true,
+    });
+    return result.result?.value;
+  }, 'C-106 detail rendering');
+  for (const width of [360, 390, 768, 1280]) {
+    await page.send('Emulation.setDeviceMetricsOverride', { width, height: 900, deviceScaleFactor: 1, mobile: width < 600 });
+    const checked = await page.send('Runtime.evaluate', {
+      expression: `(() => {
+        const svg=[...document.querySelectorAll('article svg[role=img]')];
+        const rects=svg.map(x=>x.getBoundingClientRect());
+        return { count:svg.length, viewport:innerWidth,
+          overflow:document.documentElement.scrollWidth-innerWidth,
+          stacked:rects.length===2 && rects[1].top>=rects[0].bottom &&
+            Math.abs(rects[1].left-rects[0].left)<2,
+          textLabels:svg.map(x=>x.querySelectorAll('text').length) };
+      })()`,
+      returnByValue: true,
+    });
+    const observed=checked.result?.value;
+    if (observed?.count!==2 || observed?.overflow>1 || (width<640 && !observed?.stacked))
+      throw new Error('C-106 real SVG responsive at '+width+'px: '+JSON.stringify(observed));
+    console.log('PASS C-106 SVG layout '+width+'px '+JSON.stringify(observed));
+    if (process.env.COMPOSITION_SCREENSHOT_DIR) {
+      const capture=await page.send('Page.captureScreenshot', {format:'png',captureBeyondViewport:false});
+      const bytes=Buffer.from(capture.data,'base64');
+      const name='composition-C-106-detail-'+width+'px.png';
+      await writeFile(join(process.env.COMPOSITION_SCREENSHOT_DIR,name),bytes);
+      console.log('SCREENSHOT '+name+' sha256='+createHash('sha256').update(bytes).digest('hex'));
+    }
+  }
+  await page.send('Emulation.clearDeviceMetricsOverride');
+  // CDP viewport emulation is not a true 200% Chrome browser zoom.
+  console.log('NOT_RUN true browser 200% zoom (requires independent browser zoom control)');
   await page.send('Runtime.evaluate', { expression: "location.hash = '#/composition?id=C-999'" });
   await poll(async () => {
     const state = await page.send('Runtime.evaluate', {

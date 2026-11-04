@@ -96,3 +96,14 @@ E修正後のHEADとテスト結果はPR #49コメントで確定させる。
 - **再検証**：`npm ci`, `npm run typecheck`, `npm run lint`, `npm run composition:verify`, `npm run design:verify`, `npm run build`, Chromium smokeを**最終HEAD**で実施・確認。SVG接触シートは `node scripts/render-composition-contact-sheets.cjs --out /tmp/fragmenta-composition-review --capture` で再現可能。未実行は`NOT_RUN`。
 - **後日レビュー**：`docs/COMPOSITION_B_VISUAL_AUDIT.csv`、`docs/COMPOSITION_GUIDES_A_EDITORIAL_AUDIT.md`、`docs/COMPOSITION_DISCOVERY_C.md`、配信後の`/#/composition?view=atlas`。C-001/005/037/073/103/106/117/118/120を優先。
 - **公開制御**：`HOLD_NO_MERGE / NO_DEPLOY`。Draft維持、mainマージ・Preview/Production Deploy・Vercel設定変更なし。
+
+
+## 2026-11-05 第3Wave E第一次統合とD引渡し
+
+- 基点PR HEAD `7df55546cc34941116e050d326726a8026d57b9f`。A `b04a99e8605d4f3750492fd5731de7a0d9894a8a`、B `cf8e50dc3a838502d680db84be72ff0dd0b8748b`、C `fdf393ab2e99b5bc608cfdc3ccaa4000a175e87e` を既存Draft PR #49へ競合のないファイル単位で統合した。最終統合HEADとCI状態はPRの最新Eコメントを参照。
+- A: 12 IDの文章・AI指示・比較条件の校訂と出典1件、監査記録。B: 6 ID/12図の実SVG独立再構成に基づく**モデル視認**、旧履歴を保った120行CSV、B報告、図形ハッシュmanifest。C: Chromium smokeのClipboard API、再フォーカス、4幅のC-106スクリーンショット、C記録。元scriptの全240図目視やReact実画面検証の実績ではない。
+- E修正: C-090の比較図で、左→右の矢印と番号が逆転していたため対照図の番号を左①・右②に直し、比較本文も合わせた。コマと赤丸の形は固定。図の実ブラウザ再視認は別途必要。
+- データ構造: 120 ID、10分野×12、240図、1,275図形、出典17件・参照32件。全件`draft_unreviewed`／`not_checked`維持。Bの開始旧HEAD `7df55546cc34941116e050d326726a8026d57b9f`・旧JSON SHA/PNG SHAは**歴史的な部分視認証拠**として保存し、新HEADのハッシュに置換しない。Bの元ブラウザ視認12/240（6 ID）は最終HEADの全件受入に読み替えない。人間視認0図、未見114 ID・228図。
+- 未実施: 元contact-sheet生成script全10ページ実行と最終HEADの全240 SVG/React目視、最終HEAD実Chromium操作と真の200%ズーム、OS Clipboard readback、Android/支援技術、120件の原典主張単位照合、専門監修、AI生成再現性。追加コードと実行済みPASSを混同しない。
+- DはE確定HEADを別セッション/環境で独立取得し、C-090/C-106/C-041/C-092/C-093/C-119や一覧・原票・実図を再現・反証すること。独立Dが固定HEADで判断するまで`D_FINAL=NOT_READY`。
+- **HOLD_NO_MERGE / NO_DEPLOY**。Draft維持・本番/PreviewのDeployなし・mainマージなし。

@@ -46,3 +46,33 @@
 - 意味的に重要な確認点は C-017（目的とAI指示例の差）、C-110→C-117（固定する変数の逆転）、C-063→C-119（必須前提ではない関係）の3件。
 - 生成JSONの検査は `catalog:export` 後に実行。CI・Chromium・200%ズーム・実Clipboard・Android実機は未実行のものをPASSと記さない。
 - Eの統合後、Dはその固定HEADを独立受入する。本Waveの公開制御は **HOLD_NO_MERGE / NO_DEPLOY**。
+
+
+## 2026-11-04 第3Wave：担当C オフライン実ブラウザ検査補強（統合待ち）
+
+- **基準PR HEAD**: `7df55546cc34941116e050d326726a8026d57b9f`。この時点でPR #49はDraft/open、Vercel自動Deploy無効。
+- **専用ブランチ**: `feature/20261104-composition-c-browser-acceptance`。A/Bの共通JSON・図形・原票には触れない。
+- **修正内容**: Chromium browser-smokeへ、コピー用スタブ解除後の**ブラウザ実Clipboard API writeText/readText（許可可能な場合のみ）**、同一IDの図解一覧→詳細への見出し再フォーカス、C-106実SVG表示の360/390/768/1280pxでの2図積み重ねと横溢れ点検を追加。任意の `COMPOSITION_SCREENSHOT_DIR` 指定で、各幅の一覧とC-106詳細の実Chromium PNGを保存し、標準出力にSHA-256を記録する。
+- **証拠区分**: 実Clipboard APIが使えない場合は `NOT_RUN` と記録する。headless ChromiumのClipboard API readbackは外部OSのClipboard readbackを保証しない。CDP viewport変更は**実ブラウザ200%ズームとは異なる**ので `NOT_RUN` を維持する。
+- **本セッションで実行**: GitHub上の既存ソースを固定HEADで取得し、C専用の検査コードを編集。変更後コードのJavaScript構文解析とGitHub readbackを実施（実行結果は別途PRコメントを参照）。
+- **本セッションでNOT_RUN**: 対象Repoをローカルで起動したChromium実測、PNGの実保存、OS Clipboard、実200%ズーム、Android実機、支援技術、C側での240図目視。実ブラウザでのPASSを主張しない。
+
+### Eへの再現手順
+
+```sh
+git checkout feature/20261104-composition-c-browser-acceptance
+npm ci
+npm run catalog:export
+npm run composition:verify
+npm run build
+npm run preview -- --host 127.0.0.1 --port 4173 --strictPort &
+preview_pid=$!
+COMPOSITION_SCREENSHOT_DIR=/tmp/fragmenta-c-browser \
+  CHROME_BIN="$(command -v google-chrome || command -v chromium)" \
+  node scripts/browser-smoke.mjs
+kill "$preview_pid"
+```
+
+- 出力した各PNGのSHA-256、Chromium/OS版、実行時JST、各幅と実際の結果をEが別途記録する。**コマンド記載だけでは実行証拠にならない**。
+- Cの変更をA/Bと競合しないようEが既存PRに取り込み、統合後の固定HEADで本番配信を伴わないChromium実測と独立D受入へ進む。
+- **公開制御: HOLD_NO_MERGE / NO_DEPLOY**。
