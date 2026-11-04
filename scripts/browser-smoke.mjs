@@ -262,12 +262,18 @@ try {
     return response.result?.value;
   }, 'composition comparison diagrams');
   const compositionInteraction = await page.send('Runtime.evaluate', {
-    expression: "(async () => {\n      const selector = document.querySelector('#composition-item');\n      if (!selector || selector.options.length !== 120) throw new Error('Composition selector missing 120 items');\n      selector.value = 'C-001';\n      selector.dispatchEvent(new Event('change', { bubbles: true }));\n      await new Promise(resolve => setTimeout(resolve, 150));\n      const selected = document.querySelector('#composition-title')?.textContent;\n      const button = [...document.querySelectorAll('button')].find(b => b.textContent.trim() === '指示文をコピー');\n      if (!button) throw new Error('Composition copy button missing');\n      let copied = '';\n      Object.defineProperty(navigator, 'clipboard', { configurable: true,\n        value: { writeText: async text => { copied = text; } } });\n      button.click();\n      await new Promise(resolve => setTimeout(resolve, 150));\n      const success = [...document.querySelectorAll('[role=status]')].map(x => x.textContent).join(' ');\n      Object.defineProperty(navigator, 'clipboard', { configurable: true,\n        value: { writeText: async () => { throw new Error('Denied'); } } });\n      button.click();\n      await new Promise(resolve => setTimeout(resolve, 150));\n      const denied = [...document.querySelectorAll('[role=status]')].map(x => x.textContent).join(' ');\n      return { selected, copied, success, denied, svgCount: document.querySelectorAll('svg[role=img]').length };\n    })()",
+    expression: "(async () => {\n      const selector = document.querySelector('#composition-item');\n      if (!selector || selector.options.length !== 120) throw new Error('Composition selector missing 120 items');\n      selector.value = 'C-001';\n      selector.dispatchEvent(new Event('change', { bubbles: true }));\n      await new Promise(resolve => setTimeout(resolve, 150));\n      const selected = document.querySelector('#composition-title')?.textContent;\n      const button = [...document.querySelectorAll('button')].find(b => b.textContent.trim() === '指示文をコピー');\n      if (!button) throw new Error('Composition copy button missing');\n      let copied = '';\n      Object.defineProperty(navigator, 'clipboard', { configurable: true,\n        value: { writeText: async text => { copied = text; } } });\n      button.click();\n      await new Promise(resolve => setTimeout(resolve, 150));\n      const success = [...document.querySelectorAll('[role=status]')].map(x => x.textContent).join(' ');\n      Object.defineProperty(navigator, 'clipboard', { configurable: true,\n        value: { writeText: async () => { throw new Error('Denied'); } } });\n      button.click();\n      await new Promise(resolve => setTimeout(resolve, 150));\n      const denied = [...document.querySelectorAll('[role=status]')].map(x => x.textContent).join(' ');\n      return { selected, copied, visibleAi: document.querySelector('[data-composition-ai-text]')?.textContent, success, denied, svgCount: document.querySelectorAll('svg[role=img]').length };\n    })()",
     awaitPromise: true,
     returnByValue: true,
   });
   const compositionResult = compositionInteraction.result?.value;
+  // The clipboard API below is a stub: assert exact bytes, not just a success message.
+  // Actual OS clipboard readback is a separate, still-required acceptance test.
+  const exportedComposition = JSON.parse(await readFile(join(process.cwd(), 'public/knowledge/composition-guides.json'), 'utf8'));
+  const c001Instruction = exportedComposition.guides.find(g => g.id === 'C-001')?.aiInstruction;
   if (compositionResult?.selected !== '三分割法' ||
+    compositionResult.copied !== c001Instruction ||
+    compositionResult.visibleAi !== c001Instruction ||
     !compositionResult.copied?.includes('三分割交点') ||
     !compositionResult.success?.includes('コピーしました') ||
     !compositionResult.denied?.includes('コピーできませんでした') ||
@@ -299,13 +305,24 @@ try {
   });
   if(atlasResponse.result?.value?.cards!==48 || atlasResponse.result?.value?.diagrams!==96)
     throw new Error('Composition atlas pagination failed: '+JSON.stringify(atlasResponse.result?.value));
-  console.log('PASS composition atlas 24-to-48 pagination and side-by-side comparisons');
+  // Traverse the remaining pages; this tests DOM coverage, NOT human review of 240 diagrams.
+  for (const expectedCards of [72, 96, 120]) {
+    await page.send('Runtime.evaluate', { expression: "([...document.querySelectorAll('button')].find(x=>x.textContent.includes('さらに表示')))?.click()" });
+    await poll(async () => {
+      const state = await page.send('Runtime.evaluate', {
+        expression: "({cards:document.querySelectorAll('a[data-composition-card]').length,diagrams:document.querySelectorAll('section[aria-labelledby=composition-atlas-title] svg[role=img]').length})",
+        returnByValue: true,
+      });
+      return state.result?.value?.cards === expectedCards && state.result?.value?.diagrams === expectedCards * 2;
+    }, 'composition atlas all cards ' + expectedCards);
+  }
+  console.log('PASS composition atlas 24-to-120 pagination, 240 SVG elements (DOM only)');
 
   // Purpose-based discovery: curated choices, rationale, direct link, 390px and zero results.
   await page.send('Runtime.evaluate', { expression: "location.hash = '#/composition?view=atlas&purpose=solitude'" });
   await poll(async () => {
     const response = await page.send('Runtime.evaluate', {
-      expression: "document.querySelectorAll('#composition-purpose-choices button').length===8 && document.querySelectorAll('a[data-composition-card]').length===6 && document.body.innerText.includes('選択理由') && document.body.innerText.includes('不向きな条件')",
+      expression: "document.querySelectorAll('#composition-purpose-choices button').length===8 && document.querySelectorAll('a[data-composition-card]').length===6 && document.body.innerText.includes('選択理由') && document.body.innerText.includes('適用条件')",
       returnByValue: true,
     });
     return response.result?.value;
@@ -355,7 +372,52 @@ try {
     });
     return response.result?.value;
   }, 'composition purpose empty result');
-  console.log('PASS discovery purpose, reason, direct URL, 390px and empty state');
+  // A purpose selection from an unrelated item must open a matching guide.
+  await page.send('Runtime.evaluate', { expression: "location.hash = '#/composition?view=atlas&purpose=solitude'" });
+  await poll(async () => {
+    const state = await page.send('Runtime.evaluate', {
+      expression: "document.querySelectorAll('a[data-composition-card]').length === 6",
+      returnByValue: true,
+    });
+    return state.result?.value;
+  }, 'purpose atlas before detail');
+  await page.send('Runtime.evaluate', {
+    expression: "([...document.querySelectorAll('a')].find(x=>x.textContent.trim()==='選んで詳しく見る'))?.click()",
+  });
+  await poll(async () => {
+    const state = await page.send('Runtime.evaluate', {
+      expression: "document.querySelector('#composition-title')?.textContent === 'ネガティブスペース' && document.activeElement?.id === 'composition-title' && location.hash.includes('purpose=solitude')",
+      returnByValue: true,
+    });
+    return state.result?.value;
+  }, 'purpose-specific detail choice and heading focus');
+  await page.send('Runtime.evaluate', { expression: 'history.back()' });
+  await poll(async () => {
+    const state = await page.send('Runtime.evaluate', {
+      expression: "location.hash.includes('view=atlas') && document.querySelectorAll('a[data-composition-card]').length === 6",
+      returnByValue: true,
+    });
+    return state.result?.value;
+  }, 'HashRouter back to filtered atlas');
+  for (const width of [360, 390, 768, 1280]) {
+    await page.send('Emulation.setDeviceMetricsOverride', { width, height: 900, deviceScaleFactor: 1, mobile: width < 600 });
+    const state = await page.send('Runtime.evaluate', {
+      expression: "({overflow:document.documentElement.scrollWidth-innerWidth,touch:[...document.querySelectorAll('#composition-purpose-choices button')].every(x=>x.getBoundingClientRect().height>=44)})",
+      returnByValue: true,
+    });
+    if (state.result?.value?.overflow > 1 || !state.result?.value?.touch)
+      throw new Error('Discovery responsive '+width+'px: '+JSON.stringify(state.result?.value));
+  }
+  await page.send('Emulation.clearDeviceMetricsOverride');
+  await page.send('Runtime.evaluate', { expression: "location.hash = '#/composition?id=C-999'" });
+  await poll(async () => {
+    const state = await page.send('Runtime.evaluate', {
+      expression: "document.querySelector('[role=alert]')?.textContent.includes('見つかりません')",
+      returnByValue: true,
+    });
+    return state.result?.value;
+  }, 'invalid composition ID is disclosed');
+  console.log('PASS discovery purpose, exact stub copy, filtered navigation/back, 360/390/768/1280px layout and invalid ID');
 
   // Semantics and warning language must be visibly present in rendered SVG/HTML.
   for (const [id, expected, minLabels] of [
