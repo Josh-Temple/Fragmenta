@@ -1,3 +1,16 @@
+# B — CI実Chromium SVG全240図モデル視認（2026-11-05）
+
+**入力HEAD**: 79d3baacf2f1833e3ff445a8f748e38fda748bee。正本data blob: e62e89a40dbb83932dea7af662208f6a5334f6ed、入力SHA-256: 0eecbe805733d98410004cd7b1c35c6d7c1985c6273c5d8783b94c6cf02eb5ef。
+
+- 元の接触シート生成scriptをGitHub Actions/Chromiumで実行し、10分野の接触シート10枚と、4 ID/枚の拡大タイル30枚を生成。各タイルの元HTML/PNGとID、画像SHA-256はCI内で照合成功。対象は120 ID・配置例120+対照例120=240 SVG図。
+- 30/30枚のPNG本体をActionsジョブログbase64から復元してモデルが実画像で視認。**元scriptによる実SVG全240図のモデル図形視認達成**。人間視認0、React実画面でのモデル視認0。前Waveの再構成分を重複加算しない。
+- CI環境では日本語フォントが欠け、日本語見出し・説明が四角い欠字となる。C-036のSVG内『住』『連』も欠字。図形を見たことは本文や図中文字の可読性まで合格したことを意味しない。数値・英字は表示される。
+- GitHub Actions run: https://github.com/Josh-Temple/Fragmenta/actions/runs/42017175759 。typecheck/build/ブラウザsmoke/画像生成は成功。**artifactアップロードはGitHubの容量超過で失敗**しCI総合はFAILURE。画像はjob logから一時回収できるがartifact/Library/GitHubの永続ZIPは未保存。
+- P2候補: C-002低コントラスト、C-008折線、C-023人物の切取り未図示、C-041複数変数、C-093視線連続性未立証、C-119実画像変換未実行。C-036はCIフォント不足による証拠阻害で本番UI不具合とは断定しない。既存の注意書きで制約を開示済みの項目もある。
+- 新しいci_actual_svg_*列を120行CSVに追記。旧列・旧HEADのレビュー履歴は保持。個々のPNGハッシュ/画像対応はJSON manifestのwave_2026_11_05_ci_actual_svg_Bへ記録。
+- **B判定 PARTIAL / 240図形モデル視認、文字・保存・React/D独立受入は未完了。HOLD_NO_MERGE / NO_DEPLOY、Draft維持。**
+
+---
 # B — 実SVGオフライン描画・部分視認（第3Wave、2026-11-04）
 
 **対象固定PR HEAD**: `7df55546cc34941116e050d326726a8026d57b9f`。Git blob: `be624dc126b403b163870645ee93c4bc84662413`、原本JSON SHA-256: `a8fc26661dc257dade3513e59c66395494b05cf775d00b58a04957a249d3e5c9`。既存Bの旧HEADラスタ120行を消さず、新しい列で今回の証拠を分離した。**公開制御は HOLD_NO_MERGE / NO_DEPLOY**。本記録はPR #49へ未統合のB独立ブランチ成果。
