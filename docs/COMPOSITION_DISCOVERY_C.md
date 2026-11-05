@@ -92,3 +92,26 @@ kill "$preview_pid"
 2. Eが固定した最終HEADで `npm ci` → `npm run catalog:export` → `npm run composition:verify` → `npm run build` → localhost preview → `COMPOSITION_SCREENSHOT_DIR=/tmp/fragmenta-c-browser CHROME_BIN=/usr/bin/chromium node scripts/browser-smoke.mjs` を実行。生成PNGの実ファイル・hash、4幅、重点ID、環境を読戻しする。最終HEADが変わった場合はそのSHAで再検証する。
 3. スクリーンショットは**生成だけで視認済みにしない**。Reactの実画面を開いて文字可読性・図と説明の一致を個別判定。元script/独立SVG再構成とも混同しない。
 4. Dの最終受入は別セッション・固定HEADで行う。**公開制御: `HOLD_NO_MERGE / NO_DEPLOY`**。新PR、Vercel Preview、mainマージ、Draft解除は実行しない。
+
+
+## 2026-11-05 第5Wave C：Reactスクリーンショットの全高撮影と証拠区分（E統合待ち）
+
+- **入力PR固定HEAD**：`7f08cf28c1cc052d13ef083637d020e13e891352`、base `ce47d522d6e2356c2a18db56d2d7eb0bef08171f`。取得時のPR #49はDraft/open/未マージ。
+- **C作業ブランチ**：`feature/20261105-composition-c-fullpage-react-evidence`。A/Bの`data/composition-guides.json`、図形タプル、`docs/COMPOSITION_B_VISUAL_AUDIT.csv`、SVG manifestは変更しない。
+- **今回の実装**：`scripts/browser-smoke.mjs`の任意スクリーンショット出力を変更。旧`captureBeyondViewport:false`による900pxの画面内だけの切り取りをやめ、React画面で文書の実寸と対象SVGの境界を計測し、`captureBeyondViewport:true`＋全高の明示clipを使用。PNGのIHDR幅・高さを再読込し、ページサイズに足りない画像や対象SVG不足は失敗させる。各PNGにsha256/PNG寸法/CSS寸法/route/対象図数/図形領域/取得時刻/checkout SHAをJSONで併記する。
+- **出力対象**：目的フィルタ済み一覧6件（4幅×1画面）、C-106の詳細（4幅）、C-023/041/090/093/119の詳細（5 ID×4幅）。最大28 PNG＋28 JSONを**環境変数`COMPOSITION_SCREENSHOT_DIR`を指定した場合にのみ**生成する。対象図は一部が同じものの4幅反復であり、全240図視認ではない。
+- **取得状態**：今回、実ReactアプリからのPNG生成は**0枚**、モデル画像視認は**0枚**、人間視認は**0枚**。画像ファイル・CI artifactはまだ存在しない。既存PR HEADのCI 42002796026はSUCCESSだが、このCIのartifact一覧は空で、これまでスクリーンショット出力を有効にしていなかった。E/Bによる最終候補HEADのrunner実行・artifact回収が必要。
+- **構文確認**：変更後のbrowser-smokeコードはV8の非実行構文解析PASS（ESM import宣言を除いたasync関数本体をパース）。GitHub上での`npm ci`・Node実行・build・React操作を意味しない。
+- **撮影方式の限定実機検証**：Node 22.16.0 / Linux x86_64 / Chromium 144.0.7559.96のローカル環境で、`about:blank`へ書き込んだ合成HTML（高さ2624 CSS px、2 SVG）をCDP `Page.captureScreenshot`で撮影し、PNG IHDR **389×2624px**、下部要素のDOM存在を確認してPASS。**FragmentaのReact画面ではない**。`file://`直接遷移はこの実行環境ではブロックされ、Private Repoの`git ls-remote`はDNS解決失敗。合成HTMLでの撮影成功をアプリ画面の実測へ転用しない。
+- **AI元データ読戻し**：同固定HEADの`data/composition-guides.json` blob `e62e89a40dbb83932dea7af662208f6a5334f6ed` と`data/composition-discovery.json` blob `d1ef68cff926376c8a370178756414c5a2d43523`を確認。120一意ID、240の図配列、8目的、50候補、20関連、全件`draft_unreviewed`／`not_checked`、AI指示の空欄0、候補の不明ID/理由・注意の空欄0。静的構造点検で違反0。**実エクスポートの新規生成、120件の意味的審査、原典照合は今回NOT_RUN**。
+- **依然NOT_RUN**：React実画面のPNG生成・実画像モデル視認、真のChrome 200% browser zoom、外部OS Clipboard、Android実機、支援技術。既存CIのDOM/layout・ブラウザ内Clipboard readbackを転記して今回の独自実行としていない。
+
+### E/Bへの引継ぎ（C成果の取り込み）
+
+1. C作業ブランチから**`scripts/browser-smoke.mjs`とこのC監査ファイルだけ**を既存Draft PR #49へ統合する。A/Bの並行編集結果、図形・監査原票を上書きしない。
+2. 固定した最終HEADのオフラインReact候補ビルドで以下を実行し、生成物実体・PNG寸法・sha256と画面末尾が写ったかを確認する。CI runnerで実行する場合は、Bが調整する限定的なartifactアップロードと統合し、期限付き保存を用いる。CはCI workflow・権限設定を変更していない。
+
+    `COMPOSITION_SCREENSHOT_DIR=/tmp/fragmenta-react-visual CHROME_BIN=/path/to/chromium node scripts/browser-smoke.mjs`
+
+3. JSON sidecarの`state: CAPTURED_NOT_VISUALLY_REVIEWED`は画像を生成した事実のみを表し、モデルが実際に画像表示した場合にのみ視認数を別記する。全高captureとPNG IHDRだけでは文字可読性を保証しない。真の200% zoom・外部OS Clipboard・Android/ATは独立して検査する。
+4. 新HEADのCI/画像・実React操作後に別セッションDへ引き渡す。**公開制御：`HOLD_NO_MERGE / NO_DEPLOY`、Draft維持。**
