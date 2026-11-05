@@ -920,5 +920,468 @@
       "external_os_clipboard": "NOT_RUN"
     },
     "release": "HOLD_NO_MERGE / NO_DEPLOY"
+  },
+  "wave_2026_11_05_ci_font_svg_B": {
+    "status": "B_SVG_240_MODEL_SEEN_JP_TEXT_PASS_SAVED_GITHUB; FULL_RELEASE_ACCEPTANCE_NOT_YET",
+    "input_head": "d0187578516a24ef2b0d2e13bd1c304b3e6a6b5f",
+    "input_sha256": "0eecbe805733d98410004cd7b1c35c6d7c1985c6273c5d8783b94c6cf02eb5ef",
+    "source_data_blob": "e62e89a40dbb83932dea7af662208f6a5334f6ed",
+    "ci": {
+      "run_id": 42018740345,
+      "job_id": 127215776806,
+      "url": "https://github.com/Josh-Temple/Fragmenta/actions/runs/42018740345",
+      "overall": "SUCCESS",
+      "japanese_font_install": "SUCCESS_IPAGOTHIC",
+      "original_script_rasterization": "SUCCESS_30_TILES_240_SVG",
+      "actions_artifact": "FAILED_GITHUB_ACTIONS_STORAGE_QUOTA_NO_ZIP",
+      "repo_fallback": "SUCCESS_PRIVATE_30_PNG_FILES"
+    },
+    "model_review": {
+      "png_images_viewed": 30,
+      "unique_ids_viewed": 120,
+      "svg_figures_viewed": 240,
+      "example": 120,
+      "comparison": 120,
+      "ja_headings_notes": "PASS_VISUALLY_READABLE",
+      "ja_diagram_C036": "PASS_CHARACTERS_JU_REN_READABLE",
+      "human_reviewed_svg": 0,
+      "react_real_ui_screenshots_viewed": 0,
+      "independent_d": "NOT_RUN_BY_B",
+      "six_conceptual_P2": [
+        "C-002",
+        "C-008",
+        "C-023",
+        "C-041",
+        "C-093",
+        "C-119"
+      ],
+      "acceptance": "PARTIAL"
+    },
+    "images": {
+      "root": "docs/evidence/composition/20261105_ci_42018740345",
+      "entries": [
+        {
+          "filename": "tile-01-01.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-01-01.png",
+          "ids": [
+            "C-001",
+            "C-002",
+            "C-003",
+            "C-004"
+          ],
+          "sha256": "bc093b57879a6f7227895733b6b21f13d36cb597c7de8254dbd9013bc2d15344",
+          "git_blob": "a3070d8ed1cb32fb592dcbcbe3303911b24bc4d5",
+          "size_bytes": 64755,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-01-02.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-01-02.png",
+          "ids": [
+            "C-005",
+            "C-006",
+            "C-007",
+            "C-008"
+          ],
+          "sha256": "bd5d9249c5d5c654a456a171de4efea01881c77dd04ca1b57020de9cbb89453d",
+          "git_blob": "4b6a15f7f4800e554db8b160abc84e5c30686c1f",
+          "size_bytes": 86056,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-01-03.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-01-03.png",
+          "ids": [
+            "C-009",
+            "C-010",
+            "C-011",
+            "C-012"
+          ],
+          "sha256": "470a6bd62e3f400354795065769e7106f31b543e08006b9d9092f308a7dce720",
+          "git_blob": "bcb2ce30017743a148b1ec06d450bdc6a6ec3dd4",
+          "size_bytes": 93253,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-02-01.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-02-01.png",
+          "ids": [
+            "C-013",
+            "C-014",
+            "C-015",
+            "C-016"
+          ],
+          "sha256": "5a311e0f24ea8b003a1f2a0f9345979bc3ec6a55df9013895892383984d94510",
+          "git_blob": "fa6de4ce81f1b093391cb38a316d21b63d6322cc",
+          "size_bytes": 69884,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-02-02.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-02-02.png",
+          "ids": [
+            "C-017",
+            "C-018",
+            "C-019",
+            "C-020"
+          ],
+          "sha256": "530b0dd3f48842b15be3041cf5708e326ad9975f1067d10cca2a08385183a879",
+          "git_blob": "3c9c7188fc07bf357fd08a47fb50218fb08b6559",
+          "size_bytes": 66635,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-02-03.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-02-03.png",
+          "ids": [
+            "C-021",
+            "C-022",
+            "C-023",
+            "C-024"
+          ],
+          "sha256": "5b8264bf18bcdb4cce71ea5640d2e65dede0fc0558da6d826934992ced6771dc",
+          "git_blob": "85bf1d824f76227fe89dc0e5a86d5beb5c061de1",
+          "size_bytes": 81041,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-03-01.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-03-01.png",
+          "ids": [
+            "C-025",
+            "C-026",
+            "C-027",
+            "C-028"
+          ],
+          "sha256": "c4a27c13d75f572a90c4d8a7d0c2fe52a85d27c99a5b29e3060573c33554fa17",
+          "git_blob": "0c3c241429ed9e1cd4d7efcd40e6381e1b7310ee",
+          "size_bytes": 68794,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-03-02.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-03-02.png",
+          "ids": [
+            "C-029",
+            "C-030",
+            "C-031",
+            "C-032"
+          ],
+          "sha256": "97e80b56abf6afe1a6927962c5bc58302606023b45b0070df6acc4ab08649599",
+          "git_blob": "8e0c66dc73f742b734d77767097f9f0257106150",
+          "size_bytes": 82346,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-03-03.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-03-03.png",
+          "ids": [
+            "C-033",
+            "C-034",
+            "C-035",
+            "C-036"
+          ],
+          "sha256": "b5dc9b312909801d71eff8551b5839ffef2dac5a552c6d2aa7bf6ca679a1decb",
+          "git_blob": "0441db9b117973fd60abcb4fb1ea62d20e0860fa",
+          "size_bytes": 77021,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-04-01.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-04-01.png",
+          "ids": [
+            "C-037",
+            "C-038",
+            "C-039",
+            "C-040"
+          ],
+          "sha256": "e381b05c72a815c219889fecf9864d82b0d1c177120fd45a265bf00dc7f91ed2",
+          "git_blob": "816af09be22fba6bdc88182014d8ba92d0f6903e",
+          "size_bytes": 99022,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-04-02.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-04-02.png",
+          "ids": [
+            "C-041",
+            "C-042",
+            "C-043",
+            "C-044"
+          ],
+          "sha256": "f784fe8114ac511cf7f004943be6e9f115e5eb77a7e4056629bce4d90125f395",
+          "git_blob": "b322685dad0982370a82b04d2830716cdfe71938",
+          "size_bytes": 109145,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-04-03.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-04-03.png",
+          "ids": [
+            "C-045",
+            "C-046",
+            "C-047",
+            "C-048"
+          ],
+          "sha256": "923f73b3b37ca21ad8597b66edc7fab623bf5fce4ba7e0a6c116f3558c695e12",
+          "git_blob": "7345874bceb2a7d7b833f99d6405a2273ccc12f0",
+          "size_bytes": 82565,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-05-01.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-05-01.png",
+          "ids": [
+            "C-049",
+            "C-050",
+            "C-051",
+            "C-052"
+          ],
+          "sha256": "c6dd25437b790b12884993a16b079aa92421ed4f7b0e79c40e70c8490b432357",
+          "git_blob": "56f6f8f5ce5654111cf5c79ccb744b57b36ecf28",
+          "size_bytes": 71313,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-05-02.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-05-02.png",
+          "ids": [
+            "C-053",
+            "C-054",
+            "C-055",
+            "C-056"
+          ],
+          "sha256": "ab14345093127cc3f941c61473ca905f2913d1c0085a2d46d5af6e137b7542ed",
+          "git_blob": "b12a0d808ef382c0b9159b59235643477cd47a15",
+          "size_bytes": 140525,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-05-03.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-05-03.png",
+          "ids": [
+            "C-057",
+            "C-058",
+            "C-059",
+            "C-060"
+          ],
+          "sha256": "7641acf467dbc3456f4f7fda85a30f5687e98451a0487c6740c64a43030b5811",
+          "git_blob": "3d06bec5ce4fdbb3f3e7b44d6831c53aaae4367c",
+          "size_bytes": 102400,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-06-01.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-06-01.png",
+          "ids": [
+            "C-061",
+            "C-062",
+            "C-063",
+            "C-064"
+          ],
+          "sha256": "68dbd58d82724d75c944a5fd9a8dd29277707abc26538ba75e3639fb9484bd11",
+          "git_blob": "559cbc6f21452716639fb4a16c8368873300c619",
+          "size_bytes": 71008,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-06-02.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-06-02.png",
+          "ids": [
+            "C-065",
+            "C-066",
+            "C-067",
+            "C-068"
+          ],
+          "sha256": "9a792823f774e4dc325525590cb55eab00c50e6e81ca9c66be3147a2595da851",
+          "git_blob": "4426a601d7a961830b695f66f577bc119d9191ab",
+          "size_bytes": 72253,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-06-03.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-06-03.png",
+          "ids": [
+            "C-069",
+            "C-070",
+            "C-071",
+            "C-072"
+          ],
+          "sha256": "c02d0e853a52734d46d19955ca342265fbf4925689b6d56bee8c39f5e0df5f72",
+          "git_blob": "f1fed46041a01694be7f0ef578a393fe10c23cdc",
+          "size_bytes": 63080,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-07-01.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-07-01.png",
+          "ids": [
+            "C-073",
+            "C-074",
+            "C-075",
+            "C-076"
+          ],
+          "sha256": "e20308120945d8d9f615a3a997db5486991caf9d7e73eea9e4c26ced9dce4cb9",
+          "git_blob": "0bba1943abfae44a59bdc24aeac62bc9a5b89b4e",
+          "size_bytes": 66441,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-07-02.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-07-02.png",
+          "ids": [
+            "C-077",
+            "C-078",
+            "C-079",
+            "C-080"
+          ],
+          "sha256": "3ec39c7d436c9538ee42d78beb19d7683ef7559f15629c9e8570063d180286aa",
+          "git_blob": "413fdae622f5cb8831cfc985d178cec21535e5c1",
+          "size_bytes": 69308,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-07-03.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-07-03.png",
+          "ids": [
+            "C-081",
+            "C-082",
+            "C-083",
+            "C-084"
+          ],
+          "sha256": "07817bcb2b0efcc77a4520ca773a62215dd56ba3d1bcf35c892576c5a3093bbb",
+          "git_blob": "a8e62f40444ba38ccca5570b61afcdfe13cd8fab",
+          "size_bytes": 62680,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-08-01.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-08-01.png",
+          "ids": [
+            "C-085",
+            "C-086",
+            "C-087",
+            "C-088"
+          ],
+          "sha256": "95951bb4ab707725840259eecb217feb2d5bb7837a19d473d5cb32f672e596e6",
+          "git_blob": "429d76d7e78b6a99ce11ae237e72c9325cb08e92",
+          "size_bytes": 88269,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-08-02.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-08-02.png",
+          "ids": [
+            "C-089",
+            "C-090",
+            "C-091",
+            "C-092"
+          ],
+          "sha256": "26ee0c9fae41c22dfda813abd1acd5424a7e6867ca43dd91ab4f77199288e976",
+          "git_blob": "f54bfff090ed6ba8f3038d3f7b3b67a123de044c",
+          "size_bytes": 102459,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-08-03.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-08-03.png",
+          "ids": [
+            "C-093",
+            "C-094",
+            "C-095",
+            "C-096"
+          ],
+          "sha256": "cfe85ed38a4a401e04d19b730a8ae283b9502542b390fe1b034a91509e93f1d0",
+          "git_blob": "0600c38a850bfd183972780fbcbc92ff321369d8",
+          "size_bytes": 100778,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-09-01.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-09-01.png",
+          "ids": [
+            "C-097",
+            "C-098",
+            "C-099",
+            "C-100"
+          ],
+          "sha256": "f20b773c883fbe46102d882d64269f4b56547f4ce6890c4cb2360c643f608e8f",
+          "git_blob": "0bb049c95dcf29a98570671c97f9814add82174e",
+          "size_bytes": 77848,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-09-02.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-09-02.png",
+          "ids": [
+            "C-101",
+            "C-102",
+            "C-103",
+            "C-104"
+          ],
+          "sha256": "c2be964e3bd7cbd7de9cb843c066ef327a2e21c3a730cd3eb31b18eb0aa48bc1",
+          "git_blob": "a3797b7e8ef1afdaa9da79c1c302c95a1b75d4aa",
+          "size_bytes": 71268,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-09-03.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-09-03.png",
+          "ids": [
+            "C-105",
+            "C-106",
+            "C-107",
+            "C-108"
+          ],
+          "sha256": "33fb4cbb060115b6b5a8608301e574314f8de0e0167647fc554a035618b38bd9",
+          "git_blob": "78c8b66cf642f58ac9ef4aeb5d8b976093eb11ea",
+          "size_bytes": 77528,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-10-01.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-10-01.png",
+          "ids": [
+            "C-109",
+            "C-110",
+            "C-111",
+            "C-112"
+          ],
+          "sha256": "b26faccb889e8cc49fc80e01c629714a4f49f2db47f4ba3bb1d55c713b3e9e9a",
+          "git_blob": "36c9db671cdeda1c9a9a9655464bd5969cabf4d4",
+          "size_bytes": 66332,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-10-02.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-10-02.png",
+          "ids": [
+            "C-113",
+            "C-114",
+            "C-115",
+            "C-116"
+          ],
+          "sha256": "cc4ac48ed98863dd99652b4a2f60b60d8e0ea630a5890ea2020357f18edbb06f",
+          "git_blob": "bafd10897064a4c12c7be363684a6a7732702944",
+          "size_bytes": 66919,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-10-03.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-10-03.png",
+          "ids": [
+            "C-117",
+            "C-118",
+            "C-119",
+            "C-120"
+          ],
+          "sha256": "0ff3c4a4bea382f5861afb4f20f2a4c4f2869af9d8844823dfa011e33f4f98c5",
+          "git_blob": "2034e51bb6c96652f86cae5ba42d59895f9bed79",
+          "size_bytes": 120797,
+          "log_image_complete": true
+        }
+      ]
+    },
+    "release": "HOLD_NO_MERGE / NO_DEPLOY"
   }
 }

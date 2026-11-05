@@ -1,3 +1,14 @@
+# B — CI実SVG全240図：日本語表示修正後の再視認と実PNG30枚保存（2026-11-05）
+
+対象入力HEAD: d0187578516a24ef2b0d2e13bd1c304b3e6a6b5f。正本データSHA-256: 0eecbe805733d98410004cd7b1c35c6d7c1985c6273c5d8783b94c6cf02eb5ef。CI: https://github.com/Josh-Temple/Fragmenta/actions/runs/42018740345 。
+
+- UbuntuのGitHub ActionsにIPAGothicを導入し、元のrender-composition-contact-sheets.cjsによるChromium描画で30タイルを再生成。CI全体はSUCCESS。
+- モデルは30 PNGすべてを開き、全120 ID、配置例120図と対照例120図の実SVG計240図を視認。日本語見出し・比較文章が読めること、C-036図内の『住』『連』が読めることを確認。人間目視は0図、React実画面でのモデル目視は0図。
+- Artifact uploadはGitHub Actionsの保存容量上限により失敗。これをビルド/撮影の失敗と混同しない設定を適用。代替の永続証拠として、private PRブランチの docs/evidence/composition/20261105_ci_42018740345 に30 PNG（合計2471723 bytes）を実保存。各画像のGit blob SHAとPNG SHA-256をJSON manifest/CSVに保存。
+- P2候補はC-002（主役と背景の色面）、C-008（折線のS字性）、C-023（肖像の切取り未図示）、C-041（複数変数）、C-093（視線一致の実空間不成立）、C-119（実検査未実施）を引き続き保留。図と本文の注意書きはあるものの、完全な専門監修PASSとはしない。
+- Bの実画像取得・モデル全件視認・可読な日本語・PR内画像保全は達成。React実表示、モバイル、独立D、専門レビュー・最終受入は未完了。HOLD_NO_MERGE / NO_DEPLOY、Draft維持。
+
+---
 # B — CI実Chromium SVG全240図モデル視認（2026-11-05）
 
 **入力HEAD**: 79d3baacf2f1833e3ff445a8f748e38fda748bee。正本data blob: e62e89a40dbb83932dea7af662208f6a5334f6ed、入力SHA-256: 0eecbe805733d98410004cd7b1c35c6d7c1985c6273c5d8783b94c6cf02eb5ef。
