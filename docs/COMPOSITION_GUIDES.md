@@ -119,3 +119,14 @@ E修正後のHEADとテスト結果はPR #49コメントで確定させる。
 - **公開判定**: `HOLD_NO_MERGE / NO_DEPLOY`。PRはDraftで保持し、mainマージ、Preview/Productionデプロイ、Vercel設定変更をしない。実200%ブラウザズーム、外部OS Clipboard、Android、支援技術、権利判定、生成AI再現性はいずれも`NOT_RUN`（別の実証があればPR最新Eコメントで明記）。
 
 **残作業の順序**：新HEADのCIとデータ構造確認 → Bが元scriptにより240図を生成・実際の画像で全件照合 → CがReact実画面のブラウザ画像と操作を検証 → 同HEADをDが独立再取得し反証 → Eが最終記録。自動DOM試験やCairoSVG代替画像を元scriptの視認実績に算入しない。
+
+
+## 2026-11-06 第5Wave E第一次統合 — SVG視覚証拠とReact全高撮影
+
+- 起点 PR #49 HEAD `11d97bae2de12fc4da29a18ac813fc4ee8930b6f`（Draft/open）、base `ce47d522d6e2356c2a18db56d2d7eb0bef08171f`。
+- Bは元contact-sheet scriptから生成した実Chromium 30タイル（120 ID×2=240図）をモデル視認。日本語字形をIPAフォントで再撮影し、GitHub Private branch `docs/evidence/composition/20261105_ci_42018740345/` に30 PNGを保存。GitHub artifact ZIPは容量上限で0件。B原票120行・manifestの原履歴を維持。**人間視認0**。
+- D別セッションは旧HEAD `d0187578516a24ef2b0d2e13bd1c304b3e6a6b5f` で元scriptの240図を独立視認、P2は C-002/008/023/041/093/119、`D_FINAL=NOT_READY`。Dの旧HEAD結果はE後の新HEADに自動継承しない。
+- Cの `ddfda6e5c1c32c9332925d97f5f6e52228435a1a` から `scripts/browser-smoke.mjs` と担当監査追記を非競合で採用。全高CDP capture・PNG画素寸法・図範囲・SHA-256・sidecarを検査。CIのPR #49のみ撮影を有効化し、28 React候補画像を検証、うち代表6 PNGをActionsログへBase64分割保存する。runnerの`CAPTURED`はモデル実見を意味しない。
+- 項目・図形・本文・AI側データは変更しない。したがって、Bの元データ図形画像との同一性は保持する一方、**Reactの新しい撮影結果と独立D同一HEAD受入は新CI結果と別セッション記録が必要**。Aが提案したC-002/008の注意書き、6件のP2図形修正は未採用として明示して残す。
+- 固定HEADと新CI URL・実画像視認実数・スクリーンショット結果・新D判定はPR #49のEコメントに追記して確定する。真200% browser zoom、外部OS Clipboard、Android、支援技術、120件専門監修、権利判断、生成AI再現性は未検証。
+- **HOLD_NO_MERGE / NO_DEPLOY**。main/本番、Draft状態、Vercel設定を変更しない。
