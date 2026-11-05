@@ -56,5 +56,45 @@ jobs:
           echo "Built-artifact browser smoke did not pass" >&2
           exit 1
 
+
+      - name: Render and preserve composition comparison SVG imagery (PR49 only)
+        if: github.event_name == 'pull_request' && github.event.pull_request.number == 49
+        env:
+          EVIDENCE_DIR: /tmp/fragmenta-composition-visual
+        run: |
+          chrome="$(command -v google-chrome || command -v chromium || true)"
+          test -n "$chrome"
+          CHROME_BIN="$chrome" node scripts/render-composition-contact-sheets.cjs --out "$EVIDENCE_DIR" --capture --tiles
+          node - <<'NODE'
+          const fs=require('fs'),path=require('path'),crypto=require('crypto');
+          const dir=process.env.EVIDENCE_DIR;
+          const m=JSON.parse(fs.readFileSync(path.join(dir,'manifest.json'),'utf8'));
+          if(m.svg_generated!==240||m.screenshots!==10||m.tile_png_created!==30||m.error)throw Error('Incomplete SVG capture');
+          let seen=new Set;
+          for(const t of m.tile_captures){
+            const html=fs.readFileSync(path.join(dir,t.html),'utf8');
+            const ids=[...html.matchAll(/<article id="(C-\d{3})"/g)].map(x=>x[1]);
+            if(ids.join(',')!==t.ids.join(','))throw Error('HTML IDs do not match PNG manifest: '+t.html);
+            for(const id of ids){if(seen.has(id))throw Error('Duplicate ID '+id);seen.add(id)}
+            const png=fs.readFileSync(path.join(dir,t.png));
+            if(crypto.createHash('sha256').update(png).digest('hex')!==t.sha256)throw Error('Image hash mismatch');
+            const encoded=png.toString('base64');
+            console.log('FRAGMENTA_IMG_BEGIN|'+t.png+'|'+t.sha256+'|'+t.ids.join(',')+'|'+encoded.length);
+            for(let k=0;k<encoded.length;k+=4096)console.log('FRAGMENTA_IMG_PART|'+t.png+'|'+encoded.slice(k,k+4096));
+            console.log('FRAGMENTA_IMG_END|'+t.png);
+          }
+          if(seen.size!==120)throw Error('Not all 120 IDs covered: '+seen.size);
+          console.log('FRAGMENTA_CAPTURE_SUMMARY|images=30|svg=240|ids=120|model_seen=0');
+          NODE
+
+      - name: Upload short-lived composition visual evidence
+        if: github.event_name == 'pull_request' && github.event.pull_request.number == 49 && always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fragmenta-composition-svg-capture
+          path: /tmp/fragmenta-composition-visual/
+          if-no-files-found: warn
+          retention-days: 7
+
       # Production deployments are explicitly approved and manually triggered.
       # Do not verify an unrelated, older production SHA on each main push.

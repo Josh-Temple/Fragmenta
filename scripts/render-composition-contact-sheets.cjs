@@ -66,7 +66,25 @@ for(let i=0;i<catalog.categories.length;i++){
 if(csv.length!==121)throw Error('Review row count mismatch');
 fs.writeFileSync(path.join(out,'review-template.csv'),csv.join('\n')+'\n','utf8');
 fs.writeFileSync(path.join(out,'index.html'),'<meta charset="utf-8"><h1>構図 120項目・240 SVG</h1><ul>'+pages.map(x=>'<li><a href="'+x+'">'+x+'</a></li>').join('')+'</ul>','utf8');
-let screenshots=0,error=null;
+
+const tiles=[];
+if(process.argv.includes('--tiles')){
+ for(let i=0;i<catalog.categories.length;i++){
+  const cat=catalog.categories[i],items=catalog.guides.filter(g=>g.categoryId===cat.id);
+  for(let j=0;j<items.length;j+=4){
+   const subset=items.slice(j,j+4);
+   const name='tile-'+String(i+1).padStart(2,'0')+'-'+String(1+j/4).padStart(2,'0')+'.html';
+   const html='<!doctype html><html lang="ja"><meta charset="utf-8"><title>構図 '+esc(cat.label)+'</title>'+style
+    +'<h1>構図 '+esc(cat.label)+'　'+subset[0].id+'–'+subset.at(-1).id+'</h1>'
+    +'<main class="grid">'+subset.map(card).join('')+'</main></html>';
+   fs.writeFileSync(path.join(out,name),html,'utf8');
+   tiles.push({html:name, png:name.replace('.html','.png'), ids:subset.map(g=>g.id)});
+  }
+ }
+ if(tiles.length!==30||tiles.some(t=>t.ids.length!==4))throw Error('Expected 30 complete four-ID tiles');
+}
+
+let screenshots=0,error=null,tileScreenshots=0,tileCaptureError=null,tileCaptures=[];
 if(process.argv.includes('--capture')){
  const chrome=process.env.CHROMIUM_BIN||process.env.CHROME_BIN||'chromium';
  for(const name of pages){
@@ -77,8 +95,25 @@ if(process.argv.includes('--capture')){
   screenshots++;
  }
 }
-const report={input_sha256:hash,items:120,svg_generated:240,pages:10,screenshots,actual_human_visual_review:0,
- checklist_status:'NOT_RUN',error};
+
+if(process.argv.includes('--capture')&&tiles.length&&!error){
+ const chrome=process.env.CHROMIUM_BIN||process.env.CHROME_BIN||'chromium';
+ for(const tile of tiles){
+  const png=path.join(out,tile.png);
+  const r=spawnSync(chrome,['--headless','--no-sandbox','--disable-gpu','--disable-dev-shm-usage',
+   '--no-first-run','--hide-scrollbars','--force-device-scale-factor=1','--window-size=1400,1024',
+   '--screenshot='+png,pathToFileURL(path.join(out,tile.html)).href],{timeout:25000,encoding:'utf8'});
+  if(r.status!==0){tileCaptureError='tile capture failed at '+tile.html+': '+String(r.error?.message||r.stderr||r.status).slice(0,250);break;}
+  const bytes=fs.readFileSync(png);
+  const width=bytes.readUInt32BE(16),height=bytes.readUInt32BE(20);
+  if(width<1300||height<900){tileCaptureError='tile dimensions unexpected at '+tile.png+': '+width+'x'+height;break;}
+  tileScreenshots++;
+  tileCaptures.push({...tile,width,height,bytes:bytes.length,sha256:crypto.createHash('sha256').update(bytes).digest('hex')});
+ }
+}
+
+const report={input_sha256:hash,items:120,svg_generated:240,pages:10,screenshots,tiles_expected:tiles.length,tile_png_created:tileScreenshots,tile_captures:tileCaptures,actual_human_visual_review:0,
+ checklist_status:'NOT_RUN',error:error||tileCaptureError};
 fs.writeFileSync(path.join(out,'manifest.json'),JSON.stringify(report,null,2)+'\n','utf8');
 console.log(JSON.stringify({output:out,...report},null,2));
-if(error)process.exitCode=2;
+if(error||tileCaptureError)process.exitCode=2;
