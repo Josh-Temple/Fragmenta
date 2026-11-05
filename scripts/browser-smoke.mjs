@@ -469,6 +469,21 @@ try {
   }
   await page.send('Emulation.clearDeviceMetricsOverride');
 
+  // Multiple filters together: category, purpose and search must agree with the
+  // canonical candidate set, rather than returning an unrelated composition.
+  await page.send('Runtime.evaluate', {
+    expression: "location.hash = '#/composition?view=atlas&purpose=solitude&category=narrative&q=%E5%AD%A4%E7%8B%AC'",
+  });
+  await poll(async () => {
+    const response = await page.send('Runtime.evaluate', {
+      expression: "({cards:document.querySelectorAll('a[data-composition-card]').length, onlyC073:[...document.querySelectorAll('a[data-composition-card]')].every(a=>a.closest('article')?.innerText.includes('C-073')), reason:document.body.innerText.includes('選択理由'), caution:document.body.innerText.includes('注意点・適用条件')})",
+      returnByValue: true,
+    });
+    const observed = response.result?.value;
+    return observed?.cards === 1 && observed.onlyC073 && observed.reason && observed.caution;
+  }, 'combined category/purpose/keyword filter');
+  console.log('PASS composition combined filters: solitude + narrative + 孤独 => C-073');
+
   // C-106: inspect real SVG geometry and responsive stacking in the rendered React page.
   await page.send('Runtime.evaluate', { expression: "location.hash = '#/composition?id=C-106'" });
   await poll(async () => {
@@ -505,6 +520,52 @@ try {
     }
   }
   await page.send('Emulation.clearDeviceMetricsOverride');
+  // React-rendered focus examples: screenshot evidence is optional, and
+  // DOM/layout checks alone never count as model or human visual review.
+  for (const [id, heading] of [
+    ['C-023', '画面端の緊張'],
+    ['C-041', '前景・中景・背景'],
+    ['C-090', 'コマをまたぐ視線誘導'],
+    ['C-093', '視線の一致'],
+    ['C-119', '縮小・白黒・輪郭検査'],
+  ]) {
+    await page.send('Runtime.evaluate', {
+      expression: 'location.hash = ' + JSON.stringify('#/composition?id=' + id),
+    });
+    await poll(async () => {
+      const response = await page.send('Runtime.evaluate', {
+        expression: "({title:document.querySelector('#composition-title')?.textContent, count:document.querySelectorAll('article svg[role=img]').length})",
+        returnByValue: true,
+      });
+      return response.result?.value?.title === heading && response.result?.value?.count === 2;
+    }, 'focus composition React detail ' + id);
+    for (const width of [360, 390, 768, 1280]) {
+      await page.send('Emulation.setDeviceMetricsOverride', {
+        width, height: 900, deviceScaleFactor: 1, mobile: width < 600,
+      });
+      const result = await page.send('Runtime.evaluate', {
+        expression: `(() => {
+          const rects=[...document.querySelectorAll('article svg[role=img]')].map(x=>x.getBoundingClientRect());
+          return { count:rects.length, overflow:document.documentElement.scrollWidth-innerWidth,
+            stacked:rects.length===2 && rects[1].top>=rects[0].bottom && Math.abs(rects[1].left-rects[0].left)<2 };
+        })()`,
+        returnByValue: true,
+      });
+      const observed = result.result?.value;
+      if (observed?.count !== 2 || observed?.overflow > 1 || (width < 640 && !observed?.stacked))
+        throw new Error('Focus composition layout ' + id + ' / ' + width + 'px: ' + JSON.stringify(observed));
+      console.log('PASS focus composition React SVG DOM/layout ' + id + ' / ' + width + 'px');
+      if (process.env.COMPOSITION_SCREENSHOT_DIR) {
+        await mkdir(process.env.COMPOSITION_SCREENSHOT_DIR, { recursive: true });
+        const capture = await page.send('Page.captureScreenshot', {format:'png',captureBeyondViewport:false});
+        const bytes = Buffer.from(capture.data, 'base64');
+        const name = 'composition-focus-' + id + '-' + width + 'px.png';
+        await writeFile(join(process.env.COMPOSITION_SCREENSHOT_DIR, name), bytes);
+        console.log('SCREENSHOT ' + name + ' sha256=' + createHash('sha256').update(bytes).digest('hex'));
+      }
+    }
+    await page.send('Emulation.clearDeviceMetricsOverride');
+  }
   // CDP viewport emulation is not a true 200% Chrome browser zoom.
   console.log('NOT_RUN true browser 200% zoom (requires independent browser zoom control)');
   await page.send('Runtime.evaluate', { expression: "location.hash = '#/composition?id=C-999'" });
