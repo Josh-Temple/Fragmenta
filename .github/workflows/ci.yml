@@ -36,7 +36,18 @@ jobs:
       - name: Verify all 18 IDs and emit a 36-output machine-readable manifest
         run: node scripts/pattern-manifest.cjs
 
+      - name: Ensure Japanese glyphs for SVG visual evidence (PR49 only)
+        if: github.event_name == 'pull_request' && github.event.pull_request.number == 49
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq --no-install-recommends fonts-ipafont-gothic
+          fc-cache -f >/dev/null
+          fc-list :lang=ja family | head -5
+          fc-list :lang=ja family | grep -qi IPA || { echo 'Japanese font missing'; exit 1; }
+
       - name: Browser startup smoke test
+        env:
+          COMPOSITION_SCREENSHOT_DIR: ${{ github.event_name == 'pull_request' && github.event.pull_request.number == 49 && '/tmp/fragmenta-react-visual' || '' }}
         run: |
           chrome="$(command -v google-chrome || command -v chromium || true)"
           if [ -z "$chrome" ]; then
@@ -57,14 +68,55 @@ jobs:
           exit 1
 
 
-      - name: Ensure Japanese glyphs for SVG visual evidence (PR49 only)
+      - name: Validate React screenshots and log a scoped image sample (PR49 only)
         if: github.event_name == 'pull_request' && github.event.pull_request.number == 49
+        env:
+          REACT_EVIDENCE_DIR: /tmp/fragmenta-react-visual
         run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y -qq --no-install-recommends fonts-ipafont-gothic
-          fc-cache -f >/dev/null
-          fc-list :lang=ja family | head -5
-          fc-list :lang=ja family | grep -qi IPA || { echo 'Japanese font missing'; exit 1; }
+          node - <<'NODE'
+          const fs = require('node:fs');
+          const path = require('node:path');
+          const crypto = require('node:crypto');
+          const dir = process.env.REACT_EVIDENCE_DIR;
+          const records = fs.readdirSync(dir).filter(n=>n.endsWith('.png.json')).sort();
+          if(records.length!==28) throw Error('Expected 28 real React screenshots, got '+records.length);
+          const names=new Set();
+          for(const name of records){
+            const item=JSON.parse(fs.readFileSync(path.join(dir,name),'utf8'));
+            const bytes=fs.readFileSync(path.join(dir,item.file));
+            if(!bytes.subarray(0,8).equals(Buffer.from('89504e470d0a1a0a','hex')))
+              throw Error('PNG signature missing '+item.file);
+            const pixels=[bytes.readUInt32BE(16),bytes.readUInt32BE(20)];
+            const hash=crypto.createHash('sha256').update(bytes).digest('hex');
+            if(hash!==item.sha256||pixels.join(',')!==item.pngPixels.join(',')
+              ||pixels[0]<item.widthCssPx||pixels[1]<item.heightCssPx
+              ||item.state!=='CAPTURED_NOT_VISUALLY_REVIEWED'
+              ||item.modelSeen!==false||item.humanSeen!==false
+              ||item.realReactPage!==true||item.expectedSvgCount!==item.observedSvgCount)
+              throw Error('React capture evidence mismatch '+item.file);
+            names.add(item.file);
+            console.log('FRAGMENTA_REACT_FILE|'+item.file+'|'+hash+'|'+pixels.join('x')+'|svg='+item.observedSvgCount);
+          }
+          const selected=[
+            'composition-purpose-atlas-390px.png',
+            'composition-C-106-detail-390px.png',
+            'composition-focus-C-023-390px.png',
+            'composition-focus-C-041-390px.png',
+            'composition-focus-C-093-390px.png',
+            'composition-focus-C-119-390px.png'
+          ];
+          for(const name of selected){
+            if(!names.has(name))throw Error('Missing representative React image '+name);
+            const bytes=fs.readFileSync(path.join(dir,name));
+            const b64=bytes.toString('base64');
+            const hash=crypto.createHash('sha256').update(bytes).digest('hex');
+            console.log('FRAGMENTA_REACT_IMG_BEGIN|'+name+'|'+hash+'|'+b64.length);
+            for(let offset=0;offset<b64.length;offset+=4096)
+              console.log('FRAGMENTA_REACT_IMG_PART|'+name+'|'+b64.slice(offset,offset+4096));
+            console.log('FRAGMENTA_REACT_IMG_END|'+name);
+          }
+          console.log('FRAGMENTA_REACT_CAPTURE_SUMMARY|images=28|model_seen=0|human_seen=0|sample_logged='+selected.length);
+          NODE
 
       - name: Render and preserve composition comparison SVG imagery (PR49 only)
         if: github.event_name == 'pull_request' && github.event.pull_request.number == 49
@@ -102,7 +154,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: fragmenta-composition-svg-capture
-          path: /tmp/fragmenta-composition-visual/
+          path: |
+            /tmp/fragmenta-composition-visual/
+            /tmp/fragmenta-react-visual/
           if-no-files-found: warn
           retention-days: 7
 
