@@ -298,3 +298,39 @@
 - 基準 `7df55546cc34941116e050d326726a8026d57b9f` との差分は `data/composition-guides.json` の上表12 IDの列挙フィールドと source 1件、それに本監査文書のみ。AブランチのJSONをB/C統合HEADへ丸ごと上書きしない。
 - Bが `diagram` を変更する場合、C-090およびC-013/023/041/093/119の最新画像と文章を再突合。C-090は現時点で矛盾が残る。
 - Eは最終HEADに統合後、AIエクスポートとUIの文字列を再生成・検査し、Dへ固定HEAD引継ぎを実施する。Aによるビルド・実ブラウザ・全240図目視は **NOT_RUN**。
+
+
+## 第4Wave A — 最終候補HEADのP2文面補正・限定原典再照合（2026-11-05 JST）
+
+- **取得元固定HEAD**: `7530bd0420bcf7970cadee6707b800b532b3c8ab`。PR #49は取得時 Draft/open/未マージ。Aは専用ブランチ `feature/20261105-composition-a-svg-editorial` に隔離して実装し、EがID・フィールド単位で統合する。PR HEADはこのA作業では動かさない。
+- **範囲**: C-023/041/093/119の**4 ID・19テキストフィールド**だけ修正。例・対照のSVG図形タプル、出典ID、Bの120行CSV、Cのsidecar、既存180件を変更しない。新規sourceレコード追加0、レビュー状態昇格0。
+- **根拠の区分**: Dの同一HEADでの独立再構成SVG18図の反例と、A自身が正本JSONの座標・色番号・本文を比較した静的読解。**Aによる元scriptのSVGモデル視認0/240、React実画面0、専門家監修0**。Dの所見をAの新規視認数へ加算しない。
+- **結果**: `PARTIAL_EDITORIAL / E_INTEGRATION_PENDING`、公開制御 `HOLD_NO_MERGE / NO_DEPLOY`。
+
+### 文面の最小補正
+
+| ID | フィールド | 具体的な差分・未解決 |
+| --- | --- | --- |
+| C-023 | `example` / `contrast` / `aiInstruction` / `comparisonPoint` / `diagramNote` | 同寸法の矩形2個を左端から中央へ移動する比較であることを明示。顔の目・鼻・輪郭やフレーム外の実際の切り取りは描かれていない。**顔の象徴的な形状を足すかはB/Eが実画像で判断**。 |
+| C-041 | `contrast` / `aiInstruction` / `comparisonPoint` / `diagramNote` | 手すりの削除に加え、山の色3→2、人物の色4→2が変わる複数条件の比較と明記。一要因ずつ調べる別検証手順をAI指示に追加。**図そのものの一変数比較化は未実施**。 |
+| C-093 | `example` / `contrast` / `comparisonPoint` / `diagramNote` | 第一ショットの右矢印と第二ショット内の扉の左右移動のみを示すと説明。カメラと扉の空間座標がないため、視線一致の成否は二図からは判定不能。 |
+| C-119 | `definition` / `example` / `contrast` / `aiInstruction` / `comparisonPoint` / `diagramNote` | 二図は**加工前の配置案**で、縮小・白黒・輪郭検査は未実施と明記。検査方法をAI指示へ追記。**実変換画像の追加・合否判定はB/Cへ**。 |
+
+### 2026-11-05（JST）原典の主張単位の確認
+
+| ID・主張 | 出典ID・発行元／URL | 該当節 | 閲覧日・確認範囲 | 判断できない事項 |
+| --- | --- | --- | --- | --- |
+| C-023／被写体に寄り、画面に大きく収める構図は選択肢の一つ | **未登録資料** Nikon USA「Composing Photographs」 https://www.nikonusa.com/learn-and-explore/c/tips-and-techniques/composing-photographs | 冒頭の背景整理・被写体へ近づいてviewfinderを満たす説明 | 2026-11-05、**一般的なフレーミングの考え方だけ限定一致**。既存17件とは別の新規閲覧1URL。 | C-023の二矩形が顔に見えること、画面端での切断効果、心理的緊張の実証。 
+| C-041／前景・中景・背景は距離によって分ける視覚的な層 | **未登録資料** Adobe「How to add bokeh effects to video」 https://www.adobe.com/creativecloud/video/discover/create-bokeh-effect-in-video.html | 「Get conceptual」節、Foreground / Middleground / Backgroundの箇条書き | 2026-11-05、**層の定義に限定一致**。既存17件とは別の新規閲覧1URL。 | SVGの色の変化による奥行きの知覚強度、複合比較の因果。 
+| C-093／視線一致はショット間の視線方向・空間的連続性を確保する編集技法 | **未登録資料** Adobe「What is continuity editing in film」 https://www.adobe.com/creativecloud/video/hub/ideas/what-is-continuity-editing-in-film.html | 「Eyeline matching」節と「The 180-degree rule」節 | 2026-11-05、**編集の一般原理に限定一致**。既存17件とは別の新規閲覧1URL。 | 扉が画面右か左かだけで二図の視線一致が成立するか。 |
+| C-093／視線を示す第一ショット→視線対象の第二ショット | `filmmakers-academy-eyeline` / Filmmakers Academy https://www.filmmakersacademy.com/glossary/eyeline-match/ | 「How the Eyeline Match Works」第1・2項 | 2026-11-05、**既存原典を再照合（新規資料として加算しない）**。二ショットの役割に限定一致。 | 二つの矩形配置で撮影空間が再現されたこと、AI生成時の動線。 |
+| C-119／縮小・白黒・輪郭表示での判別手順 | **今回の外部原典照合なし**（正本データ内の手順説明） | 該当なし | 2026-11-05、文面と図形の一致だけを静的照合。**外部根拠一致と認定しない**。 | 実際の縮小・変換出力、各サイズでの可読性、色覚・支援技術等の利用結果。 |
+
+**計数の注意**: 今回新規に閲覧・限定照合したURLは3件、既存1件を再照合。第2Waveの7資料・第3Waveの新規2資料／既存1件再照合との重複を除いて記録する。**累計120件の原典確認完了を意味しない**。Nikon / Adobeの新規3URLは原票内の照合メモのみであり、JSONの `sources` と `sourceIds` は増やしていない。第三者画像等の転載許諾・権利判断を行っていない。
+
+### E・B・Cへの引継ぎ
+
+- **E**: 上表の4 ID・19フィールドだけを最新PR HEADへ統合。AのJSONファイルを他担当の変更へ丸ごと上書きしない。統合後に生成JSON・表示・コピーと文面の一致を固定HEADで再検証する。
+- **B**: C-023の人物/顔の識別性、C-041の同色化と重なり、C-093の二ショットの空間関係、C-119の3種の検査手順の不足を実画像で反証。必要な図形変更はB/Eが担当。
+- **C**: AI指示の表示・コピーと `knowledge/composition-guides.json` の生成値の一致、C-119の検査手順の読み違いを検査。
+- **保留**: 元scriptでの最終HEAD全240 SVG視認、React実UI、実200%ズーム、外部OS Clipboard、Android、支援技術、全主張の原典照合と専門家レビュー、権利判断、AI再現性。すべて本Aでは`NOT_RUN`。

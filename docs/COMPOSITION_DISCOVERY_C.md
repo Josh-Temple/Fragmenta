@@ -76,3 +76,19 @@ kill "$preview_pid"
 - 出力した各PNGのSHA-256、Chromium/OS版、実行時JST、各幅と実際の結果をEが別途記録する。**コマンド記載だけでは実行証拠にならない**。
 - Cの変更をA/Bと競合しないようEが既存PRに取り込み、統合後の固定HEADで本番配信を伴わないChromium実測と独立D受入へ進む。
 - **公開制御: HOLD_NO_MERGE / NO_DEPLOY**。
+
+## 2026-11-05 第4Wave C：React候補画面・AIデータ整合の追検査（E統合待ち）
+
+- **対象PR固定HEAD**: `7530bd0420bcf7970cadee6707b800b532b3c8ab`、base `ce47d522d6e2356c2a18db56d2d7eb0bef08171f`。Draft/open/未マージ。C専用ブランチ `feature/20261105-composition-c-react-evidence`。
+- **GitHub正本のfresh read**: `data/composition-guides.json` blob `ed93ca8a15c183f71727174f72a58efd7344122f`、`data/composition-discovery.json` blob `d1ef68cff926376c8a370178756414c5a2d43523`、既存180件 `data/content-ideas.json` blob `21213701cd16f7d0cbfa6d3d8ff19767a4c8ecdf`。
+- **この担当によるソース再計数**: 120 ID/10分野/240図/1,275図形、8目的/50候補/41一意候補/20関連、既存180件。孤立・不明カテゴリ、不明関連先/旧項目リンク、AI指示 `composition` と正本の不一致、`style:null`・未レビュー状態の違反は検出0。生成仕様に従うメモリ上でのAI sidecar再構成と対照であり、`npm run catalog:export` を今回このセッションで実行した証拠ではない。
+- **既存固定HEADのCIを再利用**: [CI 41933535206](https://github.com/Josh-Temple/Fragmenta/actions/runs/41933535206) は成功。ジョブログで図解一覧24→48→72→96→120件／240 SVG DOM、目的/検索/HashRouter、C-106の360/390/768/1280pxのSVG2件と360/390px縦積み、ブラウザ内Clipboard API readback成功を確認。**C自身による実React操作や画像視認ではない**。CI artifactにスクリーンショット保存物なし。
+- **今回のCコード実装**: `scripts/browser-smoke.mjs` に①カテゴリ＋目的＋キーワードを同時選択してC-073のみが抽出される複合条件試験、②C-023/041/090/093/119を4 CSS viewport幅で詳細React SVG2図・横溢れ・狭幅縦積み検査、③ `COMPOSITION_SCREENSHOT_DIR` があるときのみ対象図の各幅PNGとSHA-256を生成する処理を追加。独立した既存Cブランチへコミット。JavaScript構文検査・GitHub readbackをPASS。**新規検査コードはChromium未実行、スクリーンショットは未生成**。
+- **このセッションのブラウザ実行障害**: Node `v22.16.0`、Chromium `144.0.7559.96`、Playwrightは利用可能。Private GitHubへの `git ls-remote` はDNS解決失敗、Playwrightの `http://127.0.0.1` と `data:` の `goto` は `net::ERR_BLOCKED_BY_ADMINISTRATOR`。ローカルReactアプリを取得・起動できず、`npm ci`/build/preview/browser-smokeはこの環境でNOT_RUN。CDP/Playwright `set_content` は利用できるが本来のReact候補画面の代替として扱わない。ブランクページでのキーボードズーム操作は観測倍率が変わらず、真の200%ズームPASSとはしていない。
+- **明確な未実施**: 新CコミットでのCI/Node buildと実Reactスクリーンショットの生成・視認、真の200%ブラウザズーム、外部OS Clipboard、Android実機、支援技術。データ構造PASSは意味的レビュー、専門家監修、生成AI再現性のPASSではない。
+
+### Eへの引継ぎ
+1. 現PR #49とCブランチの最新コミットを比較し、`scripts/browser-smoke.mjs` とこの監査文書のみを競合解決して統合。共通JSON・A/B図形・B CSV原票は未変更。
+2. Eが固定した最終HEADで `npm ci` → `npm run catalog:export` → `npm run composition:verify` → `npm run build` → localhost preview → `COMPOSITION_SCREENSHOT_DIR=/tmp/fragmenta-c-browser CHROME_BIN=/usr/bin/chromium node scripts/browser-smoke.mjs` を実行。生成PNGの実ファイル・hash、4幅、重点ID、環境を読戻しする。最終HEADが変わった場合はそのSHAで再検証する。
+3. スクリーンショットは**生成だけで視認済みにしない**。Reactの実画面を開いて文字可読性・図と説明の一致を個別判定。元script/独立SVG再構成とも混同しない。
+4. Dの最終受入は別セッション・固定HEADで行う。**公開制御: `HOLD_NO_MERGE / NO_DEPLOY`**。新PR、Vercel Preview、mainマージ、Draft解除は実行しない。
