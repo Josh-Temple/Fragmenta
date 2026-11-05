@@ -131,3 +131,18 @@ Reactの `CompositionDiagram.tsx` と図形命令の整合はソース検査で�
 - Eは本ブランチと最新PR #49を差分比較し、AのJSON編集と衝突しないようC-037の`diagram.comparison`だけ移植する。
 - 完全独立受入（D）・Android実機・正式な最終HEAD検証は**NOT_RUN**。**HOLD_NO_MERGE / NO_DEPLOY**。
 
+
+
+---
+
+## B — 2026-11-05 Wave：最新HEADの独立CairoSVG画像部分視認（元script・Reactとは別）
+
+- **固定PR HEAD**: `7530bd0420bcf7970cadee6707b800b532b3c8ab` / base `ce47d522d6e2356c2a18db56d2d7eb0bef08171f`。データGit blob `ed93ca8a15c183f71727174f72a58efd7344122f`。先行Wave記録の原本SHA-256 `1fe6b3646fea1645bcc438ccf8c2ad0ddf9cb86a149e9f9debaa4292baee56bd`（本実行でSHA-256を原本全bytesから再計算したわけではない）。
+- **実行環境**: Node 22.16.0 / Chromium 144.0.7559.96 / Debian GNU/Linux 13、CairoSVG＋Pillow。Private Repoは認証済みGitHub連携でsourceを取得。サンドボックスではGitHub DNS解決失敗によりclone不可。小さなオフラインSVGでもChromium headlessスクリーンショットが20秒でタイムアウトしたため、元 `scripts/render-composition-contact-sheets.cjs --capture` は **NOT_RUN**。
+- **代替手順**: 最新HEADのJSONから18 IDのdiagram tuple、タイトル、comparisonPoint、diagramNoteを取得しローカルへ転記。各IDの署名（数値4桁丸めのJSONに対するFNV-1a 32）を独立照合し **18/18 MATCH**。source tupleに従い、5色・基本SVG図形をCairoSVGで480×300 PNGへ変換した。Pillowで4 ID/枚の画像5枚を作成し、**18 ID×例・対照＝36図をモデルが実画像視認**。人間視認は0。これはChrome／元script／React画面の実行ではない。
+- **視認ID**: C-001～012、023、041、090、093、106、119。**今回未視認102 ID/204図。元scriptによる視認0/240、React視認0/240**。以前の旧HEADに対するBの12図、Dの18図はこの36図に加算しない。
+- **主要所見**: C-090は①②③と二段の矢印の方向一致を画像で確認。C-106は人物移動と矩形の重なりを確認（文字実体はない）。C-012の `0.618` / `0.5` は拡大画像で読める。C-002の対照側の低コントラスト、C-008のS形を折線で示す問題はP2候補。C-023（顔としての識別性）、C-041（比較側の人物が背景色に埋没・複数変数）、C-093（空間連続性非実証）、C-119（実際の縮小/白黒/輪郭処理なし）は既知の制約を画像で再確認。C-041の複数変数は現行の注意書きにも記載済み。
+- **画像証拠**: セッション内PNG 5枚。SHA-256および各ID対応は `docs/COMPOSITION_B_SVG_AUDIT_MANIFEST.json` の `wave_2026_11_05_B` に記録。**画像のGitHub/Library永続保存は行っていない。hashだけをもって現物を保存済みとはみなさない。** 本セッションの成果ZIPは会話の添付として提供。
+- **原票**: `COMPOSITION_B_VISUAL_AUDIT.csv` の末尾に `wave_20261105_*` 列を追加。既存120行・旧HEADの実績列を保持。未見IDは `NOT_RUN`。モデル／人間視認、Chrome／CairoSVG、元script／Reactを別区分に維持。
+- **残る受入条件**: 元scriptの固定HEAD全240 SVG画像と文字を10ページで実視認、React画面の別実行、必要な修正後の再描画、E固定候補HEADでのB再検証、別セッションD受入。**今回のB判定 `PARTIAL / B_FULL_ACTUAL_SVG_NOT_READY`**。
+- **公開制御**: `HOLD_NO_MERGE / NO_DEPLOY`、Draft維持。新PR・Preview・本番反映・マージなし。
