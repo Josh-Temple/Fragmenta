@@ -62,6 +62,79 @@ async function poll(fn, description, ms = timeout) {
   throw new Error('Timed out waiting for ' + description + (lastError ? ': ' + lastError.message : ''));
 }
 
+
+// Optional screenshots of the real React composition pages. Capturing is not visual review.
+async function captureCompositionPage(page, name, { selector, expectedSvgCount }) {
+  if (!process.env.COMPOSITION_SCREENSHOT_DIR) return;
+  const fontWait = await page.send('Runtime.evaluate', {
+    expression: "(async()=>{if(document.fonts?.ready)await document.fonts.ready;return true})()",
+    awaitPromise: true, returnByValue: true,
+  });
+  if (fontWait.exceptionDetails || fontWait.result?.value !== true)
+    throw new Error('Composition screenshot fonts did not settle: ' + name);
+  const measure = await page.send('Runtime.evaluate', {
+    expression: '(' + (function (selector) {
+      const figures = [...document.querySelectorAll(selector)];
+      const bounds = figures.map(el => {
+        const r = el.getBoundingClientRect();
+        return { x: r.left + scrollX, y: r.top + scrollY, width: r.width, height: r.height };
+      });
+      return {
+        hash: location.hash, viewportWidth: innerWidth, dpr: devicePixelRatio,
+        width: Math.ceil(Math.max(document.documentElement.scrollWidth, document.body.scrollWidth, innerWidth)),
+        height: Math.ceil(Math.max(document.documentElement.scrollHeight, document.body.scrollHeight, innerHeight)),
+        svgCount: figures.length, bounds,
+      };
+    }).toString() + ')(' + JSON.stringify(selector) + ')',
+    returnByValue: true,
+  });
+  if (measure.exceptionDetails) throw new Error('Composition screenshot measurement failed: ' + name);
+  const observed = measure.result?.value;
+  if (!observed || observed.svgCount !== expectedSvgCount ||
+      observed.width < 1 || observed.height < 1 || observed.height > 16000 ||
+      observed.bounds.some(b => b.width <= 1 || b.height <= 1 ||
+        b.x < -1 || b.y < -1 ||
+        b.x + b.width > observed.width + 2 || b.y + b.height > observed.height + 2)) {
+    throw new Error('Composition screenshot full-page coverage invalid ' + name + ': ' + JSON.stringify(observed));
+  }
+  // Explicit full-document CSS-pixel clip, with PNG dimensions read back below.
+  const capture = await page.send('Page.captureScreenshot', {
+    format: 'png', captureBeyondViewport: true, fromSurface: true,
+    clip: { x: 0, y: 0, width: observed.width, height: observed.height, scale: 1 },
+  });
+  const bytes = Buffer.from(capture.data || '', 'base64');
+  if (bytes.length < 24 || bytes.subarray(0, 8).toString('hex') !== '89504e470d0a1a0a')
+    throw new Error('Composition screenshot is not a PNG: ' + name);
+  const pngWidth = bytes.readUInt32BE(16);
+  const pngHeight = bytes.readUInt32BE(20);
+  if (pngWidth < observed.width || pngHeight < observed.height)
+    throw new Error('Composition screenshot truncated ' + name +
+      ': png=' + pngWidth + 'x' + pngHeight +
+      ', document=' + observed.width + 'x' + observed.height);
+  const digest = createHash('sha256').update(bytes).digest('hex');
+  await mkdir(process.env.COMPOSITION_SCREENSHOT_DIR, { recursive: true });
+  await writeFile(join(process.env.COMPOSITION_SCREENSHOT_DIR, name), bytes);
+  const record = {
+    state: 'CAPTURED_NOT_VISUALLY_REVIEWED',
+    createdAt: new Date().toISOString(), file: name, sha256: digest,
+    pngPixels: [pngWidth, pngHeight],
+    realReactPage: true, urlHash: observed.hash,
+    runnerCheckoutSha: process.env.GITHUB_SHA || null,
+    widthCssPx: observed.width, heightCssPx: observed.height,
+    viewportCssPx: observed.viewportWidth, dpr: observed.dpr,
+    diagramSelector: selector, expectedSvgCount,
+    observedSvgCount: observed.svgCount, svgBoundsCssPx: observed.bounds,
+    modelSeen: false, humanSeen: false,
+    trueBrowserZoom200: 'NOT_RUN', externalOsClipboardReadback: 'NOT_RUN',
+  };
+  await writeFile(join(process.env.COMPOSITION_SCREENSHOT_DIR, name + '.json'),
+    JSON.stringify(record, null, 2) + '\n');
+  console.log('CAPTURED_NOT_VISUALLY_REVIEWED ' + name + ' sha256=' + digest +
+    ' png=' + pngWidth + 'x' + pngHeight +
+    ' css=' + observed.width + 'x' + observed.height +
+    ' svg=' + observed.svgCount);
+}
+
 const routes = [
   ['/', 'つくりたいUIを'],
   ['/tools', '実用ツール'],
@@ -458,14 +531,10 @@ try {
       throw new Error('Discovery responsive '+width+'px: '+JSON.stringify(state.result?.value));
     // Optional durable evidence: 4 actual Chromium viewport screenshots, never
     // just CSS transforms. The caller decides whether/where to save artifacts.
-    if (process.env.COMPOSITION_SCREENSHOT_DIR) {
-      await mkdir(process.env.COMPOSITION_SCREENSHOT_DIR, { recursive: true });
-      const capture = await page.send('Page.captureScreenshot', { format:'png', captureBeyondViewport:false });
-      const bytes = Buffer.from(capture.data, 'base64');
-      const name = 'composition-purpose-atlas-' + width + 'px.png';
-      await writeFile(join(process.env.COMPOSITION_SCREENSHOT_DIR, name), bytes);
-      console.log('SCREENSHOT ' + name + ' sha256=' + createHash('sha256').update(bytes).digest('hex'));
-    }
+    await captureCompositionPage(page, 'composition-purpose-atlas-' + width + 'px.png', {
+      selector: 'section[aria-labelledby=composition-atlas-title] svg[role=img]',
+      expectedSvgCount: 12,
+    });
   }
   await page.send('Emulation.clearDeviceMetricsOverride');
 
@@ -511,13 +580,9 @@ try {
     if (observed?.count!==2 || observed?.overflow>1 || (width<640 && !observed?.stacked))
       throw new Error('C-106 real SVG responsive at '+width+'px: '+JSON.stringify(observed));
     console.log('PASS C-106 SVG layout '+width+'px '+JSON.stringify(observed));
-    if (process.env.COMPOSITION_SCREENSHOT_DIR) {
-      const capture=await page.send('Page.captureScreenshot', {format:'png',captureBeyondViewport:false});
-      const bytes=Buffer.from(capture.data,'base64');
-      const name='composition-C-106-detail-'+width+'px.png';
-      await writeFile(join(process.env.COMPOSITION_SCREENSHOT_DIR,name),bytes);
-      console.log('SCREENSHOT '+name+' sha256='+createHash('sha256').update(bytes).digest('hex'));
-    }
+    await captureCompositionPage(page, 'composition-C-106-detail-' + width + 'px.png', {
+      selector: 'article svg[role=img]', expectedSvgCount: 2,
+    });
   }
   await page.send('Emulation.clearDeviceMetricsOverride');
   // React-rendered focus examples: screenshot evidence is optional, and
@@ -555,14 +620,9 @@ try {
       if (observed?.count !== 2 || observed?.overflow > 1 || (width < 640 && !observed?.stacked))
         throw new Error('Focus composition layout ' + id + ' / ' + width + 'px: ' + JSON.stringify(observed));
       console.log('PASS focus composition React SVG DOM/layout ' + id + ' / ' + width + 'px');
-      if (process.env.COMPOSITION_SCREENSHOT_DIR) {
-        await mkdir(process.env.COMPOSITION_SCREENSHOT_DIR, { recursive: true });
-        const capture = await page.send('Page.captureScreenshot', {format:'png',captureBeyondViewport:false});
-        const bytes = Buffer.from(capture.data, 'base64');
-        const name = 'composition-focus-' + id + '-' + width + 'px.png';
-        await writeFile(join(process.env.COMPOSITION_SCREENSHOT_DIR, name), bytes);
-        console.log('SCREENSHOT ' + name + ' sha256=' + createHash('sha256').update(bytes).digest('hex'));
-      }
+      await captureCompositionPage(page, 'composition-focus-' + id + '-' + width + 'px.png', {
+        selector: 'article svg[role=img]', expectedSvgCount: 2,
+      });
     }
     await page.send('Emulation.clearDeviceMetricsOverride');
   }
