@@ -580,7 +580,7 @@ try {
     type: 'rawKeyDown', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13,
   });
   await page.send('Input.dispatchKeyEvent', {
-    type: 'char', key: 'Enter', code: 'Enter', text: '\\r', windowsVirtualKeyCode: 13,
+    type: 'char', key: 'Enter', code: 'Enter', text: '\r', windowsVirtualKeyCode: 13,
   });
   await page.send('Input.dispatchKeyEvent', {
     type: 'keyUp', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13,
