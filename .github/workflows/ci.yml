@@ -6,12 +6,18 @@ on:
     branches:
       - main
 
+# Coalesce superseded updates to the same PR or branch.
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -36,18 +42,11 @@ jobs:
       - name: Verify all 18 IDs and emit a 36-output machine-readable manifest
         run: node scripts/pattern-manifest.cjs
 
-      - name: Ensure Japanese glyphs for SVG visual evidence (PR49 only)
-        if: github.event_name == 'pull_request' && github.event.pull_request.number == 49
-        run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y -qq --no-install-recommends fonts-ipafont-gothic
-          fc-cache -f >/dev/null
-          fc-list :lang=ja family | head -5
-          fc-list :lang=ja family | grep -qi IPA || { echo 'Japanese font missing'; exit 1; }
-
-      - name: Browser startup smoke test
-        env:
-          COMPOSITION_SCREENSHOT_DIR: ${{ github.event_name == 'pull_request' && github.event.pull_request.number == 49 && '/tmp/fragmenta-react-visual' || '' }}
+      # Routine PR checks exercise the real built React UI without capturing
+      # or uploading PNG files. Full visual evidence is an on-demand,
+      # offline release-candidate activity (see PR #49 acceptance notes).
+      - name: Browser startup smoke test (no image capture)
+        timeout-minutes: 7
         run: |
           chrome="$(command -v google-chrome || command -v chromium || true)"
           if [ -z "$chrome" ]; then
@@ -57,108 +56,7 @@ jobs:
           npm run preview -- --host 127.0.0.1 --port 4173 --strictPort &
           preview_pid=$!
           trap 'kill "$preview_pid" 2>/dev/null || true' EXIT
-          for attempt in 1 2 3; do
-            echo "Built-artifact browser smoke attempt $attempt/3"
-            if CHROME_BIN="$chrome" node scripts/browser-smoke.mjs; then
-              exit 0
-            fi
-            if [ "$attempt" -lt 3 ]; then sleep 5; fi
-          done
-          echo "Built-artifact browser smoke did not pass" >&2
-          exit 1
-
-
-      - name: Validate React screenshots and log a scoped image sample (PR49 only)
-        if: github.event_name == 'pull_request' && github.event.pull_request.number == 49
-        env:
-          REACT_EVIDENCE_DIR: /tmp/fragmenta-react-visual
-        run: |
-          node - <<'NODE'
-          const fs = require('node:fs');
-          const path = require('node:path');
-          const crypto = require('node:crypto');
-          const dir = process.env.REACT_EVIDENCE_DIR;
-          const records = fs.readdirSync(dir).filter(n=>n.endsWith('.png.json')).sort();
-          if(records.length!==28) throw Error('Expected 28 real React screenshots, got '+records.length);
-          const names=new Set();
-          for(const name of records){
-            const item=JSON.parse(fs.readFileSync(path.join(dir,name),'utf8'));
-            const bytes=fs.readFileSync(path.join(dir,item.file));
-            if(!bytes.subarray(0,8).equals(Buffer.from('89504e470d0a1a0a','hex')))
-              throw Error('PNG signature missing '+item.file);
-            const pixels=[bytes.readUInt32BE(16),bytes.readUInt32BE(20)];
-            const hash=crypto.createHash('sha256').update(bytes).digest('hex');
-            if(hash!==item.sha256||pixels.join(',')!==item.pngPixels.join(',')
-              ||pixels[0]<item.widthCssPx||pixels[1]<item.heightCssPx
-              ||item.state!=='CAPTURED_NOT_VISUALLY_REVIEWED'
-              ||item.modelSeen!==false||item.humanSeen!==false
-              ||item.realReactPage!==true||item.expectedSvgCount!==item.observedSvgCount)
-              throw Error('React capture evidence mismatch '+item.file);
-            names.add(item.file);
-            console.log('FRAGMENTA_REACT_FILE|'+item.file+'|'+hash+'|'+pixels.join('x')+'|svg='+item.observedSvgCount);
-          }
-          const selected=[
-            'composition-purpose-atlas-390px.png',
-            'composition-C-106-detail-390px.png',
-            'composition-focus-C-023-390px.png',
-            'composition-focus-C-041-390px.png',
-            'composition-focus-C-093-390px.png',
-            'composition-focus-C-119-390px.png'
-          ];
-          for(const name of selected){
-            if(!names.has(name))throw Error('Missing representative React image '+name);
-            const bytes=fs.readFileSync(path.join(dir,name));
-            const b64=bytes.toString('base64');
-            const hash=crypto.createHash('sha256').update(bytes).digest('hex');
-            console.log('FRAGMENTA_REACT_IMG_BEGIN|'+name+'|'+hash+'|'+b64.length);
-            for(let offset=0;offset<b64.length;offset+=4096)
-              console.log('FRAGMENTA_REACT_IMG_PART|'+name+'|'+b64.slice(offset,offset+4096));
-            console.log('FRAGMENTA_REACT_IMG_END|'+name);
-          }
-          console.log('FRAGMENTA_REACT_CAPTURE_SUMMARY|images=28|model_seen=0|human_seen=0|sample_logged='+selected.length);
-          NODE
-
-      - name: Render and preserve composition comparison SVG imagery (PR49 only)
-        if: github.event_name == 'pull_request' && github.event.pull_request.number == 49
-        env:
-          EVIDENCE_DIR: /tmp/fragmenta-composition-visual
-        run: |
-          chrome="$(command -v google-chrome || command -v chromium || true)"
-          test -n "$chrome"
-          CHROME_BIN="$chrome" node scripts/render-composition-contact-sheets.cjs --out "$EVIDENCE_DIR" --capture --tiles
-          node - <<'NODE'
-          const fs=require('fs'),path=require('path'),crypto=require('crypto');
-          const dir=process.env.EVIDENCE_DIR;
-          const m=JSON.parse(fs.readFileSync(path.join(dir,'manifest.json'),'utf8'));
-          if(m.svg_generated!==240||m.screenshots!==10||m.tile_png_created!==30||m.error)throw Error('Incomplete SVG capture');
-          let seen=new Set;
-          for(const t of m.tile_captures){
-            const html=fs.readFileSync(path.join(dir,t.html),'utf8');
-            const ids=[...html.matchAll(/<article id="(C-\d{3})"/g)].map(x=>x[1]);
-            if(ids.join(',')!==t.ids.join(','))throw Error('HTML IDs do not match PNG manifest: '+t.html);
-            for(const id of ids){if(seen.has(id))throw Error('Duplicate ID '+id);seen.add(id)}
-            const png=fs.readFileSync(path.join(dir,t.png));
-            if(crypto.createHash('sha256').update(png).digest('hex')!==t.sha256)throw Error('Image hash mismatch');
-            const encoded=png.toString('base64');
-            console.log('FRAGMENTA_IMG_BEGIN|'+t.png+'|'+t.sha256+'|'+t.ids.join(',')+'|'+encoded.length);
-            for(let k=0;k<encoded.length;k+=4096)console.log('FRAGMENTA_IMG_PART|'+t.png+'|'+encoded.slice(k,k+4096));
-            console.log('FRAGMENTA_IMG_END|'+t.png);
-          }
-          if(seen.size!==120)throw Error('Not all 120 IDs covered: '+seen.size);
-          console.log('FRAGMENTA_CAPTURE_SUMMARY|images=30|svg=240|ids=120|model_seen=0');
-          NODE
-
-      - name: Upload short-lived composition visual evidence
-        continue-on-error: true # GitHub artifact quota should not hide successful image captures
-        if: github.event_name == 'pull_request' && github.event.pull_request.number == 49 && always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: fragmenta-composition-svg-capture
-          path: |
-            /tmp/fragmenta-composition-visual/
-            /tmp/fragmenta-react-visual/
-          if-no-files-found: warn
-          retention-days: 7
+          CHROME_BIN="$chrome" node scripts/browser-smoke.mjs
 
       # Production deployments are explicitly approved and manually triggered.
       # Do not verify an unrelated, older production SHA on each main push.
