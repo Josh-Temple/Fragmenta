@@ -38,12 +38,20 @@ if (new Set(requestedTargets).size !== requestedTargets.length ||
   throw new Error('Screenshot target/width filters contain duplicates');
 let captureSourceSha = null;
 let captureWorktreeClean = null;
+let captureRendererBlob = null;
+let captureDataBlob = null;
+let captureRendererSha256 = null;
+let captureDataSha256 = null;
 const captureRecords = [];
 if (captureDir) {
   const requestedSha = process.env.COMPOSITION_CAPTURE_SOURCE_SHA || '';
   if (!/^[a-f0-9]{40}$/i.test(requestedSha))
     throw new Error('COMPOSITION_CAPTURE_SOURCE_SHA must be a full 40-character commit SHA');
   captureSourceSha = execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
+  captureRendererBlob = execFileSync('git', ['rev-parse', 'HEAD:components/CompositionDiagram.tsx'], { encoding: 'utf8' }).trim();
+  captureDataBlob = execFileSync('git', ['rev-parse', 'HEAD:data/composition-guides.json'], { encoding: 'utf8' }).trim();
+  captureRendererSha256 = createHash('sha256').update(await readFile(join(process.cwd(), 'components/CompositionDiagram.tsx'))).digest('hex');
+  captureDataSha256 = createHash('sha256').update(await readFile(join(process.cwd(), 'data/composition-guides.json'))).digest('hex');
   captureWorktreeClean = !execFileSync('git', ['status', '--porcelain'], { encoding: 'utf8' }).trim();
   if (captureSourceSha.toLowerCase() !== requestedSha.toLowerCase())
     throw new Error('Declared screenshot source SHA does not equal local git HEAD');
@@ -175,6 +183,8 @@ async function captureCompositionPage(page, name, { selector, expectedSvgCount }
     bytes: bytes.length, pngPixels: [pngWidth, pngHeight],
     captureMode, target: selection.target, requestedWidth: selection.width,
     checkoutCommitSha: captureSourceSha, checkoutWasClean: captureWorktreeClean,
+    reactRendererGitBlob: captureRendererBlob, compositionDataGitBlob: captureDataBlob,
+    reactRendererCurrentSha256: captureRendererSha256, compositionDataCurrentSha256: captureDataSha256,
     sourceCommitExact: captureWorktreeClean, reviewHandoff: 'LOCAL_FILE_NOT_SHARED',
     realReactPage: true, urlHash: observed.hash,
     runnerCheckoutSha: process.env.GITHUB_SHA || null,
@@ -784,6 +794,8 @@ try {
     const manifest = {
       state: 'CAPTURED_NOT_VISUALLY_REVIEWED', mode: captureMode,
       checkoutCommitSha: captureSourceSha, checkoutWasClean: captureWorktreeClean,
+      reactRendererGitBlob: captureRendererBlob, compositionDataGitBlob: captureDataBlob,
+      reactRendererCurrentSha256: captureRendererSha256, compositionDataCurrentSha256: captureDataSha256,
       captureCount: captureRecords.length,
       bytesTotal: captureRecords.reduce((sum, record) => sum + record.bytes, 0),
       retention: 'TEMPORARY_LOCAL_ONLY_REQUIRES_EXPLICIT_HANDOFF',
