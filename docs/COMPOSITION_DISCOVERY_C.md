@@ -115,3 +115,22 @@ kill "$preview_pid"
 
 3. JSON sidecarの`state: CAPTURED_NOT_VISUALLY_REVIEWED`は画像を生成した事実のみを表し、モデルが実際に画像表示した場合にのみ視認数を別記する。全高captureとPNG IHDRだけでは文字可読性を保証しない。真の200% zoom・外部OS Clipboard・Android/ATは独立して検査する。
 4. 新HEADのCI/画像・実React操作後に別セッションDへ引き渡す。**公開制御：`HOLD_NO_MERGE / NO_DEPLOY`、Draft維持。**
+
+
+## 2026-11-06 第6Wave C：候補Reactの実入力回帰テスト追加／実ブラウザ環境の制約
+
+- **PR fresh read:** #49は `open / Draft / 未マージ`。開始HEAD `231ff9a70143a656834682b6542caa559bbdcb2d`、base `ce47d522d6e2356c2a18db56d2d7eb0bef08171f`。Vercelの `git.deploymentEnabled:false` は変更していない。
+- **C専用ブランチ：** `feature/20261106-composition-c-real-input-acceptance`（既存Draft PRへは未統合）。担当Cの変更は `scripts/browser-smoke.mjs` と本監査文書のみ。共通構図JSON、SVG renderer、B原票、CI workflow、公開設定は不変更。
+- **実装：** 自動browser-smokeに、Reactの構図一覧で `#composition-query` をfocus→CDP `Input.insertText`→Enterキー送信→0件表示確認→「条件をすべて解除」をCDP `Input.dispatchMouseEvent` で押し、目的・検索条件の解除と120件セレクタを確認するテストを追加。URLの直接書換えだけの既存テストに対し、**フォームとボタンの実イベント経路を実際に通る**検査を追加したもの。これは自動Chromium操作であり、人間・独立Dの操作証拠ではない。
+- **新コード確認：** GitHubでのソース読戻しと、V8にてESM import行除去後のasync関数ラップ構文解析はPASS。**新CコードのReact候補画面上での実行は `TEST_ADDED_NOT_EXECUTED`**。型・lint・build・GitHub CIを新C SHAで実行したと主張しない。
+- **実ブラウザ環境の調査：** ローカルでNode 22.16.0、Chromium 144.0.7559.96、Playwrightの存在を確認。Playwrightは `about:blank` に遷移できるが、`data:` と `http://127.0.0.1:4173` は `net::ERR_BLOCKED_BY_ADMINISTRATOR`。Private GitHubへの認証付きcheckoutができず、React/npm依存ライブラリもローカルに未用意。**候補Reactのローカル起動・ライブ操作・28枚PNG新規撮影は `NOT_RUN`**。代わりの合成HTMLをReact実画面とは呼ばない。
+- **限定的な検査方式の動作確認：** `about:blank` に合成HTMLを挿入した独立ローカル実験で、CDP `Input.insertText`＋Enterのイベント経路がフォーム送信まで進むことは確認。ただし**合成HTMLであってFragmenta Reactの合格証拠ではない**。
+- **再確認した旧HEADのCI:** `42066575698` のブラウザ検査はPASS、React全高PNG `28 CAPTURED` と幅別ハッシュ・寸法のログを確認。しかし新Cコードには適用できない。旧React画像は本Wave起案時の集計 `6/28 SEEN_MODEL`、`22/28 UNSEEN`、artifact `0`。Cは本回、モデル実画像視認 `0`、人間視認 `0`、新規PNG取得 `0`。
+- **区別する未実施:** `NOT_RUN_TRUE_ZOOM`、`NOT_RUN_OS_CLIPBOARD`、`NOT_RUN_ANDROID`、`NOT_RUN_AT`。旧CIでChromium内のClipboard API readbackが成功していても、外部OSのreadbackではない。P2 C-002/008/023/041/093/119の図形意味審査・修正はA/B/E/Dの範囲であり、今回CからPASS昇格しない。
+- **公開境界:** `HOLD_NO_MERGE / NO_DEPLOY`。Draft解除・mainマージ・Vercel Preview/Production・新PR作成・自動Deploy設定の変更は実施していない。
+
+### Eへの限定引継ぎ（第6Wave C）
+
+1. Cブランチから `scripts/browser-smoke.mjs` と `docs/COMPOSITION_DISCOVERY_C.md` のみを差分確認して既存PRへ統合。**A/Bの並行変更と競合する箇所はフィールド/ファイル単位で解消**し、データJSONやB監査原票を上書きしない。
+2. **統合後の候補HEADでのみ** Node22 `npm ci` → `npm run build`（prebuild込み）→ offline `npm run preview -- --host 127.0.0.1 --port 4173 --strictPort` → `CHROME_BIN=... COMPOSITION_SCREENSHOT_DIR=... node scripts/browser-smoke.mjs` を実行。追加した `PASS composition CDP keyboard search/Enter and pointer reset` のログと28 PNG sidecarを照合。起動できなければ原因と `NOT_RUN` をそのまま残す。
+3. Bの未見22 PNGの画像現物回収と、Dの**別セッション**での画像実見・React独立操作を別途維持。画像生成/DOM検査/CI合格をCライブ実行やD合格に転記しない。

@@ -553,6 +553,68 @@ try {
   }, 'combined category/purpose/keyword filter');
   console.log('PASS composition combined filters: solitude + narrative + 孤独 => C-073');
 
+  // Exercise the actual React search form with CDP keyboard events, not a
+  // direct location.hash assignment or a synthetic DOM submit event.
+  await page.send('Runtime.evaluate', {
+    expression: "location.hash = '#/composition?view=atlas&purpose=solitude'",
+  });
+  await poll(async () => {
+    const response = await page.send('Runtime.evaluate', {
+      expression: "document.querySelector('#composition-query')?.value === '' && document.querySelectorAll('a[data-composition-card]').length === 6",
+      returnByValue: true,
+    });
+    return response.result?.value;
+  }, 'composition actual search form ready');
+  await page.send('Runtime.evaluate', {
+    expression: "document.querySelector('#composition-query')?.focus()",
+  });
+  await page.send('Input.insertText', { text: '__fragmenta_no_results_2026__' });
+  await poll(async () => {
+    const response = await page.send('Runtime.evaluate', {
+      expression: "document.querySelector('#composition-query')?.value === '__fragmenta_no_results_2026__'",
+      returnByValue: true,
+    });
+    return response.result?.value;
+  }, 'composition real keyboard input');
+  await page.send('Input.dispatchKeyEvent', {
+    type: 'rawKeyDown', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13,
+  });
+  await page.send('Input.dispatchKeyEvent', {
+    type: 'char', key: 'Enter', code: 'Enter', text: '\r', windowsVirtualKeyCode: 13,
+  });
+  await page.send('Input.dispatchKeyEvent', {
+    type: 'keyUp', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13,
+  });
+  await poll(async () => {
+    const response = await page.send('Runtime.evaluate', {
+      expression: "location.hash.includes('q=__fragmenta_no_results_2026__') && document.querySelectorAll('a[data-composition-card]').length === 0 && document.body.innerText.includes('該当する項目がありません')",
+      returnByValue: true,
+    });
+    return response.result?.value;
+  }, 'composition real Enter submit and no-results');
+  // Exercise the reset control through a CDP pointer event, not element.click().
+  const resetButton = await page.send('Runtime.evaluate', {
+    expression: "(()=>{const b=[...document.querySelectorAll('button')].find(x=>x.textContent.trim()==='条件をすべて解除');if(!b)return null;b.scrollIntoView({block:'center'});const r=b.getBoundingClientRect();return {x:r.left+r.width/2,y:r.top+r.height/2,width:r.width,height:r.height}})()",
+    returnByValue: true,
+  });
+  const resetPoint = resetButton.result?.value;
+  if (!resetPoint || resetPoint.width < 1 || resetPoint.height < 44)
+    throw new Error('Composition reset button missing or undersized: ' + JSON.stringify(resetPoint));
+  await page.send('Input.dispatchMouseEvent', {
+    type: 'mousePressed', x: resetPoint.x, y: resetPoint.y, button: 'left', clickCount: 1,
+  });
+  await page.send('Input.dispatchMouseEvent', {
+    type: 'mouseReleased', x: resetPoint.x, y: resetPoint.y, button: 'left', clickCount: 1,
+  });
+  await poll(async () => {
+    const response = await page.send('Runtime.evaluate', {
+      expression: "!location.hash.includes('q=') && !location.hash.includes('purpose=') && !!document.querySelector('#composition-title') && document.querySelector('#composition-item')?.options.length === 120",
+      returnByValue: true,
+    });
+    return response.result?.value;
+  }, 'composition real reset-button click');
+  console.log('PASS composition CDP keyboard search/Enter and pointer reset; automated Chromium UI, not human or independent D operation');
+
   // C-106: inspect real SVG geometry and responsive stacking in the rendered React page.
   await page.send('Runtime.evaluate', { expression: "location.hash = '#/composition?id=C-106'" });
   await poll(async () => {
