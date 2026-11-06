@@ -132,6 +132,14 @@ async function captureCompositionPage(page, name, { selector, expectedSvgCount }
   });
   if (fontWait.exceptionDetails || fontWait.result?.value !== true)
     throw new Error('Composition screenshot fonts did not settle: ' + name);
+  // Full-document CDP clips retain fixed elements at the current scroll offset.
+  // Anchor the mobile bottom navigation at the document end, away from body text.
+  const scrollWait = await page.send('Runtime.evaluate', {
+    expression: "(async()=>{scrollTo({top:document.documentElement.scrollHeight,behavior:'instant'});await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));return true})()",
+    awaitPromise: true, returnByValue: true,
+  });
+  if (scrollWait.exceptionDetails || scrollWait.result?.value !== true)
+    throw new Error('Composition screenshot scroll did not settle: ' + name);
   const measure = await page.send('Runtime.evaluate', {
     expression: '(' + (function (selector) {
       const figures = [...document.querySelectorAll(selector)];

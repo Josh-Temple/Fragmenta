@@ -3,13 +3,13 @@ import type { CompositionGuide, Shape } from '../data/composition';
 
 type Variant = 'example' | 'comparison';
 const colors = ['#241e18', '#77716b', '#b6aca1', '#c9c0b4', '#b13c29'];
-function draw(shape: Shape, index: number): React.ReactNode {
+function draw(shape: Shape, index: number, roundLineEnds = false): React.ReactNode {
   const [kind, ...values] = shape;
   const n = (i: number) => Number(values[i]);
   if (kind === 'rect') return <rect key={index} x={n(0)} y={n(1)} width={n(2)} height={n(3)} fill={colors[n(4)]} />;
   if (kind === 'circle') return <circle key={index} cx={n(0)} cy={n(1)} r={n(2)} fill={colors[n(3)]} />;
   if (kind === 'line') return <line key={index} x1={n(0)} y1={n(1)} x2={n(2)} y2={n(3)}
-    stroke={colors[n(4)]} strokeWidth={n(5)} strokeLinecap="square" />;
+    stroke={colors[n(4)]} strokeWidth={n(5)} strokeLinecap={roundLineEnds ? 'round' : 'square'} />;
   if (kind === 'poly') return <polygon key={index} points={String(values[0])} fill={colors[n(1)]} />;
   if (kind === 'text') return <text key={index} x={n(0)} y={n(1)}
     fill={colors[n(3)]} fontSize={n(4)} fontFamily="sans-serif" fontWeight="600"
@@ -24,7 +24,7 @@ const CompositionDiagram: React.FC<{ guide: CompositionGuide; variant: Variant }
     className="w-full h-auto rounded-lg border border-ink-border" xmlns="http://www.w3.org/2000/svg">
     <title>{guide.titleJa + '・' + label}</title>
     <rect x="0" y="0" width="240" height="150" fill="#f1e9de" />
-    {guide.diagram[variant].map(draw)}
+    {guide.diagram[variant].map((shape, index) => draw(shape, index, guide.id === 'C-008' && variant === 'example'))}
   </svg>;
 };
 export default CompositionDiagram;
