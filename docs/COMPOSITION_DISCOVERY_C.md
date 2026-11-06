@@ -134,3 +134,45 @@ kill "$preview_pid"
 1. Cブランチから `scripts/browser-smoke.mjs` と `docs/COMPOSITION_DISCOVERY_C.md` のみを差分確認して既存PRへ統合。**A/Bの並行変更と競合する箇所はフィールド/ファイル単位で解消**し、データJSONやB監査原票を上書きしない。
 2. **統合後の候補HEADでのみ** Node22 `npm ci` → `npm run build`（prebuild込み）→ offline `npm run preview -- --host 127.0.0.1 --port 4173 --strictPort` → `CHROME_BIN=... COMPOSITION_SCREENSHOT_DIR=... node scripts/browser-smoke.mjs` を実行。追加した `PASS composition CDP keyboard search/Enter and pointer reset` のログと28 PNG sidecarを照合。起動できなければ原因と `NOT_RUN` をそのまま残す。
 3. Bの未見22 PNGの画像現物回収と、Dの**別セッション**での画像実見・React独立操作を別途維持。画像生成/DOM検査/CI合格をCライブ実行やD合格に転記しない。
+
+
+## 2026-11-06 第7Wave C — 省資源のオフラインReact撮影（C専用差分）
+
+**基準:** PR #49 open/Draft/unmerged、C着手HEAD ae7df6c9dd0c75e3bd7d9cc9b204ae2fd7c4f30e、base ce47d522d6e2356c2a18db56d2d7eb0bef08171f。C専用ブランチ feature/20261106-composition-c-wave7-offline-capture。変更は scripts/browser-smoke.mjs と本C原票だけであり、共通JSON、renderer、CI workflow、Vercel設定は不変更。
+
+### 実装した撮影方式
+
+- COMPOSITION_SCREENSHOT_DIR だけでは28枚を撮らず、COMPOSITION_CAPTURE_MODE=focused または final28 の明示が必須。通常CIは両方を指定しないため従来の実React smokeのみ実行する。
+- focused：C-002/008/023/041/093/119 のうち指定したID×最大2幅（既定360/390）、最大12 PNG。C-002/008の詳細もこのモードだけ追加。final28：従来の固定7画面（purpose-atlas、C-106/023/041/090/093/119）×360/390/768/1280px＝28 PNG。任意フィルタによる最終セットの改変を禁止。
+- COMPOSITION_CAPTURE_SOURCE_SHA に指定した40桁のcommitをローカルgit HEADと照合。final28はcleanなcheckoutでなければ停止。focusedがdirtyなら sourceCommitExact:false として完成HEADの証拠にしない。
+- PNG signature/IHDR寸法/IEND、生成数・重複SHAを検査。PNGごとのsidecarと manifest.json に画像SHA256、バイト数、PNG寸法、source commit/clean状態を記録。視認数は初期値0であり、捕捉しただけでは視覚PASSにならない。
+- PNGの保存先はローカル指定先のみ。ログへのBase64画像、GitHubへのPNG保存、Actions artifact upload、Vercel Previewは実施しない。manifestもDへの受渡し・期限内アクセスを保証しない。
+
+### Cが実際に確認できた範囲
+
+| 検査 | 結果 |
+| --- | --- |
+| GitHub PR/対象ファイルのfresh read | EXECUTED、PR HEADと省資源workflow確認 |
+| C専用ブランチへのコード変更・GitHub readback | EXECUTED |
+| 更新後JSの構文解析（ESM import除去のV8解析） | PASS_V8_PARSE、実行PASSではない |
+| ローカルNode/Chromium | Node 22.16.0 / Chromium 144.0.7559.96 |
+| Private repo checkout | BLOCKED_DNS。git ls-remoteが Could not resolve host: github.com |
+| ローカルHTTP上の合成ページをChromiumで表示 | 15秒timeout。Fragmenta Reactではない |
+| npm ci、Vite build、本物Reactの実ブラウザ操作 | NOT_RUN（checkout/依存とブラウザ起動経路が不足） |
+| 今回のfocused / final28 React PNG | NEW_CAPTURED=0、MODEL_SEEN=0、D_SEEN=0 |
+| true 200% browser zoom / 外部OS Clipboard / Android / AT | NOT_RUN |
+| 公開 | HOLD_NO_MERGE / NO_DEPLOY |
+
+旧CIがReact28枚を生成・機械検査した記録、旧モデルの6/28視認・22/28未見は**過去の別HEADの結果**であり、今回Cの新たな実画像取得には算入しない。CではP2図形の修正・意味判定、D独立受入は行っていない。
+
+### E / 認証済みオフライン環境への引継ぎ
+
+Eは本Cブランチから上記2ファイルだけを既存Draft PR #49に限定統合すること。Bの変更とEの最終候補SHAを固定し、認証済みのPrivate checkout・Node22・Chromiumを利用できる環境（例：許可済みCodex Cloud）で次の順に実行する。
+
+1. npm ci → npm run build → npm run preview -- --host 127.0.0.1 --port 4173 --strictPort （background）
+2. CHROME_BIN にローカルChromiumを、COMPOSITION_CAPTURE_SOURCE_SHA に git rev-parse HEAD の40桁SHAを設定。
+3. 限定撮影例（1件390px）: COMPOSITION_SCREENSHOT_DIR=/tmp/fragmenta-p2 COMPOSITION_CAPTURE_MODE=focused COMPOSITION_CAPTURE_TARGETS=C-041 COMPOSITION_CAPTURE_WIDTHS=390 node scripts/browser-smoke.mjs
+4. 変更図の実画像をレビュー者が開いて確認し、問題がなければE最終候補のclean checkoutで1回のみ実施: COMPOSITION_SCREENSHOT_DIR=/tmp/fragmenta-final28 COMPOSITION_CAPTURE_MODE=final28 node scripts/browser-smoke.mjs （SOURCE_SHA/CHROME_BINも継続設定）
+5. manifest.jsonの28件を実PNG・SHA・実バイトと照合し、D別セッションへ権限内の原バイト共有・保全期限を確保。Cの0枚を28枚実見としない。
+
+**停止条件:** React起動不可、HEAD変化、PNG実体不達、Dの画像回収不能ならNOT_READY。artifact quota回避のCI重化・Vercel Deploy・有料化・公開/権限変更は禁止。最終受入 D_FINAL=NOT_READY を維持。

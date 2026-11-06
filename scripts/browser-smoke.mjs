@@ -1,4 +1,4 @@
-import { spawn } from 'node:child_process';
+import { spawn, execFileSync } from 'node:child_process';
 import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { tmpdir } from 'node:os';
@@ -8,6 +8,64 @@ const baseUrl = process.env.SMOKE_BASE_URL || 'http://127.0.0.1:4173';
 const chrome = process.env.CHROME_BIN || process.env.CHROMIUM_BIN || 'google-chrome';
 const timeout = 15000;
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+// Image capture is opt-in and strictly scoped: routine CI never sets these.
+// Focused=up to 6 changed P2 IDs x 2 widths; final28=7 fixed screens x 4 widths.
+const captureMode = process.env.COMPOSITION_CAPTURE_MODE || 'none';
+const captureDir = process.env.COMPOSITION_SCREENSHOT_DIR || '';
+const finalTargets = ['purpose-atlas', 'C-106', 'C-023', 'C-041', 'C-090', 'C-093', 'C-119'];
+const p2Targets = ['C-002', 'C-008', 'C-023', 'C-041', 'C-093', 'C-119'];
+const knownWidths = [360, 390, 768, 1280];
+if ((captureDir && !['focused', 'final28'].includes(captureMode)) ||
+    (!captureDir && captureMode !== 'none'))
+  throw new Error('COMPOSITION_SCREENSHOT_DIR and COMPOSITION_CAPTURE_MODE=focused|final28 are both required');
+const requestedTargets = captureMode === 'focused'
+  ? (process.env.COMPOSITION_CAPTURE_TARGETS || p2Targets.join(',')).split(',').map(s => s.trim())
+  : finalTargets;
+const requestedWidths = captureMode === 'focused'
+  ? (process.env.COMPOSITION_CAPTURE_WIDTHS || '360,390').split(',').map(Number)
+  : knownWidths;
+if (captureMode === 'final28' && (process.env.COMPOSITION_CAPTURE_TARGETS || process.env.COMPOSITION_CAPTURE_WIDTHS))
+  throw new Error('final28 has a fixed 7-target x 4-width matrix: remove focused filters');
+if (captureMode === 'focused' &&
+    (requestedTargets.length < 1 || requestedTargets.length > 6 ||
+     requestedTargets.some(id => !p2Targets.includes(id)) ||
+     requestedWidths.length < 1 || requestedWidths.length > 2 ||
+     requestedWidths.some(width => !knownWidths.includes(width))))
+  throw new Error('focused capture: six approved P2 IDs and at most two of 360,390,768,1280');
+if (new Set(requestedTargets).size !== requestedTargets.length ||
+    new Set(requestedWidths).size !== requestedWidths.length)
+  throw new Error('Screenshot target/width filters contain duplicates');
+let captureSourceSha = null;
+let captureWorktreeClean = null;
+let captureRendererBlob = null;
+let captureDataBlob = null;
+let captureRendererSha256 = null;
+let captureDataSha256 = null;
+const captureRecords = [];
+if (captureDir) {
+  const requestedSha = process.env.COMPOSITION_CAPTURE_SOURCE_SHA || '';
+  if (!/^[a-f0-9]{40}$/i.test(requestedSha))
+    throw new Error('COMPOSITION_CAPTURE_SOURCE_SHA must be a full 40-character commit SHA');
+  captureSourceSha = execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
+  captureRendererBlob = execFileSync('git', ['rev-parse', 'HEAD:components/CompositionDiagram.tsx'], { encoding: 'utf8' }).trim();
+  captureDataBlob = execFileSync('git', ['rev-parse', 'HEAD:data/composition-guides.json'], { encoding: 'utf8' }).trim();
+  captureRendererSha256 = createHash('sha256').update(await readFile(join(process.cwd(), 'components/CompositionDiagram.tsx'))).digest('hex');
+  captureDataSha256 = createHash('sha256').update(await readFile(join(process.cwd(), 'data/composition-guides.json'))).digest('hex');
+  captureWorktreeClean = !execFileSync('git', ['status', '--porcelain'], { encoding: 'utf8' }).trim();
+  if (captureSourceSha.toLowerCase() !== requestedSha.toLowerCase())
+    throw new Error('Declared screenshot source SHA does not equal local git HEAD');
+  if (captureMode === 'final28' && !captureWorktreeClean)
+    throw new Error('final28 requires clean git checkout; focused captures may be provisional');
+}
+function captureSelection(name) {
+  const match = /^composition-(purpose-atlas|C-106-detail|focus-C-\d{3})-(360|390|768|1280)px\.png$/.exec(name);
+  if (!match) throw new Error('Unrecognized screenshot name: ' + name);
+  const target = match[1] === 'C-106-detail' ? 'C-106'
+    : match[1].startsWith('focus-') ? match[1].slice(6) : match[1];
+  const width = Number(match[2]);
+  return { target, width, selected: requestedTargets.includes(target) && requestedWidths.includes(width) };
+}
 
 class DevTools {
   constructor(url) {
@@ -65,7 +123,9 @@ async function poll(fn, description, ms = timeout) {
 
 // Optional screenshots of the real React composition pages. Capturing is not visual review.
 async function captureCompositionPage(page, name, { selector, expectedSvgCount }) {
-  if (!process.env.COMPOSITION_SCREENSHOT_DIR) return;
+  if (!captureDir) return;
+  const selection = captureSelection(name);
+  if (!selection.selected) return;
   const fontWait = await page.send('Runtime.evaluate', {
     expression: "(async()=>{if(document.fonts?.ready)await document.fonts.ready;return true})()",
     awaitPromise: true, returnByValue: true,
@@ -107,17 +167,25 @@ async function captureCompositionPage(page, name, { selector, expectedSvgCount }
     throw new Error('Composition screenshot is not a PNG: ' + name);
   const pngWidth = bytes.readUInt32BE(16);
   const pngHeight = bytes.readUInt32BE(20);
+  if (bytes.length < 36 || bytes.readUInt32BE(bytes.length - 12) !== 0 ||
+      bytes.toString('ascii', bytes.length - 8, bytes.length - 4) !== 'IEND')
+    throw new Error('Composition screenshot missing PNG IEND: ' + name);
   if (pngWidth < observed.width || pngHeight < observed.height)
     throw new Error('Composition screenshot truncated ' + name +
       ': png=' + pngWidth + 'x' + pngHeight +
       ', document=' + observed.width + 'x' + observed.height);
   const digest = createHash('sha256').update(bytes).digest('hex');
-  await mkdir(process.env.COMPOSITION_SCREENSHOT_DIR, { recursive: true });
-  await writeFile(join(process.env.COMPOSITION_SCREENSHOT_DIR, name), bytes);
+  await mkdir(captureDir, { recursive: true });
+  await writeFile(join(captureDir, name), bytes);
   const record = {
     state: 'CAPTURED_NOT_VISUALLY_REVIEWED',
     createdAt: new Date().toISOString(), file: name, sha256: digest,
-    pngPixels: [pngWidth, pngHeight],
+    bytes: bytes.length, pngPixels: [pngWidth, pngHeight],
+    captureMode, target: selection.target, requestedWidth: selection.width,
+    checkoutCommitSha: captureSourceSha, checkoutWasClean: captureWorktreeClean,
+    reactRendererGitBlob: captureRendererBlob, compositionDataGitBlob: captureDataBlob,
+    reactRendererCurrentSha256: captureRendererSha256, compositionDataCurrentSha256: captureDataSha256,
+    sourceCommitExact: captureWorktreeClean, reviewHandoff: 'LOCAL_FILE_NOT_SHARED',
     realReactPage: true, urlHash: observed.hash,
     runnerCheckoutSha: process.env.GITHUB_SHA || null,
     widthCssPx: observed.width, heightCssPx: observed.height,
@@ -127,8 +195,9 @@ async function captureCompositionPage(page, name, { selector, expectedSvgCount }
     modelSeen: false, humanSeen: false,
     trueBrowserZoom200: 'NOT_RUN', externalOsClipboardReadback: 'NOT_RUN',
   };
-  await writeFile(join(process.env.COMPOSITION_SCREENSHOT_DIR, name + '.json'),
+  await writeFile(join(captureDir, name + '.json'),
     JSON.stringify(record, null, 2) + '\n');
+  captureRecords.push(record);
   console.log('CAPTURED_NOT_VISUALLY_REVIEWED ' + name + ' sha256=' + digest +
     ' png=' + pngWidth + 'x' + pngHeight +
     ' css=' + observed.width + 'x' + observed.height +
@@ -687,6 +756,57 @@ try {
       });
     }
     await page.send('Emulation.clearDeviceMetricsOverride');
+  }
+  // C-002/C-008 are not in the historical 28 screens; focus-only additions.
+  if (captureMode === 'focused' &&
+      requestedTargets.some(id => id === 'C-002' || id === 'C-008')) {
+    for (const [id, heading] of [['C-002', '中央構図'], ['C-008', 'S字構図']]) {
+      if (!requestedTargets.includes(id)) continue;
+      await page.send('Runtime.evaluate', {
+        expression: 'location.hash = ' + JSON.stringify('#/composition?id=' + id),
+      });
+      await poll(async () => {
+        const state = await page.send('Runtime.evaluate', {
+          expression: "({title:document.querySelector('#composition-title')?.textContent,svg:document.querySelectorAll('article svg[role=img]').length})",
+          returnByValue: true,
+        });
+        return state.result?.value?.title === heading && state.result?.value?.svg === 2;
+      }, 'focused P2 React detail ' + id);
+      for (const width of requestedWidths) {
+        await page.send('Emulation.setDeviceMetricsOverride', {
+          width, height: 900, deviceScaleFactor: 1, mobile: width < 600,
+        });
+        await captureCompositionPage(page, 'composition-focus-' + id + '-' + width + 'px.png', {
+          selector: 'article svg[role=img]', expectedSvgCount: 2,
+        });
+      }
+      await page.send('Emulation.clearDeviceMetricsOverride');
+    }
+  }
+  if (captureDir) {
+    const expected = requestedTargets.length * requestedWidths.length;
+    if (captureRecords.length !== expected)
+      throw new Error('Screenshot count mismatch ' + captureMode + ': expected ' +
+        expected + ', captured ' + captureRecords.length);
+    const digests = captureRecords.map(record => record.sha256);
+    if (new Set(digests).size !== digests.length)
+      throw new Error('Duplicate screenshot hashes; investigate capture identity');
+    const manifest = {
+      state: 'CAPTURED_NOT_VISUALLY_REVIEWED', mode: captureMode,
+      checkoutCommitSha: captureSourceSha, checkoutWasClean: captureWorktreeClean,
+      reactRendererGitBlob: captureRendererBlob, compositionDataGitBlob: captureDataBlob,
+      reactRendererCurrentSha256: captureRendererSha256, compositionDataCurrentSha256: captureDataSha256,
+      captureCount: captureRecords.length,
+      bytesTotal: captureRecords.reduce((sum, record) => sum + record.bytes, 0),
+      retention: 'TEMPORARY_LOCAL_ONLY_REQUIRES_EXPLICIT_HANDOFF',
+      modelSeen: 0, humanSeen: 0, independentDSeen: 0,
+      records: captureRecords.map(({ file, target, requestedWidth, sha256, bytes, pngPixels }) =>
+        ({ file, target, requestedWidth, sha256, bytes, pngPixels })),
+    };
+    await writeFile(join(captureDir, 'manifest.json'), JSON.stringify(manifest, null, 2) + '\n');
+    console.log('CAPTURE_MANIFEST ' + captureMode + ' count=' + manifest.captureCount +
+      ' bytes=' + manifest.bytesTotal + ' SHA=' + captureSourceSha +
+      ' checkoutClean=' + captureWorktreeClean + ' modelSeen=0');
   }
   // CDP viewport emulation is not a true 200% Chrome browser zoom.
   console.log('NOT_RUN true browser 200% zoom (requires independent browser zoom control)');
