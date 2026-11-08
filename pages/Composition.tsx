@@ -145,10 +145,10 @@ const Composition: React.FC = () => {
       </section>
       <section aria-labelledby="composition-visual" className="mt-6">
         <h3 id="composition-visual" className="text-lg font-bold">構図の模式図</h3>
-        <div className="mt-3 grid gap-4 sm:grid-cols-2">
-          <div><p className="mb-2 text-sm font-semibold">{guide.id === 'C-110' ? '画風A' : '配置例'}</p><CompositionDiagram guide={guide} variant="example" />
+        <div className={guide.id === 'C-093' || guide.id === 'C-119' ? 'mt-3 grid gap-4' : 'mt-3 grid gap-4 sm:grid-cols-2'}>
+          <div><p className="mb-2 text-sm font-semibold">{guide.id === 'C-110' ? '画風A' : guide.id === 'C-119' ? '元図' : '配置例'}</p><CompositionDiagram guide={guide} variant="example" />
             <p className="mt-2 text-sm leading-relaxed">{guide.example}</p></div>
-          <div><p className="mb-2 text-sm font-semibold">{guide.id === 'C-110' ? '画風B' : '対照例'}</p><CompositionDiagram guide={guide} variant="comparison" />
+          <div><p className="mb-2 text-sm font-semibold">{guide.id === 'C-110' ? '画風B' : guide.id === 'C-119' ? '検査表示' : '対照例'}</p><CompositionDiagram guide={guide} variant="comparison" />
             <p className="mt-2 text-sm leading-relaxed">{guide.contrast}</p></div>
         </div>
         {guide.comparisonPoint && <p className="mt-4 rounded-lg border border-ink-border bg-surface p-3 text-sm leading-relaxed"><strong>見比べるポイント：</strong>{guide.comparisonPoint}</p>}
@@ -195,11 +195,11 @@ const Composition: React.FC = () => {
           <h3 className="mt-2 text-base font-bold">{item.titleJa}</h3>
           <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div className="min-w-0">
-              <p className="mb-2 text-xs font-semibold">{item.id === 'C-110' ? '画風A' : '配置例'}</p>
+              <p className="mb-2 text-xs font-semibold">{item.id === 'C-110' ? '画風A' : item.id === 'C-119' ? '元図' : '配置例'}</p>
               <CompositionDiagram guide={item} variant="example" />
             </div>
             <div className="min-w-0">
-              <p className="mb-2 text-xs font-semibold">{item.id === 'C-110' ? '画風B' : '対照例'}</p>
+              <p className="mb-2 text-xs font-semibold">{item.id === 'C-110' ? '画風B' : item.id === 'C-119' ? '検査表示' : '対照例'}</p>
               <CompositionDiagram guide={item} variant="comparison" />
             </div>
           </div>

@@ -791,6 +791,42 @@ try {
       await page.send('Emulation.clearDeviceMetricsOverride');
     }
   }
+  // C-119 inspections must transform the same shapes, not substitute a redrawn scene.
+  await page.send('Runtime.evaluate', { expression: "location.hash = '#/composition?id=C-119'" });
+  await poll(async () => {
+    const state = await page.send('Runtime.evaluate', {
+      expression: "!!document.querySelector('[data-inspection-select]')", returnByValue: true,
+    });
+    return state.result?.value;
+  }, 'C-119 live inspection control');
+  for (const mode of ['grayscale', 'quarter', 'tiny', 'silhouette', 'outline']) {
+    const result = await page.send('Runtime.evaluate', {
+      expression: `(async()=>{
+        const select=document.querySelector('[data-inspection-select]');
+        select.value=${JSON.stringify(mode)};select.dispatchEvent(new Event('change',{bubbles:true}));
+        await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
+        const original=[...document.querySelectorAll('article svg[role=img]')][0];
+        const group=document.querySelector('[data-inspection-transform]');
+        const geometry=el=>[...el.children].filter(x=>x.tagName!=='title' && !(x.tagName==='rect' && x.getAttribute('width')==='240'))
+          .map(x=>[x.tagName,...['x','y','width','height','cx','cy','r'].map(a=>x.getAttribute(a))]);
+        return {mode:group.dataset.inspectionTransform,original:geometry(original),transformed:geometry(group),
+          scale:group.transform.baseVal.consolidate().matrix.a,filter:getComputedStyle(group).filter,
+          fill:group.children[0].getAttribute('fill'),stroke:group.children[0].getAttribute('stroke'),
+          labelled:!!document.querySelector('label[for="'+select.id+'"]'),
+          status:select.parentElement.querySelector('[role=status]')?.textContent};
+      })()`, awaitPromise: true, returnByValue: true,
+    });
+    const state = result.result?.value;
+    const scale = mode === 'quarter' ? 0.25 : mode === 'tiny' ? 0.0625 : 1;
+    if (result.exceptionDetails || state?.mode !== mode || !state.labelled || !state.status ||
+        state.scale !== scale || state.original.length !== 7 ||
+        JSON.stringify(state.original) !== JSON.stringify(state.transformed) ||
+        (mode === 'grayscale' && state.filter !== 'grayscale(1)') ||
+        (mode === 'outline' && (state.fill !== 'none' || state.stroke !== '#241e18')) ||
+        (mode === 'silhouette' && state.fill !== '#241e18'))
+      throw new Error('C-119 controlled inspection failed: '+JSON.stringify(state));
+  }
+  console.log('PASS C-119 same-source geometry, 5 separate live transforms, accessible label and status');
   if (captureDir) {
     const expected = requestedTargets.length * requestedWidths.length;
     if (captureRecords.length !== expected)

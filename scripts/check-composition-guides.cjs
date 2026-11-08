@@ -24,7 +24,6 @@ for(const guide of source.guides) {
    .every(s=>typeof s==='string'&&s.length>=15), 'incomplete editorial guidance: '+guide.id);
  assert(guide.reviewStatus==='draft_unreviewed'&&guide.evidenceStatus==='not_checked','draft status: '+guide.id);
  assert(typeof guide.comparisonPoint==='string'&&guide.comparisonPoint.length>=15,'missing comparison point: '+guide.id);
- assert(JSON.stringify(guide.diagram.example)!==JSON.stringify(guide.diagram.comparison),'identical diagrams: '+guide.id);
  for(const v of ['example','comparison']) {
   const diagram=guide.diagram[v];
   assert(Array.isArray(diagram)&&diagram.length>0,'empty '+v+' diagram: '+guide.id);
@@ -46,8 +45,9 @@ const revised = expected;
 for (const id of revised) {
   const guide = source.guides.find(item => item.id === id);
   assert(guide?.comparisonPoint?.length >= 15, 'missing comparison explanation: ' + id);
-  assert(JSON.stringify(guide.diagram.example) !== JSON.stringify(guide.diagram.comparison),
-    'comparison must differ: ' + id);
+  const sameSource = JSON.stringify(guide.diagram.example) === JSON.stringify(guide.diagram.comparison);
+  assert(id === 'C-119' ? sameSource : !sameSource,
+    id === 'C-119' ? 'inspection must retain the identical source' : 'comparison must differ: ' + id);
 }
 for (const guide of source.guides) {
   for (const [variant, shapes] of Object.entries(guide.diagram)) {
@@ -147,5 +147,19 @@ assert(windows118('comparison').length>windows118('example').length &&
  JSON.stringify(p118.diagram.example.filter(s=>s[0]==='circle'||(s[0]==='rect'&&s[5]===4)))===
  JSON.stringify(p118.diagram.comparison.filter(s=>s[0]==='circle'||(s[0]==='rect'&&s[5]===4))),
  'C-118 window-density comparison must keep character identical');
+
+// Eyeline counterexample changes the second camera direction, not the scene.
+const eyeline = at('C-093');
+const camera2 = variant => eyeline.diagram[variant].find(s => s[0] === 'line' && s[1] === 122 && s[2] === 60);
+for (const [variant, target] of [['example', [182, 38]], ['comparison', [60, 38]]]) {
+  const line = camera2(variant);
+  assert(line, 'C-093 camera 2 shooting direction missing');
+  const dx = line[3] - line[1], dy = line[4] - line[2];
+  const tx = target[0] - line[1], ty = target[1] - line[2];
+  assert(Math.abs(dx * ty - dy * tx) < 0.01 && dx * tx + dy * ty > 0,
+    'C-093 camera 2 must actually aim at the depicted target');
+}
+assert(JSON.stringify(eyeline.diagram.example.slice(0, 13)) === JSON.stringify(eyeline.diagram.comparison.slice(0, 13)),
+  'C-093 person, door, gaze and camera 1 must stay fixed');
 
 console.log('PASS: 120 draft guides / 10 categories, 240 diagrams, geometry and captions, comparison points, route and export hook');
