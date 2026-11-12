@@ -1,7 +1,7 @@
 /* TypeScript AST lint for app sources. Narrower than ESLint; no extra dependencies. */
 const fs = require('node:fs');
 const path = require('node:path');
-const ts = require('typescript');
+const ts = require('typescript-legacy');
 const root = path.resolve(__dirname, '..');
 const targets = ['App.tsx', 'index.tsx', 'types.ts', 'components', 'pages', 'data'];
 function sourceFiles(file) {

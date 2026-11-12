@@ -9,7 +9,7 @@ import { tmpdir } from 'node:os';
 import { resolve, dirname, join, extname, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
-import ts from 'typescript';
+import ts from 'typescript-legacy';
 import { build } from 'vite';
 
 const require = createRequire(import.meta.url);
