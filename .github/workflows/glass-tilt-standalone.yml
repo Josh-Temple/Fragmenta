@@ -22,7 +22,7 @@ jobs:
       - name: Install exact dependencies
         run: npm ci
       - name: Type-check
-        run: npx tsc --noEmit
+        run: npm run typecheck
       - name: Build existing app
         run: npm run build
       - name: Preserve all sixteen standalone HTML fixture checks

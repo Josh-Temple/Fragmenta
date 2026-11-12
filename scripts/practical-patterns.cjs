@@ -3,7 +3,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const assert = require('node:assert/strict');
-const ts = require('typescript');
+const ts = require('typescript-legacy');
 const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
 const mod = { exports: {} };
 new Function('require', 'exports', 'module', ts.transpileModule(
