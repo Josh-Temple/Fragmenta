@@ -13,12 +13,12 @@ The repository should remain deployable as a conventional Vite static applicatio
 - Source branch: `main`
 - URL: https://fragmenta-brown.vercel.app
 - Access: public
-- Deployment: automatic after changes reach `main`
+- Deployment: manual only. A Production deployment requires separate, explicit approval of the integrated PR and the exact release SHA (see `docs/DEPLOYMENT_POLICY.md`). Automatic Git deployments are disabled via `git.deploymentEnabled: false` in `vercel.json`.
 
 ### Preview
 
 - Source: pull requests / non-production branches
-- Deployment: automatic Vercel Preview Deployment
+- Deployment: manual, on-demand Vercel Preview Deployment for one reviewed candidate SHA (see `docs/DEPLOYMENT_POLICY.md`). Automatic Git deployments are disabled.
 - Access: Vercel authentication is enabled
 - Purpose: visual and interaction review before merge
 
@@ -74,7 +74,7 @@ If Fragmenta later needs server-side APIs or other runtime capabilities, evaluat
 4. Wait for GitHub CI.
 5. Review the exact Vercel Preview Deployment, especially on mobile for visual changes. Keep authentication enabled.
 6. Confirm security-risk handling, the current Production alias, the rollback target, and the authorized operator before merging the single release candidate to `main`.
-7. Confirm the automatic Production Deployment reaches `READY`, serves the actual new `main` SHA, and ran the locked install/build.
+7. Confirm the manually requested Production Deployment reaches `READY`, serves the actual new `main` SHA, and ran the locked install/build.
 8. Verify the application and key interactions on Production independently. If rendering differs from the accepted Preview, treat the release as incomplete and follow the verified recovery procedure.
 
 ## Source-controlled install command
