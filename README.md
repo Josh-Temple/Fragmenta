@@ -14,7 +14,7 @@ Fragmenta is deployed to Vercel from the GitHub repository.
 
 - Production: https://fragmenta-brown.vercel.app
 - Production branch: `main`
-- Pull requests: Vercel Preview Deployments
+- Pull requests: manual Vercel Preview Deployments only (see `docs/DEPLOYMENT_POLICY.md`); automatic Git deployments are disabled
 - Production is public; previews require Vercel authentication
 - Framework: Vite
 - Node.js: 22.x
