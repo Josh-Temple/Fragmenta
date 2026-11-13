@@ -1244,7 +1244,7 @@
 
 **Material Design** ・ 状態：企画段階
 
-参考メモ（未レビュー）：Material Designの公式資料を起点に、原則・コンポーネント・利用条件を比較可能な項目として整理する。
+参考メモ（未レビュー）：GoogleのMaterial Design 3は、色・文字・形などのスタイルとコンポーネントを組み合わせるためのデザインシステム。参照した資料ではテーマの作り方を説明している。
 
 関連案：[メガメニュー](#idea-components-01)
 
@@ -1252,7 +1252,7 @@
 
 **Carbon Design System** ・ 状態：企画段階
 
-参考メモ（未レビュー）：Carbon Design Systemの公式情報を起点に、パターンとデザイン原則を参照用に整理する。
+参考メモ（未レビュー）：CarbonはIBMのデザインシステム。共通の基盤に加え、製品など用途別の拡張があり、コンポーネント、パターン、コード、設計資料が提供されている。
 
 関連案：[棒グラフ](#idea-data-viz-01)
 
@@ -1260,7 +1260,7 @@
 
 **Fluent** ・ 状態：企画段階
 
-参考メモ（未レビュー）：Fluentの公式資料に沿って、Microsoftのデザイン指針と実装資料の適用範囲を整理する。
+参考メモ（未レビュー）：Fluent 2はMicrosoftのデザインシステム。公式サイトはWeb、iOS、Android、Windowsのコンポーネント資料への導線を掲載している。
 
 関連案：[日本語・英語併記の組版](#idea-typography-11)
 
@@ -1268,7 +1268,7 @@
 
 **Apple Human Interface Guidelines** ・ 状態：企画段階
 
-参考メモ（未レビュー）：AppleのHuman Interface Guidelinesを、画面構成・入力・ナビゲーションの参考資料として調査する企画。
+参考メモ（未レビュー）：AppleのHuman Interface Guidelinesは、Appleの各プラットフォーム向けに、設計の基礎、操作パターン、部品、入力方法などを案内する資料。
 
 関連案：[タッチ操作領域の確保](#idea-accessibility-05)
 
