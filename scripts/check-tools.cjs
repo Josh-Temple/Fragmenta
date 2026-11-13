@@ -69,8 +69,17 @@ assert.equal(liveTools.filter(tool => matchesSearch('行間', [tool.titleJa, ...
 const { definitions } = load('data/definitions.tsx');
 assert.equal(Object.keys(definitions).length, 18);
 assert.deepEqual(Object.keys(patternSearchAliases).sort(), Object.keys(definitions).sort());
+const { patternChoices } = load('data/pattern-choices.ts');
+assert.deepEqual(Object.keys(patternChoices).sort(), Object.keys(definitions).sort());
+for (const [id, choice] of Object.entries(patternChoices)) {
+  assert.ok(choice.avoidWhen.trim() && choice.startWith.trim(), 'missing selection guidance: ' + id);
+  assert.equal(choice.related.length, 2, 'expected two related patterns: ' + id);
+  assert.equal(new Set(choice.related.map(item => item.id)).size, 2, 'duplicate related pattern: ' + id);
+  for (const item of choice.related)
+    assert.ok(definitions[item.id] && item.id !== id && item.reason.trim(), 'invalid related pattern: ' + id + '/' + item.id);
+}
 const { designStyles } = load('data/design-styles.ts');
 assert.equal(designStyles.length, 24);
 assert.ok(Object.keys(styleSearchAliases).every(id => designStyles.some(style => style.id === id)));
 assert.equal(designStyles.filter(style => matchesSearch('ガラス', [style.ja, style.summary, ...style.features, styleSearchAliases[style.id] ?? ''])).length > 0, true);
-console.log('PASS tools/discovery: WCAG fixtures and exact thresholds, 256 gray pairs, input rejection, scoped typography CSS, Japanese/Unicode search, 18 patterns + 24 styles + 2 live / 10 planned tools');
+console.log('PASS tools/discovery: WCAG fixtures and exact thresholds, 256 gray pairs, input rejection, scoped typography CSS, Japanese/Unicode search, 18 pattern guides and related links, 24 styles + 2 live / 10 planned tools');

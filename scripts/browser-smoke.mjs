@@ -1010,6 +1010,59 @@ try {
   }, 'Search field accessible label');
   console.log('PASS Search field explicit accessible label');
 
+  // Visit every selection guide in the built React app and check its two links.
+  const patternIds = [
+    'elastic-button', 'smart-skeleton', 'glass-tilt', 'fluid-toggle', 'glitch-text', 'morph-fab',
+    'warm-neo-brutalist-editorial', 'editorial-split-layout', 'inline-validation',
+    'article-table-of-contents', 'readable-article', 'native-faq', 'pricing-comparison',
+    'release-timeline', 'metric-summary', 'breadcrumb-trail', 'empty-state', 'responsive-data-table',
+  ];
+  await page.send('Emulation.setDeviceMetricsOverride', { width: 390, height: 844, deviceScaleFactor: 1, mobile: true });
+  for (const id of patternIds) {
+    await page.send('Runtime.evaluate', { expression: 'location.hash = ' + JSON.stringify('#/p/' + id) });
+    const observed = await poll(async () => {
+      const response = await page.send('Runtime.evaluate', {
+        expression: `(() => {
+          const box = document.querySelector('section[data-pattern-id="${id}"]');
+          if (!box) return null;
+          return { targets: [...box.querySelectorAll('a')].map(a => a.getAttribute('href')),
+            reasons: [...box.querySelectorAll('li p')].map(p => p.textContent.trim()),
+            overflowing: box.scrollWidth > box.clientWidth + 1 };
+        })()`, returnByValue: true,
+      });
+      return response.result?.value;
+    }, 'selection guide for ' + id);
+    const targets = observed.targets.map(href => href?.replace(/^#\/p\//, ''));
+    if (targets.length !== 2 || new Set(targets).size !== 2 ||
+        targets.some(target => !patternIds.includes(target) || target === id) ||
+        observed.reasons.length !== 2 || observed.reasons.some(reason => !reason) || observed.overflowing)
+      throw new Error('Invalid pattern selection guide ' + id + ': ' + JSON.stringify(observed));
+  }
+  console.log('PASS 18 selection guides with two valid related links at 390 CSS px');
+
+  await page.send('Runtime.evaluate', { expression: "location.hash = '#/p/elastic-button'" });
+  await poll(async () => {
+    const response = await page.send('Runtime.evaluate', {
+      expression: "Boolean(document.querySelector('section[data-pattern-id=elastic-button] a[href=\"#/p/fluid-toggle\"]'))",
+      returnByValue: true,
+    });
+    return response.result?.value;
+  }, 'related pattern keyboard link');
+  await page.send('Runtime.evaluate', {
+    expression: "document.querySelector('section[data-pattern-id=elastic-button] a[href=\"#/p/fluid-toggle\"]').focus()",
+  });
+  await page.send('Input.dispatchKeyEvent', { type: 'keyDown', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13 });
+  await page.send('Input.dispatchKeyEvent', { type: 'keyUp', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13 });
+  await poll(async () => {
+    const response = await page.send('Runtime.evaluate', {
+      expression: "location.hash === '#/p/fluid-toggle' && document.activeElement?.matches('h1[tabindex=\"-1\"]') && document.activeElement.textContent.trim() === 'Fluid Toggle'",
+      returnByValue: true,
+    });
+    return response.result?.value;
+  }, 'related pattern keyboard navigation and heading focus');
+  console.log('PASS related pattern Enter navigation moves focus to destination heading');
+  await page.send('Emulation.clearDeviceMetricsOverride');
+
   await page.send('Runtime.evaluate', { expression: "location.hash = '#/p/fluid-toggle'" });
   await poll(async () => {
     const result = await page.send('Runtime.evaluate', {

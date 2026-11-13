@@ -1,9 +1,16 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import type { PatternGuide } from '../data/pattern-guides';
+import { patternChoices } from '../data/pattern-choices';
+import { definitions } from '../data/definitions';
 
-const PatternUsage: React.FC<{ guide: PatternGuide }> = ({ guide }) => (
-  <div className="space-y-4 text-sm leading-relaxed text-ink-muted">
-    <p>{guide.useWhen}</p>
+const PatternUsage: React.FC<{ guide: PatternGuide; id: string }> = ({ guide, id }) => (
+  <div lang="en" className="space-y-4 text-sm leading-relaxed text-ink-muted">
+    <div><h3 className="font-semibold text-ink mb-2">When to use it</h3><p>{guide.useWhen}</p></div>
+    {patternChoices[id] && <>
+      <div><h3 className="font-semibold text-ink mb-2">When it is not a good fit</h3><p>{patternChoices[id].avoidWhen}</p></div>
+      <div><h3 className="font-semibold text-ink mb-2">Where to start</h3><p>{patternChoices[id].startWith}</p></div>
+    </>}
     <p><span className="font-semibold text-ink">Code format:</span> {guide.codeFormat}</p>
     <div>
       <h3 className="font-semibold text-ink mb-2">Try the parameters</h3>
@@ -29,6 +36,15 @@ const PatternUsage: React.FC<{ guide: PatternGuide }> = ({ guide }) => (
         {guide.limitations.map(note => <li key={note}>{note}</li>)}
       </ul>
     </div>
+    {patternChoices[id] && <section aria-labelledby={`related-patterns-${id}`} data-pattern-id={id}>
+      <h3 id={`related-patterns-${id}`} className="font-semibold text-ink mb-2">Related patterns</h3>
+      <ul className="space-y-3">
+        {patternChoices[id].related.map(item => <li key={item.id}>
+          <Link to={'/p/' + item.id} className="inline-flex min-h-11 items-center py-2 font-semibold text-ink underline underline-offset-4 rounded focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">{definitions[item.id].title}</Link>
+          <p>{item.reason}</p>
+        </li>)}
+      </ul>
+    </section>}
   </div>
 );
 

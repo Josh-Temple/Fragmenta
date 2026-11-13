@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { definitions, getPatternKind } from '../data/definitions';
 import { patternGuides } from '../data/pattern-guides';
@@ -21,6 +21,7 @@ const PatternDetail: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'code' | 'prompt' | 'parameters'>('parameters');
   const [copyStatus, setCopyStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [motionPaused, setMotionPaused] = useState(false);
+  const titleRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
     if (copyStatus === 'idle') return;
@@ -34,6 +35,7 @@ const PatternDetail: React.FC = () => {
   useEffect(() => {
     if (!def) return;
     window.scrollTo(0, 0);
+    titleRef.current?.focus({ preventScroll: true });
 
     const defaults: Record<string, number> = {};
     def.params.forEach(param => {
@@ -95,7 +97,7 @@ const PatternDetail: React.FC = () => {
         >
           <span className="material-symbols-outlined text-[24px]">arrow_back</span>
         </button>
-        <h1 className="text-ink text-base font-bold leading-tight tracking-tight flex-1 text-center truncate px-2 font-display">
+        <h1 ref={titleRef} tabIndex={-1} className="text-ink text-base font-bold leading-tight tracking-tight flex-1 text-center truncate px-2 font-display">
           {def.title}
         </h1>
         <div className="size-10" aria-hidden="true" />
@@ -229,7 +231,7 @@ const PatternDetail: React.FC = () => {
             {patternGuides[def.id] && (
               <div className="border-t border-ink-border pt-6 space-y-4">
                 <h2 className="text-lg font-bold font-display">Using this pattern</h2>
-                <PatternUsage guide={patternGuides[def.id]} />
+                <PatternUsage guide={patternGuides[def.id]} id={def.id} />
                 <Link to="/guide" className="inline-block text-sm text-ink underline underline-offset-4 py-2 rounded-xs focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink">Read the reuse guide</Link>
               </div>
             )}

@@ -116,7 +116,7 @@ const BestPractices: React.FC = () => {
                   <span className="block pl-4 mt-1 text-xs font-normal text-ink-muted">{guide.codeFormat}</span>
                 </summary>
                 <div className="mt-4 pl-4 space-y-4">
-                  <PatternUsage guide={guide} />
+                  <PatternUsage guide={guide} id={id} />
                   <Link to={`/p/${id}`} className={`${linkClass} inline-block py-2`}>Open {definitions[id].title}</Link>
                 </div>
               </details>
