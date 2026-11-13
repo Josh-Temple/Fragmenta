@@ -27,14 +27,18 @@ type InspectionMode = keyof typeof inspectionModes;
 const InspectionDiagram: React.FC<{ guide: CompositionGuide }> = ({ guide }) => {
   const [mode, setMode] = React.useState<InspectionMode>('grayscale');
   const selectId = React.useId();
+  const descriptionId = React.useId();
   const scale = mode === 'quarter' ? 0.25 : mode === 'tiny' ? 0.0625 : 1;
   return <div data-composition-inspection={mode}>
     <svg viewBox="0 0 240 150" role="img" aria-label={guide.titleJa + 'の検査表示：' + inspectionModes[mode].label}
+      aria-describedby={descriptionId}
       className="w-full h-auto rounded-lg border border-ink-border" xmlns="http://www.w3.org/2000/svg">
       <title>{'共通元図 → ' + inspectionModes[mode].label}</title>
-      <rect x="0" y="0" width="240" height="150" fill="#f1e9de" />
+      <desc id={descriptionId}>{guide.example + ' ' + inspectionModes[mode].detail}</desc>
+      <rect x="0" y="0" width="240" height="150" fill="#fff" />
       <g data-inspection-transform={mode} transform={`translate(${120 * (1 - scale)} ${75 * (1 - scale)}) scale(${scale})`}
         style={mode === 'grayscale' ? { filter: 'grayscale(1)' } : undefined}>
+        <rect data-inspection-background="true" x="0" y="0" width="240" height="150" fill="#f1e9de" />
         {guide.diagram.example.map((shape, index) => {
           const element = draw(shape, index);
           if ((mode !== 'silhouette' && mode !== 'outline') || !React.isValidElement(element)) return element;
@@ -56,13 +60,16 @@ const InspectionDiagram: React.FC<{ guide: CompositionGuide }> = ({ guide }) => 
   </div>;
 };
 const CompositionDiagram: React.FC<{ guide: CompositionGuide; variant: Variant }> = ({ guide, variant }) => {
+  const descriptionId = React.useId();
   if (guide.id === 'C-119' && variant === 'comparison') return <InspectionDiagram guide={guide} />;
   const label = guide.id === 'C-110'
     ? (variant === 'example' ? '画風A' : '画風B')
     : guide.id === 'C-119' ? '元図' : (variant === 'example' ? '配置例' : '対照例');
   return <svg viewBox="0 0 240 150" role="img" aria-label={guide.titleJa + 'の' + label + '。説明は図の下の文章を参照してください。'}
+    aria-describedby={descriptionId}
     className="w-full h-auto rounded-lg border border-ink-border" xmlns="http://www.w3.org/2000/svg">
     <title>{guide.titleJa + '・' + label}</title>
+    <desc id={descriptionId}>{(variant === 'example' ? guide.example : guide.contrast) + ' ' + guide.comparisonPoint}</desc>
     <rect x="0" y="0" width="240" height="150" fill="#f1e9de" />
     {guide.diagram[variant].map((shape, index) => draw(shape, index, guide.id === 'C-008' && variant === 'example'))}
   </svg>;

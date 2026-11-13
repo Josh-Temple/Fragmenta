@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "kind": "composition-guides",
   "status": "draft_unreviewed",
-  "intro": "構図の120項目を横断する編集下書きです。定義・配置例・対照例・比較の視点・AI指示例・独自の模式図2点を備えます。模式図は実証済みの心理効果や絶対的な良否を表しません。",
+  "intro": "構図の120項目を横断する編集下書きです。定義・配置例・対照例・比較の視点・AI指示例・模式図2点を備えます。模式図は実証済みの心理効果や絶対的な良否を表しません。",
   "issueUrl": "https://github.com/Josh-Temple/Fragmenta/issues/48",
   "categories": [
     {
@@ -165,6 +165,34 @@
       "url": "https://www.filmmakersacademy.com/glossary/eyeline-match/",
       "scope": "視線を示すショットとその対象を示す後続ショットを空間的に接続する編集技法。二コマの画面内左右位置だけで成立を保証するものではない。",
       "rights": "教育資料へのリンクのみ。ページの図・映像素材を転載していない。"
+    },
+    "adobe-foreground-layers": {
+      "title": "Foreground, middle ground, and background in photography",
+      "publisher": "Adobe",
+      "url": "https://www.adobe.com/creativecloud/photography/hub/guides/foreground-middleground-background.html",
+      "scope": "写真における前景・中景・背景の区別と、全ての層が常に必要ではないこと。模式図の知覚効果を実証するものではない。",
+      "rights": "参考リンクのみ。写真・図版の転載権を含まない。"
+    },
+    "openai-image-prompting": {
+      "title": "Image prompting",
+      "publisher": "OpenAI",
+      "url": "https://developers.openai.com/api/docs/guides/image-prompting",
+      "scope": "画像生成で目的・構図・位置・制約を明示し、結果を確認して調整するためのOpenAIのガイド。指定通りの再現を保証するものではない。",
+      "rights": "参考リンクのみ。作例画像の転載権を含まない。"
+    },
+    "adobe-photo-composition-ja": {
+      "title": "写真構図の基本",
+      "publisher": "Adobe",
+      "url": "https://www.adobe.com/jp/creativecloud/photography/discover/photo-composition.html",
+      "scope": "写真の用途や、写真上に文字を載せる可能性を撮影時に考慮するという助言。図での文字の可読性を立証しない。",
+      "rights": "参考リンクのみ。写真・図版の転載権を含まない。"
+    },
+    "pictorial-relative-size": {
+      "title": "Pictorial Depth Probed through Relative Sizes",
+      "publisher": "Wagemans, van Doorn, Koenderink / i-Perception (2011)",
+      "url": "https://journals.sagepub.com/doi/10.1068/i0474",
+      "scope": "絵画空間で相対的な大きさを奥行きの手掛かりとして扱った研究。特定の人物・建物の実寸や感情効果を証明しない。",
+      "rights": "論文へのリンクのみ。図版等の転載・改変は別途利用条件の確認が必要。"
     }
   },
   "guides": [
@@ -174,7 +202,7 @@
       "categoryId": "basics",
       "definition": "画面を縦横三等分した線や交点を目安に主題の位置を考える。",
       "example": "街路の奥に立つ人物を右側の交点付近に置き、道路を主題へ向ける。",
-      "contrast": "全要素を機械的に交点へ置くと、画面の意味や視線の流れが弱くなる。",
+      "contrast": "人物の交点付近の位置は同じ。対照図では道路の誘導線を除き、黒い矩形を追加した。交点の有無だけを比べる図ではない。",
       "aiInstruction": "人物を右上の三分割交点付近に小さく配置。道路の線は人物へ収束。背景の建築を簡略化。",
       "diagram": {
         "example": [
@@ -332,14 +360,14 @@
       ],
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "comparisonPoint": "交点は配置の選択肢であり、主題が明確なら外れていてもよい。"
+      "comparisonPoint": "人物位置は固定されているが、道路線と背景要素も変化する。三分割交点の効果だけはこの二図から判断できない。"
     },
     {
       "id": "C-002",
       "titleJa": "中央構図",
       "categoryId": "basics",
       "definition": "主役を画面の中央に据え、周囲の要素との関係で秩序や正面性を作る。",
-      "example": "巨大な門の真下に人物を一人だけ置き、左右の建築で中心を支える。",
+      "example": "左右に立つ二本の建築柱の間に人物を一人置き、人物が中心軸上にある状態を示す。門の上部は省略している。",
       "contrast": "二本の柱と人物の大きさ・高さ・色を保ち、人物だけを中央から左へ移した案。",
       "aiInstruction": "二本の建築形状・背景と人物の寸法・色・高さを固定し、人物の水平位置のみ中央と左寄りで描き分ける。",
       "diagram": {
@@ -412,7 +440,7 @@
       },
       "relatedLegacyIds": [],
       "sourceIds": [
-        "nikon-composition"
+        "nikon-balance"
       ],
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
@@ -498,7 +526,7 @@
       "categoryId": "basics",
       "definition": "左右で異なる形や面積を配置し、色・大きさ・距離などで視覚的に釣り合わせる。",
       "example": "左の重い黒い建物に、右の離れた小さな赤い標識を対応させる。",
-      "contrast": "無計画に要素を片側へ寄せるだけでは、単なる偏りになる。",
+      "contrast": "対照図は同寸の黒い矩形を左右に置く対称配置。片側に寄せた失敗例ではない。",
       "aiInstruction": "左側に大きな暗い建築、右下に小さく強い赤い標識を配置。対称にはしない。",
       "diagram": {
         "example": [
@@ -543,15 +571,15 @@
       ],
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "comparisonPoint": "非対称な形と色の強さで視覚的な重みがどう変わるかを比べる。"
+      "comparisonPoint": "非対称な大面と赤い一点の組合せと、左右に同じ大面を置く対称配置を対比する。形・色・要素数が違うため、色だけによる効果は比較できない。"
     },
     {
       "id": "C-005",
       "titleJa": "対角線構図",
       "categoryId": "basics",
       "definition": "斜めの方向を主軸として、奥行きや動きの方向を示す。",
-      "example": "画面左下から右上へ伸びる階段の先に人物を配置する。",
-      "contrast": "斜線を増やしすぎると主役へ向かう流れが失われる。",
+      "example": "左下から右上へ伸びる太い斜線の近くに人物を置いた模式図。階段の段差は描いていない。",
+      "contrast": "対照図では水平線と交差する二本の斜線を配置している。複数の線が注意を分散させる可能性を検討する例である。",
       "aiInstruction": "画面左下から右上へ一本の主要な斜線が伸びる階段。終点に小さな人物。",
       "diagram": {
         "example": [
@@ -1199,7 +1227,7 @@
       "id": "C-010",
       "titleJa": "リーディングライン",
       "categoryId": "basics",
-      "definition": "道・影・建築の線が見る人の視線を主題へ誘導するように組み立てる。",
+      "definition": "道・影・建築の線を主題に向け、見る順序の手掛かりとして利用する構図上の方法。実際の視線移動は他の要素や閲覧条件にも左右される。",
       "example": "二本の道路縁が遠くの人物に向かって収束する。",
       "contrast": "線が別の場所に向かうと視線が主題から逸れる。",
       "aiInstruction": "道路両端の線を画面奥の赤い人物へ収束させる。線以外の細部は抑える。",
@@ -1574,7 +1602,7 @@
       "categoryId": "balance",
       "definition": "主題の周囲にある空いた領域を積極的な表現要素として扱う。",
       "example": "人物を左下に小さく置き、空と壁の広い明るい領域を残す。",
-      "contrast": "同じ人物のまわりに建物の塊を増やすと、空いた領域の印象が変わる。",
+      "contrast": "人物と地面は固定し、右側の低い淡色の塊を三つの暗い縦長の塊に置き換える。空いた領域の広さと区切られ方を比べる。",
       "aiInstruction": "人物は左下の小さな形。画面の大半を何もない明るい壁と空にする。",
       "diagram": {
         "example": [
@@ -1666,7 +1694,7 @@
       ],
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "comparisonPoint": "人物の大きさと位置を変えず、背景を埋める要素の有無だけを比べる。"
+      "comparisonPoint": "人物の位置・大きさを固定したまま背景の形・数・明度を変更した比較。余白面積だけの効果は切り分けられない。"
     },
     {
       "id": "C-015",
@@ -1718,7 +1746,7 @@
       ],
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "comparisonPoint": "黒面と赤い点の大きさは同じ。赤い点を右端から黒面の近くへ移し、重さの感じ方を比べる。"
+      "comparisonPoint": "黒面の位置と大きさ、赤点の大きさを固定し、赤点を右端から黒面に重なる位置へ移す。位置だけでなく接触・背景とのコントラストも変わるため、釣り合いの差を単一要因に帰属しない。"
     },
     {
       "id": "C-016",
@@ -1726,7 +1754,7 @@
       "categoryId": "balance",
       "definition": "左右の要素を同じ形にせず、視覚的な重みと距離を調整して釣り合いを作る。",
       "example": "左に一つの大きな箱、右に離れた二つの小さな箱を置く。",
-      "contrast": "左右を単に同数にすれば均衡するとは限らない。",
+      "contrast": "対照図では同じ大きさの矩形を左右一つずつ置き、左右対称に近い配置とする。",
       "aiInstruction": "左の大きな塊と右の二つの小塊を離して配置。見た目の釣り合いを優先。",
       "diagram": {
         "example": [
@@ -1780,7 +1808,7 @@
       ],
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "comparisonPoint": "左右同じ形でなくても釣り合う配置があり得ることを示す。"
+      "comparisonPoint": "左図は左右の図形数・面積が異なる配置、右図は左右同寸の配置。見た目の釣り合いの優劣は図だけで確定しない。"
     },
     {
       "id": "C-017",
@@ -1855,7 +1883,7 @@
       "definition": "人物の視線や動きの前方・後方に残す空間の違いを使う。",
       "example": "右を向く人物を左寄りに配置して、視線の先に広い空間を残す。",
       "contrast": "向いている側を画面端に詰めると、意図せず窮屈に見える場合がある。",
-      "aiInstruction": "右を向く人物を左三分の一に配置し、進行方向の右側を大きく空ける。",
+      "aiInstruction": "人物が右側を見る設定で左三分の一に配置し、視線の先となる右側に広い余白を残す。移動方向を扱う場合は別途明示する。",
       "diagram": {
         "example": [
           [
@@ -1916,15 +1944,16 @@
       ],
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "comparisonPoint": "人物の向きを固定し、視線前方の余白を比較する。"
+      "comparisonPoint": "人物の向きを固定し、視線前方の余白を比較する。",
+      "diagramNote": "人物の向きは顔などで描かず、右側へ伸びる赤い線を視線方向の代理記号としている。矢印ではなく、実際の視線認識を検証した図ではない。"
     },
     {
       "id": "C-019",
       "titleJa": "孤立による強調",
       "categoryId": "balance",
       "definition": "反復する要素から一つだけ距離を離すことで主題を選び出す。",
-      "example": "規則的に並ぶ窓から離れた一点の灯りを主題にする。",
-      "contrast": "孤立した要素が複数あると、どれが主役か曖昧になる。",
+      "example": "黒い円を左側にまとめ、そこから離れた赤い円を一つ置いて主題の候補にする。",
+      "contrast": "対照では赤い円をほかの円と同じ列に入れ、周囲からの孤立度を小さくする。ただし円の総数と配置も異なる。",
       "aiInstruction": "同じ形の小さな窓を左側にまとめ、右側に離れた赤い一点だけ置く。",
       "diagram": {
         "example": [
@@ -2018,11 +2047,11 @@
       },
       "relatedLegacyIds": [],
       "sourceIds": [
-        "nikon-balance"
+        "nng-gestalt-proximity"
       ],
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "comparisonPoint": "同じ形でも他の形から離すと焦点になり得る。"
+      "comparisonPoint": "孤立度と配置・要素数が同時に変わる模式比較。強調の効果を距離だけの結果とは断定しない。"
     },
     {
       "id": "C-020",
@@ -2775,7 +2804,7 @@
       "categoryId": "perception",
       "definition": "前景として読む形と背景として読む面の区別を、境界とコントラストで調整する。",
       "example": "暗い建物の塊を明るい空から明確に切り分ける。",
-      "contrast": "主役と背景の明度が近すぎると輪郭を読み取りにくくなる。",
+      "contrast": "対照図では暗い単一の建築形状を、明度が近い二つの矩形の重なりに置き換える。輪郭・形・明度の条件が同時に異なる。",
       "aiInstruction": "暗い建物を明るい背景の上に一つの形として示し、境界を明確にする。",
       "diagram": {
         "example": [
@@ -2812,7 +2841,7 @@
       ],
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "comparisonPoint": "前景の形と背景の境目の読みやすさを比較する。"
+      "comparisonPoint": "暗い単一形と淡色の複数形を比較する模式例。輪郭の識別難度を明度差だけの効果とは断定できない。"
     },
     {
       "id": "C-026",
@@ -3780,8 +3809,8 @@
       "titleJa": "重なりと遮蔽",
       "categoryId": "perception",
       "definition": "手前の物体が奥の物体の一部を隠す関係で、前後の距離を伝える。",
-      "example": "建物の手前に人物、さらに手前に柱を置いて奥行きを作る。",
-      "contrast": "重なりの順序が曖昧だと、どの物体が手前か読み取りにくい。",
+      "example": "淡色の建物の前に人物を置き、さらに手前の黒い柱が人物と建物の一部を隠す。",
+      "contrast": "対照図では建物・人物・柱を離して置き、重なりによる前後関係の手掛かりを減らしている。",
       "aiInstruction": "奥の建物・中景の人物・前景の柱を互いに一部重ねて描く。",
       "diagram": {
         "example": [
@@ -3810,9 +3839,9 @@
           ],
           [
             "rect",
-            38,
+            137,
             10,
-            45,
+            22,
             140,
             0
           ]
@@ -3855,7 +3884,7 @@
       "sourceIds": [],
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "comparisonPoint": "重なりのある配置と離れた配置の前後の見え方を比べる。"
+      "comparisonPoint": "配置例は柱が人物と建物に、人物が建物に重なる。対照例は三つが離れている。"
     },
     {
       "id": "C-034",
@@ -4659,7 +4688,7 @@
       "titleJa": "前景・中景・背景",
       "categoryId": "depth",
       "definition": "画面を距離の異なる層に分け、要素の重なりと明暗で奥行きを作る。",
-      "example": "近景に黒い手すり、中景に人物、遠景に薄い山並みを置く。",
+      "example": "近景の手すりを表す黒い帯、中景の赤い人物、遠景の淡色の山並みを置く。帯は手すりの形状を省略した記号である。",
       "contrast": "同じ山並みと赤い人物を維持し、手前の黒い手すりだけを外した案。",
       "aiInstruction": "前景に黒い手すり、中景に小さな人物、遠景に明るい山を置き、層を示す。前景だけの効果を検証する際は人物と山の明度を固定し、手すりの有無のみを別途比較する。",
       "diagram": {
@@ -4719,7 +4748,9 @@
       "relatedLegacyIds": [
         "idea-layout-05"
       ],
-      "sourceIds": [],
+      "sourceIds": [
+        "adobe-foreground-layers"
+      ],
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
       "comparisonPoint": "山と人物の位置・形・色を固定し、前景の手すりの有無によって重なりと距離感の読み取りがどう変わるか比較する。",
@@ -5175,7 +5206,7 @@
       "categoryId": "depth",
       "definition": "消失点を強調せず、大きな形の重なりや明度差で空間を組み立てる。",
       "example": "手前の黒い建物、中間の灰色の屋根、奥の明るい空を面として重ねる。",
-      "contrast": "同じ建物に収束線や窓の描写を追加すると、平面的な重なりより透視線や細部が目立つ。",
+      "contrast": "対照図は建築の三つの大きな色面を維持して収束線と窓を加えた案。ただし下端の黒い帯も省いているため、情報量の追加だけの比較ではない。",
       "aiInstruction": "建物を三つの角張った色面に簡略化し、重なりだけで前後を伝える。",
       "diagram": {
         "example": [
@@ -5286,7 +5317,7 @@
       "sourceIds": [],
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "comparisonPoint": "左は大きな面の重なりだけ。右は同じ建築の輪郭に収束線と窓を足して情報量を増やす。"
+      "comparisonPoint": "二図は建築の主な輪郭を共有するが、窓・線の追加と下端帯の削除が同時に起こる。線や細部だけの効果は切り分けられない。"
     },
     {
       "id": "C-049",
@@ -6256,9 +6287,9 @@
       "titleJa": "二値の明暗構成",
       "categoryId": "value",
       "definition": "明るい面と暗い面の二段階だけで画面の骨格が読めるかを検査する。",
-      "example": "人物と建築を黒い形、光の通り道を白い形に整理する。",
+      "example": "建築と人物を暗い一色、背景を明るい一色として二段階の明暗に整理する。現図は純白・純黒ではない。",
       "contrast": "同じ場面を近い中間調に分解したとき、遠目でも人物と空間を判別できるかを見比べる。",
-      "aiInstruction": "白と黒の二値のみ。人物と建築を黒ベタ、光の帯を白い形で表す。",
+      "aiInstruction": "色相ではなく明暗を二段階に限定し、人物・建築を暗い面、光の通り道と背景を明るい面で表す。厳密な白黒画像が必要な場合は白・黒のRGB値も指定する。",
       "diagram": {
         "example": [
           [
@@ -6349,7 +6380,7 @@
       "categoryId": "value",
       "definition": "複数の影や暗い物体を連続した大きな黒い形としてまとめる。",
       "example": "建築の暗部と地面を一体の黒面につなぎ、小さな人物で尺度を与える。",
-      "contrast": "建築と地面の暗部が分離していると、形の量感と空間のまとまりが変わる。",
+      "contrast": "対照図では連続した黒面を三つの離れた矩形に置き換える。建築形状・黒い面積・人物の背後の色も変わる。",
       "aiInstruction": "影を切れ切れにせず、建物から地面まで一つの連続した黒面にする。",
       "diagram": {
         "example": [
@@ -6420,7 +6451,7 @@
       "sourceIds": [],
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "comparisonPoint": "左は建築の暗部と地面が一つの黒い形としてつながる。右は同じ主な建築を離れた黒面として扱う。"
+      "comparisonPoint": "黒面の連結状態だけでなく輪郭・面積・人物とのコントラストも変わるため、まとまりや量感の差を連結だけに帰属しない。"
     },
     {
       "id": "C-063",
@@ -6428,7 +6459,7 @@
       "categoryId": "value",
       "definition": "内部の細部を省き、外輪郭と背景の対比だけで主役を識別させる。",
       "example": "逆光の人物を一本の黒いシルエットで立たせる。",
-      "contrast": "内部を塗り分けて細部を加えた場合、外輪郭より中の記号が目立つことがある。",
+      "contrast": "対照図では同じ頭と胴の形を明るくし、内側に顔の点と横線を加える。",
       "aiInstruction": "人物の顔・服の内部描写を省き、黒い外形のみ。背後に明るい空。",
       "diagram": {
         "example": [
@@ -6482,33 +6513,33 @@
           ],
           [
             "circle",
-            111,
+            117,
             47,
-            3,
+            1.5,
             0
           ],
           [
             "circle",
-            129,
+            123,
             47,
-            3,
+            1.5,
             0
           ],
           [
             "line",
-            105,
-            94,
-            136,
-            94,
+            115,
+            72,
+            125,
+            72,
             0,
             2
           ],
           [
             "line",
-            105,
-            114,
-            136,
-            114,
+            115,
+            86,
+            125,
+            86,
             0,
             2
           ]
@@ -6518,7 +6549,7 @@
       "sourceIds": [],
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "comparisonPoint": "人物の位置と大きさを固定し、内部の描写・明度の有無を比較する。外形が先に読めるかが確認点。"
+      "comparisonPoint": "人物の位置と外形は同じ。明度と内部の記号が同時に変わるため、どちらの影響かは切り分けられない。"
     },
     {
       "id": "C-064",
@@ -6761,7 +6792,7 @@
       "categoryId": "value",
       "definition": "画面全体ではなく注目させたい位置に強い明暗差を集中させる。",
       "example": "暗い路地の遠方にだけ明るい扉を置く。",
-      "contrast": "全域で同じ強いコントラストを使うと焦点が分散する。",
+      "contrast": "対照図では同じ暗い背景に明るい矩形を三箇所置く。注目先が複数になる可能性を比較する模式図であり、視線の分散は実測していない。",
       "aiInstruction": "画面は大部分を暗く保ち、遠くの小さな扉だけを高コントラストにする。",
       "diagram": {
         "example": [
@@ -7236,7 +7267,7 @@
       "id": "C-073",
       "titleJa": "孤独を示す小さな人物",
       "categoryId": "narrative",
-      "definition": "人物の占有率を下げ、周囲の空間との尺度差から孤立感を表現する。",
+      "definition": "人物を周囲の空間より小さく描き、尺度差を利用して孤立感や広がりを示そうとする演出方法。受け取られる感情は物語や背景によって変わる。",
       "example": "広い無人の駅前広場の左寄りに小さな旅人を一人だけ置く。",
       "contrast": "同じ広場の同じ位置で人物だけを大きくすると、空間より人物の存在感が前面に出る場合がある。",
       "aiInstruction": "巨大な無人の広場と高い壁を主役にし、下端に小さな人物を一人だけ。",
@@ -7441,7 +7472,7 @@
       "titleJa": "巨大建築との尺度差",
       "categoryId": "narrative",
       "definition": "建物と人体の大きさの差を同じ画面で示し、規模を伝える。",
-      "example": "摩天楼の足元にごく小さな人物を置き、階数より形の大きさを見せる。",
+      "example": "画面の大半を占める高い建築物の代理形状と、その足元の小さな人物を対比する。階数や実寸は図示していない。",
       "contrast": "同じ建築だけを示すと、比較対象がなく絶対的な大きさを読み取りにくい場合がある。",
       "aiInstruction": "建築物は画面の大半を占める黒い矩形。足元に小さな赤い人物を配置。",
       "diagram": {
@@ -7514,7 +7545,9 @@
         ]
       },
       "relatedLegacyIds": [],
-      "sourceIds": [],
+      "sourceIds": [
+        "pictorial-relative-size"
+      ],
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
       "comparisonPoint": "同じ巨大な建物を描き、人物による尺度の手掛かりがある画面とない画面を比べる。"
@@ -11690,7 +11723,7 @@
       "categoryId": "ai",
       "definition": "何を見せたいかを先に決め、構図と装飾の判断基準をそろえる。",
       "example": "「孤独な人物」なら人物以外の視覚的な強調を減らす。",
-      "contrast": "「かっこよく」だけでは主役も視線の順番も曖昧になる。",
+      "contrast": "対照図では人物以外の建築にも赤を使い、別の暗い建築も追加する。主役以外に強い要素を増やした模式図である。",
       "aiInstruction": "主題は一人の旅人。遠景は省略し、視線が人物へ最初に届くようにする。",
       "diagram": {
         "example": [
@@ -11771,10 +11804,12 @@
       "relatedLegacyIds": [
         "idea-ai-reference-08"
       ],
-      "sourceIds": [],
+      "sourceIds": [
+        "openai-image-prompting"
+      ],
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "comparisonPoint": "主役だけ目立たせる配置と複数を強調する配置を比べる。"
+      "comparisonPoint": "二図は色の強調対象だけでなく、背景要素と人物寸法も異なる。『目的を明示した指示の効果』をこの二図だけで証明するものではない。"
     },
     {
       "id": "C-110",
@@ -11783,7 +11818,7 @@
       "definition": "被写体の位置・大きさ・空間配分を固定し、色や描法だけを変えて比較する。",
       "example": "人物と建築の配置を固定し、色面を大きく単純化した版。",
       "contrast": "同じ人物と建築の位置を固定したまま、建物の明度と内部表現だけを変える。",
-      "aiInstruction": "人物の中心は画面左上を原点として横20％・縦75％、全身の高さは画面高の約20％。建物は右側に大きく配置。位置・大きさ・余白を二案で固定し、色面の処理や描法だけを変える。",
+      "aiInstruction": "人物の中心を画面左上原点で横約19%・縦約75%、人物の高さを画面高の約16%に固定。建物は右側の同じ位置・大きさに固定し、建物の明度と内部の線だけを二案で変える。生成AIでは位置と寸法が再現されるか別途確認する。",
       "diagram": {
         "example": [
           [
@@ -11863,10 +11898,12 @@
       "relatedLegacyIds": [
         "idea-ai-reference-08"
       ],
-      "sourceIds": [],
+      "sourceIds": [
+        "openai-image-prompting"
+      ],
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "comparisonPoint": "人物と建物の位置・大きさを固定し、建物の描法・色面だけを変えた対照。構図と画風を切り分ける。"
+      "comparisonPoint": "人物と建物の主な外形・位置は固定。建物の明度と内部線のみを変える限定例であり、画風全般を切り分ける実験ではない。"
     },
     {
       "id": "C-111",
@@ -12243,8 +12280,8 @@
       "titleJa": "余白の用途指定",
       "categoryId": "ai",
       "definition": "余白を残す理由を定め、文字・感情表現・視線方向などで使い分ける。",
-      "example": "左下に旅人、右上に題名を配置できる空白を確保する。",
-      "contrast": "用途を決めずに余白を残すと後から文字と主役が衝突する。",
+      "example": "左下に旅人を置き、右上にタイトルを入れる予定の領域を確保する。図の淡い矩形は文字領域の代理表示であり、実際の文字ではない。",
+      "contrast": "対照図は上部の代理矩形を広くしているが、文字自体は描いていない。実際のタイトル配置時に主役との干渉が起こらないかは別途確認する。",
       "aiInstruction": "画面右上の四割はタイトル用の空白。人物を左下に置き、空白に細部を足さない。",
       "diagram": {
         "example": [
@@ -12317,10 +12354,13 @@
       "relatedLegacyIds": [
         "idea-review-06"
       ],
-      "sourceIds": [],
+      "sourceIds": [
+        "adobe-photo-composition-ja"
+      ],
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "comparisonPoint": "空白の目的を定めて残すか、埋めるかを比較する。"
+      "comparisonPoint": "空白の目的を定めて残すか、埋めるかを比較する。",
+      "diagramNote": "淡い矩形はタイトルを載せる想定領域を示す記号。無地の余白そのものや実際の文字可読性を検証した画像ではない。"
     },
     {
       "id": "C-116",
@@ -12846,8 +12886,8 @@
       "categoryId": "ai",
       "definition": "完成案を縮小表示・白黒表示・輪郭のみの表示で点検し、主題と重要な形が判別できるか確かめる手順。",
       "example": "共通の元図：黒い門（三辺）と赤い人物。検査表示もこの同じ図形データから描く。",
-      "contrast": "検査表示を切り替え、元図から一条件ずつ変換する。縮小25%／6.25%、グレースケール、黒一色のシルエット、塗りなしの輪郭を個別に比べる。6.25%縮小は人物や脚の形を見分けにくくする失敗条件。",
-      "aiInstruction": "同一の完成画像から、幅・高さ25%の縮小、グレースケール、シルエット、輪郭確認をそれぞれ独立に用意する。原寸の元画像と並べ、人物・門・脚や開口部を見分けられるか確認する。さらに6.25%へ縮小して判別できない条件も失敗例として記録する。実画像の輪郭抽出には使用処理と閾値を別途記録する。",
+      "contrast": "同じ元図のキャンバス全体を縮小またはグレースケール化し、シルエットとSVG境界の表示も個別に比べる。6.25%は判別しにくい例として用意する。",
+      "aiInstruction": "完成画像全体の縮小版とグレースケール版をそれぞれ用意し、元画像と比べて主題や重要な形を判別できるか確認する。シルエット・輪郭版も別に用意し、処理条件と実際の表示寸法を記録する。",
       "diagram": {
         "example": [
           [
@@ -12968,8 +13008,8 @@
       "sourceIds": [],
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "comparisonPoint": "人物・門の形と位置を同じ元図に固定。縮小は全体の幅・高さだけ、グレースケールは色だけ、シルエットは塗りだけ、輪郭は塗りを消して線幅2の線へ変換する。複数の変換を重ねず、一つずつ元図と比較する。",
-      "diagramNote": "ブラウザで同じSVGから実際に変換した表示。縮小率は幅・高さの比率であり、6.25%は判別困難な失敗条件。輪郭はSVG形状の境界で、写真等の自動エッジ抽出ではない。この模式図以外の完成画像や全閲覧条件の判別性は保証しない。"
+      "comparisonPoint": "縮小とグレースケールは背景を含む元図全体に適用する。シルエットと輪郭は前景図形の表示を変える。変換は一つずつ比較する。",
+      "diagramNote": "縮小率は背景を含む元図の幅と高さの倍率。輪郭はSVG図形の境界で、写真などの自動エッジ抽出ではない。別の画像や表示環境での判別性は保証しない。"
     },
     {
       "id": "C-120",

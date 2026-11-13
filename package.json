@@ -3,9 +3,12 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "engines": {
+    "node": "22.x"
+  },
   "scripts": {
     "dev": "vite",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "node ./node_modules/typescript/bin/tsc --noEmit",
     "lint": "node scripts/lint.cjs",
     "prebuild": "npm run typecheck && npm run lint && npm run design:verify && npm run tools:verify && npm run catalog:export && npm run composition:verify && npm run catalog:verify && npm run catalog:graph && npm run catalog:regression && npm run catalog:exports && npm run catalog:focus && npm run catalog:smoke",
     "build": "vite build",
@@ -20,21 +23,24 @@
     "catalog:graph": "node scripts/check-knowledge-graph.cjs",
     "catalog:exports": "node scripts/check-knowledge-exports.cjs && node scripts/test-knowledge-exports.cjs",
     "catalog:focus": "node scripts/test-knowledge-focus.cjs",
-    "composition:verify": "node scripts/check-composition-guides.cjs && node scripts/check-composition-discovery.cjs"
+    "composition:verify": "node scripts/check-composition-guides.cjs && node scripts/check-composition-discovery.cjs && node scripts/test-composition-regressions.cjs"
   },
   "dependencies": {
-    "react": "^19.2.3",
-    "react-dom": "^19.2.3",
-    "react-router-dom": "^7.12.0"
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-router-dom": "^7.18.5"
   },
   "devDependencies": {
     "@tailwindcss/forms": "0.5.11",
-    "@tailwindcss/postcss": "4.3.3",
+    "@tailwindcss/postcss": "4.3.5",
     "@types/node": "^22.14.0",
-    "@vitejs/plugin-react": "^5.0.0",
-    "postcss": "8.5.29",
-    "tailwindcss": "4.3.3",
-    "typescript": "~5.8.2",
-    "vite": "^6.4.5"
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.3.0",
+    "postcss": "8.5.32",
+    "tailwindcss": "4.3.5",
+    "typescript": "~7.0.2",
+    "typescript-legacy": "npm:typescript@~5.8.2",
+    "vite": "8.3.7"
   }
 }

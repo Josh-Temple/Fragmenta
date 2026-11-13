@@ -412,6 +412,23 @@ try {
     });
     return response.result?.value;
   }, 'composition comparison diagrams');
+  const compositionAccessibility = await page.send('Runtime.evaluate', {
+    expression: `(() => {
+      const quick = document.querySelector('[aria-label="検索結果から構図を選択"]');
+      const images = [...document.querySelectorAll('article svg[role=img]')];
+      return {links:quick?.querySelectorAll('a').length,
+        selected:quick?.querySelector('[aria-current="page"]')?.textContent,
+        more:quick?.textContent.includes('残りは一覧で見る'),
+        descriptions:images.every(svg => {
+          const id=svg.getAttribute('aria-describedby');
+          return id && document.getElementById(id)?.textContent?.length > 15;
+        })};
+    })()`, returnByValue: true,
+  });
+  const access = compositionAccessibility.result?.value;
+  if (compositionAccessibility.exceptionDetails || access?.links > 14 || access?.selected !== '黒い面の連結' ||
+      !access?.more || !access?.descriptions) throw new Error('Composition navigation/description failed: ' + JSON.stringify(access));
+  console.log('PASS composition bounded quick navigation and SVG descriptions');
   const compositionInteraction = await page.send('Runtime.evaluate', {
     expression: "(async () => {\n      const originalClipboard = Object.getOwnPropertyDescriptor(navigator, 'clipboard');\n      const selector = document.querySelector('#composition-item');\n      if (!selector || selector.options.length !== 120) throw new Error('Composition selector missing 120 items');\n      selector.value = 'C-001';\n      selector.dispatchEvent(new Event('change', { bubbles: true }));\n      await new Promise(resolve => setTimeout(resolve, 150));\n      const selected = document.querySelector('#composition-title')?.textContent;\n      const button = [...document.querySelectorAll('button')].find(b => b.textContent.trim() === '指示文をコピー');\n      if (!button) throw new Error('Composition copy button missing');\n      let copied = '';\n      Object.defineProperty(navigator, 'clipboard', { configurable: true,\n        value: { writeText: async text => { copied = text; } } });\n      button.click();\n      await new Promise(resolve => setTimeout(resolve, 150));\n      const success = [...document.querySelectorAll('[role=status]')].map(x => x.textContent).join(' ');\n      Object.defineProperty(navigator, 'clipboard', { configurable: true,\n        value: { writeText: async () => { throw new Error('Denied'); } } });\n      button.click();\n      await new Promise(resolve => setTimeout(resolve, 150));\n      const denied = [...document.querySelectorAll('[role=status]')].map(x => x.textContent).join(' ');\n      if (originalClipboard) Object.defineProperty(navigator, 'clipboard', originalClipboard);\n      else delete navigator.clipboard;\n      return { selected, copied, visibleAi: document.querySelector('[data-composition-ai-text]')?.textContent, success, denied, svgCount: document.querySelectorAll('svg[role=img]').length };\n    })()",
     awaitPromise: true,
@@ -807,18 +824,22 @@ try {
         await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
         const original=[...document.querySelectorAll('article svg[role=img]')][0];
         const group=document.querySelector('[data-inspection-transform]');
-        const geometry=el=>[...el.children].filter(x=>x.tagName!=='title' && !(x.tagName==='rect' && x.getAttribute('width')==='240'))
+        const geometry=el=>[...el.children].filter(x=>!['title','desc'].includes(x.tagName) && !(x.tagName==='rect' && x.getAttribute('width')==='240'))
           .map(x=>[x.tagName,...['x','y','width','height','cx','cy','r'].map(a=>x.getAttribute(a))]);
+        const sample=[...group.children].find(x=>!x.hasAttribute('data-inspection-background'));
+        const svg=group.closest('svg');
         return {mode:group.dataset.inspectionTransform,original:geometry(original),transformed:geometry(group),
           scale:group.transform.baseVal.consolidate().matrix.a,filter:getComputedStyle(group).filter,
-          fill:group.children[0].getAttribute('fill'),stroke:group.children[0].getAttribute('stroke'),
+          fill:sample.getAttribute('fill'),stroke:sample.getAttribute('stroke'),
+          background:!!group.querySelector('[data-inspection-background]'),
+          described:!!svg.querySelector('desc[id="'+svg.getAttribute('aria-describedby')+'"]'),
           labelled:!!document.querySelector('label[for="'+select.id+'"]'),
           status:select.parentElement.querySelector('[role=status]')?.textContent};
       })()`, awaitPromise: true, returnByValue: true,
     });
     const state = result.result?.value;
     const scale = mode === 'quarter' ? 0.25 : mode === 'tiny' ? 0.0625 : 1;
-    if (result.exceptionDetails || state?.mode !== mode || !state.labelled || !state.status ||
+    if (result.exceptionDetails || state?.mode !== mode || !state.labelled || !state.status || !state.background || !state.described ||
         state.scale !== scale || state.original.length !== 7 ||
         JSON.stringify(state.original) !== JSON.stringify(state.transformed) ||
         (mode === 'grayscale' && state.filter !== 'grayscale(1)') ||
