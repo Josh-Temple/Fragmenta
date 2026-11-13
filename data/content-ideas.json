@@ -5041,28 +5041,30 @@
       ],
       "editorial": {
         "reviewStatus": "draft_unreviewed",
-        "summary": "本文の主張と原資料の該当箇所を対応付ける見せ方。",
+        "summary": "本文の出典をたどれるよう、資料名や該当箇所を説明の近くに示す。統計の図表では、データの出所と提供元も分かるようにする。",
         "appropriateUses": [
-          "調査記事",
-          "規則や制度の解説"
+          "調査記事の資料リンクを示す。",
+          "図表の出所と提供機関を示す。"
         ],
         "pitfalls": [
-          "出典リンクを付けただけで支持根拠としない",
-          "参照時点を隠さない"
+          "リンクを付けただけで、その資料が主張を裏づけると判断しない。",
+          "図表の出典と、画像そのものの利用許諾を混同しない。"
         ],
         "reviewChecks": [
-          "リンク先の該当箇所を再確認",
-          "引用と解釈が区別されるか点検"
+          "資料の該当箇所と、示した主張の対応を確認する。",
+          "資料名、提供元、確認日や版が必要かを対象に応じて確認する。"
         ],
         "evidenceStatus": "not_checked",
-        "practicalExample": "制度の説明から、根拠となる資料と該当箇所に移動する。",
-        "implementationNotes": "主張ごとに出典、版や更新日、該当箇所を対応付け、リンク切れを点検する。",
-        "accessibilityNotes": "リンク名は「こちら」だけにせず、資料名を含める。",
-        "aiInstruction": "説明文と原資料の該当箇所を対応付け、資料名と確認日を表示してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "practicalExample": "統計グラフの直後にデータの名称と提供機関を示し、参照できる資料名から元資料へリンクする。",
+        "implementationNotes": "ONSの参考資料表示と図表の出典表示を参考にしつつ、主張への対応や版管理は別途点検する。",
+        "accessibilityNotes": "リンク名は「こちら」だけにせず、資料名や目的が文脈から分かるようにする。",
+        "aiInstruction": "主張と原資料の該当箇所を対応付け、資料名・提供元・確認日を区別して示してください。",
+        "sourceIds": [
+          "ons-citations-sources"
+        ],
+        "updatedOn": "2026-11-14",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "titleEn": "Source and citation display",
       "relations": [
@@ -5281,28 +5283,30 @@
       "relatedExisting": [],
       "editorial": {
         "reviewStatus": "draft_unreviewed",
-        "summary": "複数段階の作業を、現在地・次の行動・戻り方がわかる手順として提示する。",
+        "summary": "複数の行動を順に進める必要がある場合、手順と各行動へのリンクを整理する。GOV.UKの例は、案内と手続きをまたぐ一連の行動を対象としている。",
         "appropriateUses": [
-          "初期設定の案内",
-          "複雑な申請手続き"
+          "準備から申請後まで、複数の行動が必要な案内を整理する。",
+          "手順ごとに参照先や条件が異なる場合の導線を検討する。"
         ],
         "pitfalls": [
-          "手順を読むこと自体を操作の必須条件にしない",
-          "戻ると入力内容が消える設計を避ける"
+          "順番のない単なる選択肢を、必ず順に実行する手順として見せない。",
+          "案内の表示だけで入力内容が保存され、途中再開できるとみなさない。"
         ],
         "reviewChecks": [
-          "途中再開の導線を試す",
-          "手順が変わっても番号が整合するか確認"
+          "各手順の順序、条件、行動先が対象者に合うか確認する。",
+          "サービス内の作業状態を表示する場合は、実際の保存・再開方法を別途試す。"
         ],
         "evidenceStatus": "not_checked",
-        "practicalExample": "初期設定の手順を3段階に分け、各段階の完了状態を明示する。",
-        "implementationNotes": "実際の作業画面へのリンクと案内文を分離せず併置する。",
-        "accessibilityNotes": "順序を見出しとリストで表現し、現在手順を読み上げ可能にする。",
-        "aiInstruction": "ステップ別の操作ガイドを作り、途中離脱後も再開地点がわかるようにしてください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "practicalExample": "申請前の準備、申請、結果確認を並べ、それぞれの説明と実際の手続き先にリンクする。",
+        "implementationNotes": "GOV.UKはこのパターンを一連の案内向けとし、取引サービス内部には使わない。別のサービスに適用する場合は用途と条件を検証する。",
+        "accessibilityNotes": "手順の順序と番号を見出しやリストで示し、開閉操作があればキーボードと読み上げを確認する。",
+        "aiInstruction": "案内と手続きへのリンクを手順別に整理し、保存・再開機能が実装されていない場合は断定しないでください。",
+        "sourceIds": [
+          "govuk-step-by-step"
+        ],
+        "updatedOn": "2026-11-14",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -5325,28 +5329,30 @@
       "relatedExisting": [],
       "editorial": {
         "reviewStatus": "draft_unreviewed",
-        "summary": "操作の途中で必要な説明を、画面を離れず短く確認できる補足表示。",
+        "summary": "入力や操作に必要な短い説明を、その場で読めるようにする。GOV.UKの質問画面では、多くの人が必要とする情報に短いヒントを用いている。",
         "appropriateUses": [
-          "入力欄の書き方の説明",
-          "専門用語の意味の補足"
+          "入力形式や情報の探し方を入力欄の近くに示す。",
+          "補足が一部の人にだけ必要な場合、開閉できる説明を検討する。"
         ],
         "pitfalls": [
-          "重要な条件をツールチップだけに隠さない",
-          "カーソル操作でしか読めない説明にしない"
+          "重要な入力条件をホバー専用や閉じた補足に隠さない。",
+          "長い説明やリンクをすべて入力欄のヒントに詰め込まない。"
         ],
         "reviewChecks": [
-          "説明が無い状態でも操作を理解できるか",
-          "閉じる・再表示をキーボードで操作できるか"
+          "短い説明と長い背景説明のどちらが必要か、対象者と確認する。",
+          "開閉する補足はキーボード、タップ、支援技術で試す。"
         ],
         "evidenceStatus": "not_checked",
-        "practicalExample": "郵便番号入力欄の下に書式例を常時表示し、例外だけ補足説明で開く。",
-        "implementationNotes": "頻繁に必要な説明は常時表示し、補助情報だけを開閉できるパネルに分ける。",
-        "accessibilityNotes": "ホバー専用にせず、フォーカスやタップでも開ける補足表示にする。",
-        "aiInstruction": "必須の入力条件は常時示し、補足説明はタップとキーボードの両方で表示してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "practicalExample": "日付の入力欄に書式例を短く添え、長い背景説明が必要な場合は質問文の前に分けて置く。",
+        "implementationNotes": "入力に必要な短いヒントと、長い説明文やリンクを分ける。GOV.UKの質問画面向けの助言であり、全UIにそのまま適用しない。",
+        "accessibilityNotes": "説明と入力欄の関連付け、読み上げ時の長さ、タッチとキーボードでの操作を確認する。",
+        "aiInstruction": "入力に必要な短いヒントと長い背景説明を分け、必須条件を隠さず表示してください。",
+        "sourceIds": [
+          "govuk-question-pages"
+        ],
+        "updatedOn": "2026-11-14",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "titleEn": "Inline contextual help",
       "tags": [
@@ -5494,28 +5500,30 @@
       "relatedExisting": [],
       "editorial": {
         "reviewStatus": "draft_unreviewed",
-        "summary": "すべての補足を初めから表示せず、主要な判断に必要な情報から順に提示する構成。",
+        "summary": "多くの利用者が必要とする情報は見える場所に置き、一部の人に必要な補足を必要に応じて開けるようにする。",
         "appropriateUses": [
-          "長い手続きの説明",
-          "専門的な設定画面"
+          "長い制度説明で、一部の人向けの補足を分ける。",
+          "詳細な設定のうち、対象者によって必要性が異なる説明を整理する。"
         ],
         "pitfalls": [
-          "必須の注意事項を閉じた領域に隠さない",
-          "展開しないと次の操作が分からない設計にしない"
+          "利用者にとって必須の条件や、多くの人が必要とする情報を閉じた領域に隠さない。",
+          "開閉できることや、開いた状態を見た目だけで伝えない。"
         ],
         "reviewChecks": [
-          "主要情報だけで最初の判断ができるか",
-          "展開状態と戻る操作が分かるか"
+          "何が多くの利用者に必要かを実際の利用状況に照らして確認する。",
+          "補足を開けない場合や支援技術を使う場合の操作を試す。"
         ],
         "evidenceStatus": "not_checked",
-        "practicalExample": "制度説明では「対象・条件・申請方法」を先に示し、詳細な例外を直後の展開領域に配置する。",
-        "implementationNotes": "概要と詳細を階層化し、利用者に必須の条件は折りたたみの外に残す。",
-        "accessibilityNotes": "展開ボタンの状態を機械可読にし、見出しの階層とフォーカス位置を確認する。",
-        "aiInstruction": "概要を先に、詳細を段階的に表示し、重要条件は折りたたみの外に残してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "practicalExample": "手続きの対象と必須条件は常に表示し、対象者が限られる任意の補足を説明付きの開閉領域に置く。",
+        "implementationNotes": "GOV.UKのDetailsは一部の利用者が必要とする情報向け。開閉する内容の重要度や順序は対象サービスで検証する。",
+        "accessibilityNotes": "開閉部分の名前と状態が分かるようにし、キーボードと音声操作を対象環境で確認する。",
+        "aiInstruction": "多くの人に必要な条件を常時示し、補足は内容が予測できる名前で開閉できるようにしてください。",
+        "sourceIds": [
+          "govuk-details"
+        ],
+        "updatedOn": "2026-11-14",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "titleEn": "Progressive disclosure",
       "tags": [
@@ -9742,6 +9750,38 @@
       "checkedOn": "2026-11-14",
       "scope": "主に英国における成立、複数の団体、制作と生産に関する理念。全地域の展開や個々の作品の権利は対象外。",
       "rights": "参照リンクのみ。画像・文章・作品の利用条件は個別に確認する。"
+    },
+    "ons-citations-sources": {
+      "title": "Citations, references and sources",
+      "publisher": "Office for National Statistics",
+      "url": "https://service-manual.ons.gov.uk/content/formatting-and-punctuation/citations-references-and-sources",
+      "checkedOn": "2026-11-14",
+      "scope": "ONSのオンライン資料のリンク、引用、図表のデータ出典の表示方針。資料が個別の主張を裏づけるかや、作品の利用許諾は確認しない。",
+      "rights": "参照リンクのみ。文章・画像・コードの利用条件は別途確認する。"
+    },
+    "govuk-step-by-step": {
+      "title": "Step by step navigation",
+      "publisher": "GOV.UK Design System",
+      "url": "https://design-system.service.gov.uk/patterns/step-by-step-navigation/",
+      "checkedOn": "2026-11-14",
+      "scope": "GOV.UK上の複数の案内や行動を順に結ぶパターン。取引サービス内部への使用は対象外で、保存や途中再開の実装を保証しない。",
+      "rights": "参照リンクのみ。文章・図・コードの利用条件は別途確認する。"
+    },
+    "govuk-question-pages": {
+      "title": "Question pages — Hint text",
+      "publisher": "GOV.UK Design System",
+      "url": "https://design-system.service.gov.uk/patterns/question-pages/#hint-text",
+      "checkedOn": "2026-11-14",
+      "scope": "質問画面の短いヒントと長い説明の分け方。すべてのフォームや支援技術での動作を保証しない。",
+      "rights": "参照リンクのみ。文章・図・コードの利用条件は別途確認する。"
+    },
+    "govuk-details": {
+      "title": "Details component",
+      "publisher": "GOV.UK Design System",
+      "url": "https://design-system.service.gov.uk/components/details/",
+      "checkedOn": "2026-11-14",
+      "scope": "一部の利用者向けの補足を開閉する場面と、多くの人が必要とする情報を隠さないという使用上の境界。音声操作等に既知の懸念あり。",
+      "rights": "参照リンクのみ。文章・図・コードの利用条件は別途確認する。"
     }
   },
   "relationSemantics": {
