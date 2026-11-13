@@ -149,7 +149,7 @@
       "title": "Different types of shots and camera angles in film",
       "publisher": "Adobe",
       "url": "https://www.adobe.com/creativecloud/video/discover/types-of-shots-in-films.html",
-      "scope": "アイレベル・ハイ／ローアングル・ダッチアングル・俯瞰・主観ショットの定義、撮影角度とショットサイズの区別。演出効果の保証ではない。",
+      "scope": "ロング・ミディアム・クローズアップ等のショットサイズ、およびアイレベル・ハイ／ローアングル・ダッチアングル・俯瞰・主観ショットの解説。個別の図や演出効果の保証ではない。",
       "rights": "参照情報のみ。図・写真・映像の再利用権は確認していない。"
     },
     "adobe-over-shoulder": {
@@ -242,6 +242,55 @@
       "url": "https://risdmuseum.org/manual/441_understanding_art_through_thumbnail_sketching",
       "scope": "小さなスケッチで形と明暗を整理する制作上の方法。画面の縮小・グレースケール・輪郭変換の機能や効果を直接検証した資料ではない。",
       "rights": "参考リンクのみ。掲載作品・図版の転載権や本教材の図の権利を含まない。"
+    },
+    "adobe-composition-techniques": {
+      "title": "15 photography composition techniques to transform your photos",
+      "publisher": "Adobe",
+      "url": "https://www.adobe.com/au/creativecloud/roc/blog/photography/photography-composition-techniques.html",
+      "scope": "写真における対称、三角形、曲線、周囲の形によるフレーミングの実践例。構図による心理効果や本模式図の視線移動を実測した資料ではない。",
+      "rights": "参考リンクのみ。写真・図版の転載権を含まない。"
+    },
+    "openstax-gestalt-principles": {
+      "title": "Psychology 2e, 5.6 Gestalt Principles of Perception",
+      "publisher": "OpenStax",
+      "url": "https://openstax.org/books/psychology-2e/pages/5-6-gestalt-principles-of-perception",
+      "scope": "図と地、閉合、連続などの知覚傾向を説明する教科書。個々の図で全員が同じように知覚することを保証しない。",
+      "rights": "参考リンクのみ。教科書の図版や本教材の図の使用許諾を意味しない。"
+    },
+    "nng-common-fate": {
+      "title": "Common Fate: Gestalt Principle for User Interface Design",
+      "publisher": "Sarah Gibbons / Nielsen Norman Group",
+      "url": "https://www.nngroup.com/videos/common-fate-gestalt/",
+      "scope": "同時に動く要素をまとめて知覚するという原則の解説。静止した矢印だけで動きの知覚が再現されることは証明していない。",
+      "rights": "動画ページへのリンクのみ。動画・画像の転載権を含まない。"
+    },
+    "w3c-form-grouping": {
+      "title": "Grouping Controls",
+      "publisher": "W3C Web Accessibility Initiative",
+      "url": "https://www.w3.org/WAI/tutorials/forms/grouping/",
+      "scope": "関連するフォーム項目を視覚上とコード上の両方でグループ化する方法。図だけで実際のフォームの適合性は判断できない。",
+      "rights": "W3Cの解説へのリンクのみ。画面例の転載や本教材の図の権利判断を含まない。"
+    },
+    "national-gallery-aerial-perspective": {
+      "title": "Aerial perspective",
+      "publisher": "The National Gallery, London",
+      "url": "https://www.nationalgallery.org.uk/paintings/glossary/aerial-perspective",
+      "scope": "大気に伴う遠景の色調変化を、絵画で奥行きの表現に用いる方法の解説。気象条件によらない普遍的な数値や本図の効果は示さない。",
+      "rights": "用語解説へのリンクのみ。掲載作品の転載権を含まない。"
+    },
+    "national-gallery-chiaroscuro": {
+      "title": "Chiaroscuro",
+      "publisher": "The National Gallery, London",
+      "url": "https://www.nationalgallery.org.uk/paintings/glossary/chiaroscuro",
+      "scope": "絵画で明暗の対比を用いて形の量感を表す用語の説明。本図は照明の光学シミュレーションではない。",
+      "rights": "用語解説へのリンクのみ。掲載作品の転載権を含まない。"
+    },
+    "adobe-high-low-key-light": {
+      "title": "High key lighting vs low key lighting in videography",
+      "publisher": "Adobe",
+      "url": "https://www.adobe.com/uk/creativecloud/video/discover/low-key-vs-high-key-lighting.html",
+      "scope": "映像制作におけるハイキー照明とローキー照明の説明。模式図の色面から実際の照明機材や心理効果は確定できない。",
+      "rights": "参考リンクのみ。掲載画像・動画の転載権を含まない。"
     }
   },
   "guides": [
@@ -566,7 +615,9 @@
       "categoryId": "basics",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "adobe-composition-techniques"
+      ],
       "relatedLegacyIds": []
     },
     {
@@ -805,7 +856,9 @@
       "categoryId": "basics",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "adobe-composition-techniques"
+      ],
       "relatedLegacyIds": []
     },
     {
@@ -988,7 +1041,7 @@
     },
     {
       "id": "C-008",
-      "definition": "S字構図は、道や川の蛇行を通して視線を段階的に移す配置である。",
+      "definition": "S字構図は、道や川の曲がりを使って画面内にS字状の流れを作る。見る人の視線は他の要素や閲覧条件にも左右される。",
       "example": "前景から橋に向かってS字状に蛇行する川を、16本の短い直線で近似した模式図。",
       "contrast": "同じ始点・終点と橋を保ち、川の途中の曲がりをなくした直線の模式図。",
       "aiInstruction": "川を画面下から左右へ蛇行させ、奥の小さな橋へ導く。",
@@ -1172,7 +1225,9 @@
       "categoryId": "basics",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "adobe-composition-techniques"
+      ],
       "relatedLegacyIds": [],
       "diagramNote": "S字は16本の線分による折線近似。ベジェ曲線や滑らかな実曲線のレンダリングではない。"
     },
@@ -1457,7 +1512,9 @@
       "categoryId": "basics",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "adobe-composition-techniques"
+      ],
       "relatedLegacyIds": []
     },
     {
@@ -2421,12 +2478,14 @@
       "categoryId": "balance",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "nikon-composition"
+      ],
       "relatedLegacyIds": []
     },
     {
       "id": "C-022",
-      "definition": "反復の破れは、繰り返しの中から一つを変化させ注目を集める。",
+      "definition": "反復の破れは、繰り返しの中から一つを変化させ、注目を集めようとする配置である。",
       "example": "同じ窓が並ぶ中で一つだけ赤い灯りを点ける。",
       "contrast": "対照図では同じ窓の列のうち赤い窓を三つに増やす。どこが目立つかは色や他の要素にも左右される。",
       "aiInstruction": "八個の黒い窓のうち右から三番目だけ赤くする。",
@@ -2601,7 +2660,9 @@
       "categoryId": "balance",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "nikon-composition"
+      ],
       "relatedLegacyIds": []
     },
     {
@@ -2846,7 +2907,9 @@
       "categoryId": "balance",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "risd-thumbnail-sketching"
+      ],
       "relatedLegacyIds": [],
       "diagramNote": "二図は同じ大きさの枠に表示しており、この画面自体では縮小していない。縮小時に読めるかは実際の表示寸法で別途確認する。"
     },
@@ -2897,7 +2960,7 @@
     },
     {
       "id": "C-026",
-      "definition": "図と地の反転は、同じ境界を前景と背景の両方として読む現象である。",
+      "definition": "図と地の反転は、同じ境界について前景と背景のどちらとして捉えるかが入れ替わる現象である。",
       "example": "左右の暗い輪郭を主役と考えると、中央の明るい空間が背景に見える。",
       "contrast": "同じ境界で中央を暗くすると、中央の形が主役として読まれやすくなる。",
       "aiInstruction": "左右の黒い形で中央の白い形も読み取れる単純な図案を作る。",
@@ -2937,7 +3000,9 @@
       "categoryId": "perception",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "openstax-gestalt-principles"
+      ],
       "relatedLegacyIds": []
     },
     {
@@ -3341,7 +3406,9 @@
       "categoryId": "perception",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "openstax-gestalt-principles"
+      ],
       "relatedLegacyIds": []
     },
     {
@@ -3415,7 +3482,9 @@
       "categoryId": "perception",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "openstax-gestalt-principles"
+      ],
       "relatedLegacyIds": []
     },
     {
@@ -3634,7 +3703,7 @@
     },
     {
       "id": "C-032",
-      "definition": "共通運命は、同じ方向に動く要素を一群として見やすい知覚の手掛かりである。",
+      "definition": "共通運命は、同時に同じ方向へ動く要素を一群として見やすい知覚の手掛かりである。",
       "example": "同じ方向を向く三つの矢印を点に添え、移動方向を表す。実際には動かない静止図である。",
       "contrast": "対照図では三つのうち一つの矢印を別の向きにする。",
       "aiInstruction": "点三個の脇に同じ方向の矢印を添える。静止画は動きを記号で表す。",
@@ -3853,7 +3922,9 @@
       "categoryId": "perception",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "nng-common-fate"
+      ],
       "relatedLegacyIds": []
     },
     {
@@ -4028,7 +4099,7 @@
     },
     {
       "id": "C-035",
-      "definition": "近似した形のまとまりは、局所の細部より外形の大きな塊を先に見せる考え方である。",
+      "definition": "大きな形の整理は、細部を省いて画面を少数の形にまとめる構成方法である。",
       "example": "ビル群を三つの大きな矩形に整理して遠景として見せる。",
       "contrast": "対照図では同じ三つの建物に、窓を表す淡色の小矩形を十個加える。",
       "aiInstruction": "都市のビル群は三つの単純な黒い塊とし、窓はほぼ描かない。",
@@ -4167,11 +4238,13 @@
           ]
         ]
       },
-      "titleJa": "近似した形のまとまり",
+      "titleJa": "大きな形の整理",
       "categoryId": "perception",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "risd-thumbnail-sketching"
+      ],
       "relatedLegacyIds": []
     },
     {
@@ -4415,9 +4488,11 @@
       "categoryId": "perception",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "w3c-form-grouping"
+      ],
       "relatedLegacyIds": [],
-      "diagramNote": "「住」は住所欄、「連」は連絡先欄の略記。図は内容の意味が見えるよう文字を使用している。"
+      "diagramNote": "「住」は住所欄、「連」は連絡先欄の略記。図は内容の意味が見えるよう文字を使用している。 実際のWebフォームでは、見た目だけでなくコード上でも関連項目をグループ化する。"
     },
     {
       "id": "C-037",
@@ -5008,7 +5083,7 @@
     },
     {
       "id": "C-044",
-      "definition": "大気遠近法は、遠方の形ほどコントラストや彩度が下がって見える現象を利用する。",
+      "definition": "大気遠近法は、距離や大気によって遠景の色調が変わる見え方を、二次元表現の奥行きの手掛かりにする方法である。",
       "example": "遠景の山を淡く、近景の山を濃く描く。",
       "contrast": "全ての山を濃い黒にすると前後の違いが弱くなることがある。",
       "aiInstruction": "近景は濃い黒、中景は灰色、遠景は明るい灰色の山並み。",
@@ -5053,7 +5128,9 @@
       "categoryId": "depth",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "national-gallery-aerial-perspective"
+      ],
       "relatedLegacyIds": []
     },
     {
@@ -5125,7 +5202,9 @@
       "categoryId": "depth",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "nikon-lines"
+      ],
       "relatedLegacyIds": []
     },
     {
@@ -5207,7 +5286,9 @@
       "categoryId": "depth",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "adobe-composition-techniques"
+      ],
       "relatedLegacyIds": []
     },
     {
@@ -5474,7 +5555,9 @@
       "categoryId": "camera",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "adobe-camera-shots"
+      ],
       "relatedLegacyIds": []
     },
     {
@@ -5546,7 +5629,9 @@
       "categoryId": "camera",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "adobe-camera-shots"
+      ],
       "relatedLegacyIds": []
     },
     {
@@ -5611,7 +5696,9 @@
       "categoryId": "camera",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "adobe-camera-shots"
+      ],
       "relatedLegacyIds": []
     },
     {
@@ -6685,7 +6772,9 @@
       "categoryId": "value",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "national-gallery-chiaroscuro"
+      ],
       "relatedLegacyIds": []
     },
     {
@@ -6767,7 +6856,9 @@
       "categoryId": "value",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "adobe-high-low-key-light"
+      ],
       "relatedLegacyIds": []
     },
     {
@@ -6849,7 +6940,9 @@
       "categoryId": "value",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "adobe-high-low-key-light"
+      ],
       "relatedLegacyIds": []
     },
     {
@@ -6985,7 +7078,7 @@
     },
     {
       "id": "C-069",
-      "definition": "逆光は、被写体の後ろを明るくすることで外輪郭を浮かび上がらせる。",
+      "definition": "逆光は、被写体の背後側から光が当たる照明。明るい背景に対して暗く見せることで、外輪郭を強調できる。",
       "example": "明るい出口の前に暗い人物を置く。",
       "contrast": "対照図では出口を淡色から暗い灰色に変える。人物は黒のままで、完全に同じ明度ではない。",
       "aiInstruction": "明るい門の開口部に真っ黒な人物の全身を置く。",
@@ -7062,7 +7155,9 @@
       "categoryId": "value",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "adobe-silhouette-photo"
+      ],
       "relatedLegacyIds": []
     },
     {
@@ -10262,7 +10357,9 @@
       "categoryId": "sequence",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "adobe-camera-shots"
+      ],
       "relatedLegacyIds": []
     },
     {
