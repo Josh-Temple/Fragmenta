@@ -7625,28 +7625,30 @@
       "relatedExisting": [],
       "editorial": {
         "reviewStatus": "draft_unreviewed",
-        "summary": "Material Designの公式資料を起点に、原則・コンポーネント・利用条件を比較可能な項目として整理する。",
+        "summary": "GoogleのMaterial Design 3は、色・文字・形などのスタイルとコンポーネントを組み合わせるためのデザインシステム。参照した資料ではテーマの作り方を説明している。",
         "appropriateUses": [
-          "デザインシステム調査",
-          "既存UIの仕様比較"
+          "色の役割や文字の階層を、自作UIの設計方針と比較する。",
+          "Material 3のテーマを利用する際、対象の実装環境と対応版を確認する。"
         ],
         "pitfalls": [
-          "独自のサンプルを公式準拠と表示しない",
-          "バージョンが異なる資料を混在させない"
+          "見た目が似ていてもMaterial 3の公式実装や適合を意味しない。",
+          "色を変更した後の読みやすさを、テーマの採用だけで保証しない。"
         ],
         "reviewChecks": [
-          "公式原典と更新日を記録",
-          "ライセンス条件と実装例を分離"
+          "対象コンポーネントと実装環境の資料・バージョンを確認する。",
+          "背景と文字の組合せ、操作状態を実際の画面で確認する。"
         ],
         "evidenceStatus": "not_checked",
-        "practicalExample": "Material Designのコンポーネントと自作UIの違いを項目ごとに比較する。",
-        "implementationNotes": "現行版の原典へリンクし、仕様と自サイトの解釈を区別する。",
-        "accessibilityNotes": "サンプルの操作性は実装環境で別途検証する。",
-        "aiInstruction": "公式の規則を出典付きで示し、未確認の適合性は断定しないでください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "practicalExample": "主色とその上に置く文字色を役割ごとに整理し、明暗両方のテーマで読みやすさを確認する。",
+        "implementationNotes": "公式資料の役割と独自に選んだ色を分け、使用するライブラリのバージョンを記録する。",
+        "accessibilityNotes": "色の役割を参照しても、変更後のコントラストや操作性は実装ごとに検証する。",
+        "aiInstruction": "Material 3のテーマ資料を参照し、色の役割と自作案を区別して比較してください。",
+        "sourceIds": [
+          "google-material3-theming"
+        ],
+        "updatedOn": "2026-11-14",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -7668,28 +7670,30 @@
       "relatedExisting": [],
       "editorial": {
         "reviewStatus": "draft_unreviewed",
-        "summary": "Carbon Design Systemの公式情報を起点に、パターンとデザイン原則を参照用に整理する。",
+        "summary": "CarbonはIBMのデザインシステム。共通の基盤に加え、製品など用途別の拡張があり、コンポーネント、パターン、コード、設計資料が提供されている。",
         "appropriateUses": [
-          "業務アプリの設計比較",
-          "公式ドキュメントの調査"
+          "業務向けUIの部品や画面パターンを調査する。",
+          "共通基盤と用途別の拡張を分けて、自作アプリの設計と比較する。"
         ],
         "pitfalls": [
-          "独自解釈を公式の仕様と混同しない",
-          "特定の製品版に固定しない"
+          "Carbon Coreと用途別の拡張を、同じ部品群とみなさない。",
+          "見た目の模倣やライブラリの採用だけでアクセシビリティ適合を保証しない。"
         ],
         "reviewChecks": [
-          "公式の一次資料を確認",
-          "利用条件と対応コンポーネントを記録"
+          "対象とする部品や拡張の資料、対応環境を確認する。",
+          "コード・画像・商標を利用する前に、それぞれの利用条件を確認する。"
         ],
         "evidenceStatus": "not_checked",
-        "practicalExample": "Carbonの表・フォーム例と同用途の自作案を比較する。",
-        "implementationNotes": "公式ガイドの該当部分を参照し、独自の判断は別欄にする。",
-        "accessibilityNotes": "見た目の模倣だけでアクセシビリティ準拠と扱わない。",
-        "aiInstruction": "公式例と独自案を出典・用途・制約別に比較してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "practicalExample": "入力画面を検討する際、共通部品と製品向け拡張を区別して、対象となる公式ページを調べる。",
+        "implementationNotes": "採用するパッケージと版を明記し、公式の説明と独自の判断を分ける。",
+        "accessibilityNotes": "対象部品の資料を確認した上で、組み合わせた画面を利用環境ごとに検証する。",
+        "aiInstruction": "Carbon Coreと対象用途の拡張を区別し、資料で確認できる範囲を示して比較してください。",
+        "sourceIds": [
+          "ibm-carbon-about"
+        ],
+        "updatedOn": "2026-11-14",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -7711,28 +7715,30 @@
       "relatedExisting": [],
       "editorial": {
         "reviewStatus": "draft_unreviewed",
-        "summary": "Fluentの公式資料に沿って、Microsoftのデザイン指針と実装資料の適用範囲を整理する。",
+        "summary": "Fluent 2はMicrosoftのデザインシステム。公式サイトはWeb、iOS、Android、Windowsのコンポーネント資料への導線を掲載している。",
         "appropriateUses": [
-          "製品UIの比較",
-          "マルチプラットフォーム設計の調査"
+          "対象プラットフォームのコンポーネント資料を探す。",
+          "複数の環境で同じ用途の部品を比較し、差を整理する。"
         ],
         "pitfalls": [
-          "異なる世代のガイドを混在させない",
-          "Fragmentaのプレビューを公式実装としない"
+          "Fluent 1とFluent 2の資料を混ぜない。",
+          "プラットフォーム間で部品の提供状況や挙動が同一と決めつけない。"
         ],
         "reviewChecks": [
-          "参照した仕様の版とURLを記録",
-          "対象プラットフォームを明記"
+          "対象OS・ライブラリと、該当コンポーネントの資料を確認する。",
+          "使用するコードやデザイン資産の利用条件を個別に確認する。"
         ],
         "evidenceStatus": "not_checked",
-        "practicalExample": "Fluentのナビゲーション規則を自作アプリの画面構成と比較する。",
-        "implementationNotes": "最新の公式資料と対象バージョンを記録する。",
-        "accessibilityNotes": "特定OSの見た目をそのまま全プラットフォームへ適用しない。",
-        "aiInstruction": "用途と利用環境を明記して公式資料の該当箇所と比較してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "practicalExample": "Webとモバイルで同じ操作を設計する際、各プラットフォームのコンポーネント資料から差を確認する。",
+        "implementationNotes": "Fluent 2の公式サイトを入口とし、実際に使う部品と版はプラットフォーム別に記録する。",
+        "accessibilityNotes": "部品の資料を参照した後、フォーカスや読み上げを実際の対象環境で確認する。",
+        "aiInstruction": "Fluent 2の対象プラットフォームと部品を明示し、確認できない仕様は推測しないでください。",
+        "sourceIds": [
+          "microsoft-fluent2-home"
+        ],
+        "updatedOn": "2026-11-14",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -7754,28 +7760,30 @@
       "relatedExisting": [],
       "editorial": {
         "reviewStatus": "draft_unreviewed",
-        "summary": "AppleのHuman Interface Guidelinesを、画面構成・入力・ナビゲーションの参考資料として調査する企画。",
+        "summary": "AppleのHuman Interface Guidelinesは、Appleの各プラットフォーム向けに、設計の基礎、操作パターン、部品、入力方法などを案内する資料。",
         "appropriateUses": [
-          "iOSアプリのデザイン調査",
-          "プラットフォーム別の違い比較"
+          "Appleプラットフォーム向けアプリの設計資料を調べる。",
+          "対象のOS・入力方法に合う画面の作り方を比較する。"
         ],
         "pitfalls": [
-          "公式ガイドの画像を許諾なく再配布しない",
-          "ガイドの規定と独自の提案を混同しない"
+          "Human Interface Guidelinesの設計上の助言とApp Store審査基準を混同しない。",
+          "公式の画像やデザイン資産の再配布条件を確認せずに転載しない。"
         ],
         "reviewChecks": [
-          "公式の最新版と更新履歴を確認",
-          "実装対象のOS版を明示"
+          "参照する節と対象プラットフォーム、必要なOS版を確認する。",
+          "デザイン資産を利用する場合は、それぞれの利用条件を確認する。"
         ],
         "evidenceStatus": "not_checked",
-        "practicalExample": "画面構成の選択理由をAppleの該当ガイドの原文URLと並べて整理する。",
-        "implementationNotes": "公式の記述は要点だけを自分の言葉で記録し、適用対象版も区別する。",
-        "accessibilityNotes": "プラットフォーム固有の配慮と一般的なアクセシビリティ要件を混同しない。",
-        "aiInstruction": "Apple HIGの該当節を出典付きで比較し、Fragmentaの独自見解は別欄にしてください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "practicalExample": "画面の入力方法を決める際、対象プラットフォームの入力ガイドを調べ、自作案と照らし合わせる。",
+        "implementationNotes": "公式ガイドの該当節と自作案を分けて記録し、プラットフォーム固有の前提を明記する。",
+        "accessibilityNotes": "ガイドの参照だけで対応済みとせず、対象端末と支援技術で操作を確認する。",
+        "aiInstruction": "Appleの該当ガイドと対象プラットフォームを示し、独自の提案と区別してください。",
+        "sourceIds": [
+          "apple-design-pathway"
+        ],
+        "updatedOn": "2026-11-14",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -9662,6 +9670,38 @@
       "checkedOn": "2026-11-14",
       "scope": "右横書き文書と異なる方向の文字列を扱うためのdir・bdi等の方法。言語や端末ごとの表示・操作を自動保証しない。",
       "rights": "参照リンクのみ。文章やコード例の転載条件は別途確認"
+    },
+    "google-material3-theming": {
+      "title": "Create an accessible and personalized theme and brand with Material Design 3",
+      "publisher": "Android Developers / Google",
+      "url": "https://developer.android.com/codelabs/m3-design-theming",
+      "checkedOn": "2026-11-14",
+      "scope": "Material 3の色・文字・形、役割とトークン、テーマ作成の公式学習資料。個別コンポーネントや他環境の実装・適合を保証しない。",
+      "rights": "参照リンクのみ。文章・画像・コード・商標の利用条件は個別に確認する。"
+    },
+    "ibm-carbon-about": {
+      "title": "About Carbon",
+      "publisher": "IBM Carbon Design System",
+      "url": "https://www.carbondesignsystem.com/getting-started/about-carbon",
+      "checkedOn": "2026-11-14",
+      "scope": "Carbon Core、用途別の拡張、設計資料・コンポーネント・コードの概要。各部品や利用条件の全面確認ではない。",
+      "rights": "参照リンクのみ。コード・画像・商標の利用条件は個別に確認する。"
+    },
+    "microsoft-fluent2-home": {
+      "title": "Fluent 2 Design System",
+      "publisher": "Microsoft",
+      "url": "https://fluent2.microsoft.design/",
+      "checkedOn": "2026-11-14",
+      "scope": "Fluent 2のWeb、iOS、Android、Windows向け資料への入口。各プラットフォームの機能・対応状況の同一性は示さない。",
+      "rights": "参照リンクのみ。文章・画像・コード・商標の利用条件は個別に確認する。"
+    },
+    "apple-design-pathway": {
+      "title": "Design Pathway",
+      "publisher": "Apple Developer",
+      "url": "https://developer.apple.com/design/get-started/",
+      "checkedOn": "2026-11-14",
+      "scope": "Apple HIGの基礎、パターン、部品、入力方法などへの公式案内。個別の規則、App Store審査基準、各OS版の適合は別途確認する。",
+      "rights": "参照リンクのみ。文章・画像・デザイン資産・商標の利用条件は個別に確認する。"
     }
   },
   "relationSemantics": {
