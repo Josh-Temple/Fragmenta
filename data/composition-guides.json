@@ -193,6 +193,55 @@
       "url": "https://journals.sagepub.com/doi/10.1068/i0474",
       "scope": "絵画空間で相対的な大きさを奥行きの手掛かりとして扱った研究。特定の人物・建物の実寸や感情効果を証明しない。",
       "rights": "論文へのリンクのみ。図版等の転載・改変は別途利用条件の確認が必要。"
+    },
+    "adobe-diagonal-lines-ja": {
+      "title": "写真のリーディングラインに関するガイド",
+      "publisher": "Adobe",
+      "url": "https://www.adobe.com/jp/creativecloud/photography/discover/leading-lines-photography.html",
+      "scope": "「斜めのライン」節は写真家による動きや奥行きの演出上の解説。特定の模式図の視線移動や心理効果を実測した資料ではない。",
+      "rights": "参考リンクのみ。掲載写真・図版の転載権を含まない。"
+    },
+    "openstax-vision-depth-cues": {
+      "title": "Psychology 2e, 5.3 Vision",
+      "publisher": "OpenStax",
+      "url": "https://openstax.org/books/psychology-2e/pages/5-3-vision",
+      "scope": "単眼で得られる奥行きの手掛かりとして、部分的な重なりを解説。前後の順序の参考であり、距離の数値や特定の図の見え方を保証しない。",
+      "rights": "参考リンクのみ。掲載画像の転載や本教材の図の権利を承認するものではない。"
+    },
+    "dow-composition-1914": {
+      "title": "Composition, ninth edition (1914), chapters IX–X",
+      "publisher": "Arthur Wesley Dow / Project Gutenberg",
+      "url": "https://www.gutenberg.org/files/45410/45410-h/45410-h.html",
+      "scope": "第9〜10章で二つの明度を用いた構成と、暗部を大きな面として捉える学習法を提案。歴史的な制作・教育手法であり、知覚効果の実験的証明ではない。",
+      "rights": "書籍への参照リンクのみ。書籍内画像や本教材の図の使用権は別途確認。"
+    },
+    "adobe-silhouette-photo": {
+      "title": "Create contrast with silhouette portrait photography",
+      "publisher": "Adobe",
+      "url": "https://www.adobe.com/creativecloud/photography/type/silhouette-photography.html",
+      "scope": "明るい背景と暗い被写体の輪郭を使うシルエット写真の説明。すべての形が識別できるという保証ではない。",
+      "rights": "参考リンクのみ。掲載写真・図版の転載権を含まない。"
+    },
+    "adobe-tonal-contrast": {
+      "title": "A guide to high-contrast photography",
+      "publisher": "Adobe",
+      "url": "https://www.adobe.com/creativecloud/photography/technique/high-contrast.html",
+      "scope": "写真における明暗の対比と被写体の強調についての実践解説。特定図形の注目度や視線の動きを測定した実験ではない。",
+      "rights": "参考リンクのみ。掲載写真・図版の転載権を含まない。"
+    },
+    "studiobinder-wide-shot": {
+      "title": "The Wide Shot in Film — Ultimate Guide",
+      "publisher": "StudioBinder",
+      "url": "https://www.studiobinder.com/camera-shots/shot-size/wide-shot/",
+      "scope": "広い画面の中に人物を置き、孤立感を意図する映画制作上の用例。感情の受け取りを実験で保証した資料ではない。",
+      "rights": "参考リンクのみ。掲載画像・映像の転載権を含まない。"
+    },
+    "risd-thumbnail-sketching": {
+      "title": "Understanding Art Through Thumbnail Sketching",
+      "publisher": "Margaret Owen / RISD Museum",
+      "url": "https://risdmuseum.org/manual/441_understanding_art_through_thumbnail_sketching",
+      "scope": "小さなスケッチで形と明暗を整理する制作上の方法。画面の縮小・グレースケール・輪郭変換の機能や効果を直接検証した資料ではない。",
+      "rights": "参考リンクのみ。掲載作品・図版の転載権や本教材の図の権利を含まない。"
     }
   },
   "guides": [
@@ -577,7 +626,7 @@
       "id": "C-005",
       "titleJa": "対角線構図",
       "categoryId": "basics",
-      "definition": "斜めの方向を主軸として、奥行きや動きの方向を示す。",
+      "definition": "斜めの線を画面の主軸とし、奥行きや動きの方向を表そうとする構図。印象や視線は他の要素にも左右される。",
       "example": "左下から右上へ伸びる太い斜線の近くに人物を置いた模式図。階段の段差は描いていない。",
       "contrast": "対照図では水平線と交差する二本の斜線を配置している。複数の線が注意を分散させる可能性を検討する例である。",
       "aiInstruction": "画面左下から右上へ一本の主要な斜線が伸びる階段。終点に小さな人物。",
@@ -654,10 +703,12 @@
         ]
       },
       "relatedLegacyIds": [],
-      "sourceIds": [],
+      "sourceIds": [
+        "adobe-diagonal-lines-ja"
+      ],
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "comparisonPoint": "主要な斜線がどの方向へ注意を誘導するか確認する。"
+      "comparisonPoint": "人物を固定し、斜線の数と方向、水平線の有無を比べる。見る人の実際の視線移動は、この図からは測定できない。"
     },
     {
       "id": "C-006",
@@ -3809,7 +3860,7 @@
       "id": "C-033",
       "titleJa": "重なりと遮蔽",
       "categoryId": "perception",
-      "definition": "手前の物体が奥の物体の一部を隠す関係で、前後の距離を伝える。",
+      "definition": "手前の物体が奥の物体の一部を隠す関係を、前後関係の手掛かりとして使う。重なりだけから両者の距離は分からない。",
       "example": "淡色の建物の前に人物を置き、さらに手前の黒い柱が人物と建物の一部を隠す。",
       "contrast": "対照図では建物・人物・柱を離して置き、重なりによる前後関係の手掛かりを減らしている。",
       "aiInstruction": "奥の建物・中景の人物・前景の柱を互いに一部重ねて描く。",
@@ -3882,7 +3933,9 @@
         ]
       },
       "relatedLegacyIds": [],
-      "sourceIds": [],
+      "sourceIds": [
+        "openstax-vision-depth-cues"
+      ],
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
       "comparisonPoint": "配置例は柱が人物と建物に、人物が建物に重なる。対照例は三つが離れている。"
@@ -4948,7 +5001,9 @@
       "categoryId": "depth",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "openstax-vision-depth-cues"
+      ],
       "relatedLegacyIds": []
     },
     {
@@ -5317,7 +5372,9 @@
       "relatedLegacyIds": [
         "idea-visual-history-02"
       ],
-      "sourceIds": [],
+      "sourceIds": [
+        "openstax-vision-depth-cues"
+      ],
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
       "comparisonPoint": "二図は建築の主な輪郭を共有するが、窓・線の追加と下端帯の削除が同時に起こる。線や細部だけの効果は切り分けられない。"
@@ -6291,7 +6348,7 @@
       "categoryId": "value",
       "definition": "明るい面と暗い面の二段階だけで画面の骨格が読めるかを検査する。",
       "example": "建築と人物を暗い一色、背景を明るい一色として二段階の明暗に整理する。現図は純白・純黒ではない。",
-      "contrast": "同じ場面を近い中間調に分解したとき、遠目でも人物と空間を判別できるかを見比べる。",
+      "contrast": "同じ場面を複数の灰色で表し、人物と空間を判別できるかを二色の図と見比べる。遠方からの可読性は実測していない。",
       "aiInstruction": "色相ではなく明暗を二段階に限定し、人物・建築を暗い面、光の通り道と背景を明るい面で表す。厳密な白黒画像が必要な場合は白・黒のRGB値も指定する。",
       "diagram": {
         "example": [
@@ -6372,7 +6429,9 @@
         ]
       },
       "relatedLegacyIds": [],
-      "sourceIds": [],
+      "sourceIds": [
+        "dow-composition-1914"
+      ],
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
       "comparisonPoint": "形と位置を固定し、左は黒と背景色、右は複数の灰色で同じ場面を構成する。"
@@ -6451,7 +6510,9 @@
         ]
       },
       "relatedLegacyIds": [],
-      "sourceIds": [],
+      "sourceIds": [
+        "dow-composition-1914"
+      ],
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
       "comparisonPoint": "黒面の連結状態だけでなく輪郭・面積・人物とのコントラストも変わるため、まとまりや量感の差を連結だけに帰属しない。"
@@ -6460,7 +6521,7 @@
       "id": "C-063",
       "titleJa": "シルエット構図",
       "categoryId": "value",
-      "definition": "内部の細部を省き、外輪郭と背景の対比だけで主役を識別させる。",
+      "definition": "内部の細部を省き、外輪郭と背景の対比によって主役を見分けられるかを考える構成。",
       "example": "逆光の人物を一本の黒いシルエットで立たせる。",
       "contrast": "対照図では同じ頭と胴の形を明るくし、内側に顔の点と横線を加える。",
       "aiInstruction": "人物の顔・服の内部描写を省き、黒い外形のみ。背後に明るい空。",
@@ -6549,7 +6610,9 @@
         ]
       },
       "relatedLegacyIds": [],
-      "sourceIds": [],
+      "sourceIds": [
+        "adobe-silhouette-photo"
+      ],
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
       "comparisonPoint": "人物の位置と外形は同じ。明度と内部の記号が同時に変わるため、どちらの影響かは切り分けられない。"
@@ -6852,7 +6915,9 @@
         ]
       },
       "relatedLegacyIds": [],
-      "sourceIds": [],
+      "sourceIds": [
+        "adobe-tonal-contrast"
+      ],
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
       "comparisonPoint": "明部を一つに限定するときと複数に分けるときの差を見る。"
@@ -7401,7 +7466,9 @@
         ]
       },
       "relatedLegacyIds": [],
-      "sourceIds": [],
+      "sourceIds": [
+        "studiobinder-wide-shot"
+      ],
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
       "comparisonPoint": "建物と広場、人物の足元の位置を固定し、人物の大きさを変えて空間との尺度差を比べる。"
@@ -8052,7 +8119,9 @@
       "categoryId": "narrative",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "openstax-vision-depth-cues"
+      ],
       "relatedLegacyIds": []
     },
     {
@@ -13038,7 +13107,9 @@
         ]
       },
       "relatedLegacyIds": [],
-      "sourceIds": [],
+      "sourceIds": [
+        "risd-thumbnail-sketching"
+      ],
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
       "comparisonPoint": "縮小とグレースケールは背景を含む元図全体に適用する。シルエットと輪郭は前景図形の表示を変える。変換は一つずつ比較する。",
