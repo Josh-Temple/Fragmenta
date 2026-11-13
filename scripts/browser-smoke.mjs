@@ -368,6 +368,14 @@ try {
     });
     if (landmark.result?.value !== 1)
       throw new Error('Expected exactly one main landmark on ' + route + ', got ' + landmark.result?.value);
+    if (route === '/collections' || route.startsWith('/collections/') || route === '/licenses' ||
+        route.startsWith('/p/') || route.startsWith('/a/')) {
+      const focus = await page.send('Runtime.evaluate', {
+        expression: "document.activeElement?.matches('h1[tabindex=\"-1\"]')",
+        returnByValue: true,
+      });
+      if (focus.result?.value !== true) throw new Error('Heading did not receive focus on ' + route);
+    }
     if (index === 0 && !process.env.SMOKE_BASE_URL) {
       // Build-time Tailwind must preserve the original warm palette and typography.
       const result = await page.send('Runtime.evaluate', {

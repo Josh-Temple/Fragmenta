@@ -1,16 +1,21 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { patternRights } from '../data/pattern-rights';
 
 const Licenses: React.FC = () => {
   const navigate = useNavigate();
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    titleRef.current?.focus({ preventScroll: true });
+  }, []);
   return <div className="px-5 pb-28">
     <header className="flex items-center gap-3 py-4">
       <button type="button" onClick={() => navigate(-1)} aria-label="Go back"
         className="size-11 rounded-full hover:bg-ink/5 focus-visible:outline-2 focus-visible:outline-primary">
         <span aria-hidden="true" className="material-symbols-outlined">arrow_back</span>
       </button>
-      <h1 className="text-2xl font-bold font-display">Licensing information</h1>
+      <h1 ref={titleRef} tabIndex={-1} className="text-2xl font-bold font-display">Licensing information</h1>
     </header>
     <section className="space-y-4 leading-relaxed">
       <h2 className="text-xl font-semibold font-display">Fragmenta patterns</h2>

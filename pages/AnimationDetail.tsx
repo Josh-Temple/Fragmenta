@@ -33,9 +33,9 @@ const PatternDetail: React.FC = () => {
   const [paramValues, setParamValues] = useState<Record<string, number>>({});
 
   useEffect(() => {
-    if (!def) return;
     window.scrollTo(0, 0);
     titleRef.current?.focus({ preventScroll: true });
+    if (!def) return;
 
     const defaults: Record<string, number> = {};
     def.params.forEach(param => {
@@ -43,12 +43,12 @@ const PatternDetail: React.FC = () => {
     });
     setParamValues(defaults);
     setMotionPaused(false);
-  }, [def]);
+  }, [def, id]);
 
   if (!def) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-paper text-ink">
-        <h1 className="text-xl font-bold mb-4 font-display">Pattern not found</h1>
+        <h1 ref={titleRef} tabIndex={-1} className="text-xl font-bold mb-4 font-display">Pattern not found</h1>
         <button onClick={() => navigate('/')} className="text-primary hover:underline">Go home</button>
       </div>
     );

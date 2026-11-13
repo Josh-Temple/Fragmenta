@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { collections } from '../data/collections';
 
 const Collections: React.FC = () => {
   const navigate = useNavigate();
+  const titleRef = useRef<HTMLHeadingElement>(null);
   const [query, setQuery] = useState('');
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    titleRef.current?.focus({ preventScroll: true });
+  }, []);
   const visible = collections.filter(collection =>
     [collection.title, collection.description].some(text =>
       text.toLowerCase().includes(query.trim().toLowerCase())
@@ -18,7 +23,7 @@ const Collections: React.FC = () => {
           aria-label="Go back" className="size-11 rounded-full hover:bg-ink/5 focus-visible:outline-2 focus-visible:outline-primary">
           <span aria-hidden="true" className="material-symbols-outlined">arrow_back</span>
         </button>
-        <h1 className="text-2xl font-bold font-display">Collections</h1>
+        <h1 ref={titleRef} tabIndex={-1} className="text-2xl font-bold font-display">Collections</h1>
       </header>
       <p className="text-ink-muted mb-5">Curated sets of registered patterns. Every item opens a real pattern.</p>
       <label htmlFor="collection-search" className="block text-sm font-semibold mb-2">Search collections</label>

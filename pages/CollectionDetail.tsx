@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { findCollection } from '../data/collections';
 import { definitions } from '../data/definitions';
@@ -7,10 +7,15 @@ const CollectionDetail: React.FC = () => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const collection = findCollection(id);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    titleRef.current?.focus({ preventScroll: true });
+  }, [id]);
 
   if (!collection) {
     return <div className="p-6">
-      <h1 className="text-xl font-bold">Collection not found</h1>
+      <h1 ref={titleRef} tabIndex={-1} className="text-xl font-bold">Collection not found</h1>
       <Link to="/collections" className="underline text-primary mt-4 inline-block">Browse collections</Link>
     </div>;
   }
@@ -24,7 +29,7 @@ const CollectionDetail: React.FC = () => {
         </button>
         <span className="text-sm font-medium text-ink-muted">Collection</span>
       </header>
-      <h1 className="font-display text-3xl font-bold leading-tight mb-3">{collection.title}</h1>
+      <h1 ref={titleRef} tabIndex={-1} className="font-display text-3xl font-bold leading-tight mb-3">{collection.title}</h1>
       <p className="text-ink-muted leading-relaxed mb-4">{collection.description}</p>
       <p className="text-xs text-ink-muted mb-6">{collection.patternIds.length} registered patterns. No progress tracking or locked content.</p>
       <div className="grid gap-4">
