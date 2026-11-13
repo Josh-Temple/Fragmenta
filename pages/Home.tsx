@@ -28,7 +28,7 @@ const Home: React.FC = () => {
           <label htmlFor="home-search" className="block text-sm font-semibold">パターン・スタイル・ツールを検索</label>
           <div className="mt-2 flex gap-2">
             <input id="home-search" type="search" value={searchQuery} onChange={event => setSearchQuery(event.target.value)} placeholder="例：記事、ガラス、行間" className="min-w-0 flex-1 rounded-lg border border-ink/40 bg-surface-highlight px-3 py-3 text-base text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink" />
-            <button type="submit" className="rounded-lg bg-ink px-4 py-3 text-sm font-bold text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">検索</button>
+            <button type="submit" className="motion-control rounded-lg bg-ink px-4 py-3 text-sm font-bold text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">検索</button>
           </div>
         </form>
       </section>
@@ -36,7 +36,7 @@ const Home: React.FC = () => {
         <h2 id="start-heading" className="text-lg font-bold">何から始めますか</h2>
         <div className="mt-3 divide-y divide-ink/20 border-y border-ink/20">
           {[{ path: '/styles', title: 'デザインの方向を決める', detail: `${designStyles.length}スタイルを比較し、AIに伝える` }, { path: '/browse', title: '部品やレイアウトを探す', detail: `${Object.keys(definitions).length}パターンの動作と実装を見る` }, { path: '/tools', title: '色と文字を調整する', detail: '自分の配色・文章で試し、CSSをコピー' }, { path: '/knowledge', title: 'デザインの企画を横断して探す', detail: '180件の企画案と関連する項目をたどる（未制作）' }].map(item => (
-            <Link key={item.path} to={item.path} className="flex items-center justify-between gap-3 rounded py-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
+            <Link key={item.path} to={item.path} className="motion-control flex items-center justify-between gap-3 rounded py-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
               <span><strong className="text-sm">{item.title}</strong><span className="mt-1 block text-xs leading-relaxed text-ink-muted">{item.detail}</span></span><span aria-hidden="true">→</span>
             </Link>
           ))}

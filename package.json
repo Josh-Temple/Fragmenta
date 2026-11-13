@@ -10,7 +10,7 @@
     "dev": "vite",
     "typecheck": "node ./node_modules/typescript/bin/tsc --noEmit",
     "lint": "node scripts/lint.cjs",
-    "prebuild": "npm run typecheck && npm run lint && npm run design:verify && npm run tools:verify && npm run catalog:export && npm run composition:verify && npm run catalog:verify && npm run catalog:graph && npm run catalog:regression && npm run catalog:exports && npm run catalog:focus && npm run catalog:smoke",
+    "prebuild": "npm run typecheck && npm run lint && npm run design:verify && npm run tools:verify && npm run motion:verify && npm run catalog:export && npm run composition:verify && npm run catalog:verify && npm run catalog:graph && npm run catalog:regression && npm run catalog:exports && npm run catalog:focus && npm run catalog:smoke",
     "build": "vite build",
     "preview": "vite preview",
     "design:verify": "node scripts/check-design-styles.cjs",
@@ -23,7 +23,8 @@
     "catalog:graph": "node scripts/check-knowledge-graph.cjs",
     "catalog:exports": "node scripts/check-knowledge-exports.cjs && node scripts/test-knowledge-exports.cjs",
     "catalog:focus": "node scripts/test-knowledge-focus.cjs",
-    "composition:verify": "node scripts/check-composition-guides.cjs && node scripts/check-composition-discovery.cjs && node scripts/test-composition-regressions.cjs"
+    "composition:verify": "node scripts/check-composition-guides.cjs && node scripts/check-composition-discovery.cjs && node scripts/test-composition-regressions.cjs",
+    "motion:verify": "node scripts/check-site-motion.cjs"
   },
   "dependencies": {
     "react": "^19.3.1",

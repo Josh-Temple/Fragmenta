@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { DesignStyleSpecimen } from '../components/DesignStyleSpecimen';
+import { getStyleMotion } from '../data/design-style-motion';
 import { designStyleGroups, designStyles, type DesignStyleGroup } from '../data/design-styles';
 import catalog from '../data/content-ideas.json';
 import { createStylePrompt, createBlendedStylePrompt, createStyleCss, type DemoScreen } from '../data/design-style-export';
@@ -73,7 +74,7 @@ const DesignStyles: React.FC = () => {
         <div role="group" aria-label="スタイル分類" className="flex flex-wrap gap-2 mt-4">
           {[{ id: 'all' as const, label: 'すべて' }, ...designStyleGroups].map(group => (
             <button key={group.id} type="button" aria-pressed={family === group.id} onClick={() => setFamily(group.id)}
-              className={'rounded-full border px-3 py-2 text-xs font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ' +
+              className={'motion-control rounded-full border px-3 py-2 text-xs font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ' +
                 (family === group.id ? 'bg-primary text-paper border-primary' : 'bg-surface text-ink border-ink-border hover:border-primary')}>
               {group.label}
             </button>
@@ -85,7 +86,7 @@ const DesignStyles: React.FC = () => {
             {results.map(item => (
               <button type="button" aria-pressed={primary === item.id} key={item.id}
                 onClick={() => { setPrimary(item.id); setCopyStatus(''); }}
-                className={'min-w-0 text-left rounded-xl border p-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ' +
+                className={'motion-card min-w-0 text-left rounded-xl border p-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ' +
                   (primary === item.id ? 'border-primary ring-2 ring-primary/30' : 'border-ink-border hover:border-primary')}>
                 <div aria-hidden="true" className="h-16 rounded-md p-2 flex items-end gap-2 overflow-hidden"
                   style={{ background: item.tokens.background, border: '1px solid ' + item.tokens.border }}>
@@ -108,6 +109,7 @@ const DesignStyles: React.FC = () => {
       <section aria-labelledby="compare-heading" className="px-5 pt-5 pb-6 border-t border-ink-border">
         <h2 id="compare-heading" className="text-xl font-bold">同じ内容で見比べる</h2>
         <p className="mt-2 text-sm text-ink-muted">文字、余白、色、形、素材感の違いを確認します。比較する組合せと画面を選べます。</p>
+        <p className="mt-2 text-xs leading-relaxed text-ink-muted">動きの例：{getStyleMotion(first.id).description}。スタイルや画面を切り替えると確認できます。動きを減らす端末設定では再生しません。</p>
         <div className="mt-4 grid grid-cols-1 gap-3">
           <div>
             <label htmlFor="style-a" className="block mb-1 text-sm font-semibold">スタイルA</label>
@@ -202,7 +204,7 @@ const DesignStyles: React.FC = () => {
         <div className="flex items-center justify-between gap-2 mt-5">
           <h3 className="text-sm font-bold">{mixing ? 'AI向け配合プロンプト' : 'AI向けプロンプト'}</h3>
           <button type="button" onClick={() => void copyText(prompt, 'プロンプト')}
-            className="rounded-lg border border-ink-border px-3 py-2 text-sm font-semibold hover:border-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+            className="motion-control rounded-lg border border-ink-border px-3 py-2 text-sm font-semibold hover:border-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
             コピー
           </button>
         </div>
@@ -210,14 +212,14 @@ const DesignStyles: React.FC = () => {
           onFocus={e => e.currentTarget.select()} className="mt-2 w-full rounded-lg bg-surface border border-ink-border p-3 font-mono text-xs leading-relaxed text-ink resize-y"/>
         {mixing && <p className="mt-3 text-xs leading-relaxed text-ink-muted">下のCSSはスタイルAのみのトークンです。配合した完成CSSを生成する機能はまだありません。</p>}
         <button type="button" onClick={() => setShowCss(value => !value)} aria-expanded={showCss} aria-controls="atlas-css"
-          className="mt-4 w-full text-left rounded-lg border border-ink-border p-3 text-sm font-bold hover:border-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+          className="motion-control mt-4 w-full text-left rounded-lg border border-ink-border p-3 text-sm font-bold hover:border-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
           {showCss ? 'CSSトークンを閉じる −' : 'CSSトークンを見る ＋'}
         </button>
         {showCss && (
           <div id="atlas-css" className="mt-3">
             <div className="flex justify-end">
               <button type="button" onClick={() => void copyText(css, 'CSS')}
-                className="rounded-lg border border-ink-border px-3 py-2 text-sm font-semibold hover:border-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+                className="motion-control rounded-lg border border-ink-border px-3 py-2 text-sm font-semibold hover:border-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
                 CSSをコピー
               </button>
             </div>

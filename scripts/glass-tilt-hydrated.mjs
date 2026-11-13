@@ -152,11 +152,19 @@ async function run() {
       '--remote-debugging-port=0', '--user-data-dir=' + profile, 'about:blank'], { stdio: ['ignore', 'ignore', 'pipe'] });
     let browserErrors = '';
     browser.stderr.on('data', data => { browserErrors = (browserErrors + data.toString()).slice(-2000); });
-    const devtoolsPort = await poll(async () => {
-      if (browser.exitCode !== null) throw new Error('Chrome exited: ' + browserErrors);
-      const value = await readFile(join(profile, 'DevToolsActivePort'), 'utf8');
-      return value.trim().split('\n');
-    }, 'Chrome debugging endpoint', 25000);
+    browser.on('error', error => { browserErrors += '\nChromium spawn error: ' + error.message; });
+    let devtoolsPort;
+    try {
+      devtoolsPort = await poll(async () => {
+        if (browser.exitCode !== null) throw new Error('Chrome exited (' + browser.exitCode + ')');
+        const value = await readFile(join(profile, 'DevToolsActivePort'), 'utf8');
+        return value.trim().split('\n');
+      }, 'Chrome debugging endpoint', 45000);
+    } catch (error) {
+      const status = browser.exitCode === null ? 'still running or stopped by signal' : `exit ${browser.exitCode}`;
+      throw new Error(`${error.message}\nChromium status: ${status}; signal: ${browser.signalCode ?? 'none'}\n` +
+        `Chromium stderr (last 2000 characters):\n${browserErrors.trim() || '(empty)'}`, { cause: error });
+    }
     control = new DevTools('ws://127.0.0.1:' + devtoolsPort[0] + devtoolsPort[1]);
     await control.ready();
     const target = await control.send('Target.createTarget', { url: 'about:blank' });

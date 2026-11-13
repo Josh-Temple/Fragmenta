@@ -26,7 +26,7 @@ const PatternCard: React.FC<PatternCardProps> = ({ definition, className = '' })
   const kind = getPatternKind(definition);
 
   return (
-    <div className={`group relative flex flex-col bg-surface rounded-xl overflow-hidden border border-ink-border hover:border-primary/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-paper-lg ${className}`}>
+    <div className={`group relative flex flex-col bg-surface rounded-xl overflow-hidden border border-ink-border hover:border-primary/50 motion-card hover:shadow-paper-lg ${className}`}>
       <Link to={`/p/${definition.id}`} className="absolute inset-0 z-0" aria-label={`View ${definition.title}`} />
 
       <div className="h-32 w-full bg-paper bg-grid-pattern flex items-center justify-center relative overflow-hidden p-4 z-10 pointer-events-none">
