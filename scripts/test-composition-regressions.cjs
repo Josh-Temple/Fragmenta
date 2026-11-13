@@ -101,4 +101,27 @@ assert.deepEqual(room.example.slice(0, -1), room.comparison.slice(0, -1),
 const door = room.comparison[0], person = room.comparison[3], furniture = room.comparison.at(-1);
 assert(overlaps(door, furniture) && !overlaps(person, furniture),
   'C-102 furniture must partly overlap the door without hiding the person');
-console.log('PASS 240 rendered descriptions, inspection transforms, occlusion, edge, silhouette, position and arrow geometry');
+const groups = guides.get('C-036').diagram;
+const formCells = variant => groups[variant].filter(s => s[0] === 'rect' && s[3] === 28 && s[4] === 18);
+assert.deepEqual(formCells('example'), formCells('comparison'),
+  'C-036 form fields must keep their positions and colors fixed');
+function luminance(hex) {
+  const channels = hex.match(/[0-9a-f]{2}/gi).map(c => parseInt(c, 16) / 255)
+    .map(v => v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4);
+  return .2126 * channels[0] + .7152 * channels[1] + .0722 * channels[2];
+}
+for (const variant of ['example', 'comparison']) {
+  const markup = renderToStaticMarkup(React.createElement(Diagram, { guide: guides.get('C-036'), variant }));
+  const cellColors = [...markup.matchAll(/<rect [^>]*width="28" height="18" fill="(#[0-9a-f]+)"/g)].map(m => m[1]);
+  const textColors = [...markup.matchAll(/<text [^>]*fill="(#[0-9a-f]+)"[^>]*>(?:住|連)<\/text>/g)].map(m => m[1]);
+  assert(cellColors.length === 6 && textColors.length === 6, 'C-036 must render six labeled fields');
+  for (let i = 0; i < 6; i++) {
+    const [a, b] = [luminance(cellColors[i]), luminance(textColors[i])].sort((x, y) => x - y);
+    assert((b + 0.05) / (a + 0.05) >= 4.5, 'C-036 field text contrast must be at least 4.5:1');
+  }
+}
+const corridor = guides.get('C-078').diagram.example;
+const corridorRight = corridor[1][1], corridorHead = corridor[2], corridorBody = corridor[3];
+assert(corridorHead[1] + corridorHead[3] < corridorRight && corridorBody[1] + corridorBody[3] < corridorRight,
+  'C-078 person must remain inside the bright corridor');
+console.log('PASS 240 rendered descriptions, inspection transforms, text contrast, occlusion, edge, silhouette, position and arrow geometry');
