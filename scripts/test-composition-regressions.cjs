@@ -84,4 +84,21 @@ assert(dialogue.example[4][3] < dialogue.example[7][3] &&
   dialogue.comparison[4][3] < dialogue.comparison[0][1] - dialogue.comparison[0][3] &&
   dialogue.comparison[7][3] > dialogue.comparison[2][1] + dialogue.comparison[2][3],
   'C-098 direction arrows must remain distinct and outside the faces');
-console.log('PASS 240 rendered descriptions, inspection transforms, occlusion, silhouette, position and arrow geometry');
+const edge = guides.get('C-072').diagram;
+const bands = edge.example.slice(0, 4);
+assert.deepEqual(bands.map(s => s[5]), [0, 1, 2, 3]);
+assert(bands.every((s, i) => s[0] === 'rect' && s[2] === bands[0][2] && s[4] === bands[0][4] &&
+  (i === 0 || bands[i - 1][1] + bands[i - 1][3] === s[1])),
+  'C-072 must show contiguous stepped tones along one edge');
+assert.deepEqual(edge.example.slice(4), edge.comparison.slice(1),
+  'C-072 must keep the other building and person fixed');
+assert(edge.comparison[0][1] === bands[0][1] &&
+  edge.comparison[0][3] === bands.reduce((total, band) => total + band[3], 0),
+  'C-072 building must have the same outer extent in both examples');
+const room = guides.get('C-102').diagram;
+assert.deepEqual(room.example.slice(0, -1), room.comparison.slice(0, -1),
+  'C-102 must only move the furniture');
+const door = room.comparison[0], person = room.comparison[3], furniture = room.comparison.at(-1);
+assert(overlaps(door, furniture) && !overlaps(person, furniture),
+  'C-102 furniture must partly overlap the door without hiding the person');
+console.log('PASS 240 rendered descriptions, inspection transforms, occlusion, edge, silhouette, position and arrow geometry');
