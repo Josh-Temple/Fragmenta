@@ -20,7 +20,7 @@ const BottomNavItem: React.FC<{
 
 const Layout: React.FC<LayoutProps> = ({ children, showNav = true }) => {
   const location = useLocation();
-  const wide = location.pathname.startsWith('/tools') || location.pathname === '/search';
+  const wide = location.pathname.startsWith('/tools') || location.pathname === '/search' || location.pathname.startsWith('/knowledge');
 
   return (
     <div className={`bg-paper text-ink min-h-screen flex flex-col font-display antialiased selection:bg-primary selection:text-paper pb-24 ${wide ? 'max-w-3xl' : 'max-w-md'} mx-auto border-x border-ink-border shadow-paper-lg relative`}>

@@ -6,7 +6,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const crypto = require('node:crypto');
-const ts = require('typescript');
+const ts = require('typescript-legacy');
 
 const repo = path.resolve(__dirname, '..');
 const out = path.join(repo, 'dist', 'pattern-fixtures');

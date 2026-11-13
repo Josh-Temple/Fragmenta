@@ -72,6 +72,11 @@ const routes = [
   ['/a/glitch-text', 'Glitch Text'],
   ['/p/warm-neo-brutalist-editorial', 'Warm Neo-Brutalist'],
   ['/search', 'Search'],
+  ['/knowledge', 'デザインを、つながりから探す'],
+  ['/knowledge?category=typography', '12件該当'],
+  ['/knowledge?q=__fragmenta_no_results_2026__', '一致する企画案はありません'],
+  ['/knowledge/idea-visual-history-01', 'アール・ヌーヴォー'],
+  ['/knowledge/nonexistent-item', '項目が見つかりません'],
   ['/collections', 'Collections'],
   ['/collections/motion-essentials', 'Motion Essentials'],
   ['/licenses', 'Licensing information'],
@@ -94,6 +99,19 @@ const routes = [
 ];
 
 await poll(async () => (await fetch(baseUrl)).ok, 'built Vite preview server');
+
+// The built site must serve machine-readable, explicitly unreviewed knowledge exports.
+for (const [pathname, marker] of [
+  ['/knowledge/ideas.json', '"schemaVersion"'],
+  ['/knowledge/ideas.md', '# Fragmenta'],
+  ['/llms.txt', '# Fragmenta'],
+]) {
+  const response = await fetch(baseUrl + pathname);
+  if (!response.ok) throw new Error('Knowledge export HTTP ' + response.status + ': ' + pathname);
+  const content = await response.text();
+  if (!content.includes(marker)) throw new Error('Knowledge export missing marker: ' + pathname);
+  console.log('PASS knowledge export HTTP 200 ' + pathname);
+}
 const profile = await mkdtemp(join(tmpdir(), 'fragmenta-browser-smoke-'));
 const browser = spawn(chrome, [
   '--headless=new', '--no-sandbox', '--disable-gpu', '--no-first-run',
@@ -219,6 +237,87 @@ try {
     }
   }
   await page.send('Emulation.clearDeviceMetricsOverride');
+
+  // Exercise motion on the actual style atlas, including reduced-motion settings.
+  await page.send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: 'no-preference' }] });
+  await page.send('Runtime.evaluate', { expression: "location.hash = '#/styles'" });
+  await poll(async () => {
+    const result = await page.send('Runtime.evaluate', {
+      expression: "location.hash === '#/styles' && !!document.querySelector('#style-a') && !!document.querySelector('.style-motion-enter')",
+      returnByValue: true,
+    });
+    return result.result?.value;
+  }, 'style atlas motion');
+  for (const width of [360, 390, 768, 1280]) {
+    await page.send('Emulation.setDeviceMetricsOverride', { width, height: 850, deviceScaleFactor: 1, mobile: false });
+    const result = await page.send('Runtime.evaluate', {
+      expression: `(() => {
+        const specimen = document.querySelector('.style-motion-enter');
+        return { viewport: innerWidth, scrollWidth: document.documentElement.scrollWidth,
+          styleCount: document.querySelector('#style-a').options.length,
+          animation: getComputedStyle(specimen).animationName,
+          duration: getComputedStyle(specimen).animationDuration };
+      })()`, returnByValue: true,
+    });
+    const state = result.result?.value;
+    if (result.exceptionDetails || state?.viewport !== width || state.scrollWidth > width + 1 ||
+        state.styleCount !== 24 || state.animation !== 'fragmenta-specimen-enter' || state.duration === '0s')
+      throw new Error('Style motion layout failed: ' + JSON.stringify(state));
+    console.log('PASS style motion layout at ' + width + 'px');
+  }
+  const changeStyle = await page.send('Runtime.evaluate', {
+    expression: `(async () => {
+      const select = document.querySelector('#style-a');
+      const before = document.querySelector('.style-motion-enter');
+      select.focus(); select.value = 'wabi-sabi'; select.dispatchEvent(new Event('change', { bubbles: true }));
+      await new Promise(resolve => setTimeout(resolve, 150));
+      const after = document.querySelector('.style-motion-enter');
+      return { value: select.value, replaced: before !== after, focus: document.activeElement === select,
+        duration: getComputedStyle(after).animationDuration,
+        description: document.querySelector('#compare-heading').parentElement.innerText };
+    })()`, awaitPromise: true, returnByValue: true,
+  });
+  const changed = changeStyle.result?.value;
+  if (changeStyle.exceptionDetails || changed?.value !== 'wabi-sabi' || !changed.replaced || !changed.focus ||
+      changed.duration !== '0.72s' || !changed.description.includes('ほとんど動かない静かなフェード'))
+    throw new Error('Style change did not restart its motion: ' + JSON.stringify(changed));
+  console.log('PASS style change restarts its own motion and retains focus');
+  await page.send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: 'reduce' }] });
+  const reducedAtlas = await page.send('Runtime.evaluate', {
+    expression: `(() => {
+      const selectors = ['.page-enter', '.style-motion-enter', '.motion-control', '.motion-card'];
+      return selectors.map(selector => {
+        const el = document.querySelector(selector), s = getComputedStyle(el);
+        return { selector, animation: s.animationName, duration: s.transitionDuration,
+          transform: s.transform, opacity: s.opacity };
+      });
+    })()`, returnByValue: true,
+  });
+  const reducedStyles = reducedAtlas.result?.value;
+  if (reducedAtlas.exceptionDetails || !reducedStyles?.every(s => s.animation === 'none' &&
+      s.duration.split(',').every(v => parseFloat(v) === 0) && s.transform === 'none' && s.opacity === '1'))
+    throw new Error('Reduced motion failed on style atlas: ' + JSON.stringify(reducedStyles));
+  console.log('PASS reduced-motion removes atlas animation and keeps content visible');
+  await page.send('Emulation.setEmulatedMedia', { features: [] });
+  await page.send('Emulation.clearDeviceMetricsOverride');
+
+  // The knowledge detail heading should receive focus after client-side navigation.
+  for (const [route, heading] of [
+    ['/knowledge/idea-visual-history-01', 'アール・ヌーヴォー'],
+    ['/knowledge/nonexistent-item', '項目が見つかりません'],
+  ]) {
+    await page.send('Runtime.evaluate', {
+      expression: 'location.hash = ' + JSON.stringify('#' + route),
+    });
+    await poll(async () => {
+      const response = await page.send('Runtime.evaluate', {
+        expression: 'Boolean(document.activeElement?.matches(\'h1[tabindex="-1"]\') && document.activeElement.textContent?.includes(' + JSON.stringify(heading) + '))',
+        returnByValue: true,
+      });
+      return response.result?.value;
+    }, 'Knowledge heading focus ' + route);
+    console.log('PASS knowledge heading focus ' + route);
+  }
 
   // Search input must have an explicit accessible name, not placeholder-only text.
   await page.send('Runtime.evaluate', { expression: "location.hash = '#/search'" });

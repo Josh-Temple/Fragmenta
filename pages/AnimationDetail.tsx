@@ -4,6 +4,7 @@ import { definitions, getPatternKind } from '../data/definitions';
 import { patternGuides } from '../data/pattern-guides';
 import PatternUsage from '../components/PatternUsage';
 import { patternRights } from '../data/pattern-rights';
+import { ideas as knowledgeIdeas } from '../data/knowledge';
 
 const kindLabels = {
   motion: 'Motion',
@@ -51,6 +52,7 @@ const PatternDetail: React.FC = () => {
     );
   }
 
+  const relatedKnowledge = knowledgeIdeas.filter(item => item.relatedExisting.some(ref => ref.kind === 'pattern' && ref.id === def.id));
   const kind = getPatternKind(def);
   const kindLabel = kindLabels[kind];
 
@@ -143,6 +145,11 @@ const PatternDetail: React.FC = () => {
             ))}
           </div>
         </section>
+
+        {relatedKnowledge.length > 0 && <section aria-labelledby="related-knowledge-heading" className="mx-4 mb-5 border-t border-ink-border pt-4" lang="ja">
+          <h2 id="related-knowledge-heading" className="text-base font-bold">知識ベースの関連企画</h2>
+          <ul className="mt-2 space-y-1">{relatedKnowledge.map(item => <li key={item.id}><Link to={`/knowledge/${item.id}`} className="inline-flex min-h-11 items-center text-sm font-semibold underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">{item.titleJa}（企画段階）</Link></li>)}</ul>
+        </section>}
 
         <div className="sticky top-[60px] z-40 bg-paper px-4 border-b border-ink-border">
           <div className="flex justify-between items-end">

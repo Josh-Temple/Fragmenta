@@ -1,0 +1,22 @@
+// Generate deterministic static exports and the Markdown index from the canonical JSON.
+const fs = require('node:fs');
+const path = require('node:path');
+const { renderIndex, renderExport } = require('./knowledge-render.cjs');
+const root = path.join(__dirname, '..');
+const catalog = JSON.parse(fs.readFileSync(path.join(root, 'data/content-ideas.json'), 'utf8'));
+const out = path.join(root, 'public', 'knowledge');
+fs.mkdirSync(out, { recursive: true });
+fs.writeFileSync(path.join(root, 'docs', 'CONTENT_IDEAS.md'), renderIndex(catalog));
+fs.writeFileSync(path.join(out, 'ideas.json'), JSON.stringify(catalog, null, 2) + '\n');
+fs.writeFileSync(path.join(out, 'ideas.md'), renderExport(catalog));
+fs.writeFileSync(path.join(root, 'public', 'llms.txt'), [
+  '# Fragmenta', '',
+  '> The design knowledge catalog consists of proposals and unreviewed drafts. It is not a verified standard, official system, or proof of reuse rights.', '',
+  '- [Structured catalog](/knowledge/ideas.json): schema version, stable IDs, proposal status, optional draft guidance, sources and relations.',
+  '- [Markdown catalog](/knowledge/ideas.md): generated from the same canonical JSON, including draft and source status.',
+  '- [Browse the catalog](/#/knowledge): search and follow related proposals.',
+  '- Individual page: /#/knowledge/<stable-id>. Automated collection or use by any AI service is not guaranteed.',
+  '- [Design styles](/#/styles): illustrative previews, not official reconstructions.',
+  '- [Working UI examples](/#/browse) and [licensing](/#/licenses): verify reuse rights before copying.', '',
+].join('\n'));
+console.log('Exported ' + catalog.ideas.length + ' proposals and Markdown index from the canonical JSON');

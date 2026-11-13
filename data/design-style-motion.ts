@@ -16,7 +16,7 @@ export const styleMotion = {
   'scandinavian':    { description: '小さな移動を伴う柔らかな登場', durationMs: 490, offsetX: 0, offsetY: 6, scale: .995, easing: 'ease-out' },
   'constructivism':  { description: '対角線を意識した短い移動', durationMs: 260, offsetX: -12, offsetY: 9, scale: 1, easing: 'cubic-bezier(.25,.7,.1,1)' },
   'brutalism':       { description: '段階的で歯切れのよい切り替え', durationMs: 160, offsetX: -5, offsetY: 0, scale: 1, easing: 'steps(2,end)' },
-  'neo-brutalism':   { description: '軽く弾むような拡大', durationMs: 280, offsetX: 0, offsetY: 9, scale: .97, easing: 'cubic-bezier(.2,.8,.2,1)' },
+  'neo-brutalism':   { description: '軽快な拡大', durationMs: 280, offsetX: 0, offsetY: 9, scale: .97, easing: 'cubic-bezier(.2,.8,.2,1)' },
   'memphis':         { description: '斜め方向から遊び心を感じる登場', durationMs: 400, offsetX: 9, offsetY: -5, scale: .99, easing: 'ease-out' },
   'maximalism':      { description: '色面を強調するやや大きめの登場', durationMs: 430, offsetX: 0, offsetY: 14, scale: .965, easing: 'ease-out' },
   'postmodern':      { description: '非対称を意識した横方向の移動', durationMs: 360, offsetX: 8, offsetY: 5, scale: 1, easing: 'ease-out' },

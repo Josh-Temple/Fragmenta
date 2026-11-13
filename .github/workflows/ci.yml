@@ -14,10 +14,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 22
 
@@ -25,7 +25,7 @@ jobs:
         run: npm ci
 
       - name: Type-check
-        run: npx tsc --noEmit
+        run: npm run typecheck
 
       - name: Build
         run: npm run build
@@ -56,22 +56,5 @@ jobs:
           echo "Built-artifact browser smoke did not pass" >&2
           exit 1
 
-      - name: Verify deployed production in Chromium
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        run: |
-          chrome="$(command -v google-chrome || command -v chromium || true)"
-          if [ -z "$chrome" ]; then
-            echo "Chromium/Chrome is required for production verification" >&2
-            exit 1
-          fi
-          # Vercel may still be promoting the main deployment when Actions finishes.
-          # Verify the public origin in a real browser, not merely a 200 response.
-          for attempt in 1 2 3 4 5; do
-            echo "Production browser verification attempt $attempt/5"
-            if CHROME_BIN="$chrome" SMOKE_BASE_URL="https://fragmenta-brown.vercel.app" node scripts/browser-smoke.mjs; then
-              exit 0
-            fi
-            if [ "$attempt" -lt 5 ]; then sleep 15; fi
-          done
-          echo "Production browser smoke did not pass" >&2
-          exit 1
+      # Production deployments are explicitly approved and manually triggered.
+      # Do not verify an unrelated, older production SHA on each main push.

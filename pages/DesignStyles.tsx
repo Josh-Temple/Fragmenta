@@ -3,6 +3,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { DesignStyleSpecimen } from '../components/DesignStyleSpecimen';
 import { getStyleMotion } from '../data/design-style-motion';
 import { designStyleGroups, designStyles, type DesignStyleGroup } from '../data/design-styles';
+import catalog from '../data/content-ideas.json';
 import { createStylePrompt, createBlendedStylePrompt, createStyleCss, type DemoScreen } from '../data/design-style-export';
 
 type Family = 'all' | DesignStyleGroup;
@@ -23,6 +24,8 @@ const DesignStyles: React.FC = () => {
   const [mixEnabled, setMixEnabled] = useState(false);
   const [secondaryWeight, setSecondaryWeight] = useState(30);
   const first = designStyles.find(item => item.id === primary) ?? designStyles[0];
+  const relatedKnowledge = catalog.ideas.filter(item => item.relatedExisting.some(ref =>
+    ref.kind === 'style' && ref.id === first.id));
   const second = compare === 'none' ? null : designStyles.find(item => item.id === compare) ?? null;
   const results = useMemo(() => {
     const q = query.trim().normalize('NFKC').toLowerCase();
@@ -228,6 +231,15 @@ const DesignStyles: React.FC = () => {
         <p className="mt-3 text-sm" role="status" aria-live="polite">{copyStatus}</p>
       </section>
 
+      <section aria-labelledby="related-knowledge-heading" className="mx-5 mt-3 rounded-xl border border-ink-border p-4">
+        <h2 id="related-knowledge-heading" className="text-base font-bold">知識ベースの関連企画</h2>
+        {relatedKnowledge.length ? <ul className="mt-2 space-y-2">
+          {relatedKnowledge.map(item => <li key={item.id}>
+            <Link to={`/knowledge/${item.id}`} className="inline-flex min-h-11 items-center text-sm font-semibold underline underline-offset-4">{item.titleJa}（企画段階）</Link>
+          </li>)}
+        </ul> : <p className="mt-2 text-sm text-ink-muted">このスタイルに直接紐付けた企画はまだありません。</p>}
+        <Link to="/knowledge" className="mt-2 inline-flex min-h-11 items-center text-sm font-semibold underline underline-offset-4">すべての企画180件を見る</Link>
+      </section>
       <aside className="mx-5 mt-3 p-4 rounded-xl bg-surface border border-ink-border">
         <h2 className="text-base font-bold">類型を混同しないために</h2>
         <p className="text-sm leading-relaxed mt-2">

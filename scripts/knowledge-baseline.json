@@ -1,0 +1,1574 @@
+{
+  "sourceCommit": "4ddd7c8ca4ab419129e5048f54eff021bb01ea51",
+  "ideas": {
+    "idea-visual-history-01": {
+      "categoryId": "visual-history",
+      "sequence": 1,
+      "status": "proposal"
+    },
+    "idea-visual-history-02": {
+      "categoryId": "visual-history",
+      "sequence": 2,
+      "status": "proposal"
+    },
+    "idea-visual-history-03": {
+      "categoryId": "visual-history",
+      "sequence": 3,
+      "status": "proposal"
+    },
+    "idea-visual-history-04": {
+      "categoryId": "visual-history",
+      "sequence": 4,
+      "status": "proposal"
+    },
+    "idea-visual-history-05": {
+      "categoryId": "visual-history",
+      "sequence": 5,
+      "status": "proposal"
+    },
+    "idea-visual-history-06": {
+      "categoryId": "visual-history",
+      "sequence": 6,
+      "status": "proposal"
+    },
+    "idea-visual-history-07": {
+      "categoryId": "visual-history",
+      "sequence": 7,
+      "status": "proposal"
+    },
+    "idea-visual-history-08": {
+      "categoryId": "visual-history",
+      "sequence": 8,
+      "status": "proposal"
+    },
+    "idea-visual-history-09": {
+      "categoryId": "visual-history",
+      "sequence": 9,
+      "status": "proposal"
+    },
+    "idea-visual-history-10": {
+      "categoryId": "visual-history",
+      "sequence": 10,
+      "status": "proposal"
+    },
+    "idea-visual-history-11": {
+      "categoryId": "visual-history",
+      "sequence": 11,
+      "status": "proposal"
+    },
+    "idea-visual-history-12": {
+      "categoryId": "visual-history",
+      "sequence": 12,
+      "status": "proposal"
+    },
+    "idea-layout-01": {
+      "categoryId": "layout",
+      "sequence": 1,
+      "status": "proposal"
+    },
+    "idea-layout-02": {
+      "categoryId": "layout",
+      "sequence": 2,
+      "status": "proposal"
+    },
+    "idea-layout-03": {
+      "categoryId": "layout",
+      "sequence": 3,
+      "status": "proposal"
+    },
+    "idea-layout-04": {
+      "categoryId": "layout",
+      "sequence": 4,
+      "status": "proposal"
+    },
+    "idea-layout-05": {
+      "categoryId": "layout",
+      "sequence": 5,
+      "status": "proposal"
+    },
+    "idea-layout-06": {
+      "categoryId": "layout",
+      "sequence": 6,
+      "status": "proposal"
+    },
+    "idea-layout-07": {
+      "categoryId": "layout",
+      "sequence": 7,
+      "status": "proposal"
+    },
+    "idea-layout-08": {
+      "categoryId": "layout",
+      "sequence": 8,
+      "status": "proposal"
+    },
+    "idea-layout-09": {
+      "categoryId": "layout",
+      "sequence": 9,
+      "status": "proposal"
+    },
+    "idea-layout-10": {
+      "categoryId": "layout",
+      "sequence": 10,
+      "status": "proposal"
+    },
+    "idea-layout-11": {
+      "categoryId": "layout",
+      "sequence": 11,
+      "status": "proposal"
+    },
+    "idea-layout-12": {
+      "categoryId": "layout",
+      "sequence": 12,
+      "status": "proposal"
+    },
+    "idea-typography-01": {
+      "categoryId": "typography",
+      "sequence": 1,
+      "status": "proposal"
+    },
+    "idea-typography-02": {
+      "categoryId": "typography",
+      "sequence": 2,
+      "status": "proposal"
+    },
+    "idea-typography-03": {
+      "categoryId": "typography",
+      "sequence": 3,
+      "status": "proposal"
+    },
+    "idea-typography-04": {
+      "categoryId": "typography",
+      "sequence": 4,
+      "status": "proposal"
+    },
+    "idea-typography-05": {
+      "categoryId": "typography",
+      "sequence": 5,
+      "status": "proposal"
+    },
+    "idea-typography-06": {
+      "categoryId": "typography",
+      "sequence": 6,
+      "status": "proposal"
+    },
+    "idea-typography-07": {
+      "categoryId": "typography",
+      "sequence": 7,
+      "status": "proposal"
+    },
+    "idea-typography-08": {
+      "categoryId": "typography",
+      "sequence": 8,
+      "status": "proposal"
+    },
+    "idea-typography-09": {
+      "categoryId": "typography",
+      "sequence": 9,
+      "status": "proposal"
+    },
+    "idea-typography-10": {
+      "categoryId": "typography",
+      "sequence": 10,
+      "status": "proposal"
+    },
+    "idea-typography-11": {
+      "categoryId": "typography",
+      "sequence": 11,
+      "status": "proposal"
+    },
+    "idea-typography-12": {
+      "categoryId": "typography",
+      "sequence": 12,
+      "status": "proposal"
+    },
+    "idea-color-01": {
+      "categoryId": "color",
+      "sequence": 1,
+      "status": "proposal"
+    },
+    "idea-color-02": {
+      "categoryId": "color",
+      "sequence": 2,
+      "status": "proposal"
+    },
+    "idea-color-03": {
+      "categoryId": "color",
+      "sequence": 3,
+      "status": "proposal"
+    },
+    "idea-color-04": {
+      "categoryId": "color",
+      "sequence": 4,
+      "status": "proposal"
+    },
+    "idea-color-05": {
+      "categoryId": "color",
+      "sequence": 5,
+      "status": "proposal"
+    },
+    "idea-color-06": {
+      "categoryId": "color",
+      "sequence": 6,
+      "status": "proposal"
+    },
+    "idea-color-07": {
+      "categoryId": "color",
+      "sequence": 7,
+      "status": "proposal"
+    },
+    "idea-color-08": {
+      "categoryId": "color",
+      "sequence": 8,
+      "status": "proposal"
+    },
+    "idea-color-09": {
+      "categoryId": "color",
+      "sequence": 9,
+      "status": "proposal"
+    },
+    "idea-color-10": {
+      "categoryId": "color",
+      "sequence": 10,
+      "status": "proposal"
+    },
+    "idea-color-11": {
+      "categoryId": "color",
+      "sequence": 11,
+      "status": "proposal"
+    },
+    "idea-color-12": {
+      "categoryId": "color",
+      "sequence": 12,
+      "status": "proposal"
+    },
+    "idea-components-01": {
+      "categoryId": "components",
+      "sequence": 1,
+      "status": "proposal"
+    },
+    "idea-components-02": {
+      "categoryId": "components",
+      "sequence": 2,
+      "status": "proposal"
+    },
+    "idea-components-03": {
+      "categoryId": "components",
+      "sequence": 3,
+      "status": "proposal"
+    },
+    "idea-components-04": {
+      "categoryId": "components",
+      "sequence": 4,
+      "status": "proposal"
+    },
+    "idea-components-05": {
+      "categoryId": "components",
+      "sequence": 5,
+      "status": "proposal"
+    },
+    "idea-components-06": {
+      "categoryId": "components",
+      "sequence": 6,
+      "status": "proposal"
+    },
+    "idea-components-07": {
+      "categoryId": "components",
+      "sequence": 7,
+      "status": "proposal"
+    },
+    "idea-components-08": {
+      "categoryId": "components",
+      "sequence": 8,
+      "status": "proposal"
+    },
+    "idea-components-09": {
+      "categoryId": "components",
+      "sequence": 9,
+      "status": "proposal"
+    },
+    "idea-components-10": {
+      "categoryId": "components",
+      "sequence": 10,
+      "status": "proposal"
+    },
+    "idea-components-11": {
+      "categoryId": "components",
+      "sequence": 11,
+      "status": "proposal"
+    },
+    "idea-components-12": {
+      "categoryId": "components",
+      "sequence": 12,
+      "status": "proposal"
+    },
+    "idea-forms-01": {
+      "categoryId": "forms",
+      "sequence": 1,
+      "status": "proposal"
+    },
+    "idea-forms-02": {
+      "categoryId": "forms",
+      "sequence": 2,
+      "status": "proposal"
+    },
+    "idea-forms-03": {
+      "categoryId": "forms",
+      "sequence": 3,
+      "status": "proposal"
+    },
+    "idea-forms-04": {
+      "categoryId": "forms",
+      "sequence": 4,
+      "status": "proposal"
+    },
+    "idea-forms-05": {
+      "categoryId": "forms",
+      "sequence": 5,
+      "status": "proposal"
+    },
+    "idea-forms-06": {
+      "categoryId": "forms",
+      "sequence": 6,
+      "status": "proposal"
+    },
+    "idea-forms-07": {
+      "categoryId": "forms",
+      "sequence": 7,
+      "status": "proposal"
+    },
+    "idea-forms-08": {
+      "categoryId": "forms",
+      "sequence": 8,
+      "status": "proposal"
+    },
+    "idea-forms-09": {
+      "categoryId": "forms",
+      "sequence": 9,
+      "status": "proposal"
+    },
+    "idea-forms-10": {
+      "categoryId": "forms",
+      "sequence": 10,
+      "status": "proposal"
+    },
+    "idea-forms-11": {
+      "categoryId": "forms",
+      "sequence": 11,
+      "status": "proposal"
+    },
+    "idea-forms-12": {
+      "categoryId": "forms",
+      "sequence": 12,
+      "status": "proposal"
+    },
+    "idea-motion-01": {
+      "categoryId": "motion",
+      "sequence": 1,
+      "status": "proposal"
+    },
+    "idea-motion-02": {
+      "categoryId": "motion",
+      "sequence": 2,
+      "status": "proposal"
+    },
+    "idea-motion-03": {
+      "categoryId": "motion",
+      "sequence": 3,
+      "status": "proposal"
+    },
+    "idea-motion-04": {
+      "categoryId": "motion",
+      "sequence": 4,
+      "status": "proposal"
+    },
+    "idea-motion-05": {
+      "categoryId": "motion",
+      "sequence": 5,
+      "status": "proposal"
+    },
+    "idea-motion-06": {
+      "categoryId": "motion",
+      "sequence": 6,
+      "status": "proposal"
+    },
+    "idea-motion-07": {
+      "categoryId": "motion",
+      "sequence": 7,
+      "status": "proposal"
+    },
+    "idea-motion-08": {
+      "categoryId": "motion",
+      "sequence": 8,
+      "status": "proposal"
+    },
+    "idea-motion-09": {
+      "categoryId": "motion",
+      "sequence": 9,
+      "status": "proposal"
+    },
+    "idea-motion-10": {
+      "categoryId": "motion",
+      "sequence": 10,
+      "status": "proposal"
+    },
+    "idea-motion-11": {
+      "categoryId": "motion",
+      "sequence": 11,
+      "status": "proposal"
+    },
+    "idea-motion-12": {
+      "categoryId": "motion",
+      "sequence": 12,
+      "status": "proposal"
+    },
+    "idea-data-viz-01": {
+      "categoryId": "data-viz",
+      "sequence": 1,
+      "status": "proposal"
+    },
+    "idea-data-viz-02": {
+      "categoryId": "data-viz",
+      "sequence": 2,
+      "status": "proposal"
+    },
+    "idea-data-viz-03": {
+      "categoryId": "data-viz",
+      "sequence": 3,
+      "status": "proposal"
+    },
+    "idea-data-viz-04": {
+      "categoryId": "data-viz",
+      "sequence": 4,
+      "status": "proposal"
+    },
+    "idea-data-viz-05": {
+      "categoryId": "data-viz",
+      "sequence": 5,
+      "status": "proposal"
+    },
+    "idea-data-viz-06": {
+      "categoryId": "data-viz",
+      "sequence": 6,
+      "status": "proposal"
+    },
+    "idea-data-viz-07": {
+      "categoryId": "data-viz",
+      "sequence": 7,
+      "status": "proposal"
+    },
+    "idea-data-viz-08": {
+      "categoryId": "data-viz",
+      "sequence": 8,
+      "status": "proposal"
+    },
+    "idea-data-viz-09": {
+      "categoryId": "data-viz",
+      "sequence": 9,
+      "status": "proposal"
+    },
+    "idea-data-viz-10": {
+      "categoryId": "data-viz",
+      "sequence": 10,
+      "status": "proposal"
+    },
+    "idea-data-viz-11": {
+      "categoryId": "data-viz",
+      "sequence": 11,
+      "status": "proposal"
+    },
+    "idea-data-viz-12": {
+      "categoryId": "data-viz",
+      "sequence": 12,
+      "status": "proposal"
+    },
+    "idea-information-01": {
+      "categoryId": "information",
+      "sequence": 1,
+      "status": "proposal"
+    },
+    "idea-information-02": {
+      "categoryId": "information",
+      "sequence": 2,
+      "status": "proposal"
+    },
+    "idea-information-03": {
+      "categoryId": "information",
+      "sequence": 3,
+      "status": "proposal"
+    },
+    "idea-information-04": {
+      "categoryId": "information",
+      "sequence": 4,
+      "status": "proposal"
+    },
+    "idea-information-05": {
+      "categoryId": "information",
+      "sequence": 5,
+      "status": "proposal"
+    },
+    "idea-information-06": {
+      "categoryId": "information",
+      "sequence": 6,
+      "status": "proposal"
+    },
+    "idea-information-07": {
+      "categoryId": "information",
+      "sequence": 7,
+      "status": "proposal"
+    },
+    "idea-information-08": {
+      "categoryId": "information",
+      "sequence": 8,
+      "status": "proposal"
+    },
+    "idea-information-09": {
+      "categoryId": "information",
+      "sequence": 9,
+      "status": "proposal"
+    },
+    "idea-information-10": {
+      "categoryId": "information",
+      "sequence": 10,
+      "status": "proposal"
+    },
+    "idea-information-11": {
+      "categoryId": "information",
+      "sequence": 11,
+      "status": "proposal"
+    },
+    "idea-information-12": {
+      "categoryId": "information",
+      "sequence": 12,
+      "status": "proposal"
+    },
+    "idea-accessibility-01": {
+      "categoryId": "accessibility",
+      "sequence": 1,
+      "status": "proposal"
+    },
+    "idea-accessibility-02": {
+      "categoryId": "accessibility",
+      "sequence": 2,
+      "status": "proposal"
+    },
+    "idea-accessibility-03": {
+      "categoryId": "accessibility",
+      "sequence": 3,
+      "status": "proposal"
+    },
+    "idea-accessibility-04": {
+      "categoryId": "accessibility",
+      "sequence": 4,
+      "status": "proposal"
+    },
+    "idea-accessibility-05": {
+      "categoryId": "accessibility",
+      "sequence": 5,
+      "status": "proposal"
+    },
+    "idea-accessibility-06": {
+      "categoryId": "accessibility",
+      "sequence": 6,
+      "status": "proposal"
+    },
+    "idea-accessibility-07": {
+      "categoryId": "accessibility",
+      "sequence": 7,
+      "status": "proposal"
+    },
+    "idea-accessibility-08": {
+      "categoryId": "accessibility",
+      "sequence": 8,
+      "status": "proposal"
+    },
+    "idea-accessibility-09": {
+      "categoryId": "accessibility",
+      "sequence": 9,
+      "status": "proposal"
+    },
+    "idea-accessibility-10": {
+      "categoryId": "accessibility",
+      "sequence": 10,
+      "status": "proposal"
+    },
+    "idea-accessibility-11": {
+      "categoryId": "accessibility",
+      "sequence": 11,
+      "status": "proposal"
+    },
+    "idea-accessibility-12": {
+      "categoryId": "accessibility",
+      "sequence": 12,
+      "status": "proposal"
+    },
+    "idea-ai-ui-01": {
+      "categoryId": "ai-ui",
+      "sequence": 1,
+      "status": "proposal"
+    },
+    "idea-ai-ui-02": {
+      "categoryId": "ai-ui",
+      "sequence": 2,
+      "status": "proposal"
+    },
+    "idea-ai-ui-03": {
+      "categoryId": "ai-ui",
+      "sequence": 3,
+      "status": "proposal"
+    },
+    "idea-ai-ui-04": {
+      "categoryId": "ai-ui",
+      "sequence": 4,
+      "status": "proposal"
+    },
+    "idea-ai-ui-05": {
+      "categoryId": "ai-ui",
+      "sequence": 5,
+      "status": "proposal"
+    },
+    "idea-ai-ui-06": {
+      "categoryId": "ai-ui",
+      "sequence": 6,
+      "status": "proposal"
+    },
+    "idea-ai-ui-07": {
+      "categoryId": "ai-ui",
+      "sequence": 7,
+      "status": "proposal"
+    },
+    "idea-ai-ui-08": {
+      "categoryId": "ai-ui",
+      "sequence": 8,
+      "status": "proposal"
+    },
+    "idea-ai-ui-09": {
+      "categoryId": "ai-ui",
+      "sequence": 9,
+      "status": "proposal"
+    },
+    "idea-ai-ui-10": {
+      "categoryId": "ai-ui",
+      "sequence": 10,
+      "status": "proposal"
+    },
+    "idea-ai-ui-11": {
+      "categoryId": "ai-ui",
+      "sequence": 11,
+      "status": "proposal"
+    },
+    "idea-ai-ui-12": {
+      "categoryId": "ai-ui",
+      "sequence": 12,
+      "status": "proposal"
+    },
+    "idea-use-cases-01": {
+      "categoryId": "use-cases",
+      "sequence": 1,
+      "status": "proposal"
+    },
+    "idea-use-cases-02": {
+      "categoryId": "use-cases",
+      "sequence": 2,
+      "status": "proposal"
+    },
+    "idea-use-cases-03": {
+      "categoryId": "use-cases",
+      "sequence": 3,
+      "status": "proposal"
+    },
+    "idea-use-cases-04": {
+      "categoryId": "use-cases",
+      "sequence": 4,
+      "status": "proposal"
+    },
+    "idea-use-cases-05": {
+      "categoryId": "use-cases",
+      "sequence": 5,
+      "status": "proposal"
+    },
+    "idea-use-cases-06": {
+      "categoryId": "use-cases",
+      "sequence": 6,
+      "status": "proposal"
+    },
+    "idea-use-cases-07": {
+      "categoryId": "use-cases",
+      "sequence": 7,
+      "status": "proposal"
+    },
+    "idea-use-cases-08": {
+      "categoryId": "use-cases",
+      "sequence": 8,
+      "status": "proposal"
+    },
+    "idea-use-cases-09": {
+      "categoryId": "use-cases",
+      "sequence": 9,
+      "status": "proposal"
+    },
+    "idea-use-cases-10": {
+      "categoryId": "use-cases",
+      "sequence": 10,
+      "status": "proposal"
+    },
+    "idea-use-cases-11": {
+      "categoryId": "use-cases",
+      "sequence": 11,
+      "status": "proposal"
+    },
+    "idea-use-cases-12": {
+      "categoryId": "use-cases",
+      "sequence": 12,
+      "status": "proposal"
+    },
+    "idea-design-systems-01": {
+      "categoryId": "design-systems",
+      "sequence": 1,
+      "status": "proposal"
+    },
+    "idea-design-systems-02": {
+      "categoryId": "design-systems",
+      "sequence": 2,
+      "status": "proposal"
+    },
+    "idea-design-systems-03": {
+      "categoryId": "design-systems",
+      "sequence": 3,
+      "status": "proposal"
+    },
+    "idea-design-systems-04": {
+      "categoryId": "design-systems",
+      "sequence": 4,
+      "status": "proposal"
+    },
+    "idea-design-systems-05": {
+      "categoryId": "design-systems",
+      "sequence": 5,
+      "status": "proposal"
+    },
+    "idea-design-systems-06": {
+      "categoryId": "design-systems",
+      "sequence": 6,
+      "status": "proposal"
+    },
+    "idea-design-systems-07": {
+      "categoryId": "design-systems",
+      "sequence": 7,
+      "status": "proposal"
+    },
+    "idea-design-systems-08": {
+      "categoryId": "design-systems",
+      "sequence": 8,
+      "status": "proposal"
+    },
+    "idea-design-systems-09": {
+      "categoryId": "design-systems",
+      "sequence": 9,
+      "status": "proposal"
+    },
+    "idea-design-systems-10": {
+      "categoryId": "design-systems",
+      "sequence": 10,
+      "status": "proposal"
+    },
+    "idea-design-systems-11": {
+      "categoryId": "design-systems",
+      "sequence": 11,
+      "status": "proposal"
+    },
+    "idea-design-systems-12": {
+      "categoryId": "design-systems",
+      "sequence": 12,
+      "status": "proposal"
+    },
+    "idea-review-01": {
+      "categoryId": "review",
+      "sequence": 1,
+      "status": "proposal"
+    },
+    "idea-review-02": {
+      "categoryId": "review",
+      "sequence": 2,
+      "status": "proposal"
+    },
+    "idea-review-03": {
+      "categoryId": "review",
+      "sequence": 3,
+      "status": "proposal"
+    },
+    "idea-review-04": {
+      "categoryId": "review",
+      "sequence": 4,
+      "status": "proposal"
+    },
+    "idea-review-05": {
+      "categoryId": "review",
+      "sequence": 5,
+      "status": "proposal"
+    },
+    "idea-review-06": {
+      "categoryId": "review",
+      "sequence": 6,
+      "status": "proposal"
+    },
+    "idea-review-07": {
+      "categoryId": "review",
+      "sequence": 7,
+      "status": "proposal"
+    },
+    "idea-review-08": {
+      "categoryId": "review",
+      "sequence": 8,
+      "status": "proposal"
+    },
+    "idea-review-09": {
+      "categoryId": "review",
+      "sequence": 9,
+      "status": "proposal"
+    },
+    "idea-review-10": {
+      "categoryId": "review",
+      "sequence": 10,
+      "status": "proposal"
+    },
+    "idea-review-11": {
+      "categoryId": "review",
+      "sequence": 11,
+      "status": "proposal"
+    },
+    "idea-review-12": {
+      "categoryId": "review",
+      "sequence": 12,
+      "status": "proposal"
+    },
+    "idea-ai-reference-01": {
+      "categoryId": "ai-reference",
+      "sequence": 1,
+      "status": "proposal"
+    },
+    "idea-ai-reference-02": {
+      "categoryId": "ai-reference",
+      "sequence": 2,
+      "status": "proposal"
+    },
+    "idea-ai-reference-03": {
+      "categoryId": "ai-reference",
+      "sequence": 3,
+      "status": "proposal"
+    },
+    "idea-ai-reference-04": {
+      "categoryId": "ai-reference",
+      "sequence": 4,
+      "status": "proposal"
+    },
+    "idea-ai-reference-05": {
+      "categoryId": "ai-reference",
+      "sequence": 5,
+      "status": "proposal"
+    },
+    "idea-ai-reference-06": {
+      "categoryId": "ai-reference",
+      "sequence": 6,
+      "status": "proposal"
+    },
+    "idea-ai-reference-07": {
+      "categoryId": "ai-reference",
+      "sequence": 7,
+      "status": "proposal"
+    },
+    "idea-ai-reference-08": {
+      "categoryId": "ai-reference",
+      "sequence": 8,
+      "status": "proposal"
+    },
+    "idea-ai-reference-09": {
+      "categoryId": "ai-reference",
+      "sequence": 9,
+      "status": "proposal"
+    },
+    "idea-ai-reference-10": {
+      "categoryId": "ai-reference",
+      "sequence": 10,
+      "status": "proposal"
+    },
+    "idea-ai-reference-11": {
+      "categoryId": "ai-reference",
+      "sequence": 11,
+      "status": "proposal"
+    },
+    "idea-ai-reference-12": {
+      "categoryId": "ai-reference",
+      "sequence": 12,
+      "status": "proposal"
+    }
+  },
+  "drafts": {
+    "idea-visual-history-01": "c52e1562464309d6d6fe312c48e04db852f4bfa8bf19ac4247eb14b4dc94872d",
+    "idea-visual-history-02": "d7808199de97e97c38df27cd2589222d866eb0821d7e383580a457042d569d9f",
+    "idea-visual-history-03": "14f618615c2d04ff1d244f07eeef2d25e68054da7250cd5dcb4b9518aa2a19a8",
+    "idea-layout-01": "a62dc67daf13c81df8cf515e8ac3e9147b2967c5aa4026673e3135cd5becd7e0",
+    "idea-layout-02": "5cd3b7a223822b41a9b59bc2c1b24efeeef87488cbac78b58550924badb57c7d",
+    "idea-layout-03": "0a53322e6415653199565ce8e05c182c86e5746d133a13cbe9a4459a9ecc5c53",
+    "idea-layout-04": "cf54a9cd977a64644071e00b0f3d75bd214c3fe29cdcb5e29b71ec439604bfa5",
+    "idea-typography-01": "22a3bafb1d44ae6b71ac719dd92f2717bba95ac1d1cbff3980046dc275e3b4c2",
+    "idea-typography-02": "a899354014e4b15b78991a031b66c6682d38188edff471c0625be7d725886011",
+    "idea-typography-03": "4646bc62c137133e3429e7ece2d7254e4afbba5c8e1873f7377d0165cc678dda",
+    "idea-typography-04": "0f2fc8a464ff912e72f6ab0fc60dcf7a7088009991a7de55cb08c6ace0b79d58",
+    "idea-color-01": "bb4a378263e92715ee7a406441070eef1919e71d66ecedf017aa5fef3d962a7d",
+    "idea-color-02": "6315b800f822b51ab95ef744bc99475a0c798d38ea0435ee2d1d1016666aa175",
+    "idea-color-03": "2f336f43df4a11bb6b8510e38dd42e6b4072149bbafae33315c19cd08963bd31",
+    "idea-color-06": "c1e58f8693f825c2a2fb63a65439c511cb7ff7c24c9984d93dc9d205fb1122c2",
+    "idea-components-01": "2beef191a517093cbcdc46ffe88d2354348c474eb356009c88d19348a55befb9",
+    "idea-components-02": "b6e2617dbbf5a7a75e9444cf546ff4d153ac54e87f2cb7dabe92277a607a62e4",
+    "idea-components-03": "c347d567a56f92ddd7542514397cae5c8803c4622ecfca3cc9fda7080296621c",
+    "idea-forms-01": "b88516ce8ad4c1fa7bc27b39fa556ed3e4351a67f46cfbdf5088b3c2ee17200d",
+    "idea-forms-02": "f22bc3784a961e6ab7262bef54a571d042bdbc2530894a49129dbb34f82989ff",
+    "idea-forms-03": "a273bad721b284ced838efc29ce97fded31c436b9c25250626bb54a0c85b333a",
+    "idea-forms-04": "8b7b025b5ac8345838bbab488bfb6167034d1a7bdf650e546d05e2274762a99e",
+    "idea-motion-01": "0042c471eb9b297284a31bcdd809f10d6d0e995ce83442e08ca442479b0bd623",
+    "idea-motion-02": "fd868f83c1c2e858f3303303b80017a0f64e90aa963675ecb399c6a3b3e95665",
+    "idea-motion-03": "e477fb232f4eb2d02871a30762a7f68955c218f8ca80d6017fa68f3cbb1c7753",
+    "idea-motion-09": "eec274fd11567c2647f829ac262261b883894b1a0bcf760f9ad64176fe098340",
+    "idea-data-viz-01": "9e3f7473dcc416f7b0872c30b5c40a0711e8b7c8bbcf6ba6ab8bff618fa9384d",
+    "idea-data-viz-02": "cae35e88e81b402bc369021e203b5a5bfa2f0b2929a18797528e61f957e3b528",
+    "idea-data-viz-03": "c312115482f6cc3f243f2d2c311071132869020824e74ccd55675087a25f8848",
+    "idea-data-viz-04": "cbd5b3d0de5a93532c2bdc4b79d711b058d11396daa60b5f3e8d6d8208786e37",
+    "idea-information-01": "3de4deabc53c2b019bd52d1a22eb6123becfabb821bfe67e46eb589625c22f0b",
+    "idea-information-02": "cd5359b25430da7f54055330000b4500f2eda7213423ce0977e06e7244c51a7c",
+    "idea-information-03": "9d1deff427d7547005385a7e131a6bdcd00546cefe41ff4cb39efada4850cc54",
+    "idea-information-12": "ffb41dee0da553e3ababf66170fd9d1a3256c96b0c246c0bb33286859ad3246b",
+    "idea-accessibility-01": "5c867a2c872664a7e0eeae423eb7844441cab46bf06b83003a5ccc739ef66050",
+    "idea-accessibility-02": "a4fbf7f3ab80eb9983c5ef6430f054baa60faa3d611442ce4a91f95229875955",
+    "idea-accessibility-03": "ad3378a372cae216018abfbfd7c87cf63146a0da8a177e90600c19f75f5de508",
+    "idea-accessibility-04": "829a4ff352def00ac6fbf88eca01ab4c8d49dd89443ae2fa889b04333a2a83c2",
+    "idea-ai-ui-01": "81e8891aa2ef5246e01fda1200f213ad003aced7d501092bbe67a781985a9668",
+    "idea-ai-ui-02": "7117e37bead03c848ef44b96dc712a8876bdf1552b51683f7da2e4edce88db5f",
+    "idea-ai-ui-03": "b5af5845d2a1aca80686ac0d90b80f1e1a3e02a29bce60dae391474722d241b2",
+    "idea-ai-ui-04": "12d0f68ac84489558ab5a3ae7c7617dc85eea293b46f5f9d31229f646f86448a",
+    "idea-use-cases-01": "4e465f392b61ac75fd74d4e11afffbcdb015840ead522f114d5f0677bcaad2ed",
+    "idea-use-cases-02": "51855eea5f6581ef9b6bd7c130c8eca3f33e45f64c19d484d73bd7ade8126e29",
+    "idea-use-cases-03": "996f62328f6f8607225a1e50beb2539d996028166b188f8c9146ce73657fc55f",
+    "idea-use-cases-04": "cbdc081620a585097fb59346785d48c5cbe1d9581ee1f471c49478aba3d30ad8",
+    "idea-design-systems-01": "92c3487c5a9c14f79bc217022ec3c599587e1113c817dd416a153ad7c7b398ba",
+    "idea-design-systems-02": "008cee314a9583613caa4cc9bd58206ad23337f24b3ec27cd7c048fc6382eb91",
+    "idea-design-systems-03": "a5e596858c42e743d8bb70a9f3eefc2329c3591648185260e09cb451c145683e",
+    "idea-review-01": "987238a89566897f1c41217a0b20b3e53ac21ff14408069834653820e6345afe",
+    "idea-review-02": "11f5fd3f864062ab0726efdde4e2a9e5dc8a5eb526a3666d75f547ee417736c6",
+    "idea-review-03": "f2f005abb09e99db9d726236ca9f9cfd1c960e9044b77f8beea46851fe278d5e",
+    "idea-review-04": "a4e543559e5f444fbdde9b152603d2487f0f0179f34b77fd5e41abffba5dd7e4",
+    "idea-ai-reference-01": "d3692c68de63a1f5f3874ba2109ab99959f8ace2a44e45bb483d113500e7a2e0",
+    "idea-ai-reference-02": "80fab2eda5f3723a4b8025f7cc579a88ba04d3b0b4871964745d92015ba95200",
+    "idea-ai-reference-03": "86255925ccee01bc13a7909d80cc28b296db5567a63c8ffd9d5a25b51f9c456a",
+    "idea-ai-reference-04": "ca4114f343d7e0859f9ca56418ec72273ac153cf1d219464998113645f9741ff"
+  },
+  "relations": [
+    [
+      "idea-layout-01",
+      "idea-layout-08"
+    ],
+    [
+      "idea-layout-02",
+      "idea-use-cases-04"
+    ],
+    [
+      "idea-layout-02",
+      "idea-visual-history-09"
+    ],
+    [
+      "idea-layout-04",
+      "idea-review-05"
+    ],
+    [
+      "idea-layout-05",
+      "idea-visual-history-02"
+    ],
+    [
+      "idea-layout-06",
+      "idea-motion-01"
+    ],
+    [
+      "idea-layout-07",
+      "idea-use-cases-06"
+    ],
+    [
+      "idea-layout-12",
+      "idea-review-01"
+    ],
+    [
+      "idea-layout-12",
+      "idea-review-07"
+    ],
+    [
+      "idea-typography-01",
+      "idea-typography-11"
+    ],
+    [
+      "idea-typography-02",
+      "idea-use-cases-04"
+    ],
+    [
+      "idea-typography-04",
+      "idea-typography-10"
+    ],
+    [
+      "idea-typography-05",
+      "idea-use-cases-10"
+    ],
+    [
+      "idea-typography-09",
+      "idea-visual-history-11"
+    ],
+    [
+      "idea-typography-11",
+      "idea-use-cases-03"
+    ],
+    [
+      "idea-color-01",
+      "idea-review-03"
+    ],
+    [
+      "idea-color-01",
+      "idea-review-11"
+    ],
+    [
+      "idea-color-02",
+      "idea-use-cases-11"
+    ],
+    [
+      "idea-color-02",
+      "idea-visual-history-03"
+    ],
+    [
+      "idea-color-02",
+      "idea-visual-history-12"
+    ],
+    [
+      "idea-color-03",
+      "idea-review-11"
+    ],
+    [
+      "idea-color-03",
+      "idea-visual-history-05"
+    ],
+    [
+      "idea-color-05",
+      "idea-use-cases-10"
+    ],
+    [
+      "idea-color-08",
+      "idea-review-11"
+    ],
+    [
+      "idea-color-09",
+      "idea-visual-history-06"
+    ],
+    [
+      "idea-color-10",
+      "idea-visual-history-04"
+    ],
+    [
+      "idea-color-10",
+      "idea-visual-history-08"
+    ],
+    [
+      "idea-color-11",
+      "idea-motion-04"
+    ],
+    [
+      "idea-color-11",
+      "idea-visual-history-07"
+    ],
+    [
+      "idea-color-12",
+      "idea-review-12"
+    ],
+    [
+      "idea-components-01",
+      "idea-design-systems-01"
+    ],
+    [
+      "idea-components-01",
+      "idea-information-09"
+    ],
+    [
+      "idea-components-01",
+      "idea-motion-02"
+    ],
+    [
+      "idea-components-02",
+      "idea-forms-07"
+    ],
+    [
+      "idea-components-04",
+      "idea-layout-01"
+    ],
+    [
+      "idea-components-05",
+      "idea-forms-01"
+    ],
+    [
+      "idea-components-06",
+      "idea-information-11"
+    ],
+    [
+      "idea-components-07",
+      "idea-motion-10"
+    ],
+    [
+      "idea-components-08",
+      "idea-forms-10"
+    ],
+    [
+      "idea-components-08",
+      "idea-motion-12"
+    ],
+    [
+      "idea-components-09",
+      "idea-layout-09"
+    ],
+    [
+      "idea-components-10",
+      "idea-information-09"
+    ],
+    [
+      "idea-components-10",
+      "idea-layout-03"
+    ],
+    [
+      "idea-components-11",
+      "idea-design-systems-09"
+    ],
+    [
+      "idea-components-11",
+      "idea-forms-11"
+    ],
+    [
+      "idea-forms-01",
+      "idea-forms-03"
+    ],
+    [
+      "idea-forms-01",
+      "idea-use-cases-01"
+    ],
+    [
+      "idea-forms-02",
+      "idea-use-cases-01"
+    ],
+    [
+      "idea-forms-02",
+      "idea-use-cases-12"
+    ],
+    [
+      "idea-forms-04",
+      "idea-forms-11"
+    ],
+    [
+      "idea-forms-05",
+      "idea-information-05"
+    ],
+    [
+      "idea-forms-06",
+      "idea-review-10"
+    ],
+    [
+      "idea-forms-08",
+      "idea-review-09"
+    ],
+    [
+      "idea-forms-09",
+      "idea-forms-10"
+    ],
+    [
+      "idea-forms-12",
+      "idea-information-06"
+    ],
+    [
+      "idea-motion-01",
+      "idea-motion-03"
+    ],
+    [
+      "idea-motion-03",
+      "idea-motion-11"
+    ],
+    [
+      "idea-motion-04",
+      "idea-review-04"
+    ],
+    [
+      "idea-motion-05",
+      "idea-visual-history-02"
+    ],
+    [
+      "idea-motion-06",
+      "idea-review-04"
+    ],
+    [
+      "idea-data-viz-01",
+      "idea-data-viz-02"
+    ],
+    [
+      "idea-data-viz-01",
+      "idea-design-systems-02"
+    ],
+    [
+      "idea-data-viz-01",
+      "idea-use-cases-07"
+    ],
+    [
+      "idea-data-viz-01",
+      "idea-use-cases-08"
+    ],
+    [
+      "idea-data-viz-02",
+      "idea-data-viz-10"
+    ],
+    [
+      "idea-data-viz-03",
+      "idea-data-viz-04"
+    ],
+    [
+      "idea-data-viz-03",
+      "idea-data-viz-12"
+    ],
+    [
+      "idea-data-viz-03",
+      "idea-motion-08"
+    ],
+    [
+      "idea-data-viz-04",
+      "idea-review-07"
+    ],
+    [
+      "idea-data-viz-04",
+      "idea-typography-08"
+    ],
+    [
+      "idea-data-viz-04",
+      "idea-use-cases-08"
+    ],
+    [
+      "idea-data-viz-05",
+      "idea-data-viz-06"
+    ],
+    [
+      "idea-data-viz-05",
+      "idea-data-viz-08"
+    ],
+    [
+      "idea-data-viz-06",
+      "idea-data-viz-07"
+    ],
+    [
+      "idea-data-viz-07",
+      "idea-data-viz-12"
+    ],
+    [
+      "idea-data-viz-09",
+      "idea-layout-05"
+    ],
+    [
+      "idea-data-viz-11",
+      "idea-use-cases-06"
+    ],
+    [
+      "idea-information-01",
+      "idea-information-07"
+    ],
+    [
+      "idea-information-02",
+      "idea-layout-04"
+    ],
+    [
+      "idea-information-02",
+      "idea-typography-05"
+    ],
+    [
+      "idea-information-02",
+      "idea-use-cases-05"
+    ],
+    [
+      "idea-information-04",
+      "idea-use-cases-09"
+    ],
+    [
+      "idea-information-05",
+      "idea-use-cases-02"
+    ],
+    [
+      "idea-information-10",
+      "idea-typography-03"
+    ],
+    [
+      "idea-information-11",
+      "idea-layout-01"
+    ],
+    [
+      "idea-information-12",
+      "idea-use-cases-02"
+    ],
+    [
+      "idea-accessibility-01",
+      "idea-components-10"
+    ],
+    [
+      "idea-accessibility-01",
+      "idea-design-systems-12"
+    ],
+    [
+      "idea-accessibility-02",
+      "idea-layout-03"
+    ],
+    [
+      "idea-accessibility-03",
+      "idea-design-systems-06"
+    ],
+    [
+      "idea-accessibility-03",
+      "idea-review-03"
+    ],
+    [
+      "idea-accessibility-03",
+      "idea-visual-history-06"
+    ],
+    [
+      "idea-accessibility-04",
+      "idea-typography-07"
+    ],
+    [
+      "idea-accessibility-04",
+      "idea-typography-12"
+    ],
+    [
+      "idea-accessibility-05",
+      "idea-components-08"
+    ],
+    [
+      "idea-accessibility-05",
+      "idea-design-systems-04"
+    ],
+    [
+      "idea-accessibility-06",
+      "idea-typography-06"
+    ],
+    [
+      "idea-accessibility-07",
+      "idea-color-04"
+    ],
+    [
+      "idea-accessibility-07",
+      "idea-color-07"
+    ],
+    [
+      "idea-accessibility-07",
+      "idea-color-08"
+    ],
+    [
+      "idea-accessibility-07",
+      "idea-use-cases-11"
+    ],
+    [
+      "idea-accessibility-08",
+      "idea-forms-06"
+    ],
+    [
+      "idea-accessibility-09",
+      "idea-motion-04"
+    ],
+    [
+      "idea-accessibility-09",
+      "idea-motion-11"
+    ],
+    [
+      "idea-accessibility-10",
+      "idea-color-06"
+    ],
+    [
+      "idea-accessibility-11",
+      "idea-forms-07"
+    ],
+    [
+      "idea-accessibility-11",
+      "idea-information-07"
+    ],
+    [
+      "idea-accessibility-11",
+      "idea-information-10"
+    ],
+    [
+      "idea-accessibility-11",
+      "idea-review-02"
+    ],
+    [
+      "idea-accessibility-12",
+      "idea-typography-11"
+    ],
+    [
+      "idea-ai-ui-01",
+      "idea-ai-ui-12"
+    ],
+    [
+      "idea-ai-ui-01",
+      "idea-components-12"
+    ],
+    [
+      "idea-ai-ui-01",
+      "idea-forms-08"
+    ],
+    [
+      "idea-ai-ui-01",
+      "idea-forms-10"
+    ],
+    [
+      "idea-ai-ui-02",
+      "idea-motion-09"
+    ],
+    [
+      "idea-ai-ui-03",
+      "idea-information-02"
+    ],
+    [
+      "idea-ai-ui-04",
+      "idea-layout-11"
+    ],
+    [
+      "idea-ai-ui-05",
+      "idea-data-viz-01"
+    ],
+    [
+      "idea-ai-ui-06",
+      "idea-components-12"
+    ],
+    [
+      "idea-ai-ui-07",
+      "idea-data-viz-12"
+    ],
+    [
+      "idea-ai-ui-07",
+      "idea-information-08"
+    ],
+    [
+      "idea-ai-ui-08",
+      "idea-components-07"
+    ],
+    [
+      "idea-ai-ui-08",
+      "idea-design-systems-08"
+    ],
+    [
+      "idea-ai-ui-08",
+      "idea-layout-10"
+    ],
+    [
+      "idea-ai-ui-08",
+      "idea-review-06"
+    ],
+    [
+      "idea-ai-ui-09",
+      "idea-information-03"
+    ],
+    [
+      "idea-ai-ui-10",
+      "idea-forms-11"
+    ],
+    [
+      "idea-ai-ui-11",
+      "idea-ai-ui-12"
+    ],
+    [
+      "idea-ai-ui-12",
+      "idea-information-08"
+    ],
+    [
+      "idea-use-cases-04",
+      "idea-visual-history-01"
+    ],
+    [
+      "idea-use-cases-04",
+      "idea-visual-history-10"
+    ],
+    [
+      "idea-design-systems-03",
+      "idea-typography-11"
+    ],
+    [
+      "idea-design-systems-05",
+      "idea-use-cases-01"
+    ],
+    [
+      "idea-design-systems-07",
+      "idea-forms-03"
+    ],
+    [
+      "idea-design-systems-10",
+      "idea-layout-10"
+    ],
+    [
+      "idea-design-systems-11",
+      "idea-information-03"
+    ],
+    [
+      "idea-review-06",
+      "idea-typography-03"
+    ],
+    [
+      "idea-review-06",
+      "idea-typography-10"
+    ],
+    [
+      "idea-review-08",
+      "idea-typography-09"
+    ],
+    [
+      "idea-ai-reference-01",
+      "idea-ai-reference-12"
+    ],
+    [
+      "idea-ai-reference-01",
+      "idea-ai-ui-04"
+    ],
+    [
+      "idea-ai-reference-01",
+      "idea-visual-history-02"
+    ],
+    [
+      "idea-ai-reference-02",
+      "idea-information-01"
+    ],
+    [
+      "idea-ai-reference-03",
+      "idea-typography-11"
+    ],
+    [
+      "idea-ai-reference-04",
+      "idea-color-06"
+    ],
+    [
+      "idea-ai-reference-05",
+      "idea-use-cases-02"
+    ],
+    [
+      "idea-ai-reference-06",
+      "idea-review-12"
+    ],
+    [
+      "idea-ai-reference-07",
+      "idea-information-04"
+    ],
+    [
+      "idea-ai-reference-08",
+      "idea-review-12"
+    ],
+    [
+      "idea-ai-reference-09",
+      "idea-use-cases-10"
+    ],
+    [
+      "idea-ai-reference-10",
+      "idea-ai-ui-04"
+    ],
+    [
+      "idea-ai-reference-11",
+      "idea-information-02"
+    ]
+  ]
+}
