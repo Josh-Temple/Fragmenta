@@ -97,28 +97,30 @@
       "relatedExisting": [],
       "editorial": {
         "reviewStatus": "draft_unreviewed",
-        "summary": "曲線・植物的な装飾を手掛かりに、アール・ヌーヴォーの造形的特徴を調べる。",
+        "summary": "アール・ヌーヴォーは19世紀末に複数の国で展開した造形表現。自然の形や流れる線に加え、幾何学的な形や非対称も用いられ、地域ごとに表現が異なる。",
         "appropriateUses": [
-          "展覧会案内",
-          "装飾的な見出し"
+          "展示や建築・工芸の紹介で、作品ごとの造形を比較する。",
+          "曲線的な装飾を現代の案内画面に応用する際の出発点とする。"
         ],
         "pitfalls": [
-          "歴史的作品をそのまま複製しない",
-          "本文の可読性を装飾で損なわない"
+          "曲線や植物模様だけを、すべての作品に共通する必須条件としない。",
+          "歴史的な作品と現代の独自解釈を混同せず、作品画像の使用条件を確認する。"
         ],
         "reviewChecks": [
-          "典型例と成立背景を出典で確認",
-          "長文と狭い画面での表示を評価"
+          "個別作品の作者、制作年、所蔵先と名称を確認する。",
+          "装飾の有無にかかわらず文字が読め、作品情報をたどれるか確認する。"
         ],
         "evidenceStatus": "not_checked",
-        "practicalExample": "展覧会の案内で曲線的な装飾を見出しの周囲に使い、作品情報は通常文字で配置する。",
-        "implementationNotes": "史実としての作品画像と独自の装飾図案を分け、画像の権利を確認する。",
-        "accessibilityNotes": "花や曲線を削除しても記事の順番と作品名が分かる構造を維持する。",
-        "aiInstruction": "アール・ヌーヴォー風の案内を作り、歴史的な作品の再現と独自の再解釈を明確に区別してください。",
-        "updatedOn": "2026-11-01",
-        "sourceIds": [],
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "practicalExample": "展覧会の案内で、見出しの周囲に独自の曲線装飾を使い、作品名と説明は読みやすい文字で配置する。",
+        "implementationNotes": "地域や作品による違いを資料で確認し、史実と現代のデザイン上の選択を分けて記録する。",
+        "accessibilityNotes": "装飾が見えなくても作品名と情報の順序が分かる構造を維持する。",
+        "aiInstruction": "アール・ヌーヴォーの地域差を踏まえて案内画面を提案し、史実と独自の再解釈を区別してください。",
+        "updatedOn": "2026-11-14",
+        "sourceIds": [
+          "vam-art-nouveau-international"
+        ],
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -149,28 +151,30 @@
       ],
       "editorial": {
         "reviewStatus": "draft_unreviewed",
-        "summary": "直線・色面・構成の関係を手掛かりに、デ・ステイルの特徴と他の様式との差を調べる。",
+        "summary": "デ・ステイルは1917年創刊の同名の雑誌を中心とした造形運動。MoMAは直線、矩形、三原色を用いた抽象表現を特徴の一部として紹介している。",
         "appropriateUses": [
-          "構成的なポスター",
-          "色面で区切る紹介ページ"
+          "直線や色面の配置を使ったポスターの構成を比較する。",
+          "作品の造形と、現代UIのタイル配置との違いを検討する。"
         ],
         "pitfalls": [
-          "三原色を使うだけで同様式と断定しない",
-          "装飾より情報順を優先"
+          "三原色や格子を使っただけで、作品がデ・ステイルに属すると断定しない。",
+          "同時代のバウハウスと同一の運動として扱わない。"
         ],
         "reviewChecks": [
-          "歴史的な根拠を一次資料で確かめる",
-          "配色だけでなく構成を比較"
+          "特定の作家や作品に言及する場合は、制作年と資料を個別に確認する。",
+          "色面に加え線の方向、配置の関係、情報の読み順を比較する。"
         ],
         "evidenceStatus": "not_checked",
-        "practicalExample": "ポスターを縦横の線と色面で構成し、他の幾何学様式と配置原則を比較する。",
-        "implementationNotes": "色の選択だけで様式を断定せず、原典の年代・作家・作品名を別に確認する。",
-        "accessibilityNotes": "色面の区分を見出し・境界線でも示し、本文を読みやすく保つ。",
-        "aiInstruction": "デ・ステイルに関連する造形要素を比較し、一次資料未確認の主張は確定表現にしないでください。",
-        "updatedOn": "2026-11-01",
-        "sourceIds": [],
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "practicalExample": "架空のポスターで縦横の線と色面を組み合わせ、資料で見た作品と自作案の違いを説明する。",
+        "implementationNotes": "資料の歴史的説明と自作UIの判断を分ける。作品の画像やデザインを使う場合は個別の利用条件を確認する。",
+        "accessibilityNotes": "色面だけに依存せず、見出しや境界線でも情報を区分する。",
+        "aiInstruction": "デ・ステイルの資料を参照し、歴史的記述と独自の構成案を分けて提示してください。",
+        "updatedOn": "2026-11-14",
+        "sourceIds": [
+          "moma-de-stijl"
+        ],
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -209,28 +213,30 @@
       ],
       "editorial": {
         "reviewStatus": "draft_unreviewed",
-        "summary": "家具・建築・グラフィックの事例を参照し、ミッドセンチュリー・モダンの共通する特徴を整理する。",
+        "summary": "ミッドセンチュリー・モダンを調べる際は、家具や建築などの対象と地域を明示する。関連する時期の事例として、Metは1950〜75年の各地のデザインを紹介している。",
         "appropriateUses": [
-          "文化施設の紹介",
-          "製品の編集ページ"
+          "戦後の家具や暮らしに関する展示を調査する。",
+          "素材や形状の異なる実例を比較する。"
         ],
         "pitfalls": [
-          "時代区分を一意に断定しない",
-          "古典的な作品の正確な複製を避ける"
+          "一つの配色や曲線を、この時期のすべての作品の特徴としない。",
+          "1950〜75年を用語全体の唯一の定義とみなさない。"
         ],
         "reviewChecks": [
-          "用語の範囲と出典を確認",
-          "日本語本文との相性を比較"
+          "対象の地域、制作年、作家、素材を作品ごとに確認する。",
+          "参照した資料の時期と対象分野を記録する。"
         ],
         "evidenceStatus": "not_checked",
-        "practicalExample": "家具の紹介カードで素材・曲線・余白の特徴を比較し、年代は出典付きで表示する。",
-        "implementationNotes": "建築・家具・グラフィックで使われる呼称の範囲を分けて扱う。",
-        "accessibilityNotes": "製品名・特徴を図版以外の文章でも伝える。",
-        "aiInstruction": "ミッドセンチュリー・モダンの特徴を用途別に整理し、時代範囲を一意に固定しないでください。",
-        "updatedOn": "2026-11-01",
-        "sourceIds": [],
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "practicalExample": "戦後の家具を紹介するカードで、作品ごとの制作地・年代・素材を資料と照合して並べる。",
+        "implementationNotes": "Metの資料は1950〜75年のデザイン史の一例であり、この用語の全地域・全期間を定義する資料ではない。",
+        "accessibilityNotes": "素材や形の説明を画像だけに頼らず文章でも示す。",
+        "aiInstruction": "地域・制作年・対象分野を明示し、ミッドセンチュリー・モダンの年代を単一の定義に固定しないでください。",
+        "updatedOn": "2026-11-14",
+        "sourceIds": [
+          "met-design-1950-75"
+        ],
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -252,28 +258,30 @@
       "relatedExisting": [],
       "editorial": {
         "reviewStatus": "draft_unreviewed",
-        "summary": "手工芸と工業生産の関係を手掛かりに、アーツ・アンド・クラフツの造形と思想を出典別に整理する。",
+        "summary": "アーツ・アンド・クラフツは19世紀後半の英国で、生産のあり方や装飾芸術の評価を問い直した運動。特定の模様だけでなく、複数の団体や制作に関する考え方を含む。",
         "appropriateUses": [
-          "工芸展の解説",
-          "書物やパッケージの意匠比較"
+          "工芸や建築を扱う展示の背景を調査する。",
+          "制作方法や素材と、完成した意匠との関係を比較する。"
         ],
         "pitfalls": [
-          "古い模様を無条件に複製しない",
-          "様式名だけで年代や作者を断定しない"
+          "運動全体を一つの装飾様式や、機械の全面否定に単純化しない。",
+          "古い作品の模様や写真を、権利確認なしで再配布しない。"
         ],
         "reviewChecks": [
-          "作品の制作年と所蔵先を確認",
-          "作品と現代の再解釈を区別"
+          "作品の作者、制作年、所蔵先、素材を個別に確認する。",
+          "参照する地域と、当時の制作思想・現代の解釈を分ける。"
         ],
         "evidenceStatus": "not_checked",
-        "practicalExample": "工芸展の案内で図版と作品名・年代・出典を並べて検討する。",
-        "implementationNotes": "実物の資料を引用する場合は画像権利を個別に確認し、独自の再解釈を別記する。",
-        "accessibilityNotes": "装飾を取り除いても作品名・説明が読める構造を保つ。",
-        "aiInstruction": "アーツ・アンド・クラフツの特徴を一次資料候補とともに整理し、未確認の年代や帰属は空欄にしてください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "practicalExample": "工芸展の案内で作品ごとの材料、制作方法、作者と年代を、資料のリンクとともに整理する。",
+        "implementationNotes": "V&Aの解説は主に英国での展開を扱う。別の地域に関する主張は、その地域の資料で確認する。",
+        "accessibilityNotes": "図版の有無にかかわらず、作品名と説明をテキストで読めるようにする。",
+        "aiInstruction": "アーツ・アンド・クラフツの資料と対象地域を明記し、制作思想と現代の意匠案を区別してください。",
+        "sourceIds": [
+          "vam-arts-crafts-introduction"
+        ],
+        "updatedOn": "2026-11-14",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -9702,6 +9710,38 @@
       "checkedOn": "2026-11-14",
       "scope": "Apple HIGの基礎、パターン、部品、入力方法などへの公式案内。個別の規則、App Store審査基準、各OS版の適合は別途確認する。",
       "rights": "参照リンクのみ。文章・画像・デザイン資産・商標の利用条件は個別に確認する。"
+    },
+    "vam-art-nouveau-international": {
+      "title": "Art Nouveau – an international style",
+      "publisher": "Victoria and Albert Museum",
+      "url": "https://www.vam.ac.uk/articles/art-nouveau-an-international-style",
+      "checkedOn": "2026-11-14",
+      "scope": "19世紀末の複数地域での展開、自然形態・流線・幾何学・非対称などの紹介。個別作品の詳細な帰属や現代UIの効果は対象外。",
+      "rights": "参照リンクのみ。画像・文章・作品の利用条件は個別に確認する。"
+    },
+    "moma-de-stijl": {
+      "title": "Contra-Construction Project (Axonometric), 1923",
+      "publisher": "The Museum of Modern Art",
+      "url": "https://www.moma.org/collection/works/232",
+      "checkedOn": "2026-11-14",
+      "scope": "ファン・ドゥースブルフらの作品の解説を通じ、1917年の雑誌と矩形・三原色・線による構成を紹介。運動に属する全作品が同一形式とは示さない。",
+      "rights": "参照リンクのみ。画像・文章・作品の利用条件は個別に確認する。"
+    },
+    "met-design-1950-75": {
+      "title": "Design, 1950–75",
+      "publisher": "The Metropolitan Museum of Art",
+      "url": "https://www.metmuseum.org/essays/design-1950-75",
+      "checkedOn": "2026-11-14",
+      "scope": "1950〜75年の各地の家具・材料・デザインの紹介。「ミッドセンチュリー・モダン」全体の時期・地域・分野を定義する資料ではない。",
+      "rights": "参照リンクのみ。画像・文章・作品の利用条件は個別に確認する。"
+    },
+    "vam-arts-crafts-introduction": {
+      "title": "Arts and Crafts: an introduction",
+      "publisher": "Victoria and Albert Museum",
+      "url": "https://www.vam.ac.uk/articles/arts-and-crafts-an-introduction",
+      "checkedOn": "2026-11-14",
+      "scope": "主に英国における成立、複数の団体、制作と生産に関する理念。全地域の展開や個々の作品の権利は対象外。",
+      "rights": "参照リンクのみ。画像・文章・作品の利用条件は個別に確認する。"
     }
   },
   "relationSemantics": {
