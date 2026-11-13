@@ -9,14 +9,11 @@ import { createStylePrompt, createBlendedStylePrompt, createStyleCss, type DemoS
 type Family = 'all' | DesignStyleGroup;
 
 const DesignStyles: React.FC = () => {
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const requestedStyle = searchParams.get('style');
   const [family, setFamily] = useState<Family>('all');
   const [query, setQuery] = useState('');
-  const [primary, setPrimary] = useState(() => designStyles.find(style => style.id === requestedStyle)?.id ?? 'swiss');
-  useEffect(() => {
-    if (requestedStyle && designStyles.some(style => style.id === requestedStyle)) setPrimary(requestedStyle);
-  }, [requestedStyle]);
+  const primary = designStyles.find(style => style.id === requestedStyle)?.id ?? 'swiss';
   const [compare, setCompare] = useState('neo-brutalism');
   const [screen, setScreen] = useState<DemoScreen>('dashboard');
   const [copyStatus, setCopyStatus] = useState('');
@@ -36,6 +33,26 @@ const DesignStyles: React.FC = () => {
   }, [family, query]);
   const canMix = Boolean(second && first.id !== second.id);
   const mixing = mixEnabled && canMix;
+  useEffect(() => {
+    if (!canMix) setMixEnabled(false);
+  }, [canMix]);
+  useEffect(() => {
+    setCopyStatus('');
+  }, [primary]);
+  const selectPrimary = (id: string) => {
+    if (requestedStyle !== id) {
+      const next = new URLSearchParams(searchParams);
+      next.set('style', id);
+      setSearchParams(next);
+    }
+    if (!second || second.id === id) setMixEnabled(false);
+    setCopyStatus('');
+  };
+  const selectCompare = (id: string) => {
+    setCompare(id);
+    if (id === 'none' || id === primary) setMixEnabled(false);
+    setCopyStatus('');
+  };
   const prompt = mixing && second ? createBlendedStylePrompt(first, second, screen, secondaryWeight) : createStylePrompt(first, screen);
   const css = createStyleCss(first);
   const copyText = async (value: string, label: string) => {
@@ -85,7 +102,7 @@ const DesignStyles: React.FC = () => {
           <div className="grid grid-cols-2 gap-3 mt-4">
             {results.map(item => (
               <button type="button" aria-pressed={primary === item.id} key={item.id}
-                onClick={() => { setPrimary(item.id); setCopyStatus(''); }}
+                onClick={() => selectPrimary(item.id)}
                 className={'motion-card min-w-0 text-left rounded-xl border p-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ' +
                   (primary === item.id ? 'border-primary ring-2 ring-primary/30' : 'border-ink-border hover:border-primary')}>
                 <div aria-hidden="true" className="h-16 rounded-md p-2 flex items-end gap-2 overflow-hidden"
@@ -113,14 +130,14 @@ const DesignStyles: React.FC = () => {
         <div className="mt-4 grid grid-cols-1 gap-3">
           <div>
             <label htmlFor="style-a" className="block mb-1 text-sm font-semibold">スタイルA</label>
-            <select id="style-a" value={primary} onChange={e => { setPrimary(e.target.value); setCopyStatus(''); }}
+            <select id="style-a" value={primary} onChange={e => selectPrimary(e.target.value)}
               className="w-full bg-paper text-ink border border-ink-border rounded-lg p-3 text-base">
               {designStyles.map(item => <option key={item.id} value={item.id}>{item.name} / {item.ja}</option>)}
             </select>
           </div>
           <div>
             <label htmlFor="style-b" className="block mb-1 text-sm font-semibold">比較対象B</label>
-            <select id="style-b" value={compare} onChange={e => setCompare(e.target.value)}
+            <select id="style-b" value={compare} onChange={e => selectCompare(e.target.value)}
               className="w-full bg-paper text-ink border border-ink-border rounded-lg p-3 text-base">
               <option value="none">比較しない</option>
               {designStyles.map(item => <option key={item.id} value={item.id}>{item.name} / {item.ja}</option>)}

@@ -952,13 +952,13 @@ try {
       select.focus(); select.value = 'wabi-sabi'; select.dispatchEvent(new Event('change', { bubbles: true }));
       await new Promise(resolve => setTimeout(resolve, 150));
       const after = document.querySelector('.style-motion-enter');
-      return { value: select.value, replaced: before !== after, focus: document.activeElement === select,
+      return { value: select.value, hash: location.hash, replaced: before !== after, focus: document.activeElement === select,
         duration: getComputedStyle(after).animationDuration,
         description: document.querySelector('#compare-heading').parentElement.innerText };
     })()`, awaitPromise: true, returnByValue: true,
   });
   const changed = changeStyle.result?.value;
-  if (changeStyle.exceptionDetails || changed?.value !== 'wabi-sabi' || !changed.replaced || !changed.focus ||
+  if (changeStyle.exceptionDetails || changed?.value !== 'wabi-sabi' || !changed.hash.includes('style=wabi-sabi') || !changed.replaced || !changed.focus ||
       changed.duration !== '0.72s' || !changed.description.includes('ほとんど動かない静かなフェード'))
     throw new Error('Style change did not restart its motion: ' + JSON.stringify(changed));
   console.log('PASS style change restarts its own motion and retains focus');
@@ -979,6 +979,77 @@ try {
     throw new Error('Reduced motion failed on style atlas: ' + JSON.stringify(reducedStyles));
   console.log('PASS reduced-motion removes atlas animation and keeps content visible');
   await page.send('Emulation.setEmulatedMedia', { features: [] });
+
+  // Selection must survive reload, support direct links and browser back, and
+  // retain unrelated query parameters. A disabled mix must not resume itself.
+  await page.send('Page.reload');
+  await poll(async () => {
+    const result = await page.send('Runtime.evaluate', {
+      expression: "location.hash.includes('style=wabi-sabi') && document.querySelector('#style-a')?.value === 'wabi-sabi'",
+      returnByValue: true,
+    });
+    return result.result?.value;
+  }, 'style selection after reload');
+  await page.send('Runtime.evaluate', { expression: "location.hash = '#/styles?style=unknown-style'" });
+  await poll(async () => {
+    const result = await page.send('Runtime.evaluate', {
+      expression: "location.hash.includes('style=unknown-style') && document.querySelector('#style-a')?.value === 'swiss'",
+      returnByValue: true,
+    });
+    return result.result?.value;
+  }, 'unknown style falls back to Swiss');
+  await page.send('Runtime.evaluate', { expression: "location.hash = '#/styles?style=glass&origin=test'" });
+  await poll(async () => {
+    const result = await page.send('Runtime.evaluate', {
+      expression: "document.querySelector('#style-a')?.value === 'glass' && location.hash.includes('origin=test')",
+      returnByValue: true,
+    });
+    return result.result?.value;
+  }, 'direct style link');
+  const mixReset = await page.send('Runtime.evaluate', {
+    expression: `(async () => {
+      const mix = [...document.querySelectorAll('input[type=checkbox]')].find(el => el.closest('label')?.textContent.includes('2つのデザインを組み合わせたAI指示'));
+      const compare = document.querySelector('#style-b');
+      mix.click(); await new Promise(r => setTimeout(r, 50));
+      const enabled = mix.checked && !mix.disabled;
+      compare.value = 'glass'; compare.dispatchEvent(new Event('change', { bubbles: true }));
+      await new Promise(r => setTimeout(r, 50));
+      const disabled = mix.disabled && !mix.checked;
+      compare.value = 'swiss'; compare.dispatchEvent(new Event('change', { bubbles: true }));
+      await new Promise(r => setTimeout(r, 50));
+      const staysOff = !mix.checked && !mix.disabled;
+      mix.click(); await new Promise(r => setTimeout(r, 50));
+      compare.value = 'none'; compare.dispatchEvent(new Event('change', { bubbles: true }));
+      await new Promise(r => setTimeout(r, 50));
+      const noneDisabled = mix.disabled && !mix.checked;
+      compare.value = 'swiss'; compare.dispatchEvent(new Event('change', { bubbles: true }));
+      await new Promise(r => setTimeout(r, 50));
+      return { enabled, disabled, staysOff, noneDisabled, staysOffAfterNone: !mix.checked && !mix.disabled };
+    })()`, awaitPromise: true, returnByValue: true,
+  });
+  if (mixReset.exceptionDetails || !mixReset.result?.value?.enabled || !mixReset.result?.value?.disabled ||
+      !mixReset.result?.value?.staysOff || !mixReset.result?.value?.noneDisabled ||
+      !mixReset.result?.value?.staysOffAfterNone)
+    throw new Error('Style mix did not reset when comparison became invalid: ' + JSON.stringify(mixReset.result?.value));
+  await page.send('Runtime.evaluate', {
+    expression: "[...document.querySelectorAll('section[aria-labelledby=atlas-list-heading] button[aria-pressed]')].find(el => el.textContent.includes('Y2K')).click()",
+  });
+  await poll(async () => {
+    const result = await page.send('Runtime.evaluate', {
+      expression: "document.querySelector('#style-a')?.value === 'y2k' && location.hash.includes('style=y2k') && location.hash.includes('origin=test')",
+      returnByValue: true,
+    });
+    return result.result?.value;
+  }, 'style card updates URL and retains other parameters');
+  await page.send('Runtime.evaluate', { expression: 'history.back()' });
+  await poll(async () => {
+    const result = await page.send('Runtime.evaluate', {
+      expression: "document.querySelector('#style-a')?.value === 'glass' && location.hash.includes('style=glass') && location.hash.includes('origin=test')",
+      returnByValue: true,
+    });
+    return result.result?.value;
+  }, 'browser back restores style');
+  console.log('PASS style URL, reload, back navigation, preserved parameters and mix reset');
   await page.send('Emulation.clearDeviceMetricsOverride');
 
   // The knowledge detail heading should receive focus after client-side navigation.
@@ -1205,13 +1276,13 @@ try {
   await page.send('Input.dispatchKeyEvent', { type: 'keyUp', key: ' ', code: 'Space', windowsVirtualKeyCode: 32 });
   await poll(async () => {
     const result = await page.send('Runtime.evaluate', {
-      expression: "document.querySelector('a[href=\"#/p/warm-neo-brutalist-editorial\"]').closest('details').open",
+      expression: "document.querySelector('details[data-pattern-guide=warm-neo-brutalist-editorial]')?.open",
       returnByValue: true,
     });
     return result.result?.value;
   }, 'editorial guide disclosure');
   const guideScroll = await page.send('Runtime.evaluate', {
-    expression: "(() => { const link = document.querySelector('a[href=\"#/p/warm-neo-brutalist-editorial\"]'); link.scrollIntoView(); link.focus(); return scrollY; })()",
+    expression: "(() => { const link = document.querySelector('details[data-pattern-guide=warm-neo-brutalist-editorial] > div > a[href=\"#/p/warm-neo-brutalist-editorial\"]'); link.scrollIntoView(); link.focus(); return scrollY; })()",
     returnByValue: true,
   });
   if (!(guideScroll.result?.value > 100)) throw new Error('Guide navigation fixture was not scrolled');

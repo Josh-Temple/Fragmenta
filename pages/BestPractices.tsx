@@ -110,7 +110,7 @@ const BestPractices: React.FC = () => {
           <p className="mb-4">Each example has a different role. Open one for adjustable values and generated output.</p>
           <div className="divide-y divide-ink-border">
             {guides.map(([id, guide]) => (
-              <details key={id} className="py-4">
+              <details key={id} data-pattern-guide={id} className="py-4">
                 <summary className="cursor-pointer rounded-xs font-semibold text-ink focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink">
                   {definitions[id].title}
                   <span className="block pl-4 mt-1 text-xs font-normal text-ink-muted">{guide.codeFormat}</span>
