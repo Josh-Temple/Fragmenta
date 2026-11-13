@@ -103,7 +103,7 @@ const PatternDetail: React.FC = () => {
         <div className="size-10" aria-hidden="true" />
       </div>
 
-      <main className="flex-1 flex flex-col pb-40">
+      <div className="flex-1 flex flex-col pb-40">
         <section className="p-4">
           <div className={`relative w-full ${kind === 'style' || kind === 'layout' ? 'min-h-[280px] pt-6 pb-16' : 'aspect-[4/3]'} rounded-2xl bg-surface border border-ink-border flex flex-col items-center justify-center overflow-hidden group inset-shadow-sm`}>
             <div className="absolute inset-0 bg-grid-pattern pointer-events-none opacity-50"></div>
@@ -330,7 +330,7 @@ const PatternDetail: React.FC = () => {
             </div>
           </section>
         )}
-      </main>
+      </div>
 
       <div className="fixed bottom-0 left-0 right-0 max-w-md mx-auto p-4 bg-linear-to-t from-paper via-paper to-transparent z-50">
         <p role="status" aria-label="Copy result" aria-live="polite" className={`text-xs font-semibold mb-2 text-center ${copyStatus === 'error' ? 'text-red-700' : 'text-ink-muted'}`}>

@@ -242,6 +242,7 @@ const routes = [
   ['/knowledge/nonexistent-item', '項目が見つかりません'],
   ['/collections', 'Collections'],
   ['/collections/motion-essentials', 'Motion Essentials'],
+  ['/collections/nonexistent-collection', 'Collection not found'],
   ['/licenses', 'Licensing information'],
   ['/p/fluid-toggle', 'Fluid Toggle'],
   ['/p/morph-fab', 'Morph FAB'],
@@ -259,6 +260,7 @@ const routes = [
   ['/p/breadcrumb-trail', 'Breadcrumb Trail'],
   ['/p/empty-state', 'Empty State'],
   ['/p/responsive-data-table', 'Responsive Data Table'],
+  ['/p/nonexistent-pattern', 'Pattern not found'],
 ];
 
 await poll(async () => (await fetch(baseUrl)).ok, 'built Vite preview server');
@@ -360,6 +362,12 @@ try {
     }, route + " to render '" + expected + "'");
     await sleep(300);
     if (errors.length) throw new Error(route + ': ' + errors.join('; '));
+    const landmark = await page.send('Runtime.evaluate', {
+      expression: "document.querySelectorAll('#root main, #root [role=main]').length",
+      returnByValue: true,
+    });
+    if (landmark.result?.value !== 1)
+      throw new Error('Expected exactly one main landmark on ' + route + ', got ' + landmark.result?.value);
     if (index === 0 && !process.env.SMOKE_BASE_URL) {
       // Build-time Tailwind must preserve the original warm palette and typography.
       const result = await page.send('Runtime.evaluate', {
@@ -378,7 +386,7 @@ try {
       }
       console.log('PASS build-time Tailwind style contract', style);
     }
-    console.log('PASS ' + route + ": React mounted and '" + expected + "' rendered");
+    console.log('PASS ' + route + ": React mounted, one main landmark and '" + expected + "' rendered");
   }
 
   // Cross-route responsive matrix. Check the rendered page, not only its HTTP status.

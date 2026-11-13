@@ -12,7 +12,7 @@ const Collections: React.FC = () => {
   );
 
   return (
-    <main className="w-full px-4 pb-28">
+    <div className="w-full px-4 pb-28">
       <header className="flex items-center gap-3 py-4">
         <button type="button" onClick={() => navigate(-1)}
           aria-label="Go back" className="size-11 rounded-full hover:bg-ink/5 focus-visible:outline-2 focus-visible:outline-primary">
@@ -40,7 +40,7 @@ const Collections: React.FC = () => {
           </div>
         )}
       </div>
-    </main>
+    </div>
   );
 };
 export default Collections;
