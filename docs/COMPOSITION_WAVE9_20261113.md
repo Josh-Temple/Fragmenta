@@ -1,6 +1,6 @@
 # 構図ガイド：先行24件の編集と表示修正（2026-11-13）
 
-起点は PR #49 の `638963da6c5cbd214bff613c13ec64cb5bdfd1e3`、取り込み対象の main は `204fa175fb3aa31e8fba9afab68a83e827e5d7ec`。第9Waveの [A教材監査](https://github.com/Josh-Temple/Fragmenta/pull/49#issuecomment-6808954610)、[B出典・権利監査](https://github.com/Josh-Temple/Fragmenta/pull/49#issuecomment-6809015325)、[C利用者視点監査](https://github.com/Josh-Temple/Fragmenta/pull/49#issuecomment-6808914383) を参照して修正した。これらの監査は起点HEADの記録であり、変更後の独立受入を意味しない。
+起点は PR #49 の `638963da6c5cbd214bff613c13ec64cb5bdfd1e3`。先に main `204fa175fb3aa31e8fba9afab68a83e827e5d7ec` を取り込み、その後、厳格な型検査を有効にした main `49640c2f3134dabc1243fa5102c2694e8a3a4b80` を取り込んだ。第9Waveの [A教材監査](https://github.com/Josh-Temple/Fragmenta/pull/49#issuecomment-6808954610)、[B出典・権利監査](https://github.com/Josh-Temple/Fragmenta/pull/49#issuecomment-6809015325)、[C利用者視点監査](https://github.com/Josh-Temple/Fragmenta/pull/49#issuecomment-6808914383) を参照して修正した。これらの監査は起点HEADの記録であり、変更後の独立受入を意味しない。
 
 ## 変更
 
