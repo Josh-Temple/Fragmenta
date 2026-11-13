@@ -50,4 +50,38 @@ assert(Math.abs(verticalGuide[1] / 240 - 0.20) < 0.005 &&
   Math.abs(horizontalGuide[2] / 150 - 0.75) < 0.005 &&
   Math.abs(head111[1] - verticalGuide[1]) < 1 && Math.abs(personCenterY - horizontalGuide[2]) < 1,
   'C-111 person center should match the stated 20% / approximately 75% guides');
-console.log('PASS 240 rendered descriptions, full-canvas inspection, occlusion and silhouette geometry');
+for (const id of ['C-043', 'C-080']) {
+  const shapes = guides.get(id).diagram.example;
+  const head = shapes[1], body = shapes[2], foreground = shapes[3];
+  const headLeft = head[1] - head[3], headRight = head[1] + head[3];
+  assert(foreground[1] > headLeft && foreground[1] < headRight &&
+    foreground[1] > body[1] && foreground[1] < body[1] + body[3] &&
+    foreground[2] <= head[2] - head[3] && foreground[2] + foreground[4] >= body[2] + body[4],
+    id + ' foreground must partly cover, rather than fully hide, the person');
+}
+const p112 = guides.get('C-112').diagram;
+const top112 = v => p112[v][2][2] - p112[v][2][3];
+const bottom112 = v => p112[v][3][2] + p112[v][3][4];
+assert(Math.abs((bottom112('example') - top112('example')) / 150 - .2) < .005 &&
+  bottom112('example') === bottom112('comparison') && p112.example[2][1] === p112.comparison[2][1],
+  'C-112 must show a 20% figure with a shared horizontal position and baseline');
+function checkArrow(shapes, i, name) {
+  const shaft = shapes[i], tipX = shaft[3], tipY = shaft[4];
+  const dx = tipX - shaft[1], dy = tipY - shaft[2];
+  for (const wing of shapes.slice(i + 1, i + 3)) {
+    assert(wing[1] === tipX && wing[2] === tipY &&
+      (wing[3] - tipX) * dx + (wing[4] - tipY) * dy < 0,
+      name + ' arrowhead must point in the shaft direction');
+  }
+}
+checkArrow(guides.get('C-032').diagram.comparison, 5, 'C-032');
+for (const variant of ['example', 'comparison']) {
+  checkArrow(guides.get('C-098').diagram[variant], 4, 'C-098/' + variant);
+  checkArrow(guides.get('C-098').diagram[variant], 7, 'C-098/' + variant);
+}
+const dialogue = guides.get('C-098').diagram;
+assert(dialogue.example[4][3] < dialogue.example[7][3] &&
+  dialogue.comparison[4][3] < dialogue.comparison[0][1] - dialogue.comparison[0][3] &&
+  dialogue.comparison[7][3] > dialogue.comparison[2][1] + dialogue.comparison[2][3],
+  'C-098 direction arrows must remain distinct and outside the faces');
+console.log('PASS 240 rendered descriptions, inspection transforms, occlusion, silhouette, position and arrow geometry');
