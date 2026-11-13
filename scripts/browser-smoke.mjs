@@ -289,10 +289,17 @@ let page;
 
 try {
   const portFile = join(profile, 'DevToolsActivePort');
-  const raw = await poll(async () => {
-    if (browser.exitCode !== null) throw new Error('Chrome exited (' + browser.exitCode + '): ' + chromeErrors);
-    return await readFile(portFile, 'utf8');
-  }, 'Chromium DevTools port', 25000);
+  let raw;
+  try {
+    raw = await poll(async () => {
+      if (browser.exitCode !== null) throw new Error('Chrome exited (' + browser.exitCode + ')');
+      return await readFile(portFile, 'utf8');
+    }, 'Chromium DevTools port', 45000);
+  } catch (error) {
+    const status = browser.exitCode === null ? 'still running or stopped by signal' : `exit ${browser.exitCode}`;
+    throw new Error(`${error.message}\nChromium status: ${status}; signal: ${browser.signalCode ?? 'none'}\n` +
+      `Chromium stderr (last 3000 characters):\n${chromeErrors.trim() || '(empty)'}`, { cause: error });
+  }
   const [port, browserPath] = raw.trim().split('\n');
   control = new DevTools('ws://127.0.0.1:' + port + browserPath);
   await control.ready();
