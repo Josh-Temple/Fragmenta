@@ -6167,7 +6167,7 @@
       ],
       "editorial": {
         "reviewStatus": "draft_unreviewed",
-        "summary": "OSが提供する強制配色設定で、背景や輪郭を変更されても内容を区別できる設計を検討する。",
+        "summary": "利用者の強制配色設定で色が置き換わっても、情報や操作状態を区別できるよう検討する。",
         "appropriateUses": [
           "業務用の入力画面",
           "選択状態の多いUI"
@@ -6182,13 +6182,15 @@
         ],
         "evidenceStatus": "not_checked",
         "practicalExample": "強制配色モードで選択済みカードの輪郭とラベルが残るか確認する。",
-        "implementationNotes": "必要な境界線やシステム色の使い方を検証する。",
-        "accessibilityNotes": "フォーカス位置と現在状態を色以外でも判別可能にする。",
+        "implementationNotes": "forced-colorsの状態とシステム色を考慮し、境界・選択・フォーカスを確認する。ブラウザやOSごとの動作は実際に試す。",
+        "accessibilityNotes": "色だけに依存せず、ラベルや境界でもフォーカス位置と現在状態を区別する。強制配色は必ずしも高コントラストを意味しない。",
         "aiInstruction": "強制配色モードでカード選択とフォームの状態が見分けられるUIにしてください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "w3c-forced-colors"
+        ],
+        "updatedOn": "2026-11-14",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       }
     },
     {
@@ -6231,7 +6233,7 @@
       ],
       "editorial": {
         "reviewStatus": "draft_unreviewed",
-        "summary": "認知負荷を抑えた画面構成を、情報量・指示の明確さ・利用者の作業順序から考える。",
+        "summary": "情報のまとまり、指示の明確さ、作業の流れを見直し、利用者が次にすることを把握しやすい画面を検討する。",
         "appropriateUses": [
           "複雑な申請の案内",
           "初めて使う管理画面"
@@ -6241,18 +6243,20 @@
           "画面を細かく分けすぎて往復を増やさない"
         ],
         "reviewChecks": [
-          "利用者が次の行動を説明できるか",
-          "エラー後の復帰手順"
+          "対象となる利用者が次の行動を把握できるか確認する",
+          "エラー後の復帰手順と必要な情報が残っているか確認する"
         ],
         "evidenceStatus": "not_checked",
         "practicalExample": "申請画面に先に必要書類と所要手順を示し、条件別の説明は該当箇所に置く。",
-        "implementationNotes": "情報を章立てして進捗を明示し、補助説明は必要な場所から開けるようにする。",
-        "accessibilityNotes": "平易な言葉と予測可能な操作順を使い、視覚的強調以外でも構造を伝える。",
+        "implementationNotes": "作業前に必要な準備と手順を示し、情報を目的ごとに整理する。分け方や案内の量は対象者と検証する。",
+        "accessibilityNotes": "平易な言葉と予測可能な操作順を使い、見出しやラベルでも構造を伝える。認知の特性や必要な支援は人によって異なる。",
         "aiInstruction": "複雑な申請画面を見直し、必要事項を省略せず、次の行動と復帰方法を分かりやすくしてください。",
-        "sourceIds": [],
-        "updatedOn": "2026-11-01",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "w3c-cognitive-usable"
+        ],
+        "updatedOn": "2026-11-14",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       }
     },
     {
@@ -6267,7 +6271,7 @@
       "relatedExisting": [],
       "editorial": {
         "reviewStatus": "draft_unreviewed",
-        "summary": "右から左に読む言語を使う画面で、文字方向・視覚配置・固有の数値表記を分けて設計する。",
+        "summary": "右から左に読む文字を含む画面で、文書全体と混在する文字列の方向、配置をそれぞれ扱う。",
         "appropriateUses": [
           "アラビア語の案内",
           "ヘブライ語を含む多言語画面"
@@ -6277,18 +6281,21 @@
           "数値・電話番号の方向を一律処理しない"
         ],
         "reviewChecks": [
-          "dir属性と混在する日本語・英語",
-          "アイコンの意味と読順を確認"
+          "文書と混在文字列の方向を確認する",
+          "数字・URL・アイコンの意味とキーボード操作順を対象環境で確認する"
         ],
         "evidenceStatus": "not_checked",
         "practicalExample": "アラビア語のナビゲーションをRTLで表示し、数字やURLの表示を個別に確認する。",
-        "implementationNotes": "言語に応じてdir設定を変え、論理的なCSSプロパティを用いて余白や配置を指定する。",
-        "accessibilityNotes": "スクリーンリーダーとキーボードの移動順を確認し、方向を意味する図形は個別評価する。",
+        "implementationNotes": "文書や部分文字列に適切なdir属性を指定し、方向が不明な挿入文字列はbdiやdir=\"auto\"の利用を検討する。余白や配置には用途に応じて論理的なCSSプロパティを使う。",
+        "accessibilityNotes": "数字・URL・混在言語を含む表示、スクリーンリーダーの読み順、キーボード操作を対象環境で確認する。",
         "aiInstruction": "RTL対応の画面を設計し、数字や混在言語の方向は単純反転せず検証してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-11-01",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "w3c-rtl-structural",
+          "w3c-bidi-inline"
+        ],
+        "updatedOn": "2026-11-14",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -9623,6 +9630,38 @@
       "checkedOn": "2026-11-01",
       "scope": "FTCが指摘する誤認誘導・解約妨害・費用隠し・データ共有への誘導の事例。日本法上の違法性評価ではない",
       "rights": "参照リンクのみ。各国法への適合・転載条件は別途確認"
+    },
+    "w3c-forced-colors": {
+      "title": "Media Queries Level 5 — forced-colors",
+      "publisher": "W3C",
+      "url": "https://www.w3.org/TR/mediaqueries-5/#forced-colors",
+      "checkedOn": "2026-11-14",
+      "scope": "CSS仕様案の強制配色モード、システム色と利用者設定の説明。特定OS・ブラウザ・支援技術での動作は別途検証する。",
+      "rights": "参照リンクのみ。文章やコード例の転載条件は別途確認"
+    },
+    "w3c-cognitive-usable": {
+      "title": "Making Content Usable for People with Cognitive and Learning Disabilities — Design Guide",
+      "publisher": "W3C WAI",
+      "url": "https://www.w3.org/TR/coga-usable/design_guide.html",
+      "checkedOn": "2026-11-14",
+      "scope": "ページの目的、手順、構造、必要な資源を明確にするための非規範的な設計ガイド。個別の利用者に対する効果やWCAG適合を保証しない。",
+      "rights": "参照リンクのみ。文章や図版の転載条件は別途確認"
+    },
+    "w3c-rtl-structural": {
+      "title": "Structural markup and right-to-left text in HTML",
+      "publisher": "W3C Internationalization",
+      "url": "https://www.w3.org/International/questions/qa-html-dir.en.html",
+      "checkedOn": "2026-11-14",
+      "scope": "HTMLの書字方向とCSSの論理プロパティの解説。混在文字列や各端末の読み上げ・操作は個別検証が必要。",
+      "rights": "参照リンクのみ。文章やコード例の転載条件は別途確認"
+    },
+    "w3c-bidi-inline": {
+      "title": "Authoring HTML: Handling Right-to-left Scripts",
+      "publisher": "W3C Internationalization",
+      "url": "https://www.w3.org/International/docs/bp-html-bidi/Overview",
+      "checkedOn": "2026-11-14",
+      "scope": "右横書き文書と異なる方向の文字列を扱うためのdir・bdi等の方法。言語や端末ごとの表示・操作を自動保証しない。",
+      "rights": "参照リンクのみ。文章やコード例の転載条件は別途確認"
     }
   },
   "relationSemantics": {
