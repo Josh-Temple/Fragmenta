@@ -44,4 +44,10 @@ for (const s of silhouette.comparison.slice(3)) {
     [s[2],s[4]].every(y=>y>=bodyShape[2]&&y<=bodyShape[2]+bodyShape[4]));
   else throw Error('Unexpected detail in C-063');
 }
+const [verticalGuide, horizontalGuide, head111, body111] = guides.get('C-111').diagram.example;
+const personCenterY = ((head111[2] - head111[3]) + (body111[2] + body111[4])) / 2;
+assert(Math.abs(verticalGuide[1] / 240 - 0.20) < 0.005 &&
+  Math.abs(horizontalGuide[2] / 150 - 0.75) < 0.005 &&
+  Math.abs(head111[1] - verticalGuide[1]) < 1 && Math.abs(personCenterY - horizontalGuide[2]) < 1,
+  'C-111 person center should match the stated 20% / approximately 75% guides');
 console.log('PASS 240 rendered descriptions, full-canvas inspection, occlusion and silhouette geometry');
