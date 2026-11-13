@@ -42,7 +42,14 @@ const cases = [
  ['URL credentials', d => {d.sourceCatalog['w3c-combobox'].url='https://user:pw@www.w3.org/';}, 'invalid source metadata'],
  ['localhost URL', d => {d.sourceCatalog['w3c-combobox'].url='https://localhost/';}, 'invalid source metadata'],
  ['malformed catalog fails closed', d => {d.ideas[0].relatedIdeaIds=null;}, 'invalid catalog shape'],
- ['false partial source status', d => {d.ideas[0].editorial.sourceStatus='partial';}, 'source coverage must remain partial or not_checked']
+ ['false partial source status', d => {
+   const item=d.ideas[0];item.editorial.sourceIds=[];
+   item.editorial.sourceStatus='partial';item.editorial.sourceCoverage='partial';
+ }, 'source coverage must remain partial or not_checked'],
+ ['false unchecked source status', d => {
+   const item=d.ideas.find(x=>x.editorial.sourceIds.length>0);
+   item.editorial.sourceStatus='not_checked';item.editorial.sourceCoverage='not_checked';
+ }, 'source coverage must remain partial or not_checked']
 ];
 for (const [name,mutate,expected] of cases) {
  const data=clone();mutate(data);
