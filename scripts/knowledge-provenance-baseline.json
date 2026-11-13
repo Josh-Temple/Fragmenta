@@ -3,10 +3,10 @@
   "status": "candidate_snapshot_unreviewed",
   "relationCount": 152,
   "directedCount": 34,
-  "sourceCatalogCount": 38,
-  "sourcedIdeaCount": 59,
+  "sourceCatalogCount": 42,
+  "sourcedIdeaCount": 63,
   "relationDigest": "586d94aabdaca4e227526c92123895e59a50ee24edc29aa47d8fd6f376aae6a1",
-  "sourceCatalogDigest": "76fa660be883c33107513c2e2602c9fa9070eac7d71e4d2800124d65a73add4d",
-  "sourceAssignmentsDigest": "b14aaf7c920acef95f48366f2bbf677400a515748954396a037f3a4c87e5c1f2",
-  "noteJa": "未レビュー候補の差分を固定する検査用記録。2026-11-14の参考資料追加はアクセシビリティ、デザインシステム、デザイン史の各個別照合記録を参照。独立受入・公開承認を意味しない。"
+  "sourceCatalogDigest": "45d42fa4e0fdab62b0b8628cb61147f821b75d6dfee1ba58d1dbacad37ce81ce",
+  "sourceAssignmentsDigest": "bea0d915beb7639cc598f235612cfcffad9682705e744102123b11212f722864",
+  "noteJa": "未レビュー候補の差分を固定する検査用記録。2026-11-14の参考資料追加はアクセシビリティ、デザインシステム、デザイン史、情報設計の各個別照合記録を参照。独立受入・公開承認を意味しない。"
 }
