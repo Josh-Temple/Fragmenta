@@ -2,6 +2,7 @@ import React, { type CSSProperties } from 'react';
 import type { DesignStyle } from '../data/design-styles';
 import { designFont, type DemoScreen } from '../data/design-style-export';
 import { compositionFor, type Composition, clampSecondaryWeight } from '../data/design-style-composition';
+import { getStyleMotion } from '../data/design-style-motion';
 
 const patternMap: Record<DesignStyle['tokens']['pattern'], string> = {
   none: 'none',
@@ -38,6 +39,7 @@ export const DesignStyleSpecimen: React.FC<{
   secondaryWeight?: number;
 }> = ({ style, screen, secondaryStyle, secondaryWeight = 0 }) => {
   const t = style.tokens;
+  const motion = getStyleMotion(style.id);
   const shape = compositionFor(style);
   const mix = secondaryStyle && secondaryStyle.id !== style.id ? clampSecondaryWeight(secondaryWeight) : 0;
   const secondaryAccent = mix && secondaryStyle ? secondaryStyle.tokens.accent : t.accent;
@@ -72,15 +74,20 @@ export const DesignStyleSpecimen: React.FC<{
     <section aria-label={style.name + ' ' + screen + ' preview'}
       className="relative isolate min-w-0 overflow-hidden p-4"
       style={{
+        '--specimen-enter-x': motion.offsetX + 'px',
+        '--specimen-enter-y': motion.offsetY + 'px',
+        '--specimen-enter-scale': motion.scale,
+        '--specimen-enter-duration': motion.durationMs + 'ms',
+        '--specimen-enter-ease': motion.easing,
         background: t.background,
         color: t.text,
         fontFamily: designFont(style),
         backgroundImage: patternMap[t.pattern] === 'none' ? undefined : patternMap[t.pattern],
         backgroundSize: t.pattern === 'grid' ? '22px 22px' : t.pattern === 'dots' ? '24px 24px' : undefined,
         borderRadius: 12,
-      }}
+      } as CSSProperties}
     >
-      <div className="relative z-10" style={{ padding: shape === 'quiet' ? '8px 5px 18px' : undefined }}>
+      <div key={style.id + ':' + screen} className="style-motion-enter relative z-10" style={{ padding: shape === 'quiet' ? '8px 5px 18px' : undefined }}>
         <div className="flex items-center justify-between gap-2 text-xs" style={{
           ...muted, borderBottom: ['strict-grid', 'stacked', 'instrument', 'retro'].includes(shape) ? '1px solid ' + t.border : undefined,
           paddingBottom: ['strict-grid', 'stacked', 'instrument', 'retro'].includes(shape) ? 10 : undefined,

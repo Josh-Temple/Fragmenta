@@ -12,7 +12,7 @@ const BottomNavItem: React.FC<{
   path: string;
   isActive: boolean;
 }> = ({ icon, label, path, isActive }) => (
-  <Link to={path} aria-current={isActive ? 'page' : undefined} className={`flex min-h-11 flex-col items-center gap-1 w-14 rounded transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink ${isActive ? 'text-ink font-bold' : 'text-ink/70 hover:text-ink'}`}>
+  <Link to={path} aria-current={isActive ? 'page' : undefined} className={`motion-control flex min-h-11 flex-col items-center gap-1 w-14 rounded transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink ${isActive ? 'text-ink font-bold' : 'text-ink/70 hover:text-ink'}`}>
     <span aria-hidden="true" className={`material-symbols-outlined text-[26px] ${isActive ? 'filled' : ''}`}>{icon}</span>
     <span className="text-[10px] font-medium font-body">{label}</span>
   </Link>
@@ -25,7 +25,7 @@ const Layout: React.FC<LayoutProps> = ({ children, showNav = true }) => {
   return (
     <div className={`bg-paper text-ink min-h-screen flex flex-col font-display antialiased selection:bg-primary selection:text-paper pb-24 ${wide ? 'max-w-3xl' : 'max-w-md'} mx-auto border-x border-ink-border shadow-paper-lg relative`}>
       {/* Main Content */}
-      <main className="flex-1 flex flex-col">
+      <main key={location.pathname} className="page-enter flex-1 flex flex-col">
         {children}
       </main>
 
