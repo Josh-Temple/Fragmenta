@@ -58,10 +58,10 @@ const KnowledgeBase: React.FC = () => {
           </select>
         </div>
       </div>
-      <label className="mt-4 flex min-h-11 items-center gap-3 text-sm">
+      {(draftCount < ideas.length || draftOnly) && <label className="mt-4 flex min-h-11 items-center gap-3 text-sm">
         <input type="checkbox" checked={draftOnly} onChange={event => setFilter('draft', event.target.checked ? '1' : '')} className="size-4 shrink-0 accent-primary" />
         参考メモがある項目だけを表示（{draftCount}件）
-      </label>
+      </label>}
       <div className="mt-2 flex flex-wrap items-center justify-between gap-3">
         <p role="status" aria-live="polite" className="text-sm text-ink-muted">{filtered.length}件該当・{Math.min(visibleCount, filtered.length)}件表示 / 全{ideas.length}件</p>
         {(query || category !== 'all' || draftOnly) && <Link to="/knowledge" className="inline-flex min-h-11 items-center text-sm font-semibold underline underline-offset-4">条件をクリア</Link>}

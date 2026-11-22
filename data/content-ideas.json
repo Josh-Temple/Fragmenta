@@ -328,10 +328,12 @@
         "implementationNotes": "説明本文と画像の出所を分離して記録し、商用再利用の可否を別に確認する。",
         "accessibilityNotes": "色に依存しない分類ラベルを付け、文字と背景のコントラストを測る。",
         "aiInstruction": "ポップアートの特徴を作品ごとの出典と権利欄つきで比較し、画像複製は行わないでください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "visual-history-05-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -372,10 +374,12 @@
         "implementationNotes": "模様は独自制作し、刺激を弱める切替手段と無装飾版を用意する。",
         "accessibilityNotes": "強い縞模様や点滅を避け、装飾画像は読み上げ上の必要性に応じて扱う。",
         "aiInstruction": "オプ・アートを紹介する比較ページを提案し、作品の出典未確認箇所を明示し、装飾を消しても情報が伝わる構成にしてください。",
-        "sourceIds": [],
-        "updatedOn": "2026-11-01",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "visual-history-06-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -420,10 +424,12 @@
         "implementationNotes": "タイトルの装飾は画像とは別にテキストを保持し、派手な背景と本文を分離する。",
         "accessibilityNotes": "配色のコントラストと拡大時の文字の重なりを検査する。",
         "aiInstruction": "サイケデリック・アートの歴史紹介を考え、現代的な模倣と歴史的事実を分け、読みやすい本文を併設してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-11-01",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "visual-history-07-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -463,10 +469,12 @@
         "implementationNotes": "質感は装飾レイヤーに分け、主要テキストには重ねない。",
         "accessibilityNotes": "テクスチャを無効化しても文字とボタンの位置・意味を保つ。",
         "aiInstruction": "グランジ風の編集ページを提案し、装飾と実データを分離してコントラストを検証してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-11-01",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "visual-history-08-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -506,10 +514,12 @@
         "implementationNotes": "各素材の出典・権利とリンク先を個別管理し、装飾的配置とDOM上の順序を独立させる。",
         "accessibilityNotes": "意味のある図版には説明を付け、重ね合わせを解消した単列レイアウトを用意する。",
         "aiInstruction": "コラージュのページを構成し、画像単位で権利と代替説明を管理し、スマホでは順序立てて表示してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-11-01",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "visual-history-09-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -556,10 +566,12 @@
         "implementationNotes": "図版に制作種別と根拠状態のメタデータを付け、推計値には仮定を明記する。",
         "accessibilityNotes": "緑系配色と自然画像だけに情報の意味を依存させない。",
         "aiInstruction": "ソーラーパンクの創作展示を構成し、現実の技術・推測・創作をラベルで区別してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-11-01",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "visual-history-10-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -599,10 +611,12 @@
         "implementationNotes": "本文の行間・字間とリンク識別を優先し、装飾書体は見出しなどに限定する。",
         "accessibilityNotes": "文字拡大で装飾枠が切れないか、低視力利用者の読書を妨げないか試す。",
         "aiInstruction": "ダークアカデミア風の読書サイトを提案し、視覚表現と読みやすさを分けて評価してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-11-01",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "visual-history-11-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -642,10 +656,12 @@
         "implementationNotes": "写真と説明を独立したコンポーネントに分け、素材の出典を管理する。",
         "accessibilityNotes": "低コントラストの装飾色を本文文字に使わず、拡大表示も確認する。",
         "aiInstruction": "コテージコアを参考にした展示ページを提案し、文化的背景は未確認として分けてください。",
-        "sourceIds": [],
-        "updatedOn": "2026-11-01",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "visual-history-12-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -687,10 +703,12 @@
         "implementationNotes": "広い画面は一覧と詳細を並べ、狭い画面は一覧と詳細の遷移に切り替える。",
         "accessibilityNotes": "選択状態を文字でも示し、画面切替後の見出しやフォーカス位置を確認する。",
         "aiInstruction": "一覧から詳細を選ぶ画面を作り、モバイルでは戻れる別画面にしてください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "layout-01-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "titleEn": "Master–detail layout",
       "relations": [
@@ -811,10 +829,12 @@
         "implementationNotes": "固定位置だけでなく、長いメニューと縦方向の画面操作を考慮する。",
         "accessibilityNotes": "キーボードでメニューを開閉でき、閉じたときフォーカスが失われないようにする。",
         "aiInstruction": "固定サイドバーの管理画面を作り、360px幅では内容を優先した切替表示にしてください。",
-        "updatedOn": "2026-11-01",
-        "sourceIds": [],
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "updatedOn": "2026-11-22",
+        "sourceIds": [
+          "layout-03-reference"
+        ],
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -923,10 +943,12 @@
         "implementationNotes": "カード間の視覚的な順序とDOM順序を一致させ、CSSのみで意味順を逆転させない。",
         "accessibilityNotes": "ラベルを文章として読めるようにし、タイルに十分なタップ領域を確保する。",
         "aiInstruction": "タイル型ポータルを提案し、スマホでは読み順を保つ縦一覧も用意してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "layout-05-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -971,10 +993,12 @@
         "implementationNotes": "高さの固定値より最小高さを使い、内容が増えたら区画を自然に伸ばす。",
         "accessibilityNotes": "スクロールスナップを無効化しても操作でき、フォーカスが区画外に消えないようにする。",
         "aiInstruction": "全画面セクション型のページを作り、長い文章・拡大・キーボード操作で内容を欠落させないでください。",
-        "sourceIds": [],
-        "updatedOn": "2026-11-01",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "layout-06-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -1014,10 +1038,12 @@
         "implementationNotes": "ヒーロー画像を遅延読み込み対象にする際は初期表示の優先順位を別に検証する。",
         "accessibilityNotes": "大きな文字でも折り返し、見出し構造を崩さない。",
         "aiInstruction": "ヒーローと機能紹介の構成を作り、装飾を外しても価値と条件がわかる内容にしてください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "layout-07-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -1067,10 +1093,12 @@
         "implementationNotes": "選択IDをURLや状態に保持し、幅に応じて詳細を独立ルートに切り替える。",
         "accessibilityNotes": "詳細の見出しと戻り先を明示し、スクリーンリーダーの読み順を確認する。",
         "aiInstruction": "フィード＋詳細の画面を提案し、スマホでは単独詳細画面、戻ると選択位置を復元するようにしてください。",
-        "sourceIds": [],
-        "updatedOn": "2026-11-01",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "layout-01-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       }
     },
     {
@@ -1110,10 +1138,12 @@
         "implementationNotes": "自然な横スクロールと明示的な前後操作を提供し、表示位置を必要に応じ保存する。",
         "accessibilityNotes": "キーボードで各カードへ到達し、スクロールしなくても一覧へ切り替えられるようにする。",
         "aiInstruction": "横スクロールギャラリーを提案し、操作の存在が分かる手掛かりと全件への別導線を用意してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-11-01",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "layout-09-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       }
     },
     {
@@ -1162,10 +1192,12 @@
         "implementationNotes": "パネルごとに最小幅を定め、狭い画面では単一パネル＋切替に変更する。",
         "accessibilityNotes": "分割線を使わなくても各パネルを開ける操作を提供する。",
         "aiInstruction": "複数パネルの編集画面を提案し、未保存状態とスマホでの切替方法を明示してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-11-01",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "layout-10-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       }
     },
     {
@@ -1198,10 +1230,12 @@
         "implementationNotes": "表示状態をURLまたはローカル状態として管理し、主作業の領域を明確にする。",
         "accessibilityNotes": "領域ごとに見出しと移動手段を用意し、支援技術で読み順を検証する。",
         "aiInstruction": "画面分割ワークスペースを設計し、主要作業を優先しつつ狭い画面では一領域ずつ表示してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-11-01",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "layout-01-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -1261,10 +1295,12 @@
         "implementationNotes": "指標IDを共通にして表示密度のみ切り替え、フィルタ状態を維持する。",
         "accessibilityNotes": "小文字に頼らず、ズーム時に縦方向へ再配置できるようにする。",
         "aiInstruction": "同一KPIで高密度と低密度を比較できる画面を作り、単位・期間・注意点を両方で維持してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-11-01",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "layout-12-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       }
     },
     {
@@ -1500,10 +1536,12 @@
         "implementationNotes": "幅は文字数の目安と実機の読みやすさを併せて決める。",
         "accessibilityNotes": "拡大時の二方向スクロールと見出しの重なりを検査する。",
         "aiInstruction": "日本語の長文レイアウトを3案比較し、狭幅・拡大時の読みやすさを優先してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "typography-05-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -1648,10 +1686,12 @@
         "implementationNotes": "フォントが等幅数字を備えるか確認し、CSSのfont-variant-numericを必要箇所へ指定する。",
         "accessibilityNotes": "桁や小数点を読みやすくし、数値の単位を見出しとセルで示す。",
         "aiInstruction": "数値表の桁を揃え、等幅数字が利用できないフォントでも意味が崩れない例を作ってください。",
-        "sourceIds": [],
-        "updatedOn": "2026-11-01",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "typography-08-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       }
     },
     {
@@ -1692,10 +1732,12 @@
         "implementationNotes": "文字サイズ・行長・行間をそろえて比較し、フォントの配信条件を点検する。",
         "accessibilityNotes": "視覚調整を無効にしても見出し構造が残り、任意の文字拡大に耐えるようにする。",
         "aiInstruction": "同じ日本語本文を明朝体とゴシック体で比較し、客観的な可読性を断定せず条件を示してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-11-01",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "typography-09-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -1753,10 +1795,12 @@
         "implementationNotes": "見出しレベルとCSSの太さを独立管理し、合成太字の見え方を確認する。",
         "accessibilityNotes": "見出しは意味的要素で表し、文字を拡大しても順番が把握できるようにする。",
         "aiInstruction": "見出し・本文・補足の文字階層を設計し、ウェイトだけに頼らない情報区別を提供してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-11-01",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "typography-10-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       }
     },
     {
@@ -1820,10 +1864,12 @@
         "implementationNotes": "日本語と英語のブロックに適切なlang属性を付け、両方の文字量で表示を試す。",
         "accessibilityNotes": "言語ごとに読み上げを切り替えられる構造とし、翻訳のない箇所を明示する。",
         "aiInstruction": "日英併記のカードを作り、英語が2倍の長さでも折り返し、言語属性を指定してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-11-01",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "typography-11-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       }
     },
     {
@@ -1866,10 +1912,12 @@
         "implementationNotes": "line-clampを使う場合は全文表示の手段を付け、長単語用に折返し条件を設定する。",
         "accessibilityNotes": "文字拡大や読み上げで全名称が取れることを確認する。",
         "aiInstruction": "長文見出しをスマホ表示し、切詰めを使う場合でも全文にアクセスできるようにしてください。",
-        "sourceIds": [],
-        "updatedOn": "2026-11-01",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "typography-12-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       }
     },
     {
@@ -1903,10 +1951,12 @@
         "implementationNotes": "グレーの濃さだけで状態を表現せず、重要な操作は文字で説明する。",
         "accessibilityNotes": "文字と背景、境界線のコントラストを個別に測定する。",
         "aiInstruction": "モノクロ配色のフォームを作り、色を取り除いても操作とエラーが分かるようにしてください。",
-        "updatedOn": "2026-11-01",
-        "sourceIds": [],
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "updatedOn": "2026-11-22",
+        "sourceIds": [
+          "color-01-reference"
+        ],
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -1953,10 +2003,12 @@
         "implementationNotes": "色相の近い配色は区別が難しくなるため、文字色と背景の明度差を別に調整する。",
         "accessibilityNotes": "色の差に依存する選択状態を避け、ラベルや下線も併用する。",
         "aiInstruction": "類似色の配色を3案比較し、選択状態を色以外でも伝えてください。",
-        "updatedOn": "2026-11-01",
-        "sourceIds": [],
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "updatedOn": "2026-11-22",
+        "sourceIds": [
+          "color-01-reference"
+        ],
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -2007,10 +2059,12 @@
         "implementationNotes": "補色関係があるだけで文字を読めるとは限らず、明度差を別に検査する。",
         "accessibilityNotes": "警告・成功の状態を色のみで示さず、文言も提示する。",
         "aiInstruction": "補色配色を使うサンプルを作り、アクセントと本文のコントラストを測定してください。",
-        "updatedOn": "2026-11-01",
-        "sourceIds": [],
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "updatedOn": "2026-11-22",
+        "sourceIds": [
+          "color-01-reference"
+        ],
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -2058,10 +2112,12 @@
         "implementationNotes": "色相の関係とテキスト色のコントラストを別に計算し、変数として管理する。",
         "accessibilityNotes": "選択状態を色のみに頼らずラベルやアイコンでも示す。",
         "aiInstruction": "分割補色の配色案を3案示し、コントラスト基準を別に検査してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-11-01",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "color-01-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -2101,10 +2157,12 @@
         "implementationNotes": "演出画像と判定に必要な原画像を区別して管理する。",
         "accessibilityNotes": "画像中の内容を説明するテキストを提供し、意味のある色差を残す。",
         "aiInstruction": "デュオトーン画像の使用例を示し、情報確認用の原画像への導線も用意してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-11-01",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "color-05-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -2303,10 +2361,12 @@
         "implementationNotes": "出力解像度に合わせて点サイズを調整し、重要なUIには重ねない。",
         "accessibilityNotes": "模様をオフにしても内容が伝わり、視認性が維持できるようにする。",
         "aiInstruction": "ハーフトーンの装飾を作り、本文と操作には重ねず縮小表示を確認してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-11-01",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "color-09-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -2359,10 +2419,12 @@
         "implementationNotes": "低コストなCSS表現と画像表現を比較し、質感を無効にできる設計にする。",
         "accessibilityNotes": "背景を単色に置き換えても可読性と操作状態が変わらないようにする。",
         "aiInstruction": "紙の質感の装飾を試し、ダウンロード量とアクセシビリティを比較してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-11-01",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "color-10-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       }
     },
     {
@@ -2396,10 +2458,12 @@
         "implementationNotes": "装飾用グラデーションとデータ表現用スケールを別トークンにする。",
         "accessibilityNotes": "意味を持つ色階調には数値・凡例を併記する。",
         "aiInstruction": "装飾用とデータ用のグラデーションを分け、後者に数値ラベルを添えてください。",
-        "sourceIds": [],
-        "updatedOn": "2026-11-01",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "color-11-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -2451,10 +2515,12 @@
         "implementationNotes": "影・境界線・背景色の変数を分け、透明度が重なったときの色を測る。",
         "accessibilityNotes": "背景と接する境界を視認できるようにし、フォーカス輪郭を影と区別する。",
         "aiInstruction": "カードの奥行き表現を3種類比較し、境界線とフォーカスの可視性を検証してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-11-01",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "color-12-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -2496,10 +2562,12 @@
         "implementationNotes": "開閉トリガーをホバーのみにしない。画面幅が狭いときは階層メニューに変える。",
         "accessibilityNotes": "メニューを閉じた後のフォーカスを戻し、読み順と開閉状態を支援技術で確認する。",
         "aiInstruction": "メガメニューを作り、ホバーせずに開閉できるボタンとスマホ用の代替表示を備えてください。",
-        "updatedOn": "2026-11-01",
-        "sourceIds": [],
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "updatedOn": "2026-11-22",
+        "sourceIds": [
+          "components-01-reference"
+        ],
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -2700,10 +2768,12 @@
         "implementationNotes": "実際に行き来できる段階だけリンク化し、完了と未完了を状態として保持する。",
         "accessibilityNotes": "番号・名称・現在位置をテキストで示し、進捗バーだけに頼らない。",
         "aiInstruction": "ステッパーを作成し、進行条件と戻れる段階を明示してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-11-01",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "components-05-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       }
     },
     {
@@ -2794,10 +2864,12 @@
         "implementationNotes": "編集モードを明示し、保存中・失敗・元に戻す操作を実装上の状態として分ける。",
         "accessibilityNotes": "編集開始時に入力へフォーカスを移し、保存・取消結果を伝える。",
         "aiInstruction": "インライン編集の状態遷移を定義し、保存失敗でも編集値を保持してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-11-01",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "components-07-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       }
     },
     {
@@ -2849,10 +2921,12 @@
         "implementationNotes": "主操作とメニューボタンを別要素として管理し、変更を明示した場合のみ既定値を保存する。",
         "accessibilityNotes": "両方の操作に識別可能な名前を付け、キーボードでメニューを閉じられるようにする。",
         "aiInstruction": "スプリットボタンを作成し、既定操作・別形式・選択後の挙動を区別してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-11-01",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "components-08-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       }
     },
     {
@@ -3009,10 +3083,12 @@
         "implementationNotes": "通知内容をタイトル・本文・次の行動に分け、必要なら履歴ページへリンクする。",
         "accessibilityNotes": "緊急通知の読み上げ頻度が過剰にならないか確認する。",
         "aiInstruction": "状態バナーを設計し、影響範囲と取れる行動を文章で表示してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-11-01",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "components-11-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       }
     },
     {
@@ -3046,10 +3122,12 @@
         "implementationNotes": "操作の権限はサーバー側で検査し、画面側は許可されたアクションを示す。",
         "accessibilityNotes": "使えない操作の説明が必要な場合は理由を簡潔に伝え、代替経路を用意する。",
         "aiInstruction": "権限別メニューを設計し、UI表示だけでなくAPI側の認可検証も必要だと明記してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-11-01",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "components-12-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -3164,10 +3242,12 @@
         "implementationNotes": "郵便番号から住所が一意に確定すると仮定せず、自動入力後の修正を許可する。",
         "accessibilityNotes": "住所の入力例を明示し、読上げ・入力モード・エラー位置を確認する。",
         "aiInstruction": "日本の住所フォームを作り、郵便番号から自動入力した住所も修正可能にしてください。",
-        "updatedOn": "2026-11-01",
-        "sourceIds": [],
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "updatedOn": "2026-11-22",
+        "sourceIds": [
+          "forms-02-reference"
+        ],
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -3269,10 +3349,12 @@
         "implementationNotes": "保存対象、保存期限、再開手段を明示し、機微情報に合う保存先と認証を検討する。",
         "accessibilityNotes": "保存が成功したか失敗したかを文章で知らせる。",
         "aiInstruction": "入力途中を保存・再開する導線を設計し、保存期限と失敗時の扱いを明示してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "forms-04-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "titleEn": "Save and resume",
       "relations": [
@@ -3325,10 +3407,12 @@
         "implementationNotes": "分岐規則をデータとして管理し、前の選択が変わったとき無効になる回答を明示する。",
         "accessibilityNotes": "追加された質問への移動や説明を支援技術で確認する。",
         "aiInstruction": "回答で質問が変わるフォームを作り、全分岐を試せるテストケースを付けてください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "forms-05-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       }
     },
     {
@@ -3503,10 +3587,12 @@
         "implementationNotes": "同意文面の版数と日時を要件に応じ記録し、撤回の導線を別途設計する。",
         "accessibilityNotes": "ラベルを入力部品と関連付け、同意しない選択も操作可能にする。",
         "aiInstruction": "同意フォームを設計し、任意か必須か・撤回方法・記録範囲を明示してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-11-01",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "forms-08-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       }
     },
     {
@@ -3608,10 +3694,12 @@
         "implementationNotes": "危険度に応じて確認方法を変え、復元可能な操作では取り消しを検討する。",
         "accessibilityNotes": "初期フォーカスとボタン名で危険な操作が区別できるようにする。",
         "aiInstruction": "一括削除の確認画面を作り、対象・結果・取消方法を簡潔に示してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-11-01",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "forms-10-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       }
     },
     {
@@ -3669,10 +3757,12 @@
         "implementationNotes": "期限切れとネットワーク切断を区別し、安全な保存範囲と有効期限を設計する。",
         "accessibilityNotes": "警告を文章で示し、再認証後に入力欄へ適切に戻れるようにする。",
         "aiInstruction": "セッション期限切れの画面を設計し、保存される内容と再開条件を明記してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-11-01",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "forms-11-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       }
     },
     {
@@ -3712,10 +3802,12 @@
         "implementationNotes": "処理ステータスに応じて完了文面を出し分け、確認用のリンクを提供する。",
         "accessibilityNotes": "見出しと本文で結果を伝え、色付きアイコンのみに依存しない。",
         "aiInstruction": "完了画面を設計し、受付と最終承認の違い、次に取れる行動を示してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-11-01",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "forms-12-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       }
     },
     {
@@ -3804,10 +3896,12 @@
         "implementationNotes": "アニメーション途中に操作領域が移動することを防ぎ、閉じた領域へフォーカスを残さない。",
         "accessibilityNotes": "動きを減らす設定では即時切替とし、現在位置は静的に識別できるようにする。",
         "aiInstruction": "ナビゲーションの選択と開閉を設計し、reduced motion時には動きを省略してください。",
-        "updatedOn": "2026-11-01",
-        "sourceIds": [],
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "updatedOn": "2026-11-22",
+        "sourceIds": [
+          "motion-02-reference"
+        ],
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -3848,10 +3942,12 @@
         "implementationNotes": "内容が実際にはあるのにアニメーション終了まで操作不能にしない。",
         "accessibilityNotes": "動きを減らす設定で表示・退出を即時化し、読み上げ順を変更しない。",
         "aiInstruction": "カードの出現・退出を実装し、フォーカス中の要素を突然消さないでください。",
-        "updatedOn": "2026-11-01",
-        "sourceIds": [],
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "updatedOn": "2026-11-22",
+        "sourceIds": [
+          "motion-02-reference"
+        ],
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -3918,10 +4014,12 @@
         "implementationNotes": "スクロール監視は必要範囲に限定し、不要な連続更新を避ける。",
         "accessibilityNotes": "動きの低減設定では移動演出を止め、内容の表示順を変えない。",
         "aiInstruction": "スクロール連動の演出を作り、prefers-reduced-motion時は静的表示にしてください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "motion-04-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       }
     },
     {
@@ -3961,10 +4059,12 @@
         "implementationNotes": "アニメーションなしでも最終形をすぐ表示できる分岐を用意する。",
         "accessibilityNotes": "reduced motionで変形を省き、状態の変化を文字でも伝える。",
         "aiInstruction": "モーフィングの使用例を作り、アニメーションなしでも状態が分かるようにしてください。",
-        "sourceIds": [],
-        "updatedOn": "2026-11-01",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "motion-05-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -4004,10 +4104,12 @@
         "implementationNotes": "前の遷移が終わる前の再操作にも対応させる。",
         "accessibilityNotes": "重要な状態変化が動きなしでも判別できるようにする。",
         "aiInstruction": "開閉モーションを複数速度で比較し、動きを減らす設定では即時切替にしてください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "motion-06-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -4048,10 +4150,12 @@
         "implementationNotes": "アニメーション中にも最終値を参照可能にし、大きい数の逐次更新を抑える。",
         "accessibilityNotes": "支援技術には途中の連続値ではなく確定値を伝える。",
         "aiInstruction": "カウントアップ表示を作り、最終数値と増減幅は静的な文字としても示してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "motion-07-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": []
     },
@@ -4085,10 +4189,12 @@
         "implementationNotes": "軸範囲を固定するか変更を明示し、中間フレームを実データとして扱わない。",
         "accessibilityNotes": "動きを減らす設定では即時更新し、変更した値を要約する。",
         "aiInstruction": "データグラフの遷移を設計し、補間の意味と軸の扱いを明記してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-11-01",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "motion-08-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -4135,10 +4241,12 @@
         "implementationNotes": "割合が取得できない処理は不確かな百分率を作らず、処理中と次の案内を示す。",
         "accessibilityNotes": "進行状況を色や動きだけに頼らず、テキストでも伝える。",
         "aiInstruction": "実測できる場合だけ進捗率を表示し、未知の場合は処理中と明示してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "motion-09-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "titleEn": "Loading progress",
       "tags": [
@@ -4186,10 +4294,12 @@
         "implementationNotes": "順序をID配列として保持し、操作取り消しとサーバー保存失敗を処理する。",
         "accessibilityNotes": "上下移動ボタンと変更結果のテキスト通知を用意する。",
         "aiInstruction": "ドラッグ並べ替えのUIを作り、キーボード操作と取り消しも実装してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-11-01",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "motion-10-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -4290,10 +4400,12 @@
         "implementationNotes": "成功・処理中・失敗を分けて管理し、動きの省略時も同じ情報を表示する。",
         "accessibilityNotes": "動きが苦手な利用者にも結果を文章で伝え、フォーカスを失わせない。",
         "aiInstruction": "微細な操作アニメーションを提案し、結果を動き以外でも分かるようにしてください。",
-        "sourceIds": [],
-        "updatedOn": "2026-11-01",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "motion-06-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -4775,10 +4887,12 @@
         "implementationNotes": "正規化の方法と凡例の上下限を明記し、欠損を別状態にする。",
         "accessibilityNotes": "テキスト表や数値のツールチップを提供し、色覚差にも配慮する。",
         "aiInstruction": "ヒートマップを作成し、凡例・欠損・元データ表を含めてください。",
-        "sourceIds": [],
-        "updatedOn": "2026-11-01",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "data-viz-08-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -4825,10 +4939,12 @@
         "implementationNotes": "階層ごとの集計単位を統一し、小さい区画は一覧表からも開けるようにする。",
         "accessibilityNotes": "色以外のラベルと表を添え、キーボードで項目へ移動できるようにする。",
         "aiInstruction": "ツリーマップの例を作り、小さい項目の値と名称も取り出せるようにしてください。",
-        "sourceIds": [],
-        "updatedOn": "2026-11-01",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "data-viz-09-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       }
     },
     {
@@ -4861,10 +4977,12 @@
         "implementationNotes": "元データの符号付き差分と累積を別管理し、合計を自動検算する。",
         "accessibilityNotes": "増加・減少のラベルと値を併記し、表で同じ計算を追えるようにする。",
         "aiInstruction": "ウォーターフォールチャートを作り、符号付き増減と最終合計の検算を併記してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-11-01",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "data-viz-10-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -4904,10 +5022,12 @@
         "implementationNotes": "イベントの粒度と一意ユーザーの定義を明示し、期間と集計条件を固定する。",
         "accessibilityNotes": "各段階の件数と割合をテキストでも提示する。",
         "aiInstruction": "ファネルを作り、母数・段階定義・対象期間・元表へのリンクを示してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-11-01",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "data-viz-11-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -5014,10 +5134,12 @@
         "implementationNotes": "同じ用語に一意のIDを割当て、前後の文脈による意味の違いを注記する。",
         "accessibilityNotes": "ツールチップが開けない人も説明を読めるように、通常のリンク先を用意する。",
         "aiInstruction": "用語集を作り、本文内の定義リンクと独立した用語詳細ページを用意してください。",
-        "updatedOn": "2026-11-01",
-        "sourceIds": [],
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "updatedOn": "2026-11-22",
+        "sourceIds": [
+          "information-01-reference"
+        ],
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -5151,10 +5273,12 @@
         "implementationNotes": "公開日・適用日・修正日を区別し、削除された情報も必要に応じ履歴として残す。",
         "accessibilityNotes": "表の差分を色だけで表現せず、追加・変更・削除の文字ラベルを付ける。",
         "aiInstruction": "文書の改訂履歴を作り、変更箇所と適用日が分かる比較表示にしてください。",
-        "updatedOn": "2026-11-01",
-        "sourceIds": [],
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "updatedOn": "2026-11-22",
+        "sourceIds": [
+          "information-03-reference"
+        ],
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -5200,10 +5324,12 @@
         "implementationNotes": "関連IDを検証し、類似・対照・補完などの説明を保存する。閲覧履歴だけで妥当性を断定しない。",
         "accessibilityNotes": "関連先の名前をリンクテキストに使い、関係の理由を近くに表示する。",
         "aiInstruction": "関連資料を根拠と用途の違いで示し、未分類のリンクには確定的な推薦理由を付けないでください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "information-04-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "titleEn": "Related content recommendations",
       "tags": [
@@ -5258,10 +5384,12 @@
         "implementationNotes": "各分岐を条件・結果・根拠の組で管理し、条件の変更があれば図と本文を一緒に更新する。",
         "accessibilityNotes": "画像だけでなくテキストの手順も用意し、分岐をキーボードで辿れるようにする。",
         "aiInstruction": "分岐条件を根拠付きで示し、不明な条件には相談や確認の経路を残してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "information-05-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "titleEn": "Decision flowchart",
       "tags": [
@@ -5418,10 +5546,12 @@
         "implementationNotes": "資料ID、版、確認日、支持対象、矛盾点、確認状態を保存し、引用と解釈を分ける。",
         "accessibilityNotes": "比較表に列見出しを付け、横幅が狭い場合も資料との対応が失われないようにする。",
         "aiInstruction": "各主張に対応する資料の版・対象箇所・確認状態を並べ、相違を明示してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "information-08-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "titleEn": "Evidence comparison interface",
       "tags": [
@@ -5495,10 +5625,12 @@
         "implementationNotes": "作業単位に一意のURLを割り当て、関連する部署情報は下位に示す。",
         "accessibilityNotes": "見出し構造とリンク文言だけで目的を判断できるようにする。",
         "aiInstruction": "利用者の作業別ナビゲーションを設計し、組織別の分類とは別の入口を用意してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-11-01",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "information-09-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       }
     },
     {
@@ -5604,10 +5736,12 @@
         "implementationNotes": "分類はメタデータに基づけ、不明項目は「その他」などで残す。",
         "accessibilityNotes": "グループごとの見出しと件数を提示し、キーボード移動を妨げない。",
         "aiInstruction": "検索結果をグループ化し、全件表示・件数・分類不明結果への導線を保持してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-11-01",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "information-11-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       }
     },
     {
@@ -5640,10 +5774,12 @@
         "implementationNotes": "条件と例外を文書版・適用範囲と一緒に保存する。",
         "accessibilityNotes": "表と文章のどちらからも例外と根拠に辿れるようにする。",
         "aiInstruction": "複雑な制度を要点・条件・例外・根拠の順に整理してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "information-12-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -6368,10 +6504,12 @@
         "implementationNotes": "提案中、承認待ち、実行中、成功、失敗を区別し、承認対象を実行内容と一致させる。",
         "accessibilityNotes": "操作の影響とボタンの意味を文で示し、キーボードでも選べるようにする。",
         "aiInstruction": "AIの外部操作を実行する前に、対象と内容を確認・承認できる画面を作ってください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "ai-ui-01-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "titleEn": "Human approval for AI actions",
       "relations": [
@@ -6435,10 +6573,12 @@
         "implementationNotes": "実際の処理状態から表示を更新し、未実行や未確認を成功と表示しない。",
         "accessibilityNotes": "状態変化を動きだけで示さず、必要な更新を読み上げに伝える。",
         "aiInstruction": "処理中・成功・失敗を実際の状態と対応させ、未確認を成功と表記しないでください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "ai-ui-02-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "titleEn": "AI tool execution status",
       "tags": [
@@ -6487,10 +6627,12 @@
         "implementationNotes": "出典の提示と主張の正しさは別に扱い、参照箇所と取得時点を確認できるようにする。",
         "accessibilityNotes": "資料名をリンク名に含め、記号だけでも資料へ到達できる設計を避ける。",
         "aiInstruction": "回答中の主張と参照資料を対応させ、資料名と確認できる箇所を表示してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "ai-ui-03-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "titleEn": "AI answer citations",
       "relations": [
@@ -6541,10 +6683,12 @@
         "implementationNotes": "変換元を失わず、スキーマ不一致や値の欠落をエラーとして扱う。",
         "accessibilityNotes": "整形表示もキーボードと読み上げで確認できるようにする。",
         "aiInstruction": "AIのJSON原文と整形表示を示し、不正なJSONは成功扱いしないでください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "ai-ui-04-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "titleEn": "Structured AI output",
       "relations": [
@@ -6595,10 +6739,12 @@
         "implementationNotes": "使用済み、残量、期間、単位、取得時刻、取得失敗を別データとして扱う。",
         "accessibilityNotes": "棒だけでなく具体的な数値と期間をテキストでも提示する。",
         "aiInstruction": "処理の使用量と上限を単位・期間・取得時刻付きで示し、取得失敗を0件と混同しないでください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "ai-ui-05-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "titleEn": "AI usage and limits",
       "tags": [
@@ -6647,10 +6793,12 @@
         "implementationNotes": "提供元の現行情報に基づき利用可能機能・制限・料金条件を表示し、既定値と変更履歴を明示する。",
         "accessibilityNotes": "選択肢の名前を読み上げられるラベルにし、選択済み状態を色以外でも示す。",
         "aiInstruction": "用途別のモデル候補を提示し、未確認の性能差は明示せず、現在の選択を分かるようにしてください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "ai-ui-06-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "titleEn": "AI model selection",
       "tags": [
@@ -6697,10 +6845,12 @@
         "implementationNotes": "主張ごとに根拠・未確認事項・確認方法を分け、推定値の算出根拠が無い場合は数値化を避ける。",
         "accessibilityNotes": "「不確か」を色だけで示さず、本文の近くに文で併記する。",
         "aiInstruction": "確認済みの事実と推測を分離し、未確認事項と再確認方法を回答に含めてください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "ai-ui-07-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "titleEn": "Uncertainty communication for AI",
       "tags": [
@@ -6757,10 +6907,12 @@
         "implementationNotes": "ファイル名・差分・変更目的・関連試験・承認対象のバージョンを記録する。",
         "accessibilityNotes": "追加と削除は記号とテキストでも区別し、横長のコードは操作可能な表示にする。",
         "aiInstruction": "変更前後と差分、影響ファイル、実行済み試験、承認待ち状態を別々に示してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "ai-ui-08-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "titleEn": "AI-proposed code diff",
       "tags": [
@@ -6824,10 +6976,12 @@
         "implementationNotes": "イベントID、操作種別、実行状態、対象ID、確認手段を保存し、個人情報は最小限にする。",
         "accessibilityNotes": "時系列を見出しとテキストで辿れ、結果や失敗理由を色だけに依存させない。",
         "aiInstruction": "実行された操作だけを時系列に記録し、未実行と失敗と再試行を分けてください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "ai-ui-02-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "titleEn": "AI action audit trail",
       "tags": [
@@ -6873,10 +7027,12 @@
         "implementationNotes": "冪等性を考慮し、処理ID、直前の応答、外部状態の再取得、取り消せる範囲を扱う。",
         "accessibilityNotes": "失敗の原因と次にできる操作を文で示し、通知を読み上げ可能にする。",
         "aiInstruction": "成否不明の処理では外部状態を確認してから再試行を提案し、重複実行を避けてください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "ai-ui-10-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "titleEn": "AI retry and recovery",
       "tags": [
@@ -6925,10 +7081,12 @@
         "implementationNotes": "保存元と更新方法を個別に示し、削除や変更の反映は実際に確認した時だけ成功と表示する。",
         "accessibilityNotes": "記憶項目と操作を説明付きのラベルで表示し、危険な操作は結果を事前に説明する。",
         "aiInstruction": "保持している設定の出所と変更可能範囲を示し、変更結果を未確認のまま成功と断定しないでください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "ai-ui-11-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "titleEn": "AI memory controls",
       "tags": [
@@ -6976,10 +7134,12 @@
         "implementationNotes": "データ範囲、権限、目的、操作期限、承認状態を記録し、実行時にもスコープを照合する。",
         "accessibilityNotes": "対象ファイルと可能な操作を理解できるラベルで表示し、拒否操作を明確にする。",
         "aiInstruction": "今回必要なデータと操作権限を列挙し、閲覧と編集を分けて承認を求めてください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "ai-ui-12-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "titleEn": "AI data access and permission controls",
       "tags": [
@@ -7040,10 +7200,12 @@
         "implementationNotes": "対象条件、期限、手数料、途中保存・再開の条件を個別に表示する。",
         "accessibilityNotes": "エラーの理由を入力欄近くで説明し、前後移動で入力値を失わない。",
         "aiInstruction": "申請の対象条件と必要資料を先に示し、途中保存・再開とエラー復帰を設計してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "use-cases-01-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -7105,10 +7267,12 @@
         "implementationNotes": "条件と例外を見出しで分け、国の原典と自治体独自の案内を混同しない。",
         "accessibilityNotes": "長い表はスマホで見切れず、目次から見出しへ戻れるようにする。",
         "aiInstruction": "国の基準、適用条件、例外、根拠、更新日を区別した制度案内ページを作ってください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "use-cases-02-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -7167,10 +7331,12 @@
         "implementationNotes": "教材の達成目標、進捗保存、復習範囲を分けて扱う。",
         "accessibilityNotes": "読み上げ時に数式やグラフの意味を代替テキストで確認できるようにする。",
         "aiInstruction": "解説・練習問題・復習の3段階を作り、学習進捗と読み上げを確認してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "use-cases-03-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -7213,10 +7379,12 @@
         "implementationNotes": "画像のメタデータ、作品解説、出典と権利を別々に管理する。",
         "accessibilityNotes": "画像の代替説明と拡大操作を用意し、権利表記を視認できる位置に置く。",
         "aiInstruction": "作品一覧と詳細を作り、制作年・作者・出典・利用条件を分けて表示してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "use-cases-04-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -7271,10 +7439,12 @@
         "implementationNotes": "検索語と絞り込み条件をURLに保存し、メタデータ欠損と0件を区別する。",
         "accessibilityNotes": "結果の見出し構造とキーボードによるフィルター変更を確認する。",
         "aiInstruction": "論文検索画面を作り、著者・年・資料種別・DOI・リンクと検索条件の復元を含めてください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "use-cases-05-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "titleEn": "Academic paper search interface",
       "tags": [
@@ -7339,10 +7509,12 @@
         "implementationNotes": "表示価格の内訳と送料・在庫の更新状態を別管理し、在庫確定の時点を明示する。",
         "accessibilityNotes": "画像以外でも仕様や価格が分かり、フォームのエラー後も入力を保持する。",
         "aiInstruction": "ECサイトの購入導線を提案し、送料・在庫・返品・確認画面を含めてください。",
-        "sourceIds": [],
-        "updatedOn": "2026-11-01",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "use-cases-06-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       }
     },
     {
@@ -7375,10 +7547,12 @@
         "implementationNotes": "権限ごとに表示と操作可能性を検証し、画面上の非表示だけでアクセス制御しない。",
         "accessibilityNotes": "キーボード移動で主要操作へ到達できることを確認する。",
         "aiInstruction": "業務用SaaS管理画面を設計し、日常操作と管理設定を区別してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "use-cases-07-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -7422,10 +7596,12 @@
         "implementationNotes": "市場価格の取得日時と計算条件をデータ項目に保持し、未更新値を区別する。",
         "accessibilityNotes": "上下動を色だけで表現せず、数値と方向を文章でも示す。",
         "aiInstruction": "金融ダッシュボードを設計し、データの時点・単位・未更新・損失を明示してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-11-01",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "use-cases-08-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -7470,10 +7646,12 @@
         "implementationNotes": "モデレーション状態と公開範囲を明示し、編集・削除履歴の扱いを決める。",
         "accessibilityNotes": "返信の階層を読み順でたどれ、通知量を調整できるようにする。",
         "aiInstruction": "コミュニティ画面を提案し、通報・ブロック・公開範囲の設計を含めてください。",
-        "sourceIds": [],
-        "updatedOn": "2026-11-01",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "use-cases-09-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -7545,10 +7723,12 @@
         "implementationNotes": "公開日・更新日・訂正注記を分けたメタデータを管理する。",
         "accessibilityNotes": "目次をキーボードでたどり、本文の読み上げ順序を保つ。",
         "aiInstruction": "メディア記事のテンプレートを作り、出典・更新履歴・広告区別を明示してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-11-01",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "use-cases-10-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       }
     },
     {
@@ -7582,10 +7762,12 @@
         "implementationNotes": "医療者によるレビュー工程と更新履歴を必須項目として設計する。",
         "accessibilityNotes": "病名の色分けだけに頼らず、症状や相談先を文章で示す。",
         "aiInstruction": "医療情報サイトのレイアウトを提案し、診断ではないことと情報の根拠・適用範囲を明確にしてください。",
-        "sourceIds": [],
-        "updatedOn": "2026-11-01",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "use-cases-11-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -7630,10 +7812,12 @@
         "implementationNotes": "予定の日時にタイムゾーンを保持し、移動時間は推定根拠とともに管理する。",
         "accessibilityNotes": "地図が使えない場合でも順序と住所・時刻をテキストで示す。",
         "aiInstruction": "旅行計画画面を作り、候補と予約確定、現地時刻と推定時間を混同しないでください。",
-        "sourceIds": [],
-        "updatedOn": "2026-11-01",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "use-cases-12-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -8220,10 +8404,12 @@
         "implementationNotes": "除去した情報と残した情報の理由を明示する。",
         "accessibilityNotes": "操作名と警告が見つかるかキーボード・読み上げでも確認する。",
         "aiInstruction": "要素を減らす前後で、失われる情報と利用者のタスクを比較してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "review-01-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -8263,10 +8449,12 @@
         "implementationNotes": "見た目の評価と実際のタスク達成を分けて記録する。",
         "accessibilityNotes": "見た目の印象だけで使いやすさを判定しない。",
         "aiInstruction": "同じ利用者タスクを用いて見た目と操作性を別軸で比較してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "review-01-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -8477,10 +8665,12 @@
         "implementationNotes": "内容の優先順位を先に確定し、余白・書体・グルーピングの規則で反映する。",
         "accessibilityNotes": "見た目の強弱と見出しタグの階層を一致させ、読み上げ順を確認する。",
         "aiInstruction": "主目的を示した上で見出し・本文・注意・操作の優先順位を再設計してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "review-06-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "titleEn": "Visual hierarchy before and after",
       "tags": [
@@ -8555,10 +8745,12 @@
         "implementationNotes": "利用頻度・画面幅・閲覧か操作かを基準に複数案を作り、実タスクで比較する。",
         "accessibilityNotes": "密度変更時に文字サイズ・タッチ領域・キーボード操作を犠牲にしない。",
         "aiInstruction": "初心者と熟練者のタスクを分け、情報密度の異なる二案を理由付きで示してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "layout-12-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "titleEn": "Information density review",
       "tags": [
@@ -8597,10 +8789,12 @@
         "implementationNotes": "比較軸を定義し、判定不能・複数解釈ありを許すデータ構造にする。",
         "accessibilityNotes": "画像比較だけでなく文字による特徴説明を付ける。",
         "aiInstruction": "似たスタイルを比較する表を作り、確定できない特徴と出典未確認箇所を示してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-11-01",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "typography-09-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -8770,10 +8964,12 @@
         "implementationNotes": "改善前後を同じ表示条件で比較し、色のトークンと利用箇所を記録する。",
         "accessibilityNotes": "色に依存しない情報経路とフォーカス表示を検査する。",
         "aiInstruction": "配色の失敗と修正を比較し、測定できる課題と好みを分けてください。",
-        "sourceIds": [],
-        "updatedOn": "2026-11-01",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "review-11-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       }
     },
     {
@@ -8828,10 +9024,12 @@
         "implementationNotes": "基調のタイポグラフィと情報配置を先に決め、アクセントの追加規則を明記する。",
         "accessibilityNotes": "スタイルを混ぜてもコントラスト・操作順・動きの負担を再検査する。",
         "aiInstruction": "二つの様式を混ぜた成功案と失敗案を作り、どの設計規則が衝突したか示してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-11-01",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "review-12-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       }
     },
     {
@@ -8873,10 +9071,12 @@
         "implementationNotes": "スキーマ版と安定IDを持たせ、空欄と未確認を区別する。",
         "accessibilityNotes": "機械可読データとは別に人が読める説明も用意する。",
         "aiInstruction": "安定IDと版、出典、検証状態を持つJSONを作り、推測値を未確認としてください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "ai-ui-04-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "titleEn": "Style definition JSON",
       "relations": [
@@ -8987,10 +9187,12 @@
         "implementationNotes": "同義語の適用範囲と優先表記を分け、曖昧な別名で別項目を無理に統合しない。",
         "accessibilityNotes": "利用者に見える名称と内部IDを区別し、読み上げで英語表記が誤読されないようにする。",
         "aiInstruction": "日本語・英語の別名辞書を作り、表示名と検索語を分けて同じ項目IDを返してください。",
-        "updatedOn": "2026-11-01",
-        "sourceIds": [],
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "updatedOn": "2026-11-22",
+        "sourceIds": [
+          "ai-reference-03-reference"
+        ],
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -9030,10 +9232,12 @@
         "implementationNotes": "固定値と意味に基づくトークンを区別し、変更による影響範囲を追跡する。",
         "accessibilityNotes": "文字色・フォーカス色はトークン変更後もコントラストを再評価する。",
         "aiInstruction": "色・文字・余白のトークン一覧を作り、利用箇所と変更時の検査事項を付けてください。",
-        "updatedOn": "2026-11-01",
-        "sourceIds": [],
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "updatedOn": "2026-11-22",
+        "sourceIds": [
+          "ai-reference-04-reference"
+        ],
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -9076,10 +9280,12 @@
         "implementationNotes": "各候補に用途、制約、適合理由、避けたい条件、評価状態を持たせ、同一基準で比較する。",
         "accessibilityNotes": "評価表は色の濃淡だけで示さず、条件をテキストや表見出しから追えるようにする。",
         "aiInstruction": "目的、端末、利用者の操作、情報量を入力として候補を比較し、理由・不明点・代替案を返してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "ai-reference-05-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "titleEn": "Use-case and constraint suitability matrix",
       "tags": [
@@ -9128,10 +9334,12 @@
         "implementationNotes": "禁止・注意・条件付き許容を分け、根拠とレビュー日を記録する。ルールの例外は具体的に示す。",
         "accessibilityNotes": "禁止事項には操作不能、読みにくさ、動きへの過敏性などの影響を明記する。",
         "aiInstruction": "指定用途に不適切な表現を、理由・例外条件・代替手段とともに列挙してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "ai-reference-05-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "titleEn": "Design anti-patterns and constraints",
       "tags": [
@@ -9180,10 +9388,12 @@
         "implementationNotes": "安定IDで接続し、関係種別・比較軸・理由・編集状態を保存する。無関係な項目は無理につながない。",
         "accessibilityNotes": "関連の名前だけでなく違いの説明を表示し、キーボードでリンクを順に辿れるようにする。",
         "aiInstruction": "関連する候補を理由付きで最大3件示し、類似・対照・補完を区別してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "ai-reference-03-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "titleEn": "Related and contrasting design styles",
       "tags": [
@@ -9232,10 +9442,12 @@
         "implementationNotes": "基本構成、装飾、タイポグラフィ、動き、優先順位を別欄で記録し、混合できない条件も残す。",
         "accessibilityNotes": "配合後のコントラスト、フォーカス表示、動きを減らす設定を単独の場合と比較する。",
         "aiInstruction": "Aを画面構成の基準とし、Bから色と見出し表現のみを採用して、衝突箇所を明示してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "review-12-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "titleEn": "Mixed-style art direction recipe",
       "tags": [
@@ -9281,10 +9493,12 @@
         "implementationNotes": "役割、用途、入力、必須要素、禁止事項、確認方法を区切り、曖昧な用語には具体例を加える。",
         "accessibilityNotes": "キーボード操作と文字拡大を検証事項として含める。適合を事前に保証した表現は避ける。",
         "aiInstruction": "制度検索画面を設計してください。対象利用者、検索条件、スマホ表示、空結果、キーボード試験を示してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "ai-reference-09-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "titleEn": "Prompts by interface use case",
       "tags": [
@@ -9340,10 +9554,12 @@
         "implementationNotes": "依存関係、テスト対象、実行コマンド、再現条件、制限事項をサンプルごとに保存する。",
         "accessibilityNotes": "フォーカス順、音声読み上げ、ズームなどの手動試験も未実施なら明記する。",
         "aiInstruction": "サンプルコードと確認手順を出し、実行した試験だけを成功と記録してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "ai-reference-10-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "titleEn": "Implementation examples and test conditions",
       "tags": [
@@ -9389,10 +9605,12 @@
         "implementationNotes": "出典ID、発行元、対象箇所、参照日、ライセンス状態、確認担当・状態を分けて記録する。",
         "accessibilityNotes": "引用箇所には分かりやすいリンク名を用い、参照不可でも理由を伝えられるようにする。",
         "aiInstruction": "参照元、該当箇所、版、権利状態を区別し、不明な許諾は未確認と出力してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "ai-reference-11-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "titleEn": "Source, license and change history",
       "tags": [
@@ -9445,10 +9663,12 @@
         "implementationNotes": "単一の正本からJSON・Markdownなどを生成し、IDの一意性とURLの整合性を自動テストする。",
         "accessibilityNotes": "AI向け索引とは別に、検索可能で読み上げられる閲覧画面を用意する。",
         "aiInstruction": "安定IDで該当資料を検索し、出典と検証状態を保ったままURL付きで回答してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "ai-reference-12-reference"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "titleEn": "Search and retrieval index",
       "tags": [
@@ -9844,6 +10064,766 @@
       "checkedOn": "2026-11-22",
       "scope": "行頭・行末の禁則と和欧文混植時の文字間の扱い。端末別の実装結果は個別に確認する。",
       "rights": "参照リンクのみ。図版やコードの転載条件は別途確認。"
+    },
+    "visual-history-05-reference": {
+      "title": "What is Pop art? | MoMA",
+      "url": "https://www.moma.org/collection/terms/pop-art/consumer-goods-mass-media-and-popular-culture",
+      "scope": "ポップ・アートの題材と歴史",
+      "publisher": "MoMA",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "visual-history-06-reference": {
+      "title": "Op art | MoMA",
+      "url": "https://www.moma.org/collection/terms/op-art",
+      "scope": "幾何学的な反復と錯視",
+      "publisher": "MoMA",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "visual-history-07-reference": {
+      "title": "When Art Rocked: San Francisco Music Posters 1966 to 1971 | SFO Museum",
+      "url": "https://www.sfomuseum.org/about/press-releases/when-art-rocked-san-francisco-music-posters-1966-1971",
+      "scope": "サイケデリック・ポスターの作品例",
+      "publisher": "SFO Museum",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "visual-history-08-reference": {
+      "title": "David Carson | Armory Gallery | Virginia Tech",
+      "url": "https://gallery.vt.edu/exhibitions/david_carson.html",
+      "scope": "実物の誌面で確認できるタイポグラフィ",
+      "publisher": "Virginia Tech, Armory Gallery",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "visual-history-09-reference": {
+      "title": "Papier collé | MoMA",
+      "url": "https://www.moma.org/collection/terms/papier-coll%C3%A9",
+      "scope": "コラージュのうち、紙を貼り合わせるパピエ・コレの説明。",
+      "publisher": "MoMA",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "visual-history-10-reference": {
+      "title": "A Solarpunk Manifesto",
+      "url": "https://www.re-des.org/a-solarpunk-manifesto/",
+      "scope": "ソーラーパンク実践者の提案と価値観",
+      "publisher": "ReDes",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "visual-history-11-reference": {
+      "title": "Dark academia",
+      "url": "https://repozytorium.uni.lodz.pl/bitstream/handle/11089/57503/ZRL%2068%20z.2%20has%C5%82o%20Dark%20academia.pdf?isAllowed=y&sequence=1",
+      "scope": "ダークアカデミアと文学の関係を扱う研究資料。UI上の演出は本企画での応用。",
+      "publisher": "Zagadnienia Rodzajów Literackich",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "visual-history-12-reference": {
+      "title": "Seeking Refuge in Nature: Escapism and the Contemporary Pastoral Impulse in Cottagecore | www.aspeers.com",
+      "url": "https://www.aspeers.com/2024/buesken",
+      "scope": "田園生活を理想化する表現の解説",
+      "publisher": "aspeers",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "layout-01-reference": {
+      "title": "Canonical layouts | Adaptive Apps | Android Developers",
+      "url": "https://developer.android.com/develop/adaptive-apps/guides/canonical-layouts",
+      "scope": "一覧と詳細を並べる構成と画面幅による切替",
+      "publisher": "Android Developers",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "layout-03-reference": {
+      "title": "Side navigation | U.S. Web Design System (USWDS)",
+      "url": "https://designsystem.digital.gov/components/side-navigation/",
+      "scope": "階層を示すサイドナビゲーションの適用条件",
+      "publisher": "U.S. Web Design System",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "layout-05-reference": {
+      "title": "Card | U.S. Web Design System (USWDS)",
+      "url": "https://designsystem.digital.gov/components/card/",
+      "scope": "カードを一覧にまとめる実装例",
+      "publisher": "U.S. Web Design System",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "layout-06-reference": {
+      "title": "CSS scroll snap - CSS | MDN",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Scroll_snap",
+      "scope": "スクロール位置を区切りに合わせる実装方法",
+      "publisher": "MDN Web Docs",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "layout-07-reference": {
+      "title": "Landing page | U.S. Web Design System (USWDS)",
+      "url": "https://designsystem.digital.gov/templates/landing-page/",
+      "scope": "主要な案内と補足情報を載せるランディングページの例",
+      "publisher": "U.S. Web Design System",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "layout-09-reference": {
+      "title": "Controls & Interaction • Carousels • WAI Web Accessibility Tutorials",
+      "url": "https://www.w3.org/WAI/tutorials/carousels/controls/",
+      "scope": "複数の表示対象を切り替える操作とキーボード対応",
+      "publisher": "W3C WAI",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "layout-10-reference": {
+      "title": "Custom Layout",
+      "url": "https://code.visualstudio.com/docs/configure/custom-layout",
+      "scope": "編集領域を分割して並べるエディターの実例",
+      "publisher": "Visual Studio Code",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "layout-12-reference": {
+      "title": "Data table – Carbon Design System",
+      "url": "https://v10.carbondesignsystem.com/components/data-table/style/",
+      "scope": "行高の選び方と表の情報密度",
+      "publisher": "IBM Carbon",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "typography-05-reference": {
+      "title": "Understanding Success Criterion 1.4.8: Visual Presentation | WAI | W3C",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/visual-presentation",
+      "scope": "長文の行長・行間を調整できる条件",
+      "publisher": "W3C WAI",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "typography-08-reference": {
+      "title": "font-variant-numeric CSS property - CSS | MDN",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/font-variant-numeric",
+      "scope": "数字の字幅を揃える指定",
+      "publisher": "MDN Web Docs",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "typography-09-reference": {
+      "title": "Typeface styles & font fallback",
+      "url": "https://www.w3.org/International/articles/typography/fontstyles.en.html",
+      "scope": "明朝体とゴシック体の字形",
+      "publisher": "W3C Internationalization",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "typography-10-reference": {
+      "title": "Typography | Carbon Design System",
+      "url": "https://www.carbondesignsystem.com/building-blocks/foundations/typography/type-sets",
+      "scope": "見出しと本文の階層を示すタイプスケール",
+      "publisher": "IBM Carbon",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "typography-11-reference": {
+      "title": "Authoring HTML: Language declarations",
+      "url": "https://www.w3.org/International/docs/bp-html-lang/",
+      "scope": "異なる言語を併記する際の言語指定",
+      "publisher": "W3C Internationalization",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "typography-12-reference": {
+      "title": "Wrapping and breaking text - CSS | MDN",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Text/Wrapping_breaking_text",
+      "scope": "長い文字列の折り返し指定",
+      "publisher": "MDN Web Docs",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "color-01-reference": {
+      "title": "Colour Schemes: Complementary, Analogous, Triadic | Creative Hut Academy",
+      "url": "https://creativehut.org/library/colour-schemes-and-harmonies/",
+      "scope": "色相環を使った配色の組み合わせ",
+      "publisher": "Creative Hut Academy",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "color-05-reference": {
+      "title": "Convert images to duotone in Photoshop on desktop",
+      "url": "https://helpx.adobe.com/photoshop/desktop/adjust-color/color-effects-techniques/convert-images-to-duotone.html",
+      "scope": "二色を使った階調表現",
+      "publisher": "Adobe",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "color-09-reference": {
+      "title": "Apply distortion and stylize filters in Photoshop on desktop",
+      "url": "https://helpx.adobe.com/photoshop/desktop/effects-filters/artistic-stylize-filters/apply-distortion-and-stylize-filters.html",
+      "scope": "網点による階調表現",
+      "publisher": "Adobe",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "color-10-reference": {
+      "title": "Photoshop filter effects reference",
+      "url": "https://helpx.adobe.com/photoshop/desktop/effects-filters/blur-sharpen-filters/filter-effects-reference.html",
+      "scope": "画像に粒状感を加える処理",
+      "publisher": "Adobe",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "color-11-reference": {
+      "title": "Using CSS gradients - CSS | MDN",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Images/Using_gradients",
+      "scope": "色の停止位置を指定するグラデーション",
+      "publisher": "MDN Web Docs",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "color-12-reference": {
+      "title": "box-shadow CSS property - CSS | MDN",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/box-shadow",
+      "scope": "影の色・ぼかし・広がりの指定",
+      "publisher": "MDN Web Docs",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "components-01-reference": {
+      "title": "Header | U.S. Web Design System (USWDS)",
+      "url": "https://designsystem.digital.gov/components/header/",
+      "scope": "項目数が多いナビゲーションの構成",
+      "publisher": "U.S. Web Design System",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "components-05-reference": {
+      "title": "Step indicator | U.S. Web Design System (USWDS)",
+      "url": "https://designsystem.digital.gov/components/step-indicator/",
+      "scope": "複数ステップの現在位置の示し方",
+      "publisher": "U.S. Web Design System",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "components-07-reference": {
+      "title": "DataTable – Cell editing",
+      "url": "https://primevue.dev/datatable/#edit",
+      "scope": "表のセルを編集状態に切り替え、その場で値を更新する例。",
+      "publisher": "PrimeVue",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "components-08-reference": {
+      "title": "React Button - Fluent 2 Design System",
+      "url": "https://fluent2.microsoft.design/components/web/react/core/button/usage/",
+      "scope": "主操作と選択メニューを分けるボタン",
+      "publisher": "Microsoft Fluent",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "components-11-reference": {
+      "title": "Notification banner – GOV.UK Design System",
+      "url": "https://design-system.service.gov.uk/components/notification-banner/",
+      "scope": "状況を通知するバナーの使い方",
+      "publisher": "GOV.UK Design System",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "components-12-reference": {
+      "title": "Overflow menu – Carbon Design System",
+      "url": "https://v10.carbondesignsystem.com/components/overflow-menu/style/",
+      "scope": "操作メニューの使用不可状態",
+      "publisher": "IBM Carbon",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "forms-02-reference": {
+      "title": "インプットテキスト（使い方）｜デジタル庁デザインシステムβ版",
+      "url": "https://design.digital.go.jp/dads/components/input-text/usage/",
+      "scope": "日本の住所入力欄の設計例",
+      "publisher": "デジタル庁",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "forms-04-reference": {
+      "title": "Help users to: Save and sign out – Design system – Service manual – Office for National Statistics",
+      "url": "https://service-manual.ons.gov.uk/design-system/patterns/save-and-sign-out/",
+      "scope": "長い手続を中断・再開する際の案内",
+      "publisher": "Office for National Statistics",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "forms-05-reference": {
+      "title": "Radios – GOV.UK Design System",
+      "url": "https://design-system.service.gov.uk/components/radios/",
+      "scope": "選択に応じた追加質問の表示",
+      "publisher": "GOV.UK Design System",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "forms-08-reference": {
+      "title": "Checkboxes – GOV.UK Design System",
+      "url": "https://design-system.service.gov.uk/components/checkboxes/",
+      "scope": "確認項目に明示的にチェックする入力例",
+      "publisher": "GOV.UK Design System",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "forms-10-reference": {
+      "title": "Button – GOV.UK Design System",
+      "url": "https://design-system.service.gov.uk/components/button/",
+      "scope": "取り消しにくい操作を確認する場面",
+      "publisher": "GOV.UK Design System",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "forms-11-reference": {
+      "title": "Understanding Success Criterion 2.2.6: Timeouts | WAI | W3C",
+      "url": "https://www.w3.org/WAI/WCAG21/Understanding/timeouts",
+      "scope": "無操作時の期限とデータの消失に関する案内",
+      "publisher": "W3C WAI",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "forms-12-reference": {
+      "title": "Confirmation pages – GOV.UK Design System",
+      "url": "https://design-system.service.gov.uk/patterns/confirmation-pages/",
+      "scope": "完了後の案内と次に起きること",
+      "publisher": "GOV.UK Design System",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "motion-02-reference": {
+      "title": "ViewTransition - Web APIs | MDN",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/ViewTransition",
+      "scope": "画面の切替前後をつなぐ遷移の実装",
+      "publisher": "MDN Web Docs",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "motion-04-reference": {
+      "title": "CSS scroll-driven animations - CSS | MDN",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Scroll-driven_animations",
+      "scope": "スクロール位置に連動するアニメーション",
+      "publisher": "MDN Web Docs",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "motion-05-reference": {
+      "title": "d - SVG | MDN",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Attribute/d",
+      "scope": "パスの形状を変えるための指定",
+      "publisher": "MDN Web Docs",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "motion-06-reference": {
+      "title": "CSS easing functions",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_easing_functions",
+      "scope": "動きの途中で変化の速さを調整するイージング関数。",
+      "publisher": "MDN Web Docs",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "motion-08-reference": {
+      "title": "plotOptions.series.animation | highcharts API Reference",
+      "url": "https://api.highcharts.com/highcharts/plotOptions.series.animation",
+      "scope": "数値グラフの表示・更新アニメーションの指定",
+      "publisher": "Highcharts",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "motion-09-reference": {
+      "title": "HTMLProgressElement: position property - Web APIs | MDN",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/HTMLProgressElement/position",
+      "scope": "進捗量が分かる場合と分からない場合の表示",
+      "publisher": "MDN Web Docs",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "motion-10-reference": {
+      "title": "Understanding Success Criterion 2.5.7: Dragging Movements | WAI | W3C",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/dragging-movements",
+      "scope": "ドラッグ操作の代替操作",
+      "publisher": "W3C WAI",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "data-viz-08-reference": {
+      "title": "Selectable Heatmap | Vega-Lite",
+      "url": "https://vega.github.io/vega-lite/examples/selection_heatmap.html",
+      "scope": "二つの軸と色で値を示す実装例",
+      "publisher": "Vega-Lite",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "data-viz-09-reference": {
+      "title": "Treemap | D3 by Observable",
+      "url": "https://d3js.org/d3-hierarchy/treemap",
+      "scope": "階層データを矩形に分割する描画方法",
+      "publisher": "D3",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "data-viz-10-reference": {
+      "title": "Waterfall Charts in Power BI - Power BI | Microsoft Learn",
+      "url": "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-waterfall-charts",
+      "scope": "増減と累計を並べて示す方法",
+      "publisher": "Microsoft Learn",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "data-viz-11-reference": {
+      "title": "Create and use funnel charts in Power BI - Power BI | Microsoft Learn",
+      "url": "https://learn.microsoft.com/power-bi/visuals/power-bi-visualization-funnel-charts",
+      "scope": "段階別の件数を比較する図",
+      "publisher": "Microsoft Learn",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "information-01-reference": {
+      "title": "G101: Providing the definition of a word or phrase used in an unusual or restricted way | WAI | W3C",
+      "url": "https://www.w3.org/WAI/WCAG22/Techniques/general/G101",
+      "scope": "用語と定義を参照する方法",
+      "publisher": "W3C WAI",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "information-03-reference": {
+      "title": "Viewing a wiki's history of changes - GitHub Docs",
+      "url": "https://docs.github.com/en/communities/documenting-your-project-with-wikis/viewing-a-wikis-history-of-changes",
+      "scope": "改訂履歴と変更箇所を確認する実例",
+      "publisher": "GitHub Docs",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "information-04-reference": {
+      "title": "Related Navigation - GOV.UK Publishing Design Guide",
+      "url": "https://design-guide.publishing.service.gov.uk/components/related-navigation/",
+      "scope": "関連情報へのリンクを本文から分ける例",
+      "publisher": "GOV.UK Publishing Design Guide",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "information-05-reference": {
+      "title": "An alt Decision Tree | Web Accessibility Initiative (WAI) | W3C",
+      "url": "https://www.w3.org/WAI/tutorials/images/decision-tree/?hl=en",
+      "scope": "条件に応じて判断を分岐させる説明の実例",
+      "publisher": "W3C WAI",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "information-08-reference": {
+      "title": "Chapter 14: Completing ‘Summary of findings’ tables and grading the certainty of the evidence",
+      "url": "https://training.cochrane.org/handbook/current/chapter-14",
+      "scope": "結果と根拠の確実性を並べて示す表の例",
+      "publisher": "Cochrane",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "information-09-reference": {
+      "title": "Complete multiple tasks – GOV.UK Design System",
+      "url": "https://design-system.service.gov.uk/patterns/complete-multiple-tasks/",
+      "scope": "作業単位で手続を一覧にする方法",
+      "publisher": "GOV.UK Design System",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "information-11-reference": {
+      "title": "Federated search",
+      "url": "https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/multi-index-search/react",
+      "scope": "異なる種類の検索結果を分けて並べる構成",
+      "publisher": "Algolia",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "information-12-reference": {
+      "title": "Use clear language - GOV.UK content and publishing guidance",
+      "url": "https://guidance.publishing.service.gov.uk/writing-to-gov-uk-standards/writing-guidelines/clear-language/",
+      "scope": "条件の多い制度を読み手に説明する指針",
+      "publisher": "GOV.UK",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "ai-ui-01-reference": {
+      "title": "Human-in-the-loop - OpenAI Agents SDK",
+      "url": "https://openai.github.io/openai-agents-python/human_in_the_loop/",
+      "scope": "ツール実行を中断し、人の承認後に再開する例",
+      "publisher": "OpenAI",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "ai-ui-02-reference": {
+      "title": "Tracing - OpenAI Agents SDK",
+      "url": "https://openai.github.io/openai-agents-python/tracing/",
+      "scope": "ツール呼び出しと実行経過の記録例",
+      "publisher": "OpenAI",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "ai-ui-03-reference": {
+      "title": "Web search | OpenAI API",
+      "url": "https://developers.openai.com/api/docs/guides/tools-web-search",
+      "scope": "検索した出典を回答に表示する仕組み",
+      "publisher": "OpenAI",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "ai-ui-04-reference": {
+      "title": "JSON Schema",
+      "url": "https://json-schema.org/learn/getting-started-step-by-step",
+      "scope": "構造化された値の項目と型を定義する方法",
+      "publisher": "JSON Schema",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "ai-ui-05-reference": {
+      "title": "Rate limits | OpenAI API",
+      "url": "https://developers.openai.com/api/docs/guides/rate-limits",
+      "scope": "利用上限と残り回数に関する情報",
+      "publisher": "OpenAI",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "ai-ui-06-reference": {
+      "title": "Models | OpenAI API",
+      "url": "https://developers.openai.com/api/docs/models",
+      "scope": "モデルの機能と用途を比較する例",
+      "publisher": "OpenAI",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "ai-ui-07-reference": {
+      "title": "Explainability + Trust",
+      "url": "https://pair.withgoogle.com/chapter/explainability-trust/",
+      "scope": "AIの出力をどこまで信頼するか判断するための説明と、不確実性の伝え方。",
+      "publisher": "Google PAIR",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "ai-ui-08-reference": {
+      "title": "Reviewing proposed changes in a pull request - GitHub Docs",
+      "url": "https://docs.github.com/en/pull-requests/how-tos/review-pull-requests/reviewing-proposed-changes-in-a-pull-request?apiVersion=2022-11-28&tool=webui",
+      "scope": "提案されたコードの差分を人が確認する操作。提案の生成方法とは独立した手順。",
+      "publisher": "GitHub Docs",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "ai-ui-10-reference": {
+      "title": "Error codes | OpenAI API",
+      "url": "https://developers.openai.com/api/docs/guides/error-codes",
+      "scope": "エラーの種類によって再試行と修正を分ける例",
+      "publisher": "OpenAI",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "ai-ui-11-reference": {
+      "title": "Memory FAQ",
+      "url": "https://help.openai.com/en/articles/8590148-memory-faq",
+      "scope": "記憶の確認・削除・制御の実例",
+      "publisher": "OpenAI",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "ai-ui-12-reference": {
+      "title": "MCP servers | OpenAI API",
+      "url": "https://developers.openai.com/api/docs/guides/tools-connectors-mcp",
+      "scope": "外部ツールに渡すデータと承認設定の例",
+      "publisher": "OpenAI",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "use-cases-01-reference": {
+      "title": "ホーム ｜ 横浜市電子申請・届出システム",
+      "url": "https://shinsei.city.yokohama.lg.jp/cu/141003/ea/residents/portal/home",
+      "scope": "手続の検索と申請を提供する自治体サイトの実例",
+      "publisher": "横浜市",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "use-cases-02-reference": {
+      "title": "e-Gov 法令検索",
+      "url": "https://laws.e-gov.go.jp/",
+      "scope": "法令を名称から探し条文を読むサイトの実例",
+      "publisher": "e-Gov",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "use-cases-03-reference": {
+      "title": "About Khan Academy",
+      "url": "https://www.khanacademy.org/about",
+      "scope": "講義と演習を提供する学習サイトの実例",
+      "publisher": "Khan Academy",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "use-cases-04-reference": {
+      "title": "The Met Collection - The Metropolitan Museum of Art",
+      "url": "https://www.metmuseum.org/ja/art/collection",
+      "scope": "所蔵作品を検索・閲覧する美術館サイトの実例",
+      "publisher": "The Metropolitan Museum of Art",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "use-cases-05-reference": {
+      "title": "Help - PubMed",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/help/",
+      "scope": "論文検索の絞り込みと結果表示の実例",
+      "publisher": "National Library of Medicine",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "use-cases-06-reference": {
+      "title": "Shopify Help Center | Collections",
+      "url": "https://help.shopify.com/en/manual/products/collections",
+      "scope": "商品を分類して一覧表示する店舗サイトの実例",
+      "publisher": "Shopify",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "use-cases-07-reference": {
+      "title": "Find a user account - Google Workspace Learning Center",
+      "url": "https://support.google.com/a/users/answer/33324?hl=en",
+      "scope": "管理コンソールでアカウントを探す操作例。",
+      "publisher": "Google Workspace",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "use-cases-08-reference": {
+      "title": "Explore Dashboard Features | FRED Help",
+      "url": "https://fred.stlouisfed.org/help/account/dashboard-features/explore-features",
+      "scope": "経済指標をまとめて表示する実例",
+      "publisher": "Federal Reserve Bank of St. Louis",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "use-cases-09-reference": {
+      "title": "Managing categories for discussions - GitHub Docs",
+      "url": "https://docs.github.com/en/discussions/managing-discussions-for-your-community/managing-categories-for-discussions",
+      "scope": "コミュニティの投稿を分類する運用例",
+      "publisher": "GitHub Docs",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "use-cases-10-reference": {
+      "title": "Paragraphs – GOV.UK Design System",
+      "url": "https://design-system.service.gov.uk/styles/paragraphs/",
+      "scope": "長文を見出しと段落で構成する例",
+      "publisher": "GOV.UK Design System",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "use-cases-11-reference": {
+      "title": "Health Topics: MedlinePlus",
+      "url": "https://medlineplus.gov/healthtopics.html",
+      "scope": "健康情報を主題別に探すサイトの実例",
+      "publisher": "National Library of Medicine",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "use-cases-12-reference": {
+      "title": "Ready to Go Japan Itinerary | Travel Itineraries for Unforgettable Journeys",
+      "url": "https://www.japan.travel/en/in/itineraries/",
+      "scope": "旅程や目的地を辿る観光サイトの実例",
+      "publisher": "Japan National Tourism Organization",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "review-01-reference": {
+      "title": "Aesthetic and Minimalist Design",
+      "url": "https://www.nngroup.com/articles/aesthetic-minimalist-design/",
+      "scope": "必要な内容を残して画面を簡潔にする評価観点",
+      "publisher": "Nielsen Norman Group",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "review-06-reference": {
+      "title": "Visual Design Principles",
+      "url": "https://media.nngroup.com/media/articles/attachments/Principles_Visual_Design-A4.pdf",
+      "scope": "大きさや対比で内容の優先順位を示す方法",
+      "publisher": "Nielsen Norman Group",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "review-11-reference": {
+      "title": "Understanding Success Criterion 1.4.1: Use of Color",
+      "url": "https://www.w3.org/WAI/WCAG20/Understanding/use-of-color.html",
+      "scope": "情報を色だけで伝えていないかを点検する基準",
+      "publisher": "W3C WAI",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "review-12-reference": {
+      "title": "Overview - Material Design",
+      "url": "https://m2.material.io/design/material-theming/overview/",
+      "scope": "Material Design 2で色・書体・形をテーマとして扱う考え方。個々の配合は本企画の応用例。",
+      "publisher": "Google Material Design",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "ai-reference-03-reference": {
+      "title": "SKOS Simple Knowledge Organization System Reference",
+      "url": "https://www.w3.org/TR/skos-reference/",
+      "scope": "言語別の別名と概念間の関連を記述する方法",
+      "publisher": "W3C",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "ai-reference-04-reference": {
+      "title": "Design Tokens Format Module 2025.10",
+      "url": "https://www.designtokens.org/tr/2025.10/format/",
+      "scope": "デザイントークンの型とグループの表現",
+      "publisher": "Design Tokens Community Group",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "ai-reference-05-reference": {
+      "title": "Accordion – GOV.UK Design System",
+      "url": "https://design-system.service.gov.uk/components/accordion/",
+      "scope": "用途と不適切な条件を併記するコンポーネント文書の例",
+      "publisher": "GOV.UK Design System",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "ai-reference-09-reference": {
+      "title": "Reasoning best practices | OpenAI API",
+      "url": "https://developers.openai.com/api/docs/guides/reasoning-best-practices",
+      "scope": "用途・制約・出力例を指示に含める方法",
+      "publisher": "OpenAI",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "ai-reference-10-reference": {
+      "title": "Best Practices | Playwright",
+      "url": "https://playwright.dev/docs/best-practices",
+      "scope": "再現可能な画面操作でサンプルを検証する方法",
+      "publisher": "Playwright",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "ai-reference-11-reference": {
+      "title": "PROV-Overview",
+      "url": "https://www.w3.org/TR/prov-overview/",
+      "scope": "資料の来歴と帰属の記述。使用許諾は別途確認が必要",
+      "publisher": "W3C",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "ai-reference-12-reference": {
+      "title": "The /llms.txt file",
+      "url": "https://llmstxt.org/",
+      "scope": "AI向けに資料の説明とリンクをまとめる llms.txt の提案。利用するシステムによって対応は異なる。",
+      "publisher": "Answer.AI",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
+    },
+    "motion-07-reference": {
+      "title": "CountUp.js",
+      "url": "https://github.com/inorganik/countUp.js",
+      "scope": "数値を目標値まで変化させるカウンターの実装例。",
+      "publisher": "CountUp.js",
+      "checkedOn": "2026-11-22",
+      "rights": "参考資料へのリンク。図版、文章、コードの再利用条件は資料ごとに確認する。"
     }
   },
   "relationSemantics": {
