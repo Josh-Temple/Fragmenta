@@ -291,6 +291,76 @@
       "url": "https://www.adobe.com/uk/creativecloud/video/discover/low-key-vs-high-key-lighting.html",
       "scope": "映像制作におけるハイキー照明とローキー照明の説明。模式図の色面から実際の照明機材や心理効果は確定できない。",
       "rights": "参考リンクのみ。掲載画像・動画の転載権を含まない。"
+    },
+    "getty-design": {
+      "title": "Principles of Design",
+      "publisher": "J. Paul Getty Museum",
+      "url": "https://www.getty.edu/education/teachers/building_lessons/principles_design.pdf",
+      "scope": "放射状の均衡、形・色・質感による強調、反復と線の方向を比較するための美術教育資料。個々の図から得る印象には個人差がある。",
+      "rights": "資料への参照リンク。写真・図版・動画は収録していない。"
+    },
+    "yale-camera": {
+      "title": "Film Analysis: Cinematography",
+      "publisher": "Yale University",
+      "url": "https://filmanalysis.yale.edu/cinematography/",
+      "scope": "ショットサイズ、画角、フレーミング、前景と背景の見え方を実際の映像で解説。模式図の光学や感情効果の実証は対象外。",
+      "rights": "資料への参照リンク。写真・図版・動画は収録していない。"
+    },
+    "yale-cuts": {
+      "title": "Film Analysis: Editing",
+      "publisher": "Yale University",
+      "url": "https://filmanalysis.yale.edu/editing/",
+      "scope": "画面外への視線と次のショットをつなぐ方法、色や形が似たショットをつなぐグラフィック・マッチの制作例。",
+      "rights": "資料への参照リンク。写真・図版・動画は収録していない。"
+    },
+    "adobe-guides": {
+      "title": "Align graphic objects with guides",
+      "publisher": "Adobe",
+      "url": "https://helpx.adobe.com/in/illustrator/desktop/measure-and-align/grids-and-guides/align-graphic-objects-with-guides.html",
+      "scope": "水平・垂直のガイドで図形や文字の位置を揃える操作。",
+      "rights": "資料への参照リンク。写真・図版・動画は収録していない。"
+    },
+    "smithsonian-video": {
+      "title": "Video Handbook – Composition",
+      "publisher": "Smithsonian Center for Folklife and Cultural Heritage",
+      "url": "https://folklife-media.si.edu/docs/folklife/education_exhibits/resources/English-Video-Handbook.pdf",
+      "scope": "インタビュー撮影で頭上と人物の向く側に余白をとる例。場面に応じて変えられる。",
+      "rights": "資料への参照リンク。写真・図版・動画は収録していない。"
+    },
+    "ng-sfumato": {
+      "title": "Sfumato",
+      "publisher": "National Gallery, London",
+      "url": "https://www.nationalgallery.org.uk/paintings/glossary/sfumato",
+      "scope": "明度を徐々に変えて輪郭を背景になじませる絵画技法。模式図では段階的な色面で比較する。",
+      "rights": "資料への参照リンク。写真・図版・動画は収録していない。"
+    },
+    "proko-gesture": {
+      "title": "How to Draw Gesture",
+      "publisher": "Proko",
+      "url": "https://static.proko.com/static/course-lesson/how-to-draw-gesture",
+      "scope": "姿勢を描き始めるとき、人物の動きやリズムを簡潔な線で捉える作画練習。",
+      "rights": "資料への参照リンク。写真・図版・動画は収録していない。"
+    },
+    "kdp-print": {
+      "title": "Paperback Submission Guidelines",
+      "publisher": "Kindle Direct Publishing",
+      "url": "https://kdp.amazon.com/en_US/help/topic/G201857950",
+      "scope": "紙の本の内側余白・仕上がり寸法・塗り足し。数値の適用範囲は同サービスで製本する場合。",
+      "rights": "資料への参照リンク。写真・図版・動画は収録していない。"
+    },
+    "mdn-art-direction": {
+      "title": "Using responsive images in HTML",
+      "publisher": "MDN Web Docs",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Guides/Responsive_images",
+      "scope": "画面幅に応じて画像の切り抜きや構図を変えるアートディレクションの実装例。",
+      "rights": "資料への参照リンク。写真・図版・動画は収録していない。"
+    },
+    "crest-shadows": {
+      "title": "CREST Star Home Learning Collection – Shadows",
+      "publisher": "British Science Association",
+      "url": "https://www.crestawards.org/media/qkoalon3/crest-star-home-learning-collection.pdf",
+      "scope": "不透明な物体に一方向から光を当てたとき、光源と反対側に影ができることを確かめる実験。",
+      "rights": "リンクのみ。教材の挿図は未収録。"
     }
   },
   "guides": [
@@ -1036,7 +1106,9 @@
       "categoryId": "basics",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "getty-design"
+      ],
       "relatedLegacyIds": []
     },
     {
@@ -1326,8 +1398,11 @@
       "categoryId": "basics",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
-      "relatedLegacyIds": []
+      "sourceIds": [
+        "adobe-composition-techniques"
+      ],
+      "relatedLegacyIds": [],
+      "sourceNote": "参考資料は周囲の形で被写体を囲む手法を扱う。この例では二辺だけを使ってL字を作り、開いた側を比較する。"
     },
     {
       "id": "C-010",
@@ -1701,7 +1776,9 @@
       "categoryId": "balance",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "getty-design"
+      ],
       "relatedLegacyIds": []
     },
     {
@@ -1981,7 +2058,9 @@
       "categoryId": "balance",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "yale-camera"
+      ],
       "relatedLegacyIds": []
     },
     {
@@ -2378,7 +2457,9 @@
       "categoryId": "balance",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "getty-design"
+      ],
       "relatedLegacyIds": []
     },
     {
@@ -2760,9 +2841,12 @@
       "categoryId": "balance",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "nikon-composition"
+      ],
       "relatedLegacyIds": [],
-      "diagramNote": "実写の肖像ではなく、同じ輪郭・目・鼻・口を使う簡略化した顔記号を画面端で切り取った模式図。心理的な効果を実測したものではない。"
+      "diagramNote": "実写の肖像ではなく、同じ輪郭・目・鼻・口を使う簡略化した顔記号を画面端で切り取った模式図。心理的な効果を実測したものではない。",
+      "sourceNote": "資料の三分割の例は、主役を中央からずらす配置の参考になる。画面端での切り取りと緊張感は、この図で試す別の問いである。"
     },
     {
       "id": "C-024",
@@ -4094,7 +4178,9 @@
       "categoryId": "perception",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "adobe-guides"
+      ],
       "relatedLegacyIds": []
     },
     {
@@ -5336,7 +5422,9 @@
       "categoryId": "depth",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "yale-camera"
+      ],
       "relatedLegacyIds": []
     },
     {
@@ -6184,7 +6272,9 @@
       "categoryId": "camera",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "smithsonian-video"
+      ],
       "relatedLegacyIds": []
     },
     {
@@ -6234,7 +6324,9 @@
       "categoryId": "camera",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "smithsonian-video"
+      ],
       "relatedLegacyIds": []
     },
     {
@@ -7072,7 +7164,9 @@
       "categoryId": "value",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "crest-shadows"
+      ],
       "relatedLegacyIds": [],
       "diagramNote": "光源・物体・受光面の三次元の位置関係と、見る方向によって画面上の影の位置は変わる。"
     },
@@ -7224,7 +7318,9 @@
       "categoryId": "value",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "getty-design"
+      ],
       "relatedLegacyIds": []
     },
     {
@@ -7342,7 +7438,9 @@
       "categoryId": "value",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "getty-design"
+      ],
       "relatedLegacyIds": []
     },
     {
@@ -7448,7 +7546,9 @@
       "categoryId": "value",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "ng-sfumato"
+      ],
       "relatedLegacyIds": [],
       "diagramNote": "図は左の建物の右端だけを段階的な明度で表した模式例。連続的なぼかしや写真の焦点深度は表していない。"
     },
@@ -7655,8 +7755,11 @@
       "categoryId": "narrative",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
-      "relatedLegacyIds": []
+      "sourceIds": [
+        "adobe-composition-techniques"
+      ],
+      "relatedLegacyIds": [],
+      "sourceNote": "参考になるのは周囲の形で人物を囲む手順。囲いが圧迫感を生むかは、図を見比べて判断する。"
     },
     {
       "id": "C-075",
@@ -7854,8 +7957,11 @@
       "categoryId": "narrative",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
-      "relatedLegacyIds": []
+      "sourceIds": [
+        "adobe-composition-techniques"
+      ],
+      "relatedLegacyIds": [],
+      "sourceNote": "囲いを使うフレーミングを応用し、手前と奥で開口部の広さを変えた比較例。"
     },
     {
       "id": "C-077",
@@ -7970,7 +8076,9 @@
       "categoryId": "narrative",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "yale-cuts"
+      ],
       "relatedLegacyIds": []
     },
     {
@@ -8052,7 +8160,9 @@
       "categoryId": "narrative",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "nikon-composition"
+      ],
       "relatedLegacyIds": []
     },
     {
@@ -8140,7 +8250,9 @@
       "categoryId": "narrative",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "nikon-lines"
+      ],
       "relatedLegacyIds": []
     },
     {
@@ -8312,8 +8424,11 @@
       "categoryId": "narrative",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
-      "relatedLegacyIds": []
+      "sourceIds": [
+        "adobe-over-shoulder"
+      ],
+      "relatedLegacyIds": [],
+      "sourceNote": "肩越しショットは、手前の人物の背と奥の対象を一緒に見せる一例。単独人物の感情までは読み取れない。"
     },
     {
       "id": "C-082",
@@ -8437,7 +8552,9 @@
       "categoryId": "narrative",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "yale-camera"
+      ],
       "relatedLegacyIds": []
     },
     {
@@ -8637,8 +8754,11 @@
       "categoryId": "narrative",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
-      "relatedLegacyIds": []
+      "sourceIds": [
+        "getty-design"
+      ],
+      "relatedLegacyIds": [],
+      "sourceNote": "参照箇所は強調の原理。群衆と一人の配置は、数と間隔を変えて比べる応用例。"
     },
     {
       "id": "C-084",
@@ -8735,7 +8855,9 @@
       "categoryId": "narrative",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "getty-design"
+      ],
       "relatedLegacyIds": []
     },
     {
@@ -8839,7 +8961,9 @@
       "categoryId": "sequence",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "nikon-composition"
+      ],
       "relatedLegacyIds": []
     },
     {
@@ -8963,7 +9087,9 @@
       "categoryId": "sequence",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "proko-gesture"
+      ],
       "relatedLegacyIds": []
     },
     {
@@ -9067,7 +9193,9 @@
       "categoryId": "sequence",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "adobe-diagonal-lines-ja"
+      ],
       "relatedLegacyIds": []
     },
     {
@@ -9197,8 +9325,11 @@
       "categoryId": "sequence",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
-      "relatedLegacyIds": []
+      "sourceIds": [
+        "getty-design"
+      ],
+      "relatedLegacyIds": [],
+      "sourceNote": "資料は線や形の向きで焦点を示す原理を扱う。この図では人物の向きを使って試す。"
     },
     {
       "id": "C-089",
@@ -9279,7 +9410,9 @@
       "categoryId": "sequence",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "manga-panel-order"
+      ],
       "relatedLegacyIds": []
     },
     {
@@ -9632,7 +9765,9 @@
       "categoryId": "sequence",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "kdp-print"
+      ],
       "relatedLegacyIds": []
     },
     {
@@ -10545,8 +10680,11 @@
       "categoryId": "sequence",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
-      "relatedLegacyIds": []
+      "sourceIds": [
+        "getty-design"
+      ],
+      "relatedLegacyIds": [],
+      "sourceNote": "資料は対比による強調を扱う。静止と動作を対比させた図そのものの知覚効果は未検証。"
     },
     {
       "id": "C-096",
@@ -10689,7 +10827,9 @@
       "categoryId": "sequence",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "yale-cuts"
+      ],
       "relatedLegacyIds": []
     },
     {
@@ -10771,7 +10911,9 @@
       "categoryId": "application",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "yale-camera"
+      ],
       "relatedLegacyIds": []
     },
     {
@@ -10959,7 +11101,9 @@
       "categoryId": "application",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "adobe-over-shoulder"
+      ],
       "relatedLegacyIds": []
     },
     {
@@ -11051,8 +11195,11 @@
       "categoryId": "application",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
-      "relatedLegacyIds": []
+      "sourceIds": [
+        "adobe-silhouette-photo"
+      ],
+      "relatedLegacyIds": [],
+      "sourceNote": "資料は輪郭を背景から分ける撮影例。妖怪の外形や姿勢は、この項目の作画例である。"
     },
     {
       "id": "C-100",
@@ -11159,7 +11306,9 @@
       "categoryId": "application",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "yale-camera"
+      ],
       "relatedLegacyIds": []
     },
     {
@@ -11228,7 +11377,9 @@
       "categoryId": "application",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "adobe-foreground-layers"
+      ],
       "relatedLegacyIds": []
     },
     {
@@ -11342,8 +11493,11 @@
       "categoryId": "application",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
-      "relatedLegacyIds": []
+      "sourceIds": [
+        "yale-camera"
+      ],
+      "relatedLegacyIds": [],
+      "sourceNote": "広角撮影が室内の前後関係に及ぼす影響を参照できる。家具をどこに置くかはこの図の設計判断。"
     },
     {
       "id": "C-103",
@@ -11408,7 +11562,9 @@
       "categoryId": "application",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "getty-design"
+      ],
       "relatedLegacyIds": []
     },
     {
@@ -11490,8 +11646,11 @@
       "categoryId": "application",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
-      "relatedLegacyIds": []
+      "sourceIds": [
+        "getty-design"
+      ],
+      "relatedLegacyIds": [],
+      "sourceNote": "参照箇所は強調と均衡。人物と題名をどう配分するかはポスターへの応用例。"
     },
     {
       "id": "C-105",
@@ -11629,9 +11788,12 @@
       "categoryId": "application",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "adobe-photo-composition-ja"
+      ],
       "relatedLegacyIds": [],
-      "diagramNote": "縮小表示を自動的に比較する図ではない。表紙の可読性は、実際に想定する表示寸法に縮めて確認する。"
+      "diagramNote": "縮小表示を自動的に比較する図ではない。表紙の可読性は、実際に想定する表示寸法に縮めて確認する。",
+      "sourceNote": "写真の使用目的と文字を載せる場所を考える手順を参照。小さい表紙での識別は実寸で確かめる。"
     },
     {
       "id": "C-106",
@@ -11744,7 +11906,9 @@
       "categoryId": "application",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "adobe-photo-composition-ja"
+      ],
       "relatedLegacyIds": [],
       "diagramNote": "見出しの文字は矩形で示した模式図であり、実際の文字の可読性は文字組み・画面幅・色の対比で別途確認する。"
     },
@@ -11827,7 +11991,9 @@
       "categoryId": "application",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "mdn-art-direction"
+      ],
       "relatedLegacyIds": [],
       "diagramNote": "元の横長画像や切り抜き範囲は描いていない。実際のトリミングでは端末や表示領域に合わせて確認する。"
     },
@@ -11911,8 +12077,11 @@
       "categoryId": "application",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
-      "relatedLegacyIds": []
+      "sourceIds": [
+        "yale-camera"
+      ],
+      "relatedLegacyIds": [],
+      "sourceNote": "資料は遠景に環境を広く収めるショットの例。横長の比率や左右端の配置は本図の比較条件。"
     },
     {
       "id": "C-109",
@@ -12269,7 +12438,9 @@
       "categoryId": "ai",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "openai-image-prompting"
+      ],
       "relatedLegacyIds": []
     },
     {
@@ -12400,7 +12571,9 @@
       "categoryId": "ai",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "openai-image-prompting"
+      ],
       "relatedLegacyIds": []
     },
     {
@@ -12471,7 +12644,9 @@
       "categoryId": "ai",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "openai-image-prompting"
+      ],
       "relatedLegacyIds": []
     },
     {
@@ -12768,7 +12943,9 @@
       "categoryId": "ai",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "openai-image-prompting"
+      ],
       "relatedLegacyIds": []
     },
     {
@@ -12850,8 +13027,11 @@
       "categoryId": "ai",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
-      "relatedLegacyIds": []
+      "sourceIds": [
+        "openai-image-prompting"
+      ],
+      "relatedLegacyIds": [],
+      "sourceNote": "資料は編集時に変える部分と維持する条件を指定する方法を扱う。生成結果で他の条件が同一になる保証はない。"
     },
     {
       "id": "C-118",
@@ -13076,7 +13256,9 @@
       "categoryId": "ai",
       "reviewStatus": "draft_unreviewed",
       "evidenceStatus": "not_checked",
-      "sourceIds": [],
+      "sourceIds": [
+        "openai-image-prompting"
+      ],
       "relatedLegacyIds": []
     },
     {

@@ -5,7 +5,7 @@ export type CompositionGuide = {
   id: string; titleJa: string; categoryId: string; definition: string;
   example: string; contrast: string; aiInstruction: string;
   diagram: { example: Shape[]; comparison: Shape[] };
-  relatedLegacyIds: string[]; sourceIds: string[]; comparisonPoint?: string; diagramNote?: string;
+  relatedLegacyIds: string[]; sourceIds: string[]; sourceNote?: string; comparisonPoint?: string; diagramNote?: string;
   reviewStatus: 'draft_unreviewed'; evidenceStatus: 'not_checked';
 };
 export type CompositionCatalog = {

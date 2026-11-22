@@ -186,6 +186,7 @@ const Composition: React.FC = () => {
       <section className="mt-6 border-t border-ink-border pt-5">
         <h3 className="text-sm font-bold">出典と検証状況</h3>
         <p className="mt-2 text-sm leading-relaxed text-ink-muted">説明・図解・AI指示は未レビューの編集案です。参考資料の一部を参照していても、項目全体を検証したことにはなりません。</p>
+        {guide.sourceNote && <p className="mt-2 text-sm leading-relaxed">{guide.sourceNote}</p>}
         {guide.sourceIds.length ? <ul className="mt-2 space-y-3">{guide.sourceIds.map(id => <li key={id}><a className="text-sm underline underline-offset-4" rel="noopener noreferrer"
           href={compositionCatalog.sources[id].url}>{compositionCatalog.sources[id].publisher}：{compositionCatalog.sources[id].title}</a>
           <p className="mt-1 text-sm text-ink-muted">{compositionCatalog.sources[id].scope}</p>
