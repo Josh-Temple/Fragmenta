@@ -1297,10 +1297,12 @@
         "implementationNotes": "日本語と欧文でフォントの字面が異なるため、サイズと行間を実際の文章で調整する。",
         "accessibilityNotes": "日本語と英語の読み上げを必要な部分だけ言語属性で指定する。",
         "aiInstruction": "日本語と欧文が混じる見出し・本文を用意し、行間と改行をスマホで比較してください。",
-        "updatedOn": "2026-11-01",
-        "sourceIds": [],
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "updatedOn": "2026-11-22",
+        "sourceIds": [
+          "w3c-jlreq"
+        ],
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -1601,10 +1603,12 @@
         "implementationNotes": "CSSのline-breakやword-breakの影響を確認し、強制改行は必要最小限にする。",
         "accessibilityNotes": "文字拡大後も内容が欠けず、コピーした文章の文字順が保たれるか確かめる。",
         "aiInstruction": "日本語見出しの改行規則を検討し、固定改行を減らして複数幅で表示確認してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "w3c-jlreq"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       }
     },
     {
@@ -2638,10 +2642,12 @@
         "implementationNotes": "各ノードの識別子と親子関係を安定して持たせ、表示用のインデントだけに依存しない。",
         "accessibilityNotes": "ツリーの操作モデルを選び、矢印キーの移動と読み上げ時の階層伝達を検証する。",
         "aiInstruction": "展開と選択が異なるツリービューを作り、キーボードの移動規則を明記してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "w3c-apg-treeview"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       },
       "relations": [
         {
@@ -2737,10 +2743,12 @@
         "implementationNotes": "現在ページと絞り込み条件をURLに保持し、存在しないページ番号は安全に処理する。",
         "accessibilityNotes": "リンクの意味を文章で伝え、現在ページを視覚とARIA属性の両方で示す。",
         "aiInstruction": "検索結果にページネーションを付け、URLを共有しても同じ位置に戻れるようにしてください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "govuk-pagination"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       }
     },
     {
@@ -4627,10 +4635,12 @@
         "implementationNotes": "データ件数が多い場合は重なりの表現や間引きの影響を検証する。",
         "accessibilityNotes": "図を使えない人にも主要な傾向とデータ表を提供する。",
         "aiInstruction": "散布図を作り、軸ラベル・単位・元データへの導線を必須にしてください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "nist-scatterplot"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       }
     },
     {
@@ -4676,10 +4686,12 @@
         "implementationNotes": "階級幅と端点の包含条件を明記し、数え落としを防ぐ。",
         "accessibilityNotes": "階級表と合計件数を提供し、色だけで区間を区別しない。",
         "aiInstruction": "ヒストグラムを生成し、階級幅と合計件数を表示してください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "nist-histogram"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       }
     },
     {
@@ -4725,10 +4737,12 @@
         "implementationNotes": "四分位数の算出法とひげ・外れ値の扱いをデータ説明に記録する。",
         "accessibilityNotes": "各群の中央値・四分位数をテキストや表でも提示する。",
         "aiInstruction": "箱ひげ図を作成し、ひげの定義・標本数・元データ表へのリンクを添えてください。",
-        "sourceIds": [],
-        "updatedOn": "2026-10-31",
-        "sourceCoverage": "not_checked",
-        "sourceStatus": "not_checked"
+        "sourceIds": [
+          "nist-boxplot"
+        ],
+        "updatedOn": "2026-11-22",
+        "sourceCoverage": "partial",
+        "sourceStatus": "partial"
       }
     },
     {
@@ -9782,6 +9796,54 @@
       "checkedOn": "2026-11-14",
       "scope": "一部の利用者向けの補足を開閉する場面と、多くの人が必要とする情報を隠さないという使用上の境界。音声操作等に既知の懸念あり。",
       "rights": "参照リンクのみ。文章・図・コードの利用条件は別途確認する。"
+    },
+    "nist-histogram": {
+      "title": "Histogram",
+      "publisher": "NIST",
+      "url": "https://www.itl.nist.gov/div898/handbook/eda/section3/histogra.htm",
+      "checkedOn": "2026-11-22",
+      "scope": "度数分布から中心・ばらつき・分布の形を調べる方法。",
+      "rights": "参照リンクのみ。図版やコードの転載条件は別途確認。"
+    },
+    "nist-boxplot": {
+      "title": "Box Plot",
+      "publisher": "NIST",
+      "url": "https://www.itl.nist.gov/div898/handbook/eda/section3/boxplot.htm",
+      "checkedOn": "2026-11-22",
+      "scope": "中央値と四分位数、および群間の位置・ばらつきの比較。ひげの定義には複数の流儀がある。",
+      "rights": "参照リンクのみ。図版やコードの転載条件は別途確認。"
+    },
+    "nist-scatterplot": {
+      "title": "Scatter Plot",
+      "publisher": "NIST",
+      "url": "https://www.itl.nist.gov/div898/handbook/eda/section3/scatterp.htm",
+      "checkedOn": "2026-11-22",
+      "scope": "対応する二つの測定値を点で表し、変数間の関係を調べる方法。",
+      "rights": "参照リンクのみ。図版やコードの転載条件は別途確認。"
+    },
+    "govuk-pagination": {
+      "title": "Pagination",
+      "publisher": "GOV.UK Design System",
+      "url": "https://design-system.service.gov.uk/components/pagination/",
+      "checkedOn": "2026-11-22",
+      "scope": "長い一覧を複数ページに分ける場合の使い方と現在ページの表示。",
+      "rights": "参照リンクのみ。図版やコードの転載条件は別途確認。"
+    },
+    "w3c-apg-treeview": {
+      "title": "Tree View Pattern",
+      "publisher": "W3C WAI",
+      "url": "https://www.w3.org/WAI/ARIA/apg/patterns/treeview/",
+      "checkedOn": "2026-11-22",
+      "scope": "親子項目の展開・折りたたみと矢印キーによる操作。",
+      "rights": "参照リンクのみ。図版やコードの転載条件は別途確認。"
+    },
+    "w3c-jlreq": {
+      "title": "日本語組版処理の要件",
+      "publisher": "W3C",
+      "url": "https://www.w3.org/TR/jlreq/",
+      "checkedOn": "2026-11-22",
+      "scope": "行頭・行末の禁則と和欧文混植時の文字間の扱い。端末別の実装結果は個別に確認する。",
+      "rights": "参照リンクのみ。図版やコードの転載条件は別途確認。"
     }
   },
   "relationSemantics": {
