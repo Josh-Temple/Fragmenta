@@ -71,7 +71,7 @@ const routes = [
   ['/p/glitch-text', 'Glitch Text'],
   ['/a/glitch-text', 'Glitch Text'],
   ['/p/warm-neo-brutalist-editorial', 'Warm Neo-Brutalist'],
-  ['/search', 'Search'],
+  ['/search', 'サイト内検索'],
   ['/knowledge', 'デザインを、つながりから探す'],
   ['/knowledge?category=typography', '12件該当'],
   ['/knowledge?q=__fragmenta_no_results_2026__', '一致する企画案はありません'],
@@ -260,12 +260,36 @@ try {
   await page.send('Runtime.evaluate', { expression: "location.hash = '#/search'" });
   await poll(async () => {
     const result = await page.send('Runtime.evaluate', {
-      expression: "(()=>{const input=document.querySelector('input#pattern-search');return !!input && [...input.labels].some(label=>label.textContent.trim()==='Search patterns');})()",
+      expression: "(()=>{const input=document.querySelector('input#pattern-search');return !!input && [...input.labels].some(label=>label.textContent.trim()==='キーワード');})()",
       returnByValue: true,
     });
     return result.result?.value;
   }, 'Search field accessible label');
   console.log('PASS Search field explicit accessible label');
+
+  for (const width of [360, 1280]) {
+    await page.send('Emulation.setDeviceMetricsOverride', { width, height: 800, deviceScaleFactor: 1, mobile: false });
+    for (const [query, condition] of [
+      ['idea-components-06', "document.querySelector('[role=status]')?.textContent.includes('検索結果 1件（公開コンテンツ 0件、未レビューの企画 1件）')"],
+      ['ガラス', "document.querySelector('nav[aria-label=検索結果の分類]')?.querySelectorAll('button').length > 1"],
+    ]) {
+      await page.send('Runtime.evaluate', { expression: 'location.hash = ' + JSON.stringify('#/search?q=' + encodeURIComponent(query)) });
+      await poll(async () => (await page.send('Runtime.evaluate', {
+        expression: condition, returnByValue: true,
+      })).result.value, 'Search results at ' + width + ' for ' + query);
+    }
+    const jump = await page.send('Runtime.evaluate', {
+      expression: `(() => {
+        const buttons = document.querySelectorAll('nav[aria-label=検索結果の分類] button');
+        buttons[buttons.length - 1].click();
+        return document.activeElement?.matches('h2[tabindex="-1"]') &&
+          document.documentElement.scrollWidth <= window.innerWidth;
+      })()`, returnByValue: true,
+    });
+    if (!jump.result.value) throw new Error('Search category focus or overflow at ' + width);
+    console.log('PASS search counts, category focus and width ' + width);
+  }
+  await page.send('Emulation.clearDeviceMetricsOverride');
 
   await page.send('Runtime.evaluate', { expression: "location.hash = '#/p/fluid-toggle'" });
   await poll(async () => {

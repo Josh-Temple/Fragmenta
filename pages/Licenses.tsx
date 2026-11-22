@@ -4,7 +4,7 @@ import { patternRights } from '../data/pattern-rights';
 
 const Licenses: React.FC = () => {
   const navigate = useNavigate();
-  return <main className="px-5 pb-28">
+  return <div className="px-5 pb-28">
     <header className="flex items-center gap-3 py-4">
       <button type="button" onClick={() => navigate(-1)} aria-label="Go back"
         className="size-11 rounded-full hover:bg-ink/5 focus-visible:outline-2 focus-visible:outline-primary">
@@ -50,7 +50,7 @@ const Licenses: React.FC = () => {
         This page does not make claims about dependencies not installed in Fragmenta.</p>
       <Link to="/browse" className="inline-block text-primary underline">Browse patterns</Link>
     </section>
-  </main>;
+  </div>;
 };
 export default Licenses;
 
