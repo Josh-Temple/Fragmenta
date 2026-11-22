@@ -1151,7 +1151,7 @@ try {
   for (const width of [360, 1280]) {
     await page.send('Emulation.setDeviceMetricsOverride', { width, height: 800, deviceScaleFactor: 1, mobile: false });
     for (const [query, condition] of [
-      ['C-089', "document.querySelector('#composition-results-heading') && document.querySelector('a[href*=\"id=C-089\"]')"],
+      ['C-089', "!!document.querySelector('#composition-results-heading') && !!document.querySelector('a[href*=\"id=C-089\"]')"],
       ['idea-components-06', "document.querySelector('[role=status]')?.textContent.includes('検索結果 1件（公開コンテンツ 0件、未レビューの企画 1件）')"],
       ['ガラス', "document.querySelector('nav[aria-label=検索結果の分類]')?.querySelectorAll('button').length > 1"],
     ]) {
