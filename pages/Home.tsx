@@ -21,7 +21,6 @@ const Home: React.FC = () => {
         <p lang="en" className="text-lg font-bold">Fragmenta<span className="ml-2 text-xs font-mono font-normal text-ink-muted">UI / DESIGN / TOOLS</span></p>
       </header>
       <section className="px-6 pt-8 pb-6" aria-labelledby="home-heading">
-        <p className="text-xs font-mono text-ink-muted">見つける。試す。調整する。</p>
         <h1 id="home-heading" className="mt-3 text-4xl font-bold leading-tight tracking-tight">つくりたいUIを、<br />具体的に。</h1>
         <p className="mt-4 text-sm leading-relaxed text-ink/80">動く部品とデザインの特徴を見比べ、コードやAIへの指示文を確認できます。色と文字は実用ツールで調整できます。</p>
         <form role="search" onSubmit={search} className="mt-6">
@@ -35,7 +34,7 @@ const Home: React.FC = () => {
       <section aria-labelledby="start-heading" className="px-6 pb-5">
         <h2 id="start-heading" className="text-lg font-bold">何から始めますか</h2>
         <div className="mt-3 divide-y divide-ink/20 border-y border-ink/20">
-          {[{ path: '/styles', title: 'デザインの方向を決める', detail: `${designStyles.length}スタイルを比較し、AIに伝える` }, { path: '/browse', title: '部品やレイアウトを探す', detail: `${Object.keys(definitions).length}パターンの動作と実装を見る` }, { path: '/tools', title: '色と文字を調整する', detail: '自分の配色・文章で試し、CSSをコピー' }, { path: '/knowledge', title: 'デザインの企画を横断して探す', detail: '180件の企画案と関連する項目をたどる（未制作）' }].map(item => (
+          {[{ path: '/composition', title: '構図を図で見比べる', detail: '配置例と対照図を見て、要素の位置や余白の違いを確かめる' }, { path: '/styles', title: 'デザインの方向を決める', detail: `${designStyles.length}スタイルを比較し、AIに伝える` }, { path: '/browse', title: '部品やレイアウトを探す', detail: `${Object.keys(definitions).length}パターンの動作と実装を見る` }, { path: '/tools', title: '色と文字を調整する', detail: '自分の配色・文章で試し、CSSをコピー' }, { path: '/knowledge', title: 'デザインの企画を横断して探す', detail: '180件の企画案を読み、関連する項目をたどる。各企画の作例は未制作です。' }].map(item => (
             <Link key={item.path} to={item.path} className="motion-control flex items-center justify-between gap-3 rounded py-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
               <span><strong className="text-sm">{item.title}</strong><span className="mt-1 block text-xs leading-relaxed text-ink-muted">{item.detail}</span></span><span aria-hidden="true">→</span>
             </Link>
@@ -43,7 +42,6 @@ const Home: React.FC = () => {
         </div>
       </section>
       <section aria-labelledby="live-tools-home-heading" className="mx-6 mt-4 rounded-xl border border-ink/30 bg-surface-highlight p-5">
-        <p className="text-xs font-mono text-ink-muted">TOOLS / {liveTools.length} AVAILABLE</p>
         <h2 id="live-tools-home-heading" className="mt-2 text-lg font-bold">いま使える実用ツール</h2>
         <div className="mt-4 space-y-4">{liveTools.map(tool => <div key={tool.id}><Link to={tool.path} className="inline-block py-1 text-sm font-bold underline underline-offset-4">{tool.titleJa}</Link><p className="mt-1 text-xs leading-relaxed text-ink-muted">{tool.description}</p></div>)}</div>
       </section>
