@@ -196,7 +196,7 @@ const Composition: React.FC = () => {
     </article> : <section className="py-6" aria-labelledby="composition-atlas-title">
       <h2 id="composition-atlas-title" className="text-xl font-bold">構図の一覧</h2>
       <p className="mt-2 text-sm text-ink-muted">図を見ながら選択できます。図解と説明はいずれも未レビューの編集案です。</p>
-      {filtered.length > 0 ? <div className="mt-5 grid grid-cols-1 gap-4 lg:grid-cols-2">
+      {filtered.length > 0 ? <div className="mt-5 grid grid-cols-1 gap-4">
         {filtered.slice(0, visibleCount).map(item => <article key={item.id} className="min-w-0 rounded-xl border border-ink-border bg-surface p-4">
           <p className="text-xs text-ink">{item.id} ・ {compositionCategoryLabel(item.categoryId)}</p>
           <h3 className="mt-2 text-base font-bold">{item.titleJa}</h3>
@@ -217,10 +217,10 @@ const Composition: React.FC = () => {
           </div>}
           <p className="mt-2 text-sm leading-relaxed"><strong>見比べるポイント：</strong>{item.comparisonPoint}</p>
           {item.diagramNote && <p className="mt-2 text-xs leading-relaxed text-ink-muted"><strong>模式図の限界：</strong>{item.diagramNote}</p>}
-          <Link data-composition-card="true" to={detailHref(item.id)}
+          <Link data-composition-card="true" aria-label={`${item.titleJa}の比較図とAI指示例を見る`} to={detailHref(item.id)}
             className="mt-3 inline-flex min-h-11 items-center text-sm font-semibold underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2">比較図とAI指示例を見る</Link>
         </article>)}
-      </div> : <p role="status" className="mt-4 text-sm">検索条件に一致する構図はありません。条件を解除して再度お試しください。</p>}
+      </div> : <p role="status" className="mt-4 text-sm">検索条件に一致する構図はありません。 <Link to="/composition?view=atlas" className="inline-flex min-h-11 items-center font-semibold underline underline-offset-4">条件を解除して一覧に戻る</Link></p>}
       {visibleCount < filtered.length && <button type="button" onClick={() => setVisibleCount(count => count + 24)}
         className="mt-5 min-h-11 w-full rounded-lg border border-ink-border px-4 py-3 text-sm font-semibold focus-visible:outline-2 focus-visible:outline-offset-2">さらに表示（残り{filtered.length - visibleCount}件）</button>}
       <p role="status" className="mt-3 text-sm text-ink-muted">{Math.min(filtered.length, visibleCount)}件表示 / {filtered.length}件該当</p>
