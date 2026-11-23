@@ -21,10 +21,10 @@ const Home: React.FC = () => {
         <p lang="en" className="text-lg font-bold">Fragmenta<span className="ml-2 text-xs font-mono font-normal text-ink-muted">UI / DESIGN / TOOLS</span></p>
       </header>
       <section className="px-6 pt-8 pb-6" aria-labelledby="home-heading">
-        <h1 id="home-heading" className="mt-3 text-4xl font-bold leading-tight tracking-tight">つくりたいUIを、<br />具体的に。</h1>
+        <h1 id="home-heading" className="mt-3 text-4xl font-bold leading-tight tracking-tight">図と作例で学ぶ、UIデザイン</h1>
         <p className="mt-4 text-sm leading-relaxed text-ink/80">動く部品とデザインの特徴を見比べ、コードやAIへの指示文を確認できます。色と文字は実用ツールで調整できます。</p>
         <form role="search" onSubmit={search} className="mt-6">
-          <label htmlFor="home-search" className="block text-sm font-semibold">パターン・スタイル・ツールを検索</label>
+          <label htmlFor="home-search" className="block text-sm font-semibold">構図・スタイル・UIパターンなどを検索</label>
           <div className="mt-2 flex gap-2">
             <input id="home-search" type="search" value={searchQuery} onChange={event => setSearchQuery(event.target.value)} placeholder="例：記事、ガラス、行間" className="min-w-0 flex-1 rounded-lg border border-ink/40 bg-surface-highlight px-3 py-3 text-base text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink" />
             <button type="submit" className="motion-control rounded-lg bg-ink px-4 py-3 text-sm font-bold text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">検索</button>
@@ -32,10 +32,10 @@ const Home: React.FC = () => {
         </form>
       </section>
       <section aria-labelledby="start-heading" className="px-6 pb-5">
-        <h2 id="start-heading" className="text-lg font-bold">何から始めますか</h2>
-        <div className="mt-3 divide-y divide-ink/20 border-y border-ink/20">
+        <h2 id="start-heading" className="text-lg font-bold">目的から探す</h2>
+        <div className="mt-3 grid gap-3 sm:grid-cols-2">
           {[{ path: '/composition?view=atlas', title: '構図を図で見比べる', detail: '配置例と対照図を見て、要素の位置や余白の違いを確かめる' }, { path: '/styles', title: 'デザインの方向を決める', detail: `${designStyles.length}スタイルを比較し、AIに伝える` }, { path: '/browse', title: '部品やレイアウトを探す', detail: `${Object.keys(definitions).length}パターンの動作と実装を見る` }, { path: '/tools', title: '色と文字を調整する', detail: '自分の配色・文章で試し、CSSをコピー' }, { path: '/knowledge', title: 'デザインの企画を横断して探す', detail: '180件の企画案を読み、関連する項目をたどる。各企画の作例は未制作です。' }].map(item => (
-            <Link key={item.path} to={item.path} className="motion-control flex items-center justify-between gap-3 rounded py-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
+            <Link key={item.path} to={item.path} className="motion-control flex items-center justify-between gap-3 rounded-xl border border-ink/30 bg-surface p-4 hover:border-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
               <span><strong className="text-sm">{item.title}</strong><span className="mt-1 block text-xs leading-relaxed text-ink-muted">{item.detail}</span></span><span aria-hidden="true">→</span>
             </Link>
           ))}
@@ -52,7 +52,7 @@ const Home: React.FC = () => {
       </section>
       <section aria-labelledby="featured-heading" className="mt-7 px-6">
         <div className="flex items-baseline justify-between gap-3"><h2 id="featured-heading" className="text-lg font-bold">ページづくりに役立つ例</h2><Link to="/browse" className="py-2 text-xs font-semibold underline underline-offset-4">すべて見る</Link></div>
-        <div className="mt-3 grid grid-cols-2 gap-4">{featuredPatterns.map(definition => <PatternCard key={definition.id} definition={definition} />)}</div>
+        <div className="mt-3 grid grid-cols-1 gap-4 sm:grid-cols-2">{featuredPatterns.map(definition => <PatternCard key={definition.id} definition={definition} />)}</div>
         <p className="mt-3 text-xs leading-relaxed text-ink-muted">コードのコピーは利用許諾を意味しません。使う前に<Link to="/licenses" className="font-semibold underline underline-offset-4">権利・利用条件</Link>を確認してください。</p>
       </section>
       <section aria-labelledby="collections-home-heading" className="mx-6 mt-7 border-t border-ink-border pt-5">
