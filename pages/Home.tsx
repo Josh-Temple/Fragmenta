@@ -21,7 +21,7 @@ const Home: React.FC = () => {
         <p lang="en" className="text-lg font-bold">Fragmenta<span className="ml-2 text-xs font-mono font-normal text-ink-muted">UI / DESIGN / TOOLS</span></p>
       </header>
       <section className="px-6 pt-8 pb-6" aria-labelledby="home-heading">
-        <h1 id="home-heading" className="mt-3 text-4xl font-bold leading-tight tracking-tight">図と作例で学ぶ、UIデザイン</h1>
+        <h1 id="home-heading" className="mt-3 text-4xl font-bold leading-tight tracking-tight">つくりたいUIを、図と作例から探す</h1>
         <p className="mt-4 text-sm leading-relaxed text-ink/80">動く部品とデザインの特徴を見比べ、コードやAIへの指示文を確認できます。色と文字は実用ツールで調整できます。</p>
         <form role="search" onSubmit={search} className="mt-6">
           <label htmlFor="home-search" className="block text-sm font-semibold">構図・スタイル・UIパターンなどを検索</label>
