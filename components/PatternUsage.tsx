@@ -1,3 +1,5 @@
+import CopyReviewBrief from './CopyReviewBrief';
+import { getPatternSelection, patternSelectionBrief } from '../data/pattern-selection';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import type { PatternGuide } from '../data/pattern-guides';
@@ -6,6 +8,14 @@ import { definitions } from '../data/definitions';
 
 const PatternUsage: React.FC<{ guide: PatternGuide; id: string }> = ({ guide, id }) => (
   <div lang="en" className="space-y-4 text-sm leading-relaxed text-ink-muted">
+    <div lang="ja" className="space-y-2">
+      <h3 className="font-semibold text-ink">このパターンを選ぶとき</h3>
+      <p><strong>向く場面　</strong>{patternChoices[id].useJa}</p>
+      <p><strong>向きにくい場面　</strong>{patternChoices[id].avoidJa}</p>
+      <p><strong>実画面での確認　</strong>{patternChoices[id].checkJa}</p>
+      <p className="text-xs">{getPatternSelection(id).sourceScope}</p>
+      <CopyReviewBrief text={patternSelectionBrief(id)} />
+    </div>
     <div><h3 className="font-semibold text-ink mb-2">When to use it</h3><p>{guide.useWhen}</p></div>
     {patternChoices[id] && <>
       <div><h3 className="font-semibold text-ink mb-2">When it is not a good fit</h3><p>{patternChoices[id].avoidWhen}</p></div>
@@ -41,7 +51,7 @@ const PatternUsage: React.FC<{ guide: PatternGuide; id: string }> = ({ guide, id
       <ul className="space-y-3">
         {patternChoices[id].related.map(item => <li key={item.id}>
           <Link to={'/p/' + item.id} className="inline-flex min-h-11 items-center py-2 font-semibold text-ink underline underline-offset-4 rounded focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">{definitions[item.id].title}</Link>
-          <p>{item.reason}</p>
+          <p lang="ja">{item.reasonJa}</p><p>{item.reason}</p>
         </li>)}
       </ul>
     </section>}

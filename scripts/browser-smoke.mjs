@@ -269,6 +269,8 @@ await poll(async () => (await fetch(baseUrl)).ok, 'built Vite preview server');
 for (const [pathname, marker] of [
   ['/knowledge/ideas.json', '"schemaVersion"'],
   ['/knowledge/composition-guides.json', '"composition-guides"'],
+  ['/knowledge/style-guides.json', 'design-style-selection'],
+  ['/knowledge/pattern-guides.json', 'ui-pattern-selection'],
   ['/knowledge/ideas.md', '# Fragmenta'],
   ['/llms.txt', '# Fragmenta'],
 ]) {
@@ -461,7 +463,7 @@ try {
   // The clipboard API below is a stub: assert exact bytes, not just a success message.
   // Actual OS clipboard readback is a separate, still-required acceptance test.
   const exportedComposition = JSON.parse(await readFile(join(process.cwd(), 'public/knowledge/composition-guides.json'), 'utf8'));
-  const c001Instruction = exportedComposition.guides.find(g => g.id === 'C-001')?.aiInstruction;
+  const c001Instruction = exportedComposition.guides.find(g => g.id === 'C-001')?.reviewBrief;
   if (compositionResult?.selected !== '三分割法' ||
     compositionResult.copied !== c001Instruction ||
     compositionResult.visibleAi !== c001Instruction ||
@@ -550,11 +552,113 @@ try {
   }
   console.log('PASS composition atlas 24-to-120 pagination, 240 SVG elements (DOM only)');
 
+  // Follow an exact purpose query through global search, then compare two briefs for one guide.
+  await page.send('Runtime.evaluate', { expression: "location.hash = '#/search?q=' + encodeURIComponent('孤独感')" });
+  await poll(async () => {
+    const r = await page.send('Runtime.evaluate', {
+      expression: "document.querySelector('#composition-results-heading')?.textContent.includes('6') && !!document.querySelector('a[href*=C-073]')",
+      returnByValue: true,
+    });
+    return r.result?.value;
+  }, 'global purpose search');
+  await page.send('Runtime.evaluate', { expression: "document.querySelector('a[href*=C-073]').click()" });
+  await poll(async () => {
+    const r = await page.send('Runtime.evaluate', {
+      expression: "document.querySelector('#composition-purpose-reason')?.textContent.includes('孤独感') && document.querySelector('[data-composition-ai-text]')?.textContent.includes('Loneliness')",
+      returnByValue: true,
+    });
+    return r.result?.value;
+  }, 'global detail retains purpose and source section');
+  const guide17 = exportedComposition.guides.find(g => g.id === 'C-017');
+  for (const purposeId of ['power', 'solitude']) {
+    const choice = guide17.discovery.choices.find(c => c.purposeId === purposeId);
+    await page.send('Runtime.evaluate', { expression: 'location.hash = ' + JSON.stringify(choice.href.slice(1)) });
+    await poll(async () => {
+      const r = await page.send('Runtime.evaluate', {
+        expression: 'document.querySelector("#composition-purpose-reason")?.textContent.includes(' + JSON.stringify(choice.titleJa) + ') && document.querySelector("#composition-title")?.textContent === "主役の画面占有率"',
+        returnByValue: true,
+      });
+      return r.result?.value;
+    }, 'C-017 ' + purposeId);
+    const captured = await page.send('Runtime.evaluate', {
+      expression: `(async () => {
+        const original = Object.getOwnPropertyDescriptor(navigator, 'clipboard');
+        let copied;
+        Object.defineProperty(navigator, 'clipboard', {configurable:true,value:{writeText:async text=>{copied=text;}}});
+        try { document.querySelector('[data-composition-ai-copy]').click(); await Promise.resolve(); return copied; }
+        finally { if(original)Object.defineProperty(navigator,'clipboard',original);else delete navigator.clipboard; }
+      })()`, awaitPromise: true, returnByValue: true,
+    });
+    const value = captured.result?.value ?? '';
+    if (![choice.reasonJa, choice.cautionJa, choice.aiInstruction, choice.review.checkJa, choice.review.alternativeId].every(s => value.includes(s)) ||
+        (purposeId === 'power' && value.includes(guide17.aiInstruction))) throw Error('Incorrect purpose-specific brief for ' + purposeId);
+  }
+  console.log('PASS global purpose search, detail and purpose-specific AI copy');
+
+  const readCatalog = async file => JSON.parse(await readFile(join(process.cwd(), 'public/knowledge', file), 'utf8'));
+  const styleGuide = (await readCatalog('style-guides.json')).guides.find(g => g.id === 'minimalism');
+  const patternGuide = (await readCatalog('pattern-guides.json')).guides.find(g => g.id === 'smart-skeleton');
+  const ideaCatalog = await readCatalog('ideas.json');
+  const idea = ideaCatalog.ideas.find(g => g.id === 'idea-ai-reference-05');
+  const reviewCases = [
+    ...[styleGuide, patternGuide].map(g => ({ id: g.id, href: g.href, check: g.check, exact: g.reviewBrief })),
+    { id: idea.id, href: '/#/knowledge/' + idea.id, check: idea.editorial.reviewChecks[0],
+      fragments: [idea.id, ...idea.editorial.appropriateUses, ...idea.editorial.pitfalls,
+        ...idea.editorial.reviewChecks, ...idea.editorial.sourceIds.map(id => ideaCatalog.sourceCatalog[id].scope)] },
+  ];
+  await page.send('Page.bringToFront');
+  let nativeCopies = 0;
+  for (const width of [390, 1280]) {
+    await page.send('Emulation.setDeviceMetricsOverride', { width, height: 864, deviceScaleFactor: 1, mobile: width === 390 });
+    for (const sample of reviewCases) {
+      await page.send('Runtime.evaluate', { expression: 'location.hash = ' + JSON.stringify(sample.href.split('#')[1]) });
+      await poll(async () => {
+        const r = await page.send('Runtime.evaluate', {
+          expression: 'document.querySelector("main")?.innerText.includes(' + JSON.stringify(sample.check) + ')',
+          returnByValue: true,
+        });
+        return r.result?.value;
+      }, 'selection criteria visible for ' + sample.id);
+      const r = await page.send('Runtime.evaluate', {
+        expression: `(async () => {
+          const button = [...document.querySelectorAll('main button')].find(b => b.textContent.trim() === 'AIに渡す判断材料をコピー');
+          const overflow = document.documentElement.scrollWidth - innerWidth;
+          if (!button) throw Error('Review button missing');
+          try {
+            await navigator.clipboard.writeText('__start__');
+            button.click();
+            for (let i = 0; i < 20; i++) {
+              await new Promise(r => setTimeout(r, 30));
+              const value = await navigator.clipboard.readText();
+              if(value !== '__start__') return { value, overflow, native:true };
+            }
+            throw Error('native clipboard did not receive the review');
+          } catch (error) {
+            if (!['NotAllowedError','SecurityError'].includes(error.name) && navigator.clipboard?.readText) throw error;
+          }
+          const original = Object.getOwnPropertyDescriptor(navigator,'clipboard');
+          let value;
+          try {
+            Object.defineProperty(navigator,'clipboard',{ configurable:true,value:{writeText:async text=>{value=text;}}});
+            button.click(); await Promise.resolve(); return {value,overflow,native:false};
+          } finally { if(original)Object.defineProperty(navigator,'clipboard',original);else delete navigator.clipboard; }
+        })()`, awaitPromise: true, returnByValue: true,
+      });
+      const observed = r.result?.value;
+      if (r.exceptionDetails || !observed?.value || observed.overflow > 1 ||
+          (sample.exact ? sample.exact !== observed.value : !sample.fragments.every(s => observed.value.includes(s))))
+        throw Error('Review copy or layout failed: ' + sample.id + ' / ' + width + 'px');
+      if (observed.native) nativeCopies++;
+    }
+  }
+  await page.send('Emulation.clearDeviceMetricsOverride');
+  console.log('PASS style, pattern and knowledge review copy at 390/1280px; native Chromium clipboard ' + nativeCopies + '/6');
+
   // Purpose-based discovery: curated choices, rationale, direct link, 390px and zero results.
   await page.send('Runtime.evaluate', { expression: "location.hash = '#/composition?view=atlas&purpose=solitude'" });
   await poll(async () => {
     const response = await page.send('Runtime.evaluate', {
-      expression: "document.querySelectorAll('#composition-purpose-choices button').length===8 && document.querySelectorAll('a[data-composition-card]').length===6 && document.body.innerText.includes('選択理由') && document.body.innerText.includes('適用条件')",
+      expression: "document.querySelectorAll('#composition-purpose-choices button').length===" + exportedComposition.discovery.purposes.length + " && document.querySelectorAll('a[data-composition-card]').length===6 && document.body.innerText.includes('選択理由') && document.body.innerText.includes('適用条件')",
       returnByValue: true,
     });
     return response.result?.value;
@@ -662,13 +766,16 @@ try {
   });
   await poll(async () => {
     const response = await page.send('Runtime.evaluate', {
-      expression: "({cards:document.querySelectorAll('a[data-composition-card]').length, onlyC073:[...document.querySelectorAll('a[data-composition-card]')].every(a=>a.closest('article')?.innerText.includes('C-073')), reason:document.body.innerText.includes('選択理由'), caution:document.body.innerText.includes('注意点・適用条件')})",
+      expression: "({cards:document.querySelectorAll('a[data-composition-card]').length, ids:[...document.querySelectorAll('a[data-composition-card]')].map(a=>new URLSearchParams(a.hash.split('?')[1]).get('id')), reason:document.body.innerText.includes('選択理由'), caution:document.body.innerText.includes('注意点・適用条件')})",
       returnByValue: true,
     });
     const observed = response.result?.value;
-    return observed?.cards === 1 && observed.onlyC073 && observed.reason && observed.caution;
+    const expected = exportedComposition.guides.filter(g => g.categoryId === 'narrative' &&
+      g.discovery.purposes.includes('solitude')).map(g => g.id);
+    return observed?.cards === expected.length && JSON.stringify(observed.ids) === JSON.stringify(expected) &&
+      observed.reason && observed.caution;
   }, 'combined category/purpose/keyword filter');
-  console.log('PASS composition combined filters: solitude + narrative + 孤独 => C-073');
+  console.log('PASS composition combined filters: solitude + narrative + 孤独');
 
   // Exercise the actual React search form with CDP keyboard events, not a
   // direct location.hash assignment or a synthetic DOM submit event.

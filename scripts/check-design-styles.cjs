@@ -1,24 +1,8 @@
 /* Node 22 smoke test: validate the atlas independently of network and browser. */
 const fs = require('node:fs');
 const path = require('node:path');
-const vm = require('node:vm');
-const ts = require('typescript-legacy');
+const { load: loadTs } = require('./load-data.cjs');
 const root = path.resolve(__dirname, '..');
-
-function loadTs(file) {
-  const source = fs.readFileSync(path.join(root, file), 'utf8');
-  const result = ts.transpileModule(source, {
-    fileName: file,
-    compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 },
-    reportDiagnostics: true,
-  });
-  if ((result.diagnostics || []).some(d => d.category === ts.DiagnosticCategory.Error)) {
-    throw Error('TypeScript syntax error: ' + file);
-  }
-  const exports = {};
-  vm.runInNewContext(result.outputText, { exports }, { timeout: 3000, filename: file });
-  return exports;
-}
 function check(assertion, label) { if (!assertion) throw Error('FAIL atlas: ' + label); }
 
 const { designStyleGroups, designStyles } = loadTs('data/design-styles.ts');

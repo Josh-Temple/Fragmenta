@@ -36,7 +36,9 @@ const KnowledgeBase: React.FC = () => {
       <div className="mt-4 flex flex-wrap gap-3 text-sm">
         <a href="/knowledge/ideas.json" className="inline-flex min-h-11 items-center underline underline-offset-4">AI向けJSON</a>
         <a href="/knowledge/ideas.md" className="inline-flex min-h-11 items-center underline underline-offset-4">Markdown一覧</a>
-        <Link to="/composition" className="inline-flex min-h-11 items-center underline underline-offset-4 font-semibold">構図ガイド（優先24件・模式図）</Link>
+        <a href="/knowledge/style-guides.json" className="inline-flex min-h-11 items-center underline underline-offset-4">デザインスタイルの用途 JSON</a>
+        <a href="/knowledge/pattern-guides.json" className="inline-flex min-h-11 items-center underline underline-offset-4">UIパターンの用途 JSON</a>
+        <Link to="/composition" className="inline-flex min-h-11 items-center underline underline-offset-4 font-semibold">構図ガイド（120件・模式図）</Link>
       </div>
     </header>
     <section aria-labelledby="knowledge-search-heading" className="border-b border-ink-border py-6">

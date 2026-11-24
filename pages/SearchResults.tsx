@@ -1,3 +1,5 @@
+import { styleSearchFields } from '../data/design-style-guidance';
+import { patternChoices } from '../data/pattern-choices';
 import React, { useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { definitions, getPatternKind } from '../data/definitions';
@@ -13,8 +15,8 @@ const SearchResults: React.FC = () => {
   const query = (searchParams.get('q') || '').trim();
   const [localQuery, setLocalQuery] = useState(query);
   useEffect(() => { setLocalQuery(query); }, [query]);
-  const patterns = Object.values(definitions).filter(item => matchesSearch(query, [item.title, item.description, getPatternKind(item), item.category, ...item.tags, patternSearchAliases[item.id] ?? '']));
-  const styles = designStyles.filter(item => matchesSearch(query, [item.name, item.ja, item.summary, item.use, ...item.features, ...item.avoid, styleSearchAliases[item.id] ?? '', 'デザイン スタイル']));
+  const patterns = Object.values(definitions).filter(item => matchesSearch(query, [item.title, item.description, getPatternKind(item), item.category, ...item.tags, patternChoices[item.id].useJa, patternChoices[item.id].avoidJa, patternChoices[item.id].checkJa, patternSearchAliases[item.id] ?? '']));
+  const styles = designStyles.filter(item => matchesSearch(query, [...styleSearchFields(item), styleSearchAliases[item.id] ?? '', 'デザイン スタイル']));
   const tools = liveTools.filter(item => matchesSearch(query, [item.title, item.titleJa, item.description, ...item.tags, 'ツール']));
   const total = patterns.length + styles.length + tools.length;
   const knowledge = query.trim() ? knowledgeIdeas.filter(item => matchesKnowledge(item, query)) : [];

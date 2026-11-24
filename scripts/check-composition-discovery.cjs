@@ -1,6 +1,9 @@
 // Structural integrity of the unreviewed discovery sidecar and generated AI export.
 // Passing this test does not prove editorial accuracy, visual inspection or original-source verification.
 const fs = require('node:fs');
+const { load } = require('./load-data.cjs');
+const { matchesComposition, compositionBrief } = load('data/composition');
+const { getCompositionDiscovery } = load('data/composition-discovery');
 const path = require('node:path');
 const root = path.join(__dirname, '..');
 const read = name => JSON.parse(fs.readFileSync(path.join(root, name), 'utf8'));
@@ -10,9 +13,9 @@ const legacy = read('data/content-ideas.json'), out = read('public/knowledge/com
 const ids = new Set(src.guides.map(g => g.id)), old = new Set(legacy.ideas.map(i => i.id));
 const categories = new Set(src.categories.map(c => c.id));
 check(src.guides.length === 120 && ids.size === 120 && legacy.ideas.length === 180 && old.size === 180,'catalog counts');
-check(d.schemaVersion === 1 && d.kind === 'composition-discovery' && d.status === 'draft_unreviewed','sidecar contract');
-check(d.purposes.length === 8 && new Set(d.purposes.map(p=>p.id)).size === 8,'purpose IDs');
-check(d.purposes.reduce((n,p)=>n+p.choices.length,0) === 50,'expected 50 purpose choices');
+check(d.schemaVersion === 2 && d.kind === 'composition-discovery' && d.status === 'draft_unreviewed','sidecar contract');
+check(d.purposes.length === 15 && new Set(d.purposes.map(p=>p.id)).size === 15,'purpose IDs');
+check(new Set(d.purposes.flatMap(p => p.choices.map(c => c.guideId))).size === ids.size, 'every guide has a purpose');
 check(d.relatedComposition.length === 20,'expected 20 related links');
 check(out.schemaVersion === src.schemaVersion && out.kind === src.kind && out.status === src.status,'source contract');
 check(JSON.stringify(out.discovery) === JSON.stringify({
@@ -42,7 +45,8 @@ for(const g of src.guides) {
   check(g.relatedLegacyIds.every(x=>old.has(x)),'broken legacy link '+g.id);
   const x=exported.get(g.id);
   check(Boolean(x),'missing exported guide '+g.id);
-  const {discovery, ...canonical}=x;
+  const {discovery, href, reviewBrief, ...canonical}=x;
+  check(href === '/#/composition?id='+g.id && reviewBrief === compositionBrief(g), 'detail and brief '+g.id);
   check(JSON.stringify(canonical)===JSON.stringify(g),'canonical field drift '+g.id);
   check(g.reviewStatus==='draft_unreviewed' && g.evidenceStatus==='not_checked','unreviewed status changed '+g.id);
   const purposes=d.purposes.filter(p=>p.choices.some(c=>c.guideId===g.id));
@@ -58,12 +62,38 @@ for(const g of src.guides) {
     aiGuidance:{composition:g.aiInstruction,style:null},
     discoveryStatus:'draft_unreviewed'
   };
-  check(JSON.stringify(discovery)===JSON.stringify(expected),'all AI discovery fields '+g.id);
+  for (const [key, value] of Object.entries(expected))
+    check(JSON.stringify(discovery[key]) === JSON.stringify(value), 'legacy discovery field '+g.id+'/'+key);
+  check(JSON.stringify(discovery) === JSON.stringify(getCompositionDiscovery(g)), 'UI and export '+g.id);
+  const review = d.reviewByGuide[g.id];
+  check(review?.checkJa.length >= 10 && review.alternativeReasonJa.length >= 10 &&
+    ids.has(review.alternativeId) && review.alternativeId !== g.id, 'usable alternative '+g.id);
+  for (const c of discovery.choices) {
+    const brief = compositionBrief(g, c.purposeId);
+    const rawChoice = d.purposes.find(p => p.id === c.purposeId).choices.find(v => v.guideId === g.id);
+    const effectiveReview = rawChoice.review ?? review;
+    check(c.aiInstruction === (rawChoice.aiInstruction ?? g.aiInstruction) &&
+      JSON.stringify(c.review) === JSON.stringify(effectiveReview), 'effective guidance '+g.id);
+    for (const field of [c.titleJa, c.reasonJa, c.cautionJa, c.aiInstruction,
+      c.review.checkJa, c.review.alternativeId, c.review.alternativeReasonJa])
+      check(brief.includes(field), 'purpose lost from brief '+g.id+'/'+c.purposeId);
+    check(c.href.endsWith('purpose='+c.purposeId), 'purpose link '+g.id);
+    if (c.sourceSupport) check(g.sourceIds.includes(c.sourceSupport.sourceId) &&
+      brief.includes(c.sourceSupport.section) && brief.includes(c.sourceSupport.scopeJa), 'source scope '+g.id);
+  }
 }
+for (const p of d.purposes) {
+  const fromSearch = src.guides.filter(g => matchesComposition(g, p.titleJa)).map(g => g.id).sort();
+  const fromFilter = p.choices.map(c => c.guideId).sort();
+  check(JSON.stringify(fromSearch) === JSON.stringify(fromFilter), 'search/filter mismatch '+p.id);
+}
+const sizeGuide = src.guides.find(g => g.id === 'C-017');
+check(!compositionBrief(sizeGuide, 'power').includes(sizeGuide.aiInstruction) &&
+  compositionBrief(sizeGuide, 'solitude').includes(sizeGuide.aiInstruction), 'purpose-specific instruction');
 const relation=out.guides.find(g=>g.id==='C-110').discovery.relatedComposition.find(r=>r.targetId==='C-117');
 check(relation?.relationType==='contrast' && relation.reasonJa.includes('画風固定'),'C-110/C-117 fixed variable');
 const ui=fs.readFileSync(path.join(root,'pages/Composition.tsx'),'utf8');
 check(ui.includes('composition-purpose-choices') && ui.includes('selectedChoice.cautionJa') &&
   ui.includes('detailHref(item.id)') && ui.includes('preferredGuideId') &&
   ui.includes('data-composition-ai-text'),'UI discovery and navigation contract');
-console.log('PASS 120 guides/all AI fields, 8 purposes/50 choices, 20 links, 180 legacy IDs (structural only)');
+console.log('PASS 120 guides/all AI fields, 15 purposes/all purpose choices, 20 links, 180 legacy IDs (structural only)');

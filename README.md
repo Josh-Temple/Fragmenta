@@ -105,3 +105,9 @@ npm run build
 The original AI Studio version remains available here:
 
 https://ai.studio/apps/drive/1uJLAuPEgNAGCtksgP7BBwyuN_sue_Ee2
+
+## 用途から選び、AIに判断材料を渡す
+
+構図ガイドでは「孤独感」などの目的を選ぶか、その言葉を検索すると対応する構図を比較できます。詳細画面の「指示文をコピー」で、選んだ目的、注意点、実際の案で確かめること、代案、出典の対象範囲をまとめて渡せます。デザインスタイル、UIパターン、知識ベース各項目にも「AIに渡す判断材料をコピー」があります。利用者の目的や実際の画像を添えて、適用条件に合うかを確認できます。
+
+ビルドで生成される `/llms.txt` から、`/knowledge/composition-guides.json`、`/knowledge/style-guides.json`、`/knowledge/pattern-guides.json`、`/knowledge/ideas.json` を参照できます。用途の助言は編集下書きで、各資料の対象範囲や内容の確認状況も収録しています。

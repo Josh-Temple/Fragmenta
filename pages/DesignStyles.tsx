@@ -1,3 +1,6 @@
+import CopyReviewBrief from '../components/CopyReviewBrief';
+import { getStyleSelection, styleSelectionBrief, styleSearchFields } from '../data/design-style-guidance';
+import { matchesSearch, styleSearchAliases } from '../data/discovery';
 import React, { useEffect, useMemo, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { DesignStyleSpecimen } from '../components/DesignStyleSpecimen';
@@ -21,14 +24,14 @@ const DesignStyles: React.FC = () => {
   const [mixEnabled, setMixEnabled] = useState(false);
   const [secondaryWeight, setSecondaryWeight] = useState(30);
   const first = designStyles.find(item => item.id === primary) ?? designStyles[0];
+  const selection = getStyleSelection(first);
   const relatedKnowledge = catalog.ideas.filter(item => item.relatedExisting.some(ref =>
     ref.kind === 'style' && ref.id === first.id));
   const second = compare === 'none' ? null : designStyles.find(item => item.id === compare) ?? null;
   const results = useMemo(() => {
-    const q = query.trim().normalize('NFKC').toLowerCase();
     return designStyles.filter(item =>
       (family === 'all' || item.group === family) &&
-      (!q || [item.name, item.ja, item.summary, ...item.features].join(' ').normalize('NFKC').toLowerCase().includes(q))
+      matchesSearch(query, [...styleSearchFields(item), styleSearchAliases[item.id] ?? ''])
     );
   }, [family, query]);
   const canMix = Boolean(second && first.id !== second.id);
@@ -210,6 +213,16 @@ const DesignStyles: React.FC = () => {
         <h2 id="recipe-heading" className="text-xl font-bold">特徴とAI用の指定文</h2>
         <h3 className="mt-4 text-lg font-bold">{first.name} / {first.ja}</h3>
         <p className="mt-2 text-sm leading-relaxed">{first.summary}。{first.use}に向いています。</p>
+        <div className="mt-4 space-y-2 text-sm leading-relaxed">
+          <p><strong>向く理由　</strong>{selection.reason}</p>
+          <p><strong>向きにくい場面　</strong>{selection.avoid}</p>
+          <p><strong>最初に調整すること　</strong>{selection.adjustment}</p>
+          <p><strong>完成画面での確認　</strong>{selection.check}</p>
+          <h4 className="font-bold">条件を変えて試すスタイル</h4>
+          <ul className="space-y-2">{selection.alternatives.map(a => <li key={a.id}><Link to={'/styles?style=' + a.id} className="font-semibold underline">{a.titleJa}</Link>　{a.reason}</li>)}</ul>
+          <p className="text-xs text-ink-muted">{selection.sourceScope}</p>
+          <CopyReviewBrief text={styleSelectionBrief(first)} />
+        </div>
         <h4 className="mt-4 text-sm font-bold">指定するとよい特徴</h4>
         <ul className="mt-2 list-disc pl-5 text-sm leading-loose">
           {first.features.map(value => <li key={value}>{value}</li>)}

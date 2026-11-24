@@ -2,9 +2,9 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import CompositionDiagram from '../components/CompositionDiagram';
 import { compositionCatalog, compositionGuides, compositionCategories,
-  compositionById, compositionCategoryLabel, matchesComposition } from '../data/composition';
+  compositionById, compositionCategoryLabel, matchesComposition, compositionBrief } from '../data/composition';
 import { compositionPurposes, getCompositionPurpose, getCompositionChoice,
-  getCompositionRelations, getCompositionDiscovery } from '../data/composition-discovery';
+  getCompositionRelations, getCompositionDiscovery, purposeFromQuery, getReview } from '../data/composition-discovery';
 
 const Composition: React.FC = () => {
   const [params, setParams] = useSearchParams();
@@ -30,7 +30,11 @@ const Composition: React.FC = () => {
   if (filtered.some(item => item.id === guide.id) && !quickLinks.some(item => item.id === guide.id)) quickLinks.push(guide);
   const preferredGuideId = filtered.some(item => item.id === guide.id) ? guide.id : (filtered[0]?.id ?? guide.id);
   const discovery = getCompositionDiscovery(guide);
-  const selectedChoice = purpose && getCompositionChoice(purpose.id, guide.id);
+  const activePurpose = purpose ?? purposeFromQuery(query);
+  const selectedChoice = activePurpose && getCompositionChoice(activePurpose.id, guide.id);
+  const review = getReview(guide.id, selectedChoice);
+  const brief = compositionBrief(guide, selectedChoice?.purposeId);
+  const displayedChoices = selectedChoice ? [selectedChoice] : discovery.choices;
   const detailHref = (id: string) => {
     const next = new URLSearchParams(params);
     next.delete('view');
@@ -44,7 +48,7 @@ const Composition: React.FC = () => {
   };
   useEffect(() => setInput(query), [query]);
   useEffect(() => setVisibleCount(24), [query, category, purpose?.id]);
-  useEffect(() => setCopyStatus(''), [guide.id]);
+  useEffect(() => setCopyStatus(''), [brief]);
   useEffect(() => {
     if (!atlas && (previousDetailIdRef.current !== guide.id || previousAtlasRef.current)) {
       previousDetailIdRef.current = guide.id;
@@ -56,6 +60,7 @@ const Composition: React.FC = () => {
     const next = new URLSearchParams(params);
     if (!value || value === 'all') next.delete(key);
     else next.set(key, value);
+    if (key === 'q') { next.set('view', 'atlas'); next.delete('id'); }
     setParams(next);
   };
   return <div lang="ja" className="min-w-0 px-5 pb-12">
@@ -136,14 +141,25 @@ const Composition: React.FC = () => {
         className="mt-2 text-2xl font-bold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">{guide.titleJa}</h2>
       <p className="mt-3 text-sm leading-relaxed">{guide.definition}</p>
       {selectedChoice && <section className="mt-4 rounded-lg border border-ink-border bg-surface p-4">
-        <h3 id="composition-purpose-reason" className="font-bold">「{purpose?.titleJa}」から選んだ理由</h3>
+        <h3 id="composition-purpose-reason" className="font-bold">「{selectedChoice.titleJa}」から選んだ理由</h3>
         <p className="mt-2 text-sm">{selectedChoice.reasonJa}</p>
         <p className="mt-2 text-sm"><strong>注意点・適用条件：</strong>{selectedChoice.cautionJa}</p>
       </section>}
       <section aria-labelledby="composition-discovery-details" className="mt-5">
         <h3 id="composition-discovery-details" className="font-bold">用途と制約（編集下書き）</h3>
-        <p className="mt-2 text-sm"><strong>用途候補：</strong>{discovery.useCases.length ? discovery.useCases.join('／') : '個別の用途は未校訂です。'}</p>
-        <p className="mt-2 text-sm"><strong>注意点・適用条件：</strong>{discovery.limitations.length ? discovery.limitations.join(' ') : '個別の適用制約は未校訂です。対照例は誤りや不向きの証拠ではありません。'}</p>
+        {!selectedChoice && discovery.choices.map(choice => <div key={choice.purposeId} className="mt-3 text-sm">
+          <p><strong>{choice.titleJa}</strong>　{choice.reasonJa}</p>
+          <p className="mt-1"><strong>注意点・適用条件：</strong>{choice.cautionJa}</p>
+        </div>)}
+        <p className="mt-3 text-sm"><strong>完成案で確かめること：</strong>{review.checkJa}</p>
+        <p className="mt-2 text-sm"><strong>代案：</strong><Link to={'/composition?id=' + review.alternativeId} className="font-semibold underline underline-offset-4">{review.alternativeId} ・ {compositionById.get(review.alternativeId)?.titleJa}</Link>　{review.alternativeReasonJa}</p>
+        <p className="mt-2 text-xs text-ink-muted">{discovery.scopeNote}</p>
+        {displayedChoices.map(choice => {
+          if (!choice.sourceSupport) return null;
+          const { sourceId, section, scopeJa } = choice.sourceSupport;
+          const source = compositionCatalog.sources[sourceId];
+          return <p key={choice.purposeId} className="mt-2 text-sm"><strong>「{choice.titleJa}」の参考箇所：</strong><a href={source.url} className="underline underline-offset-4">{source.publisher} · {section}</a>　{scopeJa}</p>;
+        })}
         <p className="mt-2 text-sm"><strong>比較する構図条件：</strong>{discovery.priorityConditions[0]}</p>
         <p className="mt-2 text-xs text-ink-muted">媒体候補：{discovery.media.join(' / ')} ・ 被写体候補：{discovery.subjects.join(' / ')}（分野単位の未検証タグ）</p>
       </section>
@@ -161,10 +177,13 @@ const Composition: React.FC = () => {
       </section>
       <section aria-labelledby="composition-ai" className="mt-7 border-t border-ink-border pt-5">
         <h3 id="composition-ai" className="text-lg font-bold">AIへの指示例</h3>
-        <p data-composition-ai-text="true" className="mt-3 rounded-lg bg-surface p-4 text-sm leading-relaxed">{guide.aiInstruction}</p>
+        <p className="mt-3 rounded-lg bg-surface p-4 text-sm leading-relaxed">{selectedChoice?.aiInstruction ?? guide.aiInstruction}</p>
+        <details className="mt-3"><summary className="cursor-pointer text-sm font-semibold">AIに渡す判断材料の全文</summary>
+          <p data-composition-ai-text="true" className="mt-2 whitespace-pre-line break-words text-sm leading-relaxed">{brief}</p>
+        </details>
         <button data-composition-ai-copy="true" type="button" onClick={async () => { try {
           if (!navigator.clipboard?.writeText) throw new Error('Clipboard unavailable');
-          await navigator.clipboard.writeText(guide.aiInstruction);
+          await navigator.clipboard.writeText(brief);
           setCopyStatus('指示文をコピーしました。');
         } catch { setCopyStatus('コピーできませんでした。文章を選択してコピーしてください。'); } }}
           className="mt-3 min-h-11 rounded-lg border border-ink-border px-4 text-sm font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">指示文をコピー</button>
@@ -211,9 +230,9 @@ const Composition: React.FC = () => {
             </div>
           </div>
           <p className="mt-3 text-sm leading-relaxed text-ink-muted">{item.definition}</p>
-          {purpose && getCompositionChoice(purpose.id, item.id) && <div className="mt-3 border-t border-ink-border pt-3">
-            <p className="text-sm"><strong>選択理由：</strong>{getCompositionChoice(purpose.id, item.id)?.reasonJa}</p>
-            <p className="mt-2 text-sm"><strong>注意点・適用条件：</strong>{getCompositionChoice(purpose.id, item.id)?.cautionJa}</p>
+          {activePurpose && getCompositionChoice(activePurpose.id, item.id) && <div className="mt-3 border-t border-ink-border pt-3">
+            <p className="text-sm"><strong>選択理由：</strong>{getCompositionChoice(activePurpose.id, item.id)?.reasonJa}</p>
+            <p className="mt-2 text-sm"><strong>注意点・適用条件：</strong>{getCompositionChoice(activePurpose.id, item.id)?.cautionJa}</p>
           </div>}
           <p className="mt-2 text-sm leading-relaxed"><strong>見比べるポイント：</strong>{item.comparisonPoint}</p>
           {item.diagramNote && <p className="mt-2 text-xs leading-relaxed text-ink-muted"><strong>模式図の限界：</strong>{item.diagramNote}</p>}

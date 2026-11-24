@@ -63,3 +63,16 @@ export function relationDisplayLabel(currentId: string, relation: NonNullable<Kn
   }
   return relationLabels[relation.type];
 }
+
+export function knowledgeReviewBrief(idea: KnowledgeIdea) {
+  const draft = idea.editorial;
+  const sources = (draft?.sourceIds ?? []).map(id => sourceById[id]);
+  return [idea.id + ' ' + idea.titleJa, '企画・編集下書き。項目全体の根拠は未確認。', draft?.summary,
+    ...(draft?.appropriateUses ?? []).map(text => '向く場面　' + text),
+    ...(draft?.pitfalls ?? []).map(text => '注意点　' + text),
+    ...(draft?.reviewChecks ?? []).map(text => '確認すること　' + text),
+    ...(sources.length ? sources.map(s => '参考資料　' + s.publisher + '「' + s.title + '」 ' +
+      (isSafeKnowledgeSourceUrl(s.url) ? s.url + '　' : '') + s.scope) : ['参考資料は未登録です。']),
+    '利用目的と条件に照らして、適用できる点、見送り条件、確認が必要な点を説明してください。資料から直接読み取れることと編集上の提案を区別してください。',
+  ].filter(Boolean).join('\n');
+}

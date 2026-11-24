@@ -1,3 +1,4 @@
+import { patternSelectionBrief } from '../data/pattern-selection';
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { definitions, getPatternKind } from '../data/definitions';
@@ -83,7 +84,7 @@ const PatternDetail: React.FC = () => {
 
   const values = { ...Object.fromEntries(def.params.map(param => [param.key, param.default])), ...paramValues };
   const code = def.generateCode(values);
-  const prompt = def.generatePrompt(values);
+  const prompt = [def.generatePrompt(values), patternSelectionBrief(def.id)].join('\n\n');
   const rightsStatus = patternRights[def.id]?.status ?? 'UNCLEAR';
   const activeCopyText = activeTab === 'prompt' ? prompt : code;
 
