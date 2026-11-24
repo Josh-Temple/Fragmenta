@@ -701,7 +701,7 @@ try {
   console.log('PASS same-ID atlas/detail return heading focus');
   await page.send('Emulation.setDeviceMetricsOverride', { width: 390, height: 844, deviceScaleFactor: 1, mobile: true });
   const portrait = await page.send('Runtime.evaluate', {
-    expression: "({overflow:document.documentElement.scrollWidth-innerWidth,touch:[...document.querySelectorAll('#composition-purpose-choices button')].every(x=>x.getBoundingClientRect().height>=44)})",
+    expression: "({overflow:document.documentElement.scrollWidth-innerWidth,touch:[...document.querySelectorAll('#composition-purpose-choices button')].every(x=>x.getBoundingClientRect().height>=44),minHeight:Math.min(...[...document.querySelectorAll('#composition-purpose-choices button')].map(x=>x.getBoundingClientRect().height))})",
     returnByValue: true,
   });
   if(portrait.result?.value?.overflow > 1 || !portrait.result?.value?.touch)
@@ -745,7 +745,7 @@ try {
   for (const width of [360, 390, 768, 1280]) {
     await page.send('Emulation.setDeviceMetricsOverride', { width, height: 900, deviceScaleFactor: 1, mobile: width < 600 });
     const state = await page.send('Runtime.evaluate', {
-      expression: "({overflow:document.documentElement.scrollWidth-innerWidth,touch:[...document.querySelectorAll('#composition-purpose-choices button')].every(x=>x.getBoundingClientRect().height>=44)})",
+      expression: "({overflow:document.documentElement.scrollWidth-innerWidth,touch:[...document.querySelectorAll('#composition-purpose-choices button')].every(x=>x.getBoundingClientRect().height>=44),minHeight:Math.min(...[...document.querySelectorAll('#composition-purpose-choices button')].map(x=>x.getBoundingClientRect().height))})",
       returnByValue: true,
     });
     if (state.result?.value?.overflow > 1 || !state.result?.value?.touch)

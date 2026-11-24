@@ -33,16 +33,16 @@ export function matchesComposition(item: CompositionGuide, query: string): boole
 
 export function compositionBrief(guide: CompositionGuide, purposeId?: string): string {
   const choice = purposeId ? getCompositionChoice(purposeId, guide.id) : undefined;
-  const review = getReview(guide.id, choice);
   const choices = choice ? [choice] : getCompositionChoices(guide.id);
   return [
     guide.id + ' ' + guide.titleJa,
-    ...choices.flatMap(c => ['用途「' + c.titleJa + '」 ' + c.reasonJa, '注意点　' + c.cautionJa]),
-    ...(choice || !choices.some(c => c.aiInstruction)
-      ? ['配置の指示例　' + (choice?.aiInstruction ?? guide.aiInstruction)]
-      : choices.map(c => '「' + c.titleJa + '」での配置の指示例　' + (c.aiInstruction ?? guide.aiInstruction))),
-    '見比べる点　' + review.checkJa,
-    '代案　' + review.alternativeId + ' ' + compositionById.get(review.alternativeId)?.titleJa + '。' + review.alternativeReasonJa,
+    ...choices.flatMap(c => {
+      const r = getReview(guide.id, c);
+      return ['用途「' + c.titleJa + '」 ' + c.reasonJa, '注意点　' + c.cautionJa,
+        '配置の指示例　' + (c.aiInstruction ?? guide.aiInstruction),
+        '見比べる点　' + r.checkJa,
+        '代案　' + r.alternativeId + ' ' + compositionById.get(r.alternativeId)?.titleJa + '。' + r.alternativeReasonJa];
+    }),
     scopeNote,
     ...choices.flatMap(c => c.sourceSupport ? ['用途に関係する箇所　' + compositionCatalog.sources[c.sourceSupport.sourceId].title + ' / ' + c.sourceSupport.section + '。' + c.sourceSupport.scopeJa] : []),
     ...guide.sourceIds.map(id => {

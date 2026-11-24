@@ -85,7 +85,7 @@ const Composition: React.FC = () => {
               else { next.set('purpose', item.id); next.set('view', 'atlas'); next.delete('id'); }
               setParams(next);
             }}
-            className={'min-h-11 rounded-lg border px-3 text-sm font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 ' +
+            className={'min-h-12 rounded-lg border px-3 text-sm font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 ' +
               (purpose?.id === item.id ? 'border-ink bg-ink text-paper' : 'border-ink-border bg-surface')}>{item.titleJa}</button>)}
         </div>
         {purpose && <div className="mt-3 rounded-lg border border-ink-border bg-surface p-3">
@@ -148,7 +148,9 @@ const Composition: React.FC = () => {
       <section aria-labelledby="composition-discovery-details" className="mt-5">
         <h3 id="composition-discovery-details" className="font-bold">用途と制約（編集下書き）</h3>
         {!selectedChoice && discovery.choices.map(choice => <div key={choice.purposeId} className="mt-3 text-sm">
-          <p><strong>{choice.titleJa}</strong>　{choice.reasonJa}</p>
+          <p><strong>{discovery.choices.length > 1
+            ? <Link to={'/composition?id=' + guide.id + '&purpose=' + choice.purposeId} className="underline underline-offset-4">{choice.titleJa}</Link>
+            : choice.titleJa}</strong>　{choice.reasonJa}</p>
           <p className="mt-1"><strong>注意点・適用条件：</strong>{choice.cautionJa}</p>
         </div>)}
         <p className="mt-3 text-sm"><strong>完成案で確かめること：</strong>{review.checkJa}</p>

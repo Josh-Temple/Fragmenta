@@ -87,7 +87,7 @@ const DesignStyles: React.FC = () => {
 
       <section aria-labelledby="atlas-list-heading" className="px-5 py-6">
         <h2 id="atlas-list-heading" className="text-lg font-bold">スタイルを探す</h2>
-        <label htmlFor="atlas-search" className="block mt-4 text-sm font-semibold">名前・特徴で検索</label>
+        <label htmlFor="atlas-search" className="block mt-4 text-sm font-semibold">名前・特徴・使いどころで検索</label>
         <input id="atlas-search" type="search" value={query} onChange={e => setQuery(e.target.value)}
           placeholder="例：Swiss、和、グラデーション"
           className="w-full mt-2 rounded-lg border border-ink-border bg-paper p-3 text-ink text-base focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"/>
