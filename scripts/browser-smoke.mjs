@@ -552,6 +552,18 @@ try {
   }
   console.log('PASS composition atlas 24-to-120 pagination, 240 SVG elements (DOM only)');
 
+  const solitudeIds = exportedComposition.discovery.purposes.find(p => p.id === 'solitude').choices.map(c => c.guideId).sort();
+  await page.send('Runtime.evaluate', { expression: "document.querySelector('#composition-query').focus()" });
+  await page.send('Input.insertText', { text: '孤独感' });
+  await page.send('Input.dispatchKeyEvent', { type: 'keyDown', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13 });
+  await page.send('Input.dispatchKeyEvent', { type: 'keyUp', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13 });
+  await poll(async () => {
+    const result = await page.send('Runtime.evaluate', {
+      expression: "[...document.querySelectorAll('a[data-composition-card]')].map(a => new URLSearchParams(a.hash.split('?')[1]).get('id')).sort()",
+      returnByValue: true,
+    });
+    return JSON.stringify(result.result?.value) === JSON.stringify(solitudeIds);
+  }, 'typed purpose returns the same six guides as its filter');
   // Follow an exact purpose query through global search, then compare two briefs for one guide.
   await page.send('Runtime.evaluate', { expression: "location.hash = '#/search?q=' + encodeURIComponent('孤独感')" });
   await poll(async () => {
@@ -597,7 +609,8 @@ try {
 
   const readCatalog = async file => JSON.parse(await readFile(join(process.cwd(), 'public/knowledge', file), 'utf8'));
   const styleGuide = (await readCatalog('style-guides.json')).guides.find(g => g.id === 'minimalism');
-  const patternGuide = (await readCatalog('pattern-guides.json')).guides.find(g => g.id === 'smart-skeleton');
+  const patternsById = new Map((await readCatalog('pattern-guides.json')).guides.map(g => [g.id, g]));
+  const patternGuide = patternsById.get('smart-skeleton');
   const ideaCatalog = await readCatalog('ideas.json');
   const idea = ideaCatalog.ideas.find(g => g.id === 'idea-ai-reference-05');
   const reviewCases = [
@@ -1220,7 +1233,9 @@ try {
           const box = document.querySelector('section[data-pattern-id="${id}"]');
           if (!box) return null;
           return { targets: [...box.querySelectorAll('a')].map(a => a.getAttribute('href')),
-            reasons: [...box.querySelectorAll('li p')].map(p => p.textContent.trim()),
+            reasons: [...box.querySelectorAll('li')].map(li => ({
+              ja: li.querySelector('p[lang=ja]')?.textContent.trim(), en: li.querySelector('p[lang=en]')?.textContent.trim(),
+            })),
             overflowing: box.scrollWidth > box.clientWidth + 1 };
         })()`, returnByValue: true,
       });
@@ -1229,7 +1244,10 @@ try {
     const targets = observed.targets.map(href => href?.replace(/^#\/p\//, ''));
     if (targets.length !== 2 || new Set(targets).size !== 2 ||
         targets.some(target => !patternIds.includes(target) || target === id) ||
-        observed.reasons.length !== 2 || observed.reasons.some(reason => !reason) || observed.overflowing)
+        observed.reasons.length !== 2 || observed.reasons.some((reason, i) => {
+          const expected = patternsById.get(id).alternatives.find(a => a.id === targets[i]);
+          return !expected || reason.ja !== expected.reason || !reason.en;
+        }) || observed.overflowing)
       throw new Error('Invalid pattern selection guide ' + id + ': ' + JSON.stringify(observed));
   }
   console.log('PASS 18 selection guides with two valid related links at 390 CSS px');

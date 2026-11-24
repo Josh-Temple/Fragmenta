@@ -51,7 +51,7 @@ const PatternUsage: React.FC<{ guide: PatternGuide; id: string }> = ({ guide, id
       <ul className="space-y-3">
         {patternChoices[id].related.map(item => <li key={item.id}>
           <Link to={'/p/' + item.id} className="inline-flex min-h-11 items-center py-2 font-semibold text-ink underline underline-offset-4 rounded focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">{definitions[item.id].title}</Link>
-          <p lang="ja">{item.reasonJa}</p><p>{item.reason}</p>
+          <p lang="ja">{item.reasonJa}</p><p lang="en">{item.reason}</p>
         </li>)}
       </ul>
     </section>}
