@@ -1,0 +1,1387 @@
+{
+  "schema_version": 1,
+  "role": "B",
+  "status": "PARTIAL",
+  "fixed_pr_head": "7df55546cc34941116e050d326726a8026d57b9f",
+  "source": {
+    "path": "data/composition-guides.json",
+    "git_blob_sha": "be624dc126b403b163870645ee93c4bc84662413",
+    "sha256": "a8fc26661dc257dade3513e59c66395494b05cf775d00b58a04957a249d3e5c9",
+    "items": 120,
+    "diagrams": 240,
+    "shape_count": 1275,
+    "shape_type_counts": {
+      "line": 252,
+      "circle": 299,
+      "rect": 637,
+      "text": 36,
+      "poly": 51
+    }
+  },
+  "rendering": {
+    "method": "Chromium 144.0.7559.96 (Debian 13) via Playwright set_content of faithful stand-alone SVG markup reconstructed from source tuples; identical shapes and five-primitive palette as CompositionDiagram.tsx",
+    "original_repo_script_executed": false,
+    "react_page_executed": false,
+    "offline": true,
+    "at_jst": "2026-11-04T18:11:31+09:00",
+    "model_seen_diagrams": 12,
+    "human_seen_diagrams": 0,
+    "unseen_diagrams": 228,
+    "unseen_ids": [
+      "C-001",
+      "C-002",
+      "C-003",
+      "C-004",
+      "C-005",
+      "C-006",
+      "C-007",
+      "C-008",
+      "C-009",
+      "C-010",
+      "C-011",
+      "C-012",
+      "C-014",
+      "C-015",
+      "C-016",
+      "C-017",
+      "C-018",
+      "C-019",
+      "C-020",
+      "C-021",
+      "C-022",
+      "C-024",
+      "C-025",
+      "C-026",
+      "C-027",
+      "C-028",
+      "C-029",
+      "C-030",
+      "C-031",
+      "C-032",
+      "C-033",
+      "C-034",
+      "C-035",
+      "C-036",
+      "C-037",
+      "C-038",
+      "C-039",
+      "C-040",
+      "C-042",
+      "C-043",
+      "C-044",
+      "C-045",
+      "C-046",
+      "C-047",
+      "C-048",
+      "C-049",
+      "C-050",
+      "C-051",
+      "C-052",
+      "C-053",
+      "C-054",
+      "C-055",
+      "C-056",
+      "C-057",
+      "C-058",
+      "C-059",
+      "C-060",
+      "C-061",
+      "C-062",
+      "C-063",
+      "C-064",
+      "C-065",
+      "C-066",
+      "C-067",
+      "C-068",
+      "C-069",
+      "C-070",
+      "C-071",
+      "C-072",
+      "C-073",
+      "C-074",
+      "C-075",
+      "C-076",
+      "C-077",
+      "C-078",
+      "C-079",
+      "C-080",
+      "C-081",
+      "C-082",
+      "C-083",
+      "C-084",
+      "C-085",
+      "C-086",
+      "C-087",
+      "C-088",
+      "C-089",
+      "C-090",
+      "C-091",
+      "C-092",
+      "C-094",
+      "C-095",
+      "C-096",
+      "C-097",
+      "C-098",
+      "C-099",
+      "C-100",
+      "C-101",
+      "C-102",
+      "C-103",
+      "C-104",
+      "C-105",
+      "C-107",
+      "C-108",
+      "C-109",
+      "C-110",
+      "C-111",
+      "C-112",
+      "C-113",
+      "C-114",
+      "C-115",
+      "C-116",
+      "C-117",
+      "C-118",
+      "C-120"
+    ],
+    "source_diagram_hash_match": "6/6 independently calculated SHA-256 match",
+    "html_sha256": "4c483773f19156704c9c72435e933858d7bad08b6bd82050b3816a8c5946b4c1",
+    "png_sha256": "f854e1be30fa7f122945dd70135546214e20eb3b1014a89cb329c3fce9b36b6c",
+    "image_persisted_to_repository": false,
+    "reason": "avoid unreviewed screenshot evidence being mistaken for full contact-sheet acceptance"
+  },
+  "samples": [
+    {
+      "id": "C-013",
+      "diagram_sha256": "2db000e821d2764e686c33469d3a3ab1cfcce11992a76c414a398480adc661a4",
+      "example_shapes": 4,
+      "comparison_shapes": 4,
+      "severity": "P2",
+      "interpretation": "PARTIAL_P2",
+      "finding": "人物の位置は維持。建物のコントラスト変更が主従を変えることは見えるが、人物も両図で赤く、副題との階層の説明は追加点検が望ましい。"
+    },
+    {
+      "id": "C-023",
+      "diagram_sha256": "36370bed6486d9be474d7eb4bc4091a101e5ace16c99e58c91dc225f7526fa93",
+      "example_shapes": 2,
+      "comparison_shapes": 2,
+      "severity": "P2",
+      "interpretation": "PARTIAL_P2",
+      "finding": "画面端での切断と中央配置の差は見えるが、幾何シルエットの被写体が何か分かりにくい。旧P2候補を維持。"
+    },
+    {
+      "id": "C-041",
+      "diagram_sha256": "025756e50e41686fe7f1aedb0798bbf73d55c7f64af2c7f4d55cf0abc0778a8a",
+      "example_shapes": 4,
+      "comparison_shapes": 3,
+      "severity": "P2",
+      "interpretation": "PARTIAL_MULTIPLE_VARIABLES",
+      "finding": "前景帯の有無だけでなく山の明度と人物の色も変わるため、比較の複数変数が混在。固定条件を絞る修正が必要。"
+    },
+    {
+      "id": "C-093",
+      "diagram_sha256": "704dddd868e06614f2ebcceeba24f004f1bfb1e814797e91d4e8da1ed3c50508",
+      "example_shapes": 8,
+      "comparison_shapes": 8,
+      "severity": "P2",
+      "interpretation": "PARTIAL_SPATIAL_CONTINUITY",
+      "finding": "人物と右向き視線矢印は固定、右パネルの対象の位置だけ移動。二画面の空間的連続性まではこの図だけで立証できない。"
+    },
+    {
+      "id": "C-106",
+      "diagram_sha256": "81b476bca3cd67e558d34c5e723b153176acd53d7b0c81628ceed3c1dbb27db0",
+      "example_shapes": 6,
+      "comparison_shapes": 6,
+      "severity": "NONE",
+      "interpretation": "PASS_GEOMETRY_ONLY",
+      "finding": "比較図で顔円(x=56..80,y=57..81)が見出し矩形(x=0..75,y=65..76)と重なる。建築と見出しは両図同値、人物は水平移動だけ。実文字可読性は未検査。"
+    },
+    {
+      "id": "C-119",
+      "diagram_sha256": "22d8e8542ede9384814cd1e7a63329a2b840122f6a16602244dc5a0e4d335de2",
+      "example_shapes": 3,
+      "comparison_shapes": 6,
+      "severity": "P2",
+      "interpretation": "PARTIAL_MULTIPLE_VARIABLES",
+      "finding": "同サイズのキャンバス上で被写体縮小・低コントラスト化・線3本追加を同時実施しており、純粋な縮小・白黒・輪郭検査の対照にはなっていない。"
+    }
+  ],
+  "restrictions": {
+    "existing_raster_history_preserved": true,
+    "all_other_ids_actual_svg": "NOT_RUN",
+    "all_react_svg": "NOT_RUN",
+    "original_render_contact_sheets": "NOT_RUN",
+    "svg_intext_legibility": "NOT_RUN",
+    "mobile": "NOT_RUN",
+    "independent_d": "NOT_RUN",
+    "release": "HOLD_NO_MERGE / NO_DEPLOY"
+  },
+  "wave_2026_11_05_B": {
+    "status": "PARTIAL",
+    "fixed_pr_head": "7530bd0420bcf7970cadee6707b800b532b3c8ab",
+    "base_sha": "ce47d522d6e2356c2a18db56d2d7eb0bef08171f",
+    "source": {
+      "path": "data/composition-guides.json",
+      "git_blob_sha": "ed93ca8a15c183f71727174f72a58efd7344122f",
+      "prior_wave_sha256": "1fe6b3646fea1645bcc438ccf8c2ad0ddf9cb86a149e9f9debaa4292baee56bd",
+      "current_full_byte_sha256_recomputed": false
+    },
+    "environment": {
+      "node": "22.16.0",
+      "chromium": "144.0.7559.96",
+      "os": "Debian GNU/Linux 13",
+      "original_script_run": false,
+      "source_git_clone": false,
+      "chromium_capture": "TIMEOUT_EVEN_MINIMAL_SVG",
+      "cairosvg_reconstruction": true
+    },
+    "model_actual_cairosvg_svg_seen": 36,
+    "model_original_script_svg_seen": 0,
+    "human_seen": 0,
+    "react_seen": 0,
+    "model_unseen_by_any_method_this_wave": 204,
+    "ids_seen": [
+      "C-001",
+      "C-002",
+      "C-003",
+      "C-004",
+      "C-005",
+      "C-006",
+      "C-007",
+      "C-008",
+      "C-009",
+      "C-010",
+      "C-011",
+      "C-012",
+      "C-023",
+      "C-041",
+      "C-090",
+      "C-093",
+      "C-106",
+      "C-119"
+    ],
+    "ids_unseen": [
+      "C-013",
+      "C-014",
+      "C-015",
+      "C-016",
+      "C-017",
+      "C-018",
+      "C-019",
+      "C-020",
+      "C-021",
+      "C-022",
+      "C-024",
+      "C-025",
+      "C-026",
+      "C-027",
+      "C-028",
+      "C-029",
+      "C-030",
+      "C-031",
+      "C-032",
+      "C-033",
+      "C-034",
+      "C-035",
+      "C-036",
+      "C-037",
+      "C-038",
+      "C-039",
+      "C-040",
+      "C-042",
+      "C-043",
+      "C-044",
+      "C-045",
+      "C-046",
+      "C-047",
+      "C-048",
+      "C-049",
+      "C-050",
+      "C-051",
+      "C-052",
+      "C-053",
+      "C-054",
+      "C-055",
+      "C-056",
+      "C-057",
+      "C-058",
+      "C-059",
+      "C-060",
+      "C-061",
+      "C-062",
+      "C-063",
+      "C-064",
+      "C-065",
+      "C-066",
+      "C-067",
+      "C-068",
+      "C-069",
+      "C-070",
+      "C-071",
+      "C-072",
+      "C-073",
+      "C-074",
+      "C-075",
+      "C-076",
+      "C-077",
+      "C-078",
+      "C-079",
+      "C-080",
+      "C-081",
+      "C-082",
+      "C-083",
+      "C-084",
+      "C-085",
+      "C-086",
+      "C-087",
+      "C-088",
+      "C-089",
+      "C-091",
+      "C-092",
+      "C-094",
+      "C-095",
+      "C-096",
+      "C-097",
+      "C-098",
+      "C-099",
+      "C-100",
+      "C-101",
+      "C-102",
+      "C-103",
+      "C-104",
+      "C-105",
+      "C-107",
+      "C-108",
+      "C-109",
+      "C-110",
+      "C-111",
+      "C-112",
+      "C-113",
+      "C-114",
+      "C-115",
+      "C-116",
+      "C-117",
+      "C-118",
+      "C-120"
+    ],
+    "source_tuple_signature_crosscheck": "18/18 FNV1a MATCH, floats rounded 4dp for signature only",
+    "rendered_sheets": [
+      {
+        "name": "cairo-sheet-01.png",
+        "sha256": "25b4987347ecaf26d3c59682761003e6b98d0add212c413296b791fbfbcde785",
+        "ids": [
+          "C-001",
+          "C-002",
+          "C-003",
+          "C-004"
+        ],
+        "persistent_in_repository": false
+      },
+      {
+        "name": "cairo-sheet-02.png",
+        "sha256": "9a8038b68ece05b448fc7f19f3bad01c21c94f8d03c4ed8d7994cd30d161881f",
+        "ids": [
+          "C-005",
+          "C-006",
+          "C-007",
+          "C-008"
+        ],
+        "persistent_in_repository": false
+      },
+      {
+        "name": "cairo-sheet-03.png",
+        "sha256": "665060979c06009015f4ebfc08110027dd7c8c27a9f484d06d716f1f937b16e1",
+        "ids": [
+          "C-009",
+          "C-010",
+          "C-011",
+          "C-012"
+        ],
+        "persistent_in_repository": false
+      },
+      {
+        "name": "cairo-sheet-04.png",
+        "sha256": "a56eee17565208de1ab94444b911e485898ae73cc4c7c367e1e989f5e21cc29e",
+        "ids": [
+          "C-023",
+          "C-041",
+          "C-090",
+          "C-093"
+        ],
+        "persistent_in_repository": false
+      },
+      {
+        "name": "cairo-sheet-05.png",
+        "sha256": "da0c11635442e5b9109a91d73a195741989a1cfd5ba2da7bbccc923e174d9e6e",
+        "ids": [
+          "C-106",
+          "C-119"
+        ],
+        "persistent_in_repository": false
+      }
+    ],
+    "important_findings": {
+      "C-001": "比較の物体数と誘導線の変更を伴い、厳密な単一変数比較ではない",
+      "C-002": "対照図で赤い人物が黒い矩形と重なり低コントラスト（P2候補）",
+      "C-003": "左右の柱を同じ形のまま比較。幾何は説明と概ね整合",
+      "C-004": "赤円と黒矩形で形・色・数が変わる。重みの一般化は不可",
+      "C-005": "人物位置は維持し、線の数・方向が変化",
+      "C-006": "三点の三角配置と一列配置を確認",
+      "C-007": "放射線と平行線の区別を確認",
+      "C-008": "S字の道筋は角張った折線で、滑らかなS曲線ではない（P2候補）",
+      "C-009": "L字の囲いと四辺の囲いを確認",
+      "C-010": "線の収束先の違いを確認",
+      "C-011": "門の形固定、人物は枠の内外に移動",
+      "C-012": "0.618と0.5の図中文字を視認。黄金螺旋自体は非表示",
+      "C-023": "顔の特徴を欠き、顔だと識別しにくい。既存A注意書きは適切",
+      "C-041": "比較側人物が背景山と同じ色になり識別しづらい。前景、山明度、人物色の3変数同時変更",
+      "C-090": "配置例①右→②左→③下、対照例①左→②右→③下。矢印との方向整合をCairoSVG実画像で確認",
+      "C-093": "二画面の扉位置だけ変更。視線の空間連続性を実証しない",
+      "C-106": "見出し帯固定、人物横移動で顔と矩形見出しが重なる。実文字の可読性とは別",
+      "C-119": "縮小・白黒・輪郭処理の実検査ではなく、人物寸法・色・追加線が同時変化"
+    },
+    "clipboard_android_at": "NOT_RUN",
+    "release": "HOLD_NO_MERGE / NO_DEPLOY",
+    "d_final": "NOT_RUN",
+    "images_persisted_to_repo": false
+  },
+  "wave_2026_11_05_ci_actual_svg_B": {
+    "status": "PARTIAL_B_GEOMETRY_SEEN_TEXT_AND_ARTIFACT_BLOCKED",
+    "fixed_source_head": "79d3baacf2f1833e3ff445a8f748e38fda748bee",
+    "base_sha": "ce47d522d6e2356c2a18db56d2d7eb0bef08171f",
+    "source": {
+      "path": "data/composition-guides.json",
+      "blob_sha": "e62e89a40dbb83932dea7af662208f6a5334f6ed",
+      "sha256": "0eecbe805733d98410004cd7b1c35c6d7c1985c6273c5d8783b94c6cf02eb5ef",
+      "renderer_sha": "bb4d501c100774dfa85a083dd8c3e956ae113393",
+      "script_blob_sha": "68cbce6da90ffd70ed2dec2c0c5bfc80ce043ef7"
+    },
+    "ci": {
+      "run_id": 42017175759,
+      "job_id": 127210491978,
+      "url": "https://github.com/Josh-Temple/Fragmenta/actions/runs/42017175759",
+      "typecheck_build_smoke": "SUCCESS",
+      "original_script_capture": "SUCCESS",
+      "fullpage_png": 10,
+      "tiles_png": 30,
+      "git_artifact_upload": "FAILED_STORAGE_QUOTA",
+      "ci_conclusion": "FAILURE_ARTIFACT_UPLOAD",
+      "image_log_recovery": "30_OF_30"
+    },
+    "vision": {
+      "chromium_original_script_svg_model_seen": 240,
+      "ids_model_seen": 120,
+      "tiles_model_seen": 30,
+      "human_svg_seen": 0,
+      "react_real_browser_seen": 0,
+      "japanese_headings_notes": "UNREADABLE_TOFU",
+      "japanese_in_svg_C036": "UNREADABLE_TOFU",
+      "english_numeric_in_svg": "SEEN",
+      "comparison_against_source_text": "PARTIAL_VISUAL_GEOMETRY_ONLY_NOT_EXPERT_ACCEPTANCE"
+    },
+    "image_tiles": [
+      {
+        "filename": "tile-01-01.png",
+        "ids": [
+          "C-001",
+          "C-002",
+          "C-003",
+          "C-004"
+        ],
+        "sha256": "4136b25d5d725ed3c72750a1025f0b171b22f2721334912dfed7c84c81cf2b51",
+        "base64_length": 32264,
+        "base64_recovered_length": 32264,
+        "model_viewed": true
+      },
+      {
+        "filename": "tile-01-02.png",
+        "ids": [
+          "C-005",
+          "C-006",
+          "C-007",
+          "C-008"
+        ],
+        "sha256": "ec472a6cf95cbbdc37c8fcb6440f127e6455ebdcaff19b82379d70335e90b78d",
+        "base64_length": 65792,
+        "base64_recovered_length": 65792,
+        "model_viewed": true
+      },
+      {
+        "filename": "tile-01-03.png",
+        "ids": [
+          "C-009",
+          "C-010",
+          "C-011",
+          "C-012"
+        ],
+        "sha256": "5b88f73d134fa043d6a2c6e1fbb4a49c4e580471795ecbac263a109a22ef4e78",
+        "base64_length": 41872,
+        "base64_recovered_length": 41872,
+        "model_viewed": true
+      },
+      {
+        "filename": "tile-02-01.png",
+        "ids": [
+          "C-013",
+          "C-014",
+          "C-015",
+          "C-016"
+        ],
+        "sha256": "c7b76d3b69f5f4a2a8abc660bb1e409fe5ebcfb66c9162eacfab7359a7639be4",
+        "base64_length": 26296,
+        "base64_recovered_length": 26296,
+        "model_viewed": true
+      },
+      {
+        "filename": "tile-02-02.png",
+        "ids": [
+          "C-017",
+          "C-018",
+          "C-019",
+          "C-020"
+        ],
+        "sha256": "0b06ed4332a47d49ce952e9172edb84adf731952be6b863a775616f679748584",
+        "base64_length": 33824,
+        "base64_recovered_length": 33824,
+        "model_viewed": true
+      },
+      {
+        "filename": "tile-02-03.png",
+        "ids": [
+          "C-021",
+          "C-022",
+          "C-023",
+          "C-024"
+        ],
+        "sha256": "72052089306cfe6cde07384c842d58b5df69a58acb2cb3d775502fbb513c2ad8",
+        "base64_length": 25824,
+        "base64_recovered_length": 25824,
+        "model_viewed": true
+      },
+      {
+        "filename": "tile-03-01.png",
+        "ids": [
+          "C-025",
+          "C-026",
+          "C-027",
+          "C-028"
+        ],
+        "sha256": "19704879bf913855aeb519c301a0b97c432537a9fdde93e3a5460fc91f9e84ab",
+        "base64_length": 39964,
+        "base64_recovered_length": 39964,
+        "model_viewed": true
+      },
+      {
+        "filename": "tile-03-02.png",
+        "ids": [
+          "C-029",
+          "C-030",
+          "C-031",
+          "C-032"
+        ],
+        "sha256": "5d113773f22b1de96fb7442cb799e5592b0830ef9c4883f92d7828053bedb12a",
+        "base64_length": 52764,
+        "base64_recovered_length": 52764,
+        "model_viewed": true
+      },
+      {
+        "filename": "tile-03-03.png",
+        "ids": [
+          "C-033",
+          "C-034",
+          "C-035",
+          "C-036"
+        ],
+        "sha256": "d7f55343c3257af26e2f6ecd6ba528ebd1b67432ba6d0fcae2303b33cdccde08",
+        "base64_length": 28012,
+        "base64_recovered_length": 28012,
+        "model_viewed": true
+      },
+      {
+        "filename": "tile-04-01.png",
+        "ids": [
+          "C-037",
+          "C-038",
+          "C-039",
+          "C-040"
+        ],
+        "sha256": "a4db1dcc53c8a9329e410ed45ee185df53257fa7e2c79fd98a20e45081e83c64",
+        "base64_length": 50204,
+        "base64_recovered_length": 50204,
+        "model_viewed": true
+      },
+      {
+        "filename": "tile-04-02.png",
+        "ids": [
+          "C-041",
+          "C-042",
+          "C-043",
+          "C-044"
+        ],
+        "sha256": "4b8a773a24f562496f155acf4bc5c5a274edcddd18ee7724a9ef62696387153d",
+        "base64_length": 52000,
+        "base64_recovered_length": 52000,
+        "model_viewed": true
+      },
+      {
+        "filename": "tile-04-03.png",
+        "ids": [
+          "C-045",
+          "C-046",
+          "C-047",
+          "C-048"
+        ],
+        "sha256": "d4bcf528e37571ae1a832d7909f0e10646f3c303ec0a75aacc18accdcca553df",
+        "base64_length": 50596,
+        "base64_recovered_length": 50596,
+        "model_viewed": true
+      },
+      {
+        "filename": "tile-05-01.png",
+        "ids": [
+          "C-049",
+          "C-050",
+          "C-051",
+          "C-052"
+        ],
+        "sha256": "b5b97b1e7285ccb8e42178d42b5e3bfbb7b2762146048b9caa43c908a8f7a780",
+        "base64_length": 41480,
+        "base64_recovered_length": 41480,
+        "model_viewed": true
+      },
+      {
+        "filename": "tile-05-02.png",
+        "ids": [
+          "C-053",
+          "C-054",
+          "C-055",
+          "C-056"
+        ],
+        "sha256": "8c7dd9673c454ed1076e1625cee37da3fc0a15a484e2974e8c9c2c699dc22c1c",
+        "base64_length": 53596,
+        "base64_recovered_length": 53596,
+        "model_viewed": true
+      },
+      {
+        "filename": "tile-05-03.png",
+        "ids": [
+          "C-057",
+          "C-058",
+          "C-059",
+          "C-060"
+        ],
+        "sha256": "dcb715ff4db9817214486ee0e1d49b13969f82232f7988b04ad7e2d72a2fd80e",
+        "base64_length": 37444,
+        "base64_recovered_length": 37444,
+        "model_viewed": true
+      },
+      {
+        "filename": "tile-06-01.png",
+        "ids": [
+          "C-061",
+          "C-062",
+          "C-063",
+          "C-064"
+        ],
+        "sha256": "9cb45b82a7a3ac80e61ec4dac918c31053113986f66e7a99b1455ec0bf03c285",
+        "base64_length": 34080,
+        "base64_recovered_length": 34080,
+        "model_viewed": true
+      },
+      {
+        "filename": "tile-06-02.png",
+        "ids": [
+          "C-065",
+          "C-066",
+          "C-067",
+          "C-068"
+        ],
+        "sha256": "b4bda3b936a416f25389a173b24931a8ea62077ef94d794751e66ceaea5ba2d4",
+        "base64_length": 30752,
+        "base64_recovered_length": 30752,
+        "model_viewed": true
+      },
+      {
+        "filename": "tile-06-03.png",
+        "ids": [
+          "C-069",
+          "C-070",
+          "C-071",
+          "C-072"
+        ],
+        "sha256": "5b29939dfd2c57c0398f5b9de0832ee5e0653e3ef78ade937a9fd58839cfd574",
+        "base64_length": 33952,
+        "base64_recovered_length": 33952,
+        "model_viewed": true
+      },
+      {
+        "filename": "tile-07-01.png",
+        "ids": [
+          "C-073",
+          "C-074",
+          "C-075",
+          "C-076"
+        ],
+        "sha256": "81b853d81b0c7029a91bc61020e62051aeb87e3446c10b67c6d525834daa18e3",
+        "base64_length": 26252,
+        "base64_recovered_length": 26252,
+        "model_viewed": true
+      },
+      {
+        "filename": "tile-07-02.png",
+        "ids": [
+          "C-077",
+          "C-078",
+          "C-079",
+          "C-080"
+        ],
+        "sha256": "59dd18525f10c07d0feae31e168670a1768028d9b6c72e0ae7112952d964afb4",
+        "base64_length": 39460,
+        "base64_recovered_length": 39460,
+        "model_viewed": true
+      },
+      {
+        "filename": "tile-07-03.png",
+        "ids": [
+          "C-081",
+          "C-082",
+          "C-083",
+          "C-084"
+        ],
+        "sha256": "0226641cdbb10267bdbe65920702b9fc584516a037fba20c56651c72c0d018a0",
+        "base64_length": 29744,
+        "base64_recovered_length": 29744,
+        "model_viewed": true
+      },
+      {
+        "filename": "tile-08-01.png",
+        "ids": [
+          "C-085",
+          "C-086",
+          "C-087",
+          "C-088"
+        ],
+        "sha256": "f55d30caf1ebafbc9f9a52b3637678ffac0f5fc5aa59421ed0b0e9cbee655eab",
+        "base64_length": 62788,
+        "base64_recovered_length": 62788,
+        "model_viewed": true
+      },
+      {
+        "filename": "tile-08-02.png",
+        "ids": [
+          "C-089",
+          "C-090",
+          "C-091",
+          "C-092"
+        ],
+        "sha256": "c91af885628955d4d6cda2ba7dc772446b2510a83afc848f923379e22dcb8150",
+        "base64_length": 45348,
+        "base64_recovered_length": 45348,
+        "model_viewed": true
+      },
+      {
+        "filename": "tile-08-03.png",
+        "ids": [
+          "C-093",
+          "C-094",
+          "C-095",
+          "C-096"
+        ],
+        "sha256": "b526c96f0dc5452a00c37487276bc3157e2041409ee0cd6282c11fcd258918e0",
+        "base64_length": 43572,
+        "base64_recovered_length": 43572,
+        "model_viewed": true
+      },
+      {
+        "filename": "tile-09-01.png",
+        "ids": [
+          "C-097",
+          "C-098",
+          "C-099",
+          "C-100"
+        ],
+        "sha256": "26b10e56525bbbb1432f6851d631546b991a7e9121d4e2e089491dacda8e95f9",
+        "base64_length": 44560,
+        "base64_recovered_length": 44560,
+        "model_viewed": true
+      },
+      {
+        "filename": "tile-09-02.png",
+        "ids": [
+          "C-101",
+          "C-102",
+          "C-103",
+          "C-104"
+        ],
+        "sha256": "1bc64913a42abe40647613e1d8e445c897f7c9fdb0f4fe7575b034b7a55267db",
+        "base64_length": 40580,
+        "base64_recovered_length": 40580,
+        "model_viewed": true
+      },
+      {
+        "filename": "tile-09-03.png",
+        "ids": [
+          "C-105",
+          "C-106",
+          "C-107",
+          "C-108"
+        ],
+        "sha256": "36f6f920ddaeab1a91d181cd8d1c9102c78ad8bce0f86ed70b255768096705f2",
+        "base64_length": 32592,
+        "base64_recovered_length": 32592,
+        "model_viewed": true
+      },
+      {
+        "filename": "tile-10-01.png",
+        "ids": [
+          "C-109",
+          "C-110",
+          "C-111",
+          "C-112"
+        ],
+        "sha256": "558ec1dfe1472f09dadfa8847480addc8febf2c10fb0118a3d472b1581e3456f",
+        "base64_length": 26620,
+        "base64_recovered_length": 26620,
+        "model_viewed": true
+      },
+      {
+        "filename": "tile-10-02.png",
+        "ids": [
+          "C-113",
+          "C-114",
+          "C-115",
+          "C-116"
+        ],
+        "sha256": "78182e15ff2b161e2e787f9447355ad1edac4eb81ea106c5f2d41b71741d15c3",
+        "base64_length": 36340,
+        "base64_recovered_length": 36340,
+        "model_viewed": true
+      },
+      {
+        "filename": "tile-10-03.png",
+        "ids": [
+          "C-117",
+          "C-118",
+          "C-119",
+          "C-120"
+        ],
+        "sha256": "3bc627d584bae182b4c44648a7dcf08cd6636303af6c0275d3e398f154ebb7d5",
+        "base64_length": 34980,
+        "base64_recovered_length": 34980,
+        "model_viewed": true
+      }
+    ],
+    "observed_findings": {
+      "C-002": {
+        "severity": "P2",
+        "finding": "対照側の赤い人物が黒い門に重なり、図中の主役のコントラストが低い。",
+        "isolation": "NOT_SINGLE_VARIABLE"
+      },
+      "C-008": {
+        "severity": "P2",
+        "finding": "蛇行は鋭い折線で、滑らかなS字には見えにくい。",
+        "isolation": "GEOMETRY_S_SHAPE_PARTIAL"
+      },
+      "C-023": {
+        "severity": "P2",
+        "finding": "矩形2個の水平移動であり、肖像の実際の画面端切断は未図示。",
+        "isolation": "TRANSLATION_ONLY"
+      },
+      "C-041": {
+        "severity": "P2",
+        "finding": "人物が山と同色となり対照側で埋没。前景帯・山明度・人物色を同時変更。",
+        "isolation": "MULTIPLE_VARIABLES"
+      },
+      "C-093": {
+        "severity": "P2",
+        "finding": "第二ショットの扉位置だけ変化。実空間の視線連続性は図だけでは判定できない。",
+        "isolation": "PARTIAL_NOT_EYELINE_PROOF"
+      },
+      "C-119": {
+        "severity": "P2",
+        "finding": "別案の同時変更であり、縮小・白黒・輪郭抽出の実検査ではない。",
+        "isolation": "MULTIPLE_VARIABLES_NOT_REAL_TRANSFORM"
+      },
+      "C-036": {
+        "severity": "P2_EVIDENCE",
+        "finding": "図中文字の『住』『連』が日本語フォント不足で□になり画像では意味が判読できない。",
+        "isolation": "EVIDENCE_LABEL_UNREADABLE"
+      }
+    },
+    "limitations": {
+      "artifact_persisted_in_github": false,
+      "artifact_persisted_in_library": false,
+      "log_images_recovered_true": true,
+      "japan_font_fix_needed": true,
+      "react": "NOT_RUN_BY_B",
+      "android": "NOT_RUN",
+      "accessibility": "NOT_RUN",
+      "independent_d": "NOT_RUN",
+      "all_article_professional_review": "NOT_RUN",
+      "external_os_clipboard": "NOT_RUN"
+    },
+    "release": "HOLD_NO_MERGE / NO_DEPLOY"
+  },
+  "wave_2026_11_05_ci_font_svg_B": {
+    "status": "B_SVG_240_MODEL_SEEN_JP_TEXT_PASS_SAVED_GITHUB; FULL_RELEASE_ACCEPTANCE_NOT_YET",
+    "input_head": "d0187578516a24ef2b0d2e13bd1c304b3e6a6b5f",
+    "input_sha256": "0eecbe805733d98410004cd7b1c35c6d7c1985c6273c5d8783b94c6cf02eb5ef",
+    "source_data_blob": "e62e89a40dbb83932dea7af662208f6a5334f6ed",
+    "ci": {
+      "run_id": 42018740345,
+      "job_id": 127215776806,
+      "url": "https://github.com/Josh-Temple/Fragmenta/actions/runs/42018740345",
+      "overall": "SUCCESS",
+      "japanese_font_install": "SUCCESS_IPAGOTHIC",
+      "original_script_rasterization": "SUCCESS_30_TILES_240_SVG",
+      "actions_artifact": "FAILED_GITHUB_ACTIONS_STORAGE_QUOTA_NO_ZIP",
+      "repo_fallback": "SUCCESS_PRIVATE_30_PNG_FILES"
+    },
+    "model_review": {
+      "png_images_viewed": 30,
+      "unique_ids_viewed": 120,
+      "svg_figures_viewed": 240,
+      "example": 120,
+      "comparison": 120,
+      "ja_headings_notes": "PASS_VISUALLY_READABLE",
+      "ja_diagram_C036": "PASS_CHARACTERS_JU_REN_READABLE",
+      "human_reviewed_svg": 0,
+      "react_real_ui_screenshots_viewed": 0,
+      "independent_d": "NOT_RUN_BY_B",
+      "six_conceptual_P2": [
+        "C-002",
+        "C-008",
+        "C-023",
+        "C-041",
+        "C-093",
+        "C-119"
+      ],
+      "acceptance": "PARTIAL"
+    },
+    "images": {
+      "root": "docs/evidence/composition/20261105_ci_42018740345",
+      "entries": [
+        {
+          "filename": "tile-01-01.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-01-01.png",
+          "ids": [
+            "C-001",
+            "C-002",
+            "C-003",
+            "C-004"
+          ],
+          "sha256": "bc093b57879a6f7227895733b6b21f13d36cb597c7de8254dbd9013bc2d15344",
+          "git_blob": "a3070d8ed1cb32fb592dcbcbe3303911b24bc4d5",
+          "size_bytes": 64755,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-01-02.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-01-02.png",
+          "ids": [
+            "C-005",
+            "C-006",
+            "C-007",
+            "C-008"
+          ],
+          "sha256": "bd5d9249c5d5c654a456a171de4efea01881c77dd04ca1b57020de9cbb89453d",
+          "git_blob": "4b6a15f7f4800e554db8b160abc84e5c30686c1f",
+          "size_bytes": 86056,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-01-03.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-01-03.png",
+          "ids": [
+            "C-009",
+            "C-010",
+            "C-011",
+            "C-012"
+          ],
+          "sha256": "470a6bd62e3f400354795065769e7106f31b543e08006b9d9092f308a7dce720",
+          "git_blob": "bcb2ce30017743a148b1ec06d450bdc6a6ec3dd4",
+          "size_bytes": 93253,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-02-01.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-02-01.png",
+          "ids": [
+            "C-013",
+            "C-014",
+            "C-015",
+            "C-016"
+          ],
+          "sha256": "5a311e0f24ea8b003a1f2a0f9345979bc3ec6a55df9013895892383984d94510",
+          "git_blob": "fa6de4ce81f1b093391cb38a316d21b63d6322cc",
+          "size_bytes": 69884,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-02-02.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-02-02.png",
+          "ids": [
+            "C-017",
+            "C-018",
+            "C-019",
+            "C-020"
+          ],
+          "sha256": "530b0dd3f48842b15be3041cf5708e326ad9975f1067d10cca2a08385183a879",
+          "git_blob": "3c9c7188fc07bf357fd08a47fb50218fb08b6559",
+          "size_bytes": 66635,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-02-03.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-02-03.png",
+          "ids": [
+            "C-021",
+            "C-022",
+            "C-023",
+            "C-024"
+          ],
+          "sha256": "5b8264bf18bcdb4cce71ea5640d2e65dede0fc0558da6d826934992ced6771dc",
+          "git_blob": "85bf1d824f76227fe89dc0e5a86d5beb5c061de1",
+          "size_bytes": 81041,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-03-01.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-03-01.png",
+          "ids": [
+            "C-025",
+            "C-026",
+            "C-027",
+            "C-028"
+          ],
+          "sha256": "c4a27c13d75f572a90c4d8a7d0c2fe52a85d27c99a5b29e3060573c33554fa17",
+          "git_blob": "0c3c241429ed9e1cd4d7efcd40e6381e1b7310ee",
+          "size_bytes": 68794,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-03-02.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-03-02.png",
+          "ids": [
+            "C-029",
+            "C-030",
+            "C-031",
+            "C-032"
+          ],
+          "sha256": "97e80b56abf6afe1a6927962c5bc58302606023b45b0070df6acc4ab08649599",
+          "git_blob": "8e0c66dc73f742b734d77767097f9f0257106150",
+          "size_bytes": 82346,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-03-03.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-03-03.png",
+          "ids": [
+            "C-033",
+            "C-034",
+            "C-035",
+            "C-036"
+          ],
+          "sha256": "b5dc9b312909801d71eff8551b5839ffef2dac5a552c6d2aa7bf6ca679a1decb",
+          "git_blob": "0441db9b117973fd60abcb4fb1ea62d20e0860fa",
+          "size_bytes": 77021,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-04-01.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-04-01.png",
+          "ids": [
+            "C-037",
+            "C-038",
+            "C-039",
+            "C-040"
+          ],
+          "sha256": "e381b05c72a815c219889fecf9864d82b0d1c177120fd45a265bf00dc7f91ed2",
+          "git_blob": "816af09be22fba6bdc88182014d8ba92d0f6903e",
+          "size_bytes": 99022,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-04-02.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-04-02.png",
+          "ids": [
+            "C-041",
+            "C-042",
+            "C-043",
+            "C-044"
+          ],
+          "sha256": "f784fe8114ac511cf7f004943be6e9f115e5eb77a7e4056629bce4d90125f395",
+          "git_blob": "b322685dad0982370a82b04d2830716cdfe71938",
+          "size_bytes": 109145,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-04-03.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-04-03.png",
+          "ids": [
+            "C-045",
+            "C-046",
+            "C-047",
+            "C-048"
+          ],
+          "sha256": "923f73b3b37ca21ad8597b66edc7fab623bf5fce4ba7e0a6c116f3558c695e12",
+          "git_blob": "7345874bceb2a7d7b833f99d6405a2273ccc12f0",
+          "size_bytes": 82565,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-05-01.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-05-01.png",
+          "ids": [
+            "C-049",
+            "C-050",
+            "C-051",
+            "C-052"
+          ],
+          "sha256": "c6dd25437b790b12884993a16b079aa92421ed4f7b0e79c40e70c8490b432357",
+          "git_blob": "56f6f8f5ce5654111cf5c79ccb744b57b36ecf28",
+          "size_bytes": 71313,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-05-02.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-05-02.png",
+          "ids": [
+            "C-053",
+            "C-054",
+            "C-055",
+            "C-056"
+          ],
+          "sha256": "ab14345093127cc3f941c61473ca905f2913d1c0085a2d46d5af6e137b7542ed",
+          "git_blob": "b12a0d808ef382c0b9159b59235643477cd47a15",
+          "size_bytes": 140525,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-05-03.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-05-03.png",
+          "ids": [
+            "C-057",
+            "C-058",
+            "C-059",
+            "C-060"
+          ],
+          "sha256": "7641acf467dbc3456f4f7fda85a30f5687e98451a0487c6740c64a43030b5811",
+          "git_blob": "3d06bec5ce4fdbb3f3e7b44d6831c53aaae4367c",
+          "size_bytes": 102400,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-06-01.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-06-01.png",
+          "ids": [
+            "C-061",
+            "C-062",
+            "C-063",
+            "C-064"
+          ],
+          "sha256": "68dbd58d82724d75c944a5fd9a8dd29277707abc26538ba75e3639fb9484bd11",
+          "git_blob": "559cbc6f21452716639fb4a16c8368873300c619",
+          "size_bytes": 71008,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-06-02.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-06-02.png",
+          "ids": [
+            "C-065",
+            "C-066",
+            "C-067",
+            "C-068"
+          ],
+          "sha256": "9a792823f774e4dc325525590cb55eab00c50e6e81ca9c66be3147a2595da851",
+          "git_blob": "4426a601d7a961830b695f66f577bc119d9191ab",
+          "size_bytes": 72253,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-06-03.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-06-03.png",
+          "ids": [
+            "C-069",
+            "C-070",
+            "C-071",
+            "C-072"
+          ],
+          "sha256": "c02d0e853a52734d46d19955ca342265fbf4925689b6d56bee8c39f5e0df5f72",
+          "git_blob": "f1fed46041a01694be7f0ef578a393fe10c23cdc",
+          "size_bytes": 63080,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-07-01.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-07-01.png",
+          "ids": [
+            "C-073",
+            "C-074",
+            "C-075",
+            "C-076"
+          ],
+          "sha256": "e20308120945d8d9f615a3a997db5486991caf9d7e73eea9e4c26ced9dce4cb9",
+          "git_blob": "0bba1943abfae44a59bdc24aeac62bc9a5b89b4e",
+          "size_bytes": 66441,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-07-02.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-07-02.png",
+          "ids": [
+            "C-077",
+            "C-078",
+            "C-079",
+            "C-080"
+          ],
+          "sha256": "3ec39c7d436c9538ee42d78beb19d7683ef7559f15629c9e8570063d180286aa",
+          "git_blob": "413fdae622f5cb8831cfc985d178cec21535e5c1",
+          "size_bytes": 69308,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-07-03.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-07-03.png",
+          "ids": [
+            "C-081",
+            "C-082",
+            "C-083",
+            "C-084"
+          ],
+          "sha256": "07817bcb2b0efcc77a4520ca773a62215dd56ba3d1bcf35c892576c5a3093bbb",
+          "git_blob": "a8e62f40444ba38ccca5570b61afcdfe13cd8fab",
+          "size_bytes": 62680,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-08-01.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-08-01.png",
+          "ids": [
+            "C-085",
+            "C-086",
+            "C-087",
+            "C-088"
+          ],
+          "sha256": "95951bb4ab707725840259eecb217feb2d5bb7837a19d473d5cb32f672e596e6",
+          "git_blob": "429d76d7e78b6a99ce11ae237e72c9325cb08e92",
+          "size_bytes": 88269,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-08-02.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-08-02.png",
+          "ids": [
+            "C-089",
+            "C-090",
+            "C-091",
+            "C-092"
+          ],
+          "sha256": "26ee0c9fae41c22dfda813abd1acd5424a7e6867ca43dd91ab4f77199288e976",
+          "git_blob": "f54bfff090ed6ba8f3038d3f7b3b67a123de044c",
+          "size_bytes": 102459,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-08-03.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-08-03.png",
+          "ids": [
+            "C-093",
+            "C-094",
+            "C-095",
+            "C-096"
+          ],
+          "sha256": "cfe85ed38a4a401e04d19b730a8ae283b9502542b390fe1b034a91509e93f1d0",
+          "git_blob": "0600c38a850bfd183972780fbcbc92ff321369d8",
+          "size_bytes": 100778,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-09-01.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-09-01.png",
+          "ids": [
+            "C-097",
+            "C-098",
+            "C-099",
+            "C-100"
+          ],
+          "sha256": "f20b773c883fbe46102d882d64269f4b56547f4ce6890c4cb2360c643f608e8f",
+          "git_blob": "0bb049c95dcf29a98570671c97f9814add82174e",
+          "size_bytes": 77848,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-09-02.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-09-02.png",
+          "ids": [
+            "C-101",
+            "C-102",
+            "C-103",
+            "C-104"
+          ],
+          "sha256": "c2be964e3bd7cbd7de9cb843c066ef327a2e21c3a730cd3eb31b18eb0aa48bc1",
+          "git_blob": "a3797b7e8ef1afdaa9da79c1c302c95a1b75d4aa",
+          "size_bytes": 71268,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-09-03.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-09-03.png",
+          "ids": [
+            "C-105",
+            "C-106",
+            "C-107",
+            "C-108"
+          ],
+          "sha256": "33fb4cbb060115b6b5a8608301e574314f8de0e0167647fc554a035618b38bd9",
+          "git_blob": "78c8b66cf642f58ac9ef4aeb5d8b976093eb11ea",
+          "size_bytes": 77528,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-10-01.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-10-01.png",
+          "ids": [
+            "C-109",
+            "C-110",
+            "C-111",
+            "C-112"
+          ],
+          "sha256": "b26faccb889e8cc49fc80e01c629714a4f49f2db47f4ba3bb1d55c713b3e9e9a",
+          "git_blob": "36c9db671cdeda1c9a9a9655464bd5969cabf4d4",
+          "size_bytes": 66332,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-10-02.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-10-02.png",
+          "ids": [
+            "C-113",
+            "C-114",
+            "C-115",
+            "C-116"
+          ],
+          "sha256": "cc4ac48ed98863dd99652b4a2f60b60d8e0ea630a5890ea2020357f18edbb06f",
+          "git_blob": "bafd10897064a4c12c7be363684a6a7732702944",
+          "size_bytes": 66919,
+          "log_image_complete": true
+        },
+        {
+          "filename": "tile-10-03.png",
+          "path": "docs/evidence/composition/20261105_ci_42018740345/tile-10-03.png",
+          "ids": [
+            "C-117",
+            "C-118",
+            "C-119",
+            "C-120"
+          ],
+          "sha256": "0ff3c4a4bea382f5861afb4f20f2a4c4f2869af9d8844823dfa011e33f4f98c5",
+          "git_blob": "2034e51bb6c96652f86cae5ba42d59895f9bed79",
+          "size_bytes": 120797,
+          "log_image_complete": true
+        }
+      ]
+    },
+    "release": "HOLD_NO_MERGE / NO_DEPLOY"
+  }
+}

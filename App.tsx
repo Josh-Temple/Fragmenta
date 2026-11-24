@@ -10,6 +10,7 @@ import ContrastTool from './pages/ContrastTool';
 import TypographyTool from './pages/TypographyTool';
 const DesignStyles = React.lazy(() => import('./pages/DesignStyles'));
 const KnowledgeBase = React.lazy(() => import('./pages/KnowledgeBase'));
+const Composition = React.lazy(() => import('./pages/Composition'));
 const KnowledgeDetail = React.lazy(() => import('./pages/KnowledgeDetail'));
 const PatternDetail = React.lazy(() => import('./pages/AnimationDetail'));
 import Collections from './pages/Collections';
@@ -32,6 +33,7 @@ const App: React.FC = () => {
         <Route path="/tools/typography" element={<Layout><TypographyTool /></Layout>} />
         <Route path="/styles" element={<Layout><DesignStyles /></Layout>} />
         <Route path="/knowledge" element={<Layout><KnowledgeBase /></Layout>} />
+        <Route path="/composition" element={<Layout><Composition /></Layout>} />
         <Route path="/knowledge/:id" element={<Layout><KnowledgeDetail /></Layout>} />
         <Route path="/search" element={<Layout><SearchResults /></Layout>} />
         <Route path="/p/:id" element={<Layout showNav={false}><PatternDetail /></Layout>} />
