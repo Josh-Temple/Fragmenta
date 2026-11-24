@@ -553,10 +553,20 @@ try {
   console.log('PASS composition atlas 24-to-120 pagination, 240 SVG elements (DOM only)');
 
   const solitudeIds = exportedComposition.discovery.purposes.find(p => p.id === 'solitude').choices.map(c => c.guideId).sort();
-  await page.send('Runtime.evaluate', { expression: "document.querySelector('#composition-query').focus()" });
-  await page.send('Input.insertText', { text: '孤独感' });
-  await page.send('Input.dispatchKeyEvent', { type: 'keyDown', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13 });
-  await page.send('Input.dispatchKeyEvent', { type: 'keyUp', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13 });
+  async function submitCompositionSearch(value) {
+    await page.send('Runtime.evaluate', { expression: "(() => {const field = document.querySelector('#composition-query'); field.focus(); field.select();})()" });
+    await page.send('Input.insertText', { text: value });
+    await poll(async () => {
+      const result = await page.send('Runtime.evaluate', {
+        expression: "document.querySelector('#composition-query')?.value", returnByValue: true,
+      });
+      return result.result?.value === value;
+    }, 'composition search text entered');
+    await page.send('Input.dispatchKeyEvent', { type: 'rawKeyDown', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13 });
+    await page.send('Input.dispatchKeyEvent', { type: 'char', key: 'Enter', code: 'Enter', text: '\r', windowsVirtualKeyCode: 13 });
+    await page.send('Input.dispatchKeyEvent', { type: 'keyUp', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13 });
+  }
+  await submitCompositionSearch('孤独感');
   await poll(async () => {
     const result = await page.send('Runtime.evaluate', {
       expression: "[...document.querySelectorAll('a[data-composition-card]')].map(a => new URLSearchParams(a.hash.split('?')[1]).get('id')).sort()",
@@ -802,26 +812,7 @@ try {
     });
     return response.result?.value;
   }, 'composition actual search form ready');
-  await page.send('Runtime.evaluate', {
-    expression: "document.querySelector('#composition-query')?.focus()",
-  });
-  await page.send('Input.insertText', { text: '__fragmenta_no_results_2026__' });
-  await poll(async () => {
-    const response = await page.send('Runtime.evaluate', {
-      expression: "document.querySelector('#composition-query')?.value === '__fragmenta_no_results_2026__'",
-      returnByValue: true,
-    });
-    return response.result?.value;
-  }, 'composition real keyboard input');
-  await page.send('Input.dispatchKeyEvent', {
-    type: 'rawKeyDown', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13,
-  });
-  await page.send('Input.dispatchKeyEvent', {
-    type: 'char', key: 'Enter', code: 'Enter', text: '\r', windowsVirtualKeyCode: 13,
-  });
-  await page.send('Input.dispatchKeyEvent', {
-    type: 'keyUp', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13,
-  });
+  await submitCompositionSearch('__fragmenta_no_results_2026__');
   await poll(async () => {
     const response = await page.send('Runtime.evaluate', {
       expression: "location.hash.includes('q=__fragmenta_no_results_2026__') && document.querySelectorAll('a[data-composition-card]').length === 0 && document.body.innerText.includes('該当する項目がありません')",
