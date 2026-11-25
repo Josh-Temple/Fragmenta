@@ -13,6 +13,10 @@
   --default-ring-color: #3b82f6;
 }
 @layer base {
+  html { scroll-padding-bottom: calc(6rem + env(safe-area-inset-bottom)); }
+  @media (min-width: 48rem) {
+    html { scroll-padding-top: 4rem; scroll-padding-bottom: 0; }
+  }
   *, ::after, ::before, ::backdrop, ::file-selector-button { border-color: #e5e7eb; }
   input::placeholder, textarea::placeholder { color: #9ca3af; }
   button:not(:disabled), [role="button"]:not(:disabled) { cursor: pointer; }

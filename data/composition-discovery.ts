@@ -9,7 +9,7 @@ export type PurposeChoice = Choice & { purposeId: string; titleJa: string };
 export type CompositionRelation = { sourceId: string; targetId: string; relationType: string; reasonJa: string };
 export const compositionPurposes: CompositionPurpose[] = raw.purposes;
 export const compositionRelations: CompositionRelation[] = raw.relatedComposition;
-export const scopeNote = '用途・注意点・代案はFragmentaの編集案です。出典が扱う事項は資料ごとの説明に記載しています。';
+export const scopeNote = raw.note;
 const reviews: Record<string, Review> = raw.reviewByGuide;
 const choicesByGuide = new Map<string, PurposeChoice[]>();
 for (const purpose of compositionPurposes) {

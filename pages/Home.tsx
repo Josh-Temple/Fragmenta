@@ -18,7 +18,7 @@ const Home: React.FC = () => {
   return (
     <div className="flex min-w-0 flex-col" lang="ja">
       <header className="flex items-center justify-between border-b border-ink-border px-6 py-5">
-        <p lang="en" className="text-lg font-bold">Fragmenta<span className="ml-2 text-xs font-mono font-normal text-ink-muted">UI / DESIGN / TOOLS</span></p>
+        <p lang="en" className="text-lg font-bold">Fragmenta</p>
       </header>
       <section className="px-6 pt-8 pb-6" aria-labelledby="home-heading">
         <h1 id="home-heading" className="mt-3 text-4xl font-bold leading-tight tracking-tight">つくりたいUIを、図と作例から探す</h1>
@@ -34,7 +34,7 @@ const Home: React.FC = () => {
       <section aria-labelledby="start-heading" className="px-6 pb-5">
         <h2 id="start-heading" className="text-lg font-bold">目的から探す</h2>
         <div className="mt-3 grid gap-3 sm:grid-cols-2">
-          {[{ path: '/composition?view=atlas', title: '構図を図で見比べる', detail: '配置例と対照図を見て、要素の位置や余白の違いを確かめる' }, { path: '/styles', title: 'デザインの方向を決める', detail: `${designStyles.length}スタイルを比較し、AIに伝える` }, { path: '/browse', title: '部品やレイアウトを探す', detail: `${Object.keys(definitions).length}パターンの動作と実装を見る` }, { path: '/tools', title: '色と文字を調整する', detail: '自分の配色・文章で試し、CSSをコピー' }, { path: '/knowledge', title: 'デザインの企画を横断して探す', detail: '180件の企画案を読み、関連する項目をたどる。各企画の作例は未制作です。' }].map(item => (
+          {[{ path: '/composition?view=atlas', title: '構図を図で見比べる', detail: '配置例と対照図を見て、要素の位置や余白の違いを確かめる' }, { path: '/styles', title: 'デザインの方向を決める', detail: `${designStyles.length}スタイルを比較し、AIに伝える` }, { path: '/browse', title: '部品やレイアウトを探す', detail: `${Object.keys(definitions).length}パターンの動作と実装を見る` }, { path: '/tools', title: '色と文字を調整する', detail: `${liveTools.length}つのツールで配色と文字組みを試し、CSSをコピー` }].map(item => (
             <Link key={item.path} to={item.path} className="motion-control flex items-center justify-between gap-3 rounded-xl border border-ink/30 bg-surface p-4 hover:border-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
               <span><strong className="text-sm">{item.title}</strong><span className="mt-1 block text-xs leading-relaxed text-ink-muted">{item.detail}</span></span><span aria-hidden="true">→</span>
             </Link>
@@ -46,7 +46,7 @@ const Home: React.FC = () => {
         <div className="mt-4 space-y-4">{liveTools.map(tool => <div key={tool.id}><Link to={tool.path} className="inline-block py-1 text-sm font-bold underline underline-offset-4">{tool.titleJa}</Link><p className="mt-1 text-xs leading-relaxed text-ink-muted">{tool.description}</p></div>)}</div>
       </section>
       <section aria-labelledby="design-atlas-home-heading" className="mx-6 mt-7 border-t border-ink-border pt-5">
-        <h2 id="design-atlas-home-heading" className="text-lg font-bold">Design Styles / デザイン図鑑</h2>
+        <h2 id="design-atlas-home-heading" className="text-lg font-bold">デザインスタイル図鑑</h2>
         <p className="mt-2 text-sm leading-relaxed text-ink-muted">ミニマリズム、スイス・スタイル、和のデザインなど、{designStyles.length}系統の特徴と向いている用途を確認できます。</p>
         <Link to="/styles" className="mt-2 inline-block py-2 text-sm font-semibold underline underline-offset-4">同じ画面でスタイルを見比べる</Link>
       </section>
@@ -66,9 +66,9 @@ const Home: React.FC = () => {
         <Link to="/guide" className="mt-2 inline-block py-2 text-sm font-semibold underline underline-offset-4">使い方ガイドを読む</Link>
       </section>
       <details className="mx-6 mt-7 border-t border-ink-border pt-4 text-sm">
-        <summary className="cursor-pointer py-2 font-semibold">今後のコンテンツ案</summary>
-        <p className="mt-2 text-xs leading-relaxed text-ink-muted">公開前の企画です。完成した実装例ではありません。</p>
-        <div className="mt-2 flex flex-col gap-1 font-semibold underline underline-offset-4"><Link to="/upcoming" className="py-2">UIパターンの案 {plannedPatterns.length}件</Link><Link to="/tools/upcoming" className="py-2">実用ツールの案 {plannedTools.length}件</Link><Link to="/knowledge" className="py-2">関連リンク付きの企画台帳 180件</Link></div>
+        <summary className="cursor-pointer py-2 font-semibold">ロードマップ・今後の企画</summary>
+        <p className="mt-2 text-xs leading-relaxed text-ink-muted">ここに掲載している企画の作例は未制作です。</p>
+        <div className="mt-2 flex flex-col gap-1 font-semibold underline underline-offset-4"><Link to="/upcoming" className="py-2">UIパターンの案 {plannedPatterns.length}件</Link><Link to="/tools/upcoming" className="py-2">実用ツールの案 {plannedTools.length}件</Link><Link to="/knowledge" className="py-2">デザインの企画台帳（180件）</Link></div>
       </details>
     </div>
   );
