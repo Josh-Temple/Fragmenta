@@ -37,7 +37,7 @@ const KnowledgeDetail: React.FC = () => {
       <span aria-hidden="true" className="mx-2">/</span><span>{categoryLabel(entry.categoryId)}</span>
     </nav>
     <header className="mt-4 border-b border-ink-border pb-6">
-      <p className="text-xs font-semibold tracking-wider text-primary">PLANNED / 企画段階</p>
+      <p className="text-xs font-semibold tracking-wider text-primary">企画段階</p>
       <h1 ref={headingRef} tabIndex={-1} className="mt-2 text-3xl font-bold leading-tight focus-visible:outline-2 focus-visible:outline-offset-2">{entry.titleJa}</h1>
       {entry.titleEn && <p lang="en" className="mt-2 text-sm text-ink-muted">{entry.titleEn}</p>}
       <p className="mt-3 text-sm text-ink-muted">分類：{categoryLabel(entry.categoryId)}</p>

@@ -1,10 +1,19 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
+import { ideaById } from '../data/knowledge';
 import CompositionDiagram from '../components/CompositionDiagram';
 import { compositionCatalog, compositionGuides, compositionCategories,
   compositionById, compositionCategoryLabel, matchesComposition, compositionBrief } from '../data/composition';
 import { compositionPurposes, getCompositionPurpose, getCompositionChoice,
   getCompositionRelations, getCompositionDiscovery, purposeFromQuery, getReview } from '../data/composition-discovery';
+
+const tagLabels: Record<string, string> = {
+  illustration: 'イラスト', photography: '写真', cinema: '映画', web_ui: 'ウェブ画面',
+  comics: '漫画', graphic_design: 'グラフィックデザイン', ai_image_generation: 'AI画像生成',
+  typography: '文字', people: '人物', shapes: '図形', actions: '動作', scenes: '場面',
+  interface_elements: '画面の部品', products: '製品', landscapes: '風景', architecture: '建築',
+  animals: '動物', objects: '物体', contrast: '対照', similar: '類似', complement: '補完',
+};
 
 const Composition: React.FC = () => {
   const [params, setParams] = useSearchParams();
@@ -162,7 +171,7 @@ const Composition: React.FC = () => {
           return <p key={choice.purposeId} className="mt-2 text-sm"><strong>「{choice.titleJa}」の参考箇所：</strong><a href={source.url} className="underline underline-offset-4">{source.publisher} · {section}</a>　{scopeJa}</p>;
         })}
         <p className="mt-2 text-sm"><strong>比較する構図条件：</strong>{discovery.priorityConditions[0]}</p>
-        <p className="mt-2 text-xs text-ink-muted">媒体候補：{discovery.media.join(' / ')} ・ 被写体候補：{discovery.subjects.join(' / ')}（分野単位の未検証タグ）</p>
+        <p className="mt-2 text-xs text-ink-muted">媒体候補：{discovery.media.map(tag => tagLabels[tag] ?? tag).join(' / ')} ・ 被写体候補：{discovery.subjects.map(tag => tagLabels[tag] ?? tag).join(' / ')}（分野ごとの参考例）</p>
       </section>
       <section aria-labelledby="composition-visual" className="mt-6">
         <h3 id="composition-visual" className="text-lg font-bold">構図の模式図</h3>
@@ -195,13 +204,13 @@ const Composition: React.FC = () => {
         <ul className="mt-2 space-y-2">{getCompositionRelations(guide.id).map(r => <li key={r.targetId}>
           <Link to={detailHref(r.targetId)} className="inline-flex min-h-11 items-center text-sm underline underline-offset-4">
             {r.targetId} ・ {compositionById.get(r.targetId)?.titleJa}</Link>
-          <p className="text-xs text-ink-muted">{r.reasonJa}（{r.relationType}）</p>
+          <p className="text-xs text-ink-muted">{r.reasonJa}（{tagLabels[r.relationType] ?? r.relationType}）</p>
         </li>)}</ul>
       </section>}
       {guide.relatedLegacyIds.length > 0 && <section className="mt-6 border-t border-ink-border pt-5">
-        <h3 className="text-sm font-bold">既存Fragmentaの関連案（編集候補）</h3>
+        <h3 className="text-sm font-bold">関連する企画</h3>
         <ul className="mt-2 space-y-2">{guide.relatedLegacyIds.map(id => <li key={id}><Link className="inline-flex min-h-11 items-center text-sm underline underline-offset-4"
-          to={'/knowledge/' + id}>{id}</Link></li>)}</ul>
+          to={'/knowledge/' + id}>{ideaById.get(id)?.titleJa ?? id}</Link></li>)}</ul>
       </section>}
       <section className="mt-6 border-t border-ink-border pt-5">
         <h3 className="text-sm font-bold">出典と検証状況</h3>

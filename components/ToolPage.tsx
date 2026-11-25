@@ -4,11 +4,10 @@ import { Link } from 'react-router-dom';
 export const toolInputClass = 'w-full min-w-0 rounded-lg border border-ink/40 bg-surface-highlight px-3 py-3 text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink';
 export const toolButtonClass = 'min-h-11 rounded-lg border border-ink/40 bg-surface px-4 py-2 text-sm font-semibold text-ink hover:bg-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink disabled:opacity-50';
 
-export const ToolPage: React.FC<{ title: string; english: string; description: string; children: React.ReactNode }> = ({ title, english, description, children }) => (
+export const ToolPage: React.FC<{ title: string; description: string; children: React.ReactNode }> = ({ title, description, children }) => (
   <div lang="ja" className="min-w-0 px-5 py-6">
     <Link to="/tools" className="inline-block min-h-11 py-2 text-sm font-semibold text-ink underline underline-offset-4">実用ツール一覧</Link>
     <header className="mt-3 mb-6">
-      <p lang="en" className="text-xs font-mono text-ink-muted">{english}</p>
       <h1 className="mt-2 text-3xl font-bold leading-tight">{title}</h1>
       <p className="mt-3 text-sm leading-relaxed text-ink-muted">{description}</p>
       <p className="mt-3 text-xs leading-relaxed text-ink-muted">入力した内容はこの画面内で処理します。保存・外部送信はしません。ページを離れるとリセットされます。</p>

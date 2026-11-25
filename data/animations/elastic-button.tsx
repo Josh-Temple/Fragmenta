@@ -3,16 +3,16 @@ import { AnimationDefinition } from '../../types';
 
 export const elasticButton: AnimationDefinition = {
   id: 'elastic-button',
-  title: 'Lift & Compress',
-  description: 'A subtle, reusable button motion using transform and shadow. Great default for primary CTAs.',
-  tags: ['Button', 'CSS', 'Transform', 'Hover'],
+  title: '押すと沈むボタン',
+  description: 'ポインターを重ねると少し浮き、押すと縮むボタンです。変形と影で操作に手応えを添えます。',
+  tags: ['ボタン', 'CSS', '変形', 'ホバー'],
   category: 'button',
   performanceScore: 98,
   a11yScore: 'AA',
   params: [
-    { key: 'duration', cssVar: '--dur', label: 'Duration', type: 'number', min: 0.1, max: 1.0, step: 0.1, default: 0.2, unit: 's' },
-    { key: 'lift', cssVar: '--lift', label: 'Lift Distance', type: 'number', min: 0, max: 20, step: 1, default: 4, unit: 'px' },
-    { key: 'scale', cssVar: '--scale', label: 'Press Scale', type: 'number', min: 0.8, max: 1.0, step: 0.01, default: 0.95 }
+    { key: 'duration', cssVar: '--dur', label: '動きの時間', type: 'number', min: 0.1, max: 1.0, step: 0.1, default: 0.2, unit: 's' },
+    { key: 'lift', cssVar: '--lift', label: '浮き上がる距離', type: 'number', min: 0, max: 20, step: 1, default: 4, unit: 'px' },
+    { key: 'scale', cssVar: '--scale', label: '押したときの倍率', type: 'number', min: 0.8, max: 1.0, step: 0.01, default: 0.95 }
   ],
   Preview: ({ values }) => (
     <button 
@@ -26,7 +26,7 @@ export const elasticButton: AnimationDefinition = {
         '--scale': values['scale'],
       } as React.CSSProperties}
     >
-      <span>Explore Now</span>
+      <span>試してみる</span>
       <span className="material-symbols-outlined text-sm">arrow_forward</span>
     </button>
   ),
@@ -49,5 +49,5 @@ export const elasticButton: AnimationDefinition = {
   .btn-lift:hover, .btn-lift:active { transform: none; } }
 </style>`;
   },
-  generatePrompt: (values) => `Create a button animation: Lift ${values['lift']}px on hover, scale to ${values['scale']} on press. Duration: ${values['duration']}s.`
+  generatePrompt: (values) => `ポインターを重ねると${values['lift']}px浮き、押すと${values['scale']}倍に縮むボタンを作成してください。動きの時間は${values['duration']}sです。`
 };

@@ -28,7 +28,7 @@ const pattern = read('pages/AnimationDetail.tsx');
 const listing = read('pages/KnowledgeBase.tsx');
 const detail = read('pages/KnowledgeDetail.tsx');
 check(app.includes('path="/knowledge"') && app.includes('path="/knowledge/:id"'), 'Routes');
-check(home.includes('to="/knowledge"') && globalSearch.includes("knowledge?"), 'Navigation and query handoff');
+check(home.slice(home.indexOf('ロードマップ・今後の企画')).includes('to="/knowledge"') && globalSearch.includes("knowledge?"), 'Navigation and query handoff');
 check(listing.includes('draftOnly') && listing.includes('setParams') && listing.includes('filtered.slice(0, visibleCount).map(') && listing.includes('setVisibleCount'), 'Search, filter and paged draft-only view');
 check(detail.includes('useParams') && detail.includes('relatedIdeaIds') && detail.includes('relatedExisting') && detail.includes('siblings'), 'Detail and navigation');
 check(atlas.includes('relatedKnowledge') && atlas.includes('/knowledge/'), 'Design atlas backlink');

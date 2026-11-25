@@ -14,7 +14,7 @@ const TypographyTool: React.FC = () => {
   const update = (key: 'size' | 'leading' | 'spacing' | 'width', value: number) => setSettings(current => ({ ...current, [key]: value }));
   const css = typographyCss(settings);
   return (
-    <ToolPage title="日本語の文字を調整" english="Japanese Typography Playground" description="自分の文章を入れて、文字サイズ・行間・字間・本文幅を試せます。唯一の正解を決めるものではありません。読み手や端末に合わせて調整してください。">
+    <ToolPage title="日本語の文字を調整" description="自分の文章を入れて、文字サイズ・行間・字間・本文幅を試せます。唯一の正解を決めるものではありません。読み手や端末に合わせて調整してください。">
       <section aria-labelledby="type-settings-heading">
         <h2 id="type-settings-heading" className="text-lg font-bold">文字と余白</h2>
         <div className="mt-4 grid gap-4 sm:grid-cols-2">
