@@ -1711,6 +1711,29 @@ try {
     }
   }
   console.log('PASS clean route entry, Japanese navigation, common width and pinned position at 390/767/768/1280px');
+
+  await page.send('Emulation.setDeviceMetricsOverride', { width: 390, height: 844, deviceScaleFactor: 1, mobile: false });
+  await page.send('Page.navigate', { url: baseUrl + '/' });
+  await poll(async () => {
+    const result = await page.send('Runtime.evaluate', { expression: `(() => {
+      const link = document.querySelector('main details a[href="/upcoming"]');
+      if (!link) return false;
+      link.closest('details').open = true;
+      link.scrollIntoView(); link.focus();
+      return scrollY > 100;
+    })()`, returnByValue: true });
+    return result.result?.value;
+  }, 'roadmap link at the bottom of the home page');
+  await page.send('Input.dispatchKeyEvent', { type: 'keyDown', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13 });
+  await page.send('Input.dispatchKeyEvent', { type: 'keyUp', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13 });
+  await poll(async () => {
+    const result = await page.send('Runtime.evaluate', {
+      expression: "location.pathname === '/upcoming' && document.querySelector('h1')?.textContent === '今後のUIパターン案' && scrollY <= 1",
+      returnByValue: true,
+    });
+    return result.result?.value;
+  }, 'roadmap opens the start of the upcoming patterns page');
+  console.log('PASS mobile roadmap link opens its destination at the top');
 } finally {
   page?.close();
   control?.close();
