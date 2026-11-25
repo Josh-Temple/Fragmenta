@@ -69,20 +69,11 @@ const DesignStyles: React.FC = () => {
   };
 
   return (
-    <div className="min-w-0 flex flex-col pb-12">
-      <header className="px-5 pt-6 pb-5 border-b border-ink-border">
-        <Link to="/" className="inline-flex py-2 items-center gap-2 text-sm text-ink font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink rounded">
-          <span aria-hidden="true" className="material-symbols-outlined">arrow_back</span>
-          Home
-        </Link>
-        <p className="mt-4 text-xs uppercase tracking-[.2em] text-primary font-bold">Design Styles / デザインの図鑑</p>
-        <h1 className="mt-2 text-3xl font-bold text-ink">デザインの名前から探す</h1>
-        <p className="mt-3 text-sm leading-relaxed text-ink-muted">
-          {designStyles.length}系統の特徴を知り、同じ画面で比較し、AIへの指示文やCSSトークンを持ち帰れます。
-        </p>
-        <p className="mt-2 text-xs leading-relaxed text-ink-muted">
-          プレビューは各様式から着想を得て独自に作った簡易解釈です。歴史的な正解や公式デザインシステムの再現ではありません。
-        </p>
+    <div className="catalog-page style-atlas min-w-0 flex flex-col pb-12">
+      <header className="catalog-heading">
+        <h1>デザインの名前から探す</h1>
+        <p>{designStyles.length}系統の特徴と使いどころを知り、同じ画面で比較できます。AIへの指示文とCSSトークンも確認できます。</p>
+        <p className="style-scope">各様式から着想を得た独自の見本です。歴史的な正解や公式デザインシステムの再現ではありません。</p>
       </header>
 
       <section aria-labelledby="atlas-list-heading" className="px-5 py-6">
@@ -102,7 +93,7 @@ const DesignStyles: React.FC = () => {
         </div>
         <p className="mt-3 text-xs text-ink-muted" role="status">{results.length} / {designStyles.length} styles</p>
         {results.length ? (
-          <div className="grid grid-cols-2 gap-3 mt-4">
+          <div className="style-index-grid">
             {results.map(item => (
               <button type="button" aria-pressed={primary === item.id} key={item.id}
                 onClick={() => selectPrimary(item.id)}
@@ -185,7 +176,7 @@ const DesignStyles: React.FC = () => {
             </div>
           )}
         </div>
-        <div className="grid grid-cols-1 gap-4 mt-4">
+        <div className="specimen-grid">
           <div className="border border-ink-border rounded-xl overflow-hidden">
             <div className="px-3 py-2 bg-surface text-sm font-bold">{first.name} / {first.ja}</div>
             <DesignStyleSpecimen style={first} screen={screen}/>

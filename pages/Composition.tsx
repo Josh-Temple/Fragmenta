@@ -12,6 +12,8 @@ const Composition: React.FC = () => {
   const [copyStatus, setCopyStatus] = useState('');
   const [visibleCount, setVisibleCount] = useState(24);
   const detailHeadingRef = useRef<HTMLHeadingElement>(null);
+  const atlasHeadingRef = useRef<HTMLHeadingElement>(null);
+  const filtersRef = useRef<HTMLDetailsElement>(null);
   const previousDetailIdRef = useRef<string | null>(null);
   const query = params.get('q') ?? '';
   const atlas = params.get('view') === 'atlas';
@@ -46,6 +48,15 @@ const Composition: React.FC = () => {
     next.set('view', 'atlas');
     return '/composition?' + next.toString();
   };
+  useEffect(() => {
+    const screen = window.matchMedia('(min-width: 64rem)');
+    const syncFilters = () => {
+      if (filtersRef.current) filtersRef.current.open = screen.matches;
+    };
+    syncFilters();
+    screen.addEventListener('change', syncFilters);
+    return () => screen.removeEventListener('change', syncFilters);
+  }, []);
   useEffect(() => setInput(query), [query]);
   useEffect(() => setVisibleCount(24), [query, category, purpose?.id]);
   useEffect(() => setCopyStatus(''), [brief]);
@@ -54,6 +65,7 @@ const Composition: React.FC = () => {
       previousDetailIdRef.current = guide.id;
       detailHeadingRef.current?.focus();
     }
+    if (atlas && !previousAtlasRef.current) atlasHeadingRef.current?.focus();
     previousAtlasRef.current = atlas;
   }, [atlas, guide.id]);
   const setParam = (key: string, value: string) => {
@@ -63,16 +75,22 @@ const Composition: React.FC = () => {
     if (key === 'q') { next.set('view', 'atlas'); next.delete('id'); }
     setParams(next);
   };
-  return <div lang="ja" className="min-w-0 px-5 pb-12">
-    <header className="pt-6 pb-6 border-b border-ink-border">
-      <Link to="/knowledge" className="inline-flex min-h-11 items-center text-sm font-semibold underline underline-offset-4">知識ベースに戻る</Link>
-      <p className="mt-4 text-xs font-mono uppercase tracking-wider text-ink">Composition / 構図</p>
-      <h1 className="mt-2 text-3xl font-bold">構図を比較して学ぶ</h1>
-      <p className="mt-3 text-sm leading-relaxed text-ink-muted">全120件の編集下書きです。図は模式図で、制作経緯と権利を確認中です。厳密な正解・不正解や実証済みの心理効果を示すものではありません。</p>
-      <a href="/knowledge/composition-guides.json" className="mt-3 inline-flex min-h-11 items-center text-sm underline underline-offset-4">AI向け構造化JSON</a>
+  return <div lang="ja" className="catalog-page composition-page">
+    <header className="catalog-heading">
+      <h1>構図を比較して学ぶ</h1>
+      <p>全{compositionGuides.length}件。配置例と対照例を並べて、位置や形の違いを確かめます。図と説明は編集下書きで、制作経緯と権利は確認中です。</p>
     </header>
-    <section aria-labelledby="composition-find" className="py-5 border-b border-ink-border">
+    <div className="composition-spread">
+    <section aria-labelledby="composition-find" className="composition-find">
       <h2 id="composition-find" className="text-lg font-bold">項目を探す</h2>
+      <form role="search" className="mt-3 flex gap-2" onSubmit={event => { event.preventDefault(); setParam('q', input); }}>
+        <label htmlFor="composition-query" className="sr-only">キーワード</label>
+        <input id="composition-query" value={input} onChange={event => setInput(event.target.value)} type="search"
+          placeholder="例：余白、孤独、黒い面" className="min-w-0 min-h-11 flex-1 rounded-lg border border-ink/40 bg-paper p-3 text-base focus-visible:outline-2 focus-visible:outline-offset-2" />
+        <button className="min-h-11 rounded-lg bg-ink px-4 text-sm font-bold text-paper" type="submit">検索</button>
+      </form>
+      <details ref={filtersRef} className="composition-refinements">
+        <summary>目的・分野・構図を選ぶ</summary>
       <div className="mt-4" aria-labelledby="composition-purpose-heading">
         <h3 id="composition-purpose-heading" className="font-bold">表現したい目的から探す</h3>
         <p className="mt-1 text-sm text-ink-muted">選択候補であり、特定の印象やAI生成結果を保証しません。</p>
@@ -94,18 +112,21 @@ const Composition: React.FC = () => {
             className="mt-2 min-h-11 text-sm font-semibold underline underline-offset-4">目的の絞り込みを解除</button>
         </div>}
       </div>
-      <form role="search" className="mt-3 flex gap-2" onSubmit={event => { event.preventDefault(); setParam('q', input); }}>
-        <label htmlFor="composition-query" className="sr-only">キーワード</label>
-        <input id="composition-query" value={input} onChange={event => setInput(event.target.value)} type="search"
-          placeholder="例：余白、孤独、黒い面" className="min-w-0 min-h-11 flex-1 rounded-lg border border-ink/40 bg-paper p-3 text-base focus-visible:outline-2 focus-visible:outline-offset-2" />
-        <button className="min-h-11 rounded-lg bg-ink px-4 text-sm font-bold text-paper" type="submit">検索</button>
-      </form>
       <label htmlFor="composition-category" className="mt-4 block text-sm font-semibold">分野</label>
       <select id="composition-category" value={category} onChange={event => setParam('category', event.target.value)}
         className="mt-2 min-h-11 w-full rounded-lg border border-ink/40 bg-paper p-3 text-base focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
         <option value="all">すべての分野</option>
         {compositionCategories.map(item => <option key={item.id} value={item.id}>{item.label}</option>)}
       </select>
+      <label htmlFor="composition-item" className="mt-3 block text-sm font-semibold">表示する構図を選択</label>
+      <select id="composition-item" value={guide.id} onChange={event => setParam('id', event.target.value)}
+        className="mt-2 min-h-11 w-full rounded-lg border border-ink/40 bg-paper p-3 text-base">
+        {compositionGuides.map(item => <option key={item.id} value={item.id}>{item.id} ・ {item.titleJa}</option>)}
+      </select>
+      </details>
+      {(purpose || category !== 'all') && <p className="filter-summary">
+        絞り込み中：{[purpose?.titleJa, category !== 'all' && compositionCategoryLabel(category)].filter(Boolean).join('・')}
+      </p>}
       <p className="mt-3 text-sm text-ink-muted" role="status">{filtered.length}件 / 全{compositionGuides.length}件</p>
       <nav aria-label="表示方法" className="mt-4 flex flex-wrap gap-3 text-sm">
         <Link to={atlasHref()}
@@ -116,12 +137,7 @@ const Composition: React.FC = () => {
       {missingGuide && <p role="alert" className="mt-3 text-sm text-ink-muted">指定された構図IDは見つかりません。先頭の項目を仮表示しています。上の検索・一覧から構図を選び直してください。</p>}
       {filtered.length > 0 && !filtered.some(item => item.id === guide.id) &&
         <p className="mt-2 text-sm text-ink-muted">現在表示中の項目は検索結果の対象外です。結果一覧から別の項目を選んでください。</p>}
-      <label htmlFor="composition-item" className="mt-3 block text-sm font-semibold">表示する構図を選択</label>
-      <select id="composition-item" value={guide.id} onChange={event => setParam('id', event.target.value)}
-        className="mt-2 min-h-11 w-full rounded-lg border border-ink/40 bg-paper p-3 text-base">
-        {compositionGuides.map(item => <option key={item.id} value={item.id}>{item.id} ・ {item.titleJa}</option>)}
-      </select>
-      {!atlas && <nav className="mt-3 flex gap-2 overflow-x-auto pb-2" aria-label="検索結果から構図を選択">
+      {!atlas && <nav className="quick-guides" aria-label="検索結果から構図を選択">
         {quickLinks.map(item => <Link key={item.id} to={detailHref(item.id)}
           aria-current={guide.id === item.id ? 'page' : undefined}
           className={'flex min-h-11 shrink-0 items-center rounded-lg border px-3 text-sm font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 ' +
@@ -135,11 +151,23 @@ const Composition: React.FC = () => {
           onClick={() => setParams(new URLSearchParams())}>条件をすべて解除</button>
       </div>}
     </section>
-    {!atlas ? <article className="py-6" aria-labelledby="composition-title" key={guide.id}>
+    {!atlas ? <article className="composition-content" aria-labelledby="composition-title" key={guide.id}>
       <p className="text-xs font-mono text-ink">{guide.id} ・ {compositionCategoryLabel(guide.categoryId)}</p>
       <h2 id="composition-title" ref={detailHeadingRef} tabIndex={-1}
         className="mt-2 text-2xl font-bold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">{guide.titleJa}</h2>
       <p className="mt-3 text-sm leading-relaxed">{guide.definition}</p>
+      <section aria-labelledby="composition-visual" className="mt-6">
+        <h3 id="composition-visual" className="text-lg font-bold">構図の模式図</h3>
+        <div className={guide.id === 'C-093' || guide.id === 'C-119' ? 'mt-3 grid gap-4' : 'mt-3 grid gap-4 sm:grid-cols-2'}>
+          <div><p className="mb-2 text-sm font-semibold">{guide.id === 'C-110' ? '画風A' : guide.id === 'C-119' ? '元図' : '配置例'}</p><CompositionDiagram guide={guide} variant="example" />
+            <p className="mt-2 text-sm leading-relaxed">{guide.example}</p></div>
+          <div><p className="mb-2 text-sm font-semibold">{guide.id === 'C-110' ? '画風B' : guide.id === 'C-119' ? '検査表示' : '対照例'}</p><CompositionDiagram guide={guide} variant="comparison" />
+            <p className="mt-2 text-sm leading-relaxed">{guide.contrast}</p></div>
+        </div>
+        {guide.comparisonPoint && <p className="mt-4 rounded-lg border border-ink-border bg-surface p-3 text-sm leading-relaxed"><strong>見比べるポイント：</strong>{guide.comparisonPoint}</p>}
+        {guide.diagramNote && <p className="mt-3 text-sm leading-relaxed text-ink-muted"><strong>模式図の限界：</strong>{guide.diagramNote}</p>}
+        <p className="mt-3 text-xs leading-relaxed text-ink-muted">模式図は位置・大きさ・明暗の違いを簡略化したものです。対照例も、目的によっては適切な構図になります。</p>
+      </section>
       {selectedChoice && <section className="mt-4 rounded-lg border border-ink-border bg-surface p-4">
         <h3 id="composition-purpose-reason" className="font-bold">「{selectedChoice.titleJa}」から選んだ理由</h3>
         <p className="mt-2 text-sm">{selectedChoice.reasonJa}</p>
@@ -164,18 +192,6 @@ const Composition: React.FC = () => {
         })}
         <p className="mt-2 text-sm"><strong>比較する構図条件：</strong>{discovery.priorityConditions[0]}</p>
         <p className="mt-2 text-xs text-ink-muted">媒体候補：{discovery.media.join(' / ')} ・ 被写体候補：{discovery.subjects.join(' / ')}（分野単位の未検証タグ）</p>
-      </section>
-      <section aria-labelledby="composition-visual" className="mt-6">
-        <h3 id="composition-visual" className="text-lg font-bold">構図の模式図</h3>
-        <div className={guide.id === 'C-093' || guide.id === 'C-119' ? 'mt-3 grid gap-4' : 'mt-3 grid gap-4 sm:grid-cols-2'}>
-          <div><p className="mb-2 text-sm font-semibold">{guide.id === 'C-110' ? '画風A' : guide.id === 'C-119' ? '元図' : '配置例'}</p><CompositionDiagram guide={guide} variant="example" />
-            <p className="mt-2 text-sm leading-relaxed">{guide.example}</p></div>
-          <div><p className="mb-2 text-sm font-semibold">{guide.id === 'C-110' ? '画風B' : guide.id === 'C-119' ? '検査表示' : '対照例'}</p><CompositionDiagram guide={guide} variant="comparison" />
-            <p className="mt-2 text-sm leading-relaxed">{guide.contrast}</p></div>
-        </div>
-        {guide.comparisonPoint && <p className="mt-4 rounded-lg border border-ink-border bg-surface p-3 text-sm leading-relaxed"><strong>見比べるポイント：</strong>{guide.comparisonPoint}</p>}
-        {guide.diagramNote && <p className="mt-3 text-sm leading-relaxed text-ink-muted"><strong>模式図の限界：</strong>{guide.diagramNote}</p>}
-        <p className="mt-3 text-xs leading-relaxed text-ink-muted">模式図は位置・大きさ・明暗の違いを簡略化したものです。対照例も、目的によっては適切な構図になります。</p>
       </section>
       <section aria-labelledby="composition-ai" className="mt-7 border-t border-ink-border pt-5">
         <h3 id="composition-ai" className="text-lg font-bold">AIへの指示例</h3>
@@ -214,11 +230,10 @@ const Composition: React.FC = () => {
           <p className="mt-1 text-xs text-ink-muted">{compositionCatalog.sources[id].rights}</p></li>)}</ul>
           : <p className="mt-2 text-sm text-ink-muted">参考資料の登録：未完了</p>}
       </section>
-    </article> : <section className="py-6" aria-labelledby="composition-atlas-title">
-      <h2 id="composition-atlas-title" className="text-xl font-bold">構図の一覧</h2>
-      <p className="mt-2 text-sm text-ink-muted">図を見ながら選択できます。図解と説明はいずれも未レビューの編集案です。</p>
+    </article> : <section className="composition-content" aria-labelledby="composition-atlas-title">
+      <h2 id="composition-atlas-title" ref={atlasHeadingRef} tabIndex={-1} className="text-xl font-bold">構図の一覧</h2>
       {filtered.length > 0 ? <div className="mt-5 grid grid-cols-1 gap-4">
-        {filtered.slice(0, visibleCount).map(item => <article key={item.id} className="min-w-0 rounded-xl border border-ink-border bg-surface p-4">
+        {filtered.slice(0, visibleCount).map(item => <article key={item.id} className="atlas-entry">
           <p className="text-xs text-ink">{item.id} ・ {compositionCategoryLabel(item.categoryId)}</p>
           <h3 className="mt-2 text-base font-bold">{item.titleJa}</h3>
           <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -246,7 +261,10 @@ const Composition: React.FC = () => {
         className="mt-5 min-h-11 w-full rounded-lg border border-ink-border px-4 py-3 text-sm font-semibold focus-visible:outline-2 focus-visible:outline-offset-2">さらに表示（残り{filtered.length - visibleCount}件）</button>}
       <p role="status" className="mt-3 text-sm text-ink-muted">{Math.min(filtered.length, visibleCount)}件表示 / {filtered.length}件該当</p>
     </section>}
+    </div>
     <footer className="border-t border-ink-border pt-5 text-xs text-ink-muted">
+      <div className="catalog-resources"><Link to="/knowledge" className="text-link">企画の知識ベース</Link>
+        <a href="/knowledge/composition-guides.json" className="text-link">AI向け構造化JSON</a></div>
       <a href={compositionCatalog.issueUrl} className="underline underline-offset-4" rel="noopener noreferrer">構図120件の収録候補（GitHub Issue #48）</a>
       <p className="mt-2">既存180件の知識ベースとは分離し、構図120件を編集・レビュー中です。</p>
     </footer>

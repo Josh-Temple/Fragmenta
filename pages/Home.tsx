@@ -6,72 +6,88 @@ import { plannedTools } from '../data/planned-tools';
 import { liveTools } from '../data/live-tools';
 import { designStyles } from '../data/design-styles';
 import PatternCard from '../components/PatternCard';
+import CompositionStudy from '../components/CompositionStudy';
+
+const entryPoints = [
+  { path: '/composition?view=atlas', title: '構図を図で見比べる', detail: '配置例と対照例を並べて、主役の位置や余白を比べる。', sample: 'alignment' },
+  { path: '/styles', title: 'スタイルを選ぶ', detail: `${designStyles.length}スタイルを同じ画面で比べ、好みの特徴を言葉にする。`, sample: 'type' },
+  { path: '/browse', title: 'UIパターンを試す', detail: `${Object.keys(definitions).length}種類の部品やレイアウトを動かし、実装を読む。`, sample: 'interface' },
+];
+const secondaryEntries = [
+  { path: '/tools', title: '実用ツール', detail: '配色と日本語の文字組みを調整する。' },
+  { path: '/knowledge', title: '企画から探す', detail: '180件の企画案をたどる。各企画の作例は未制作です。' },
+];
+const featuredPatterns = ['editorial-split-layout', 'readable-article', 'inline-validation', 'responsive-data-table'];
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
-  const featuredPatterns = ['readable-article', 'inline-validation', 'warm-neo-brutalist-editorial', 'responsive-data-table'].map(id => definitions[id]);
   const search = (event: React.FormEvent) => {
     event.preventDefault();
     navigate(`/search?${new URLSearchParams({ q: searchQuery.trim() })}`);
   };
   return (
-    <div className="flex min-w-0 flex-col" lang="ja">
-      <header className="flex items-center justify-between border-b border-ink-border px-6 py-5">
-        <p lang="en" className="text-lg font-bold">Fragmenta<span className="ml-2 text-xs font-mono font-normal text-ink-muted">UI / DESIGN / TOOLS</span></p>
-      </header>
-      <section className="px-6 pt-8 pb-6" aria-labelledby="home-heading">
-        <h1 id="home-heading" className="mt-3 text-4xl font-bold leading-tight tracking-tight">つくりたいUIを、図と作例から探す</h1>
-        <p className="mt-4 text-sm leading-relaxed text-ink/80">動く部品とデザインの特徴を見比べ、コードやAIへの指示文を確認できます。色と文字は実用ツールで調整できます。</p>
-        <form role="search" onSubmit={search} className="mt-6">
-          <label htmlFor="home-search" className="block text-sm font-semibold">構図・スタイル・UIパターンなどを検索</label>
-          <div className="mt-2 flex gap-2">
-            <input id="home-search" type="search" value={searchQuery} onChange={event => setSearchQuery(event.target.value)} placeholder="例：記事、ガラス、行間" className="min-w-0 flex-1 rounded-lg border border-ink/40 bg-surface-highlight px-3 py-3 text-base text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink" />
-            <button type="submit" className="motion-control rounded-lg bg-ink px-4 py-3 text-sm font-bold text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">検索</button>
-          </div>
-        </form>
+    <div className="home-page" lang="ja">
+      <section className="home-hero" aria-labelledby="home-heading">
+        <div className="hero-intro">
+          <h1 id="home-heading">つくりたい<span lang="en">UI</span>を、<br />図と作例から探す<span className="headline-stop">。</span></h1>
+          <p>構図、スタイル、動く部品。作例を見比べながら、<wbr />自分の画面に合う選び方と実装を学べます。</p>
+          <form role="search" onSubmit={search} className="home-search">
+            <label htmlFor="home-search">サイト内を検索</label>
+            <div className="home-search-row">
+              <input id="home-search" type="search" value={searchQuery} onChange={event => setSearchQuery(event.target.value)}
+                placeholder="例：余白、記事、行間" />
+              <button type="submit">検索</button>
+            </div>
+          </form>
+        </div>
+        <CompositionStudy />
       </section>
-      <section aria-labelledby="start-heading" className="px-6 pb-5">
-        <h2 id="start-heading" className="text-lg font-bold">目的から探す</h2>
-        <div className="mt-3 grid gap-3 sm:grid-cols-2">
-          {[{ path: '/composition?view=atlas', title: '構図を図で見比べる', detail: '配置例と対照図を見て、要素の位置や余白の違いを確かめる' }, { path: '/styles', title: 'デザインの方向を決める', detail: `${designStyles.length}スタイルを比較し、AIに伝える` }, { path: '/browse', title: '部品やレイアウトを探す', detail: `${Object.keys(definitions).length}パターンの動作と実装を見る` }, { path: '/tools', title: '色と文字を調整する', detail: '自分の配色・文章で試し、CSSをコピー' }, { path: '/knowledge', title: 'デザインの企画を横断して探す', detail: '180件の企画案を読み、関連する項目をたどる。各企画の作例は未制作です。' }].map(item => (
-            <Link key={item.path} to={item.path} className="motion-control flex items-center justify-between gap-3 rounded-xl border border-ink/30 bg-surface p-4 hover:border-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
-              <span><strong className="text-sm">{item.title}</strong><span className="mt-1 block text-xs leading-relaxed text-ink-muted">{item.detail}</span></span><span aria-hidden="true">→</span>
-            </Link>
-          ))}
+      <section className="home-section" aria-labelledby="start-heading">
+        <h2 id="start-heading">目的から探す</h2>
+        <div className="entry-grid">
+          {entryPoints.map(item => <Link key={item.path} to={item.path} className="entry-link">
+            <span aria-hidden="true" className={'entry-sample sample-' + item.sample}>
+              {item.sample === 'type' ? <><i>Aa</i><b>あ</b></> : <i />}
+            </span>
+            <span className="entry-body"><strong>{item.title}</strong><span>{item.detail}</span></span>
+            <span aria-hidden="true" className="entry-arrow">↗</span>
+          </Link>)}
+        </div>
+        <div className="secondary-entries">
+          {secondaryEntries.map(item => <Link to={item.path} key={item.path}><strong>{item.title} <span aria-hidden="true">→</span></strong><span>{item.detail}</span></Link>)}
         </div>
       </section>
-      <section aria-labelledby="live-tools-home-heading" className="mx-6 mt-4 rounded-xl border border-ink/30 bg-surface-highlight p-5">
-        <h2 id="live-tools-home-heading" className="mt-2 text-lg font-bold">いま使える実用ツール</h2>
-        <div className="mt-4 space-y-4">{liveTools.map(tool => <div key={tool.id}><Link to={tool.path} className="inline-block py-1 text-sm font-bold underline underline-offset-4">{tool.titleJa}</Link><p className="mt-1 text-xs leading-relaxed text-ink-muted">{tool.description}</p></div>)}</div>
+      <section className="home-section example-notes" aria-labelledby="design-atlas-home-heading">
+        <div><h2 id="design-atlas-home-heading">この画面の組み方</h2>
+          <Link to="/styles" className="text-link">デザイン図鑑を見る</Link></div>
+        <dl>
+          <div><dt><Link to="/styles?style=swiss">スイス・スタイル <span aria-hidden="true">↗</span></Link></dt>
+            <dd>見出し、検索欄、一覧の左端をそろえ、項目の境目を細い罫線で示しています。</dd></div>
+          <div><dt><Link to="/p/editorial-split-layout" lang="en">Editorial Split Layout <span aria-hidden="true">↗</span></Link></dt>
+            <dd>構図の一覧では、広い画面で検索条件を左、図版を右に置きます。スマートフォンでは上から順に読めます。</dd></div>
+        </dl>
       </section>
-      <section aria-labelledby="design-atlas-home-heading" className="mx-6 mt-7 border-t border-ink-border pt-5">
-        <h2 id="design-atlas-home-heading" className="text-lg font-bold">Design Styles / デザイン図鑑</h2>
-        <p className="mt-2 text-sm leading-relaxed text-ink-muted">ミニマリズム、スイス・スタイル、和のデザインなど、{designStyles.length}系統の特徴と向いている用途を確認できます。</p>
-        <Link to="/styles" className="mt-2 inline-block py-2 text-sm font-semibold underline underline-offset-4">同じ画面でスタイルを見比べる</Link>
+      <section className="home-section" aria-labelledby="featured-heading">
+        <div className="section-head"><h2 id="featured-heading">ページづくりに役立つ例</h2><Link to="/browse" className="text-link">すべて見る</Link></div>
+        <div className="featured-grid">{featuredPatterns.map(id => <PatternCard key={id} definition={definitions[id]} />)}</div>
+        <p className="rights-note">コードを使う前に、各作例の<Link to="/licenses" className="text-link">権利・利用条件</Link>を確認してください。</p>
       </section>
-      <section aria-labelledby="featured-heading" className="mt-7 px-6">
-        <div className="flex items-baseline justify-between gap-3"><h2 id="featured-heading" className="text-lg font-bold">ページづくりに役立つ例</h2><Link to="/browse" className="py-2 text-xs font-semibold underline underline-offset-4">すべて見る</Link></div>
-        <div className="mt-3 grid grid-cols-1 gap-4 sm:grid-cols-2">{featuredPatterns.map(definition => <PatternCard key={definition.id} definition={definition} />)}</div>
-        <p className="mt-3 text-xs leading-relaxed text-ink-muted">コードのコピーは利用許諾を意味しません。使う前に<Link to="/licenses" className="font-semibold underline underline-offset-4">権利・利用条件</Link>を確認してください。</p>
+      <section className="home-section resource-grid" aria-label="ツールとガイド">
+        <div><h2 id="live-tools-home-heading">いま使える実用ツール</h2>
+          {liveTools.map(tool => <Link key={tool.id} to={tool.path} className="resource-link">{tool.titleJa} <span aria-hidden="true">→</span></Link>)}</div>
+        <div><h2>組み合わせと使い方</h2>
+          <Link className="resource-link" to="/collections">用途別のコレクション <span aria-hidden="true">→</span></Link>
+          <Link className="resource-link" to="/guide">プレビューから実装へ <span aria-hidden="true">→</span></Link></div>
       </section>
-      <section aria-labelledby="collections-home-heading" className="mx-6 mt-7 border-t border-ink-border pt-5">
-        <h2 id="collections-home-heading" className="text-lg font-bold">目的に合う組み合わせを探す</h2>
-        <p className="mt-2 text-sm leading-relaxed text-ink-muted">記事、フォーム、操作部品など、用途ごとにパターンをまとめています。</p>
-        <Link to="/collections" className="mt-2 inline-block py-2 text-sm font-semibold underline underline-offset-4">コレクションを見る</Link>
-      </section>
-      <section aria-labelledby="reuse-guide-heading" className="mx-6 mt-6 border-t border-ink-border pt-5">
-        <h2 id="reuse-guide-heading" className="text-lg font-bold">プレビューから実装へ</h2>
-        <p className="mt-2 text-sm leading-relaxed text-ink-muted">コードの形式、調整できる値、自分のページで確認する点をまとめたガイドです。</p>
-        <Link to="/guide" className="mt-2 inline-block py-2 text-sm font-semibold underline underline-offset-4">使い方ガイドを読む</Link>
-      </section>
-      <details className="mx-6 mt-7 border-t border-ink-border pt-4 text-sm">
-        <summary className="cursor-pointer py-2 font-semibold">今後のコンテンツ案</summary>
-        <p className="mt-2 text-xs leading-relaxed text-ink-muted">公開前の企画です。完成した実装例ではありません。</p>
-        <div className="mt-2 flex flex-col gap-1 font-semibold underline underline-offset-4"><Link to="/upcoming" className="py-2">UIパターンの案 {plannedPatterns.length}件</Link><Link to="/tools/upcoming" className="py-2">実用ツールの案 {plannedTools.length}件</Link><Link to="/knowledge" className="py-2">関連リンク付きの企画台帳 180件</Link></div>
+      <details className="upcoming-links">
+        <summary>今後のコンテンツ案</summary>
+        <p>制作を予定している企画です。</p>
+        <Link to="/upcoming" className="text-link">UIパターンの案 {plannedPatterns.length}件</Link>
+        <Link to="/tools/upcoming" className="text-link">実用ツールの案 {plannedTools.length}件</Link>
+        <Link to="/knowledge" className="text-link">関連リンク付きの企画台帳 180件</Link>
       </details>
     </div>
   );
 };
-
 export default Home;
