@@ -218,7 +218,7 @@ const routes = [
   ['/tools/contrast', 'コントラスト比'],
   ['/tools/typography', '日本語の文字を調整'],
   ['/tools/upcoming', '10 tools planned'],
-  ['/browse', 'All patterns'],
+  ['/browse', 'すべてのパターン'],
   ['/p/glitch-text', 'Glitch Text'],
   ['/a/glitch-text', 'Glitch Text'],
   ['/p/warm-neo-brutalist-editorial', 'Warm Neo-Brutalist'],
@@ -379,22 +379,56 @@ try {
       if (focus.result?.value !== true) throw new Error('Heading did not receive focus on ' + route);
     }
     if (index === 0 && !process.env.SMOKE_BASE_URL) {
-      // Build-time Tailwind must preserve the original warm palette and typography.
+      // Check the visible shell and a Tailwind utility on the study controls.
       const result = await page.send('Runtime.evaluate', {
         expression: `JSON.stringify({
-          background: getComputedStyle(document.querySelector('#root .bg-paper')).backgroundColor,
-          fontFamily: getComputedStyle(document.querySelector('#root .bg-paper')).fontFamily,
+          background: getComputedStyle(document.body).backgroundColor,
+          labelPosition: getComputedStyle(document.querySelector('.study-positions legend')).position,
+          fontFamily: getComputedStyle(document.querySelector('.site-shell')).fontFamily,
           cssAssets: performance.getEntriesByType('resource').filter(entry => entry.name.includes('/assets/') && entry.name.endsWith('.css')).length,
           tailwindCdn: performance.getEntriesByType('resource').filter(entry => entry.name.includes('cdn.tailwindcss.com')).length
         })`,
         returnByValue: true,
       });
       const style = JSON.parse(result.result?.value || '{}');
-      if (style.background !== 'rgb(250, 240, 230)' || !style.fontFamily?.includes('Space Grotesk')
+      if (style.background !== 'rgb(248, 246, 239)' || style.labelPosition !== 'absolute' || !style.fontFamily?.includes('Space Grotesk')
           || style.cssAssets === 0 || style.tailwindCdn !== 0) {
         throw new Error('Build-time Tailwind style contract failed: ' + JSON.stringify(style));
       }
       console.log('PASS build-time Tailwind style contract', style);
+
+      await page.send('Runtime.evaluate', {
+        expression: "document.querySelector('.study-positions input:checked').focus()",
+      });
+      for (const type of ['keyDown', 'keyUp']) {
+        await page.send('Input.dispatchKeyEvent', { type, key: 'ArrowRight', code: 'ArrowRight', windowsVirtualKeyCode: 39 });
+      }
+      await poll(async () => {
+        const result = await page.send('Runtime.evaluate', {
+          expression: `(() => {
+            const print = document.querySelector('.study-print');
+            const frame = print.getBoundingClientRect();
+            const sun = print.querySelector('.study-sun').getBoundingClientRect();
+            return print.dataset.position === 'C-002' &&
+              Math.abs(sun.left + sun.width / 2 - frame.left - frame.width / 2) < 1 &&
+              Math.abs(sun.top + sun.height / 2 - frame.top - frame.height / 2) < 1 &&
+              document.querySelector('.study-link').hash === '#/composition?id=C-002';
+          })()`, returnByValue: true,
+        });
+        return result.result?.value;
+      }, 'keyboard composition selection, centered sun and matching lesson URL');
+      await page.send('Runtime.evaluate', { expression: "document.querySelector('.guide-toggle input').focus()" });
+      for (const type of ['keyDown', 'keyUp']) {
+        await page.send('Input.dispatchKeyEvent', { type, key: ' ', code: 'Space', windowsVirtualKeyCode: 32 });
+      }
+      await poll(async () => {
+        const result = await page.send('Runtime.evaluate', {
+          expression: "!document.querySelector('.study-guides') && !document.querySelector('.guide-toggle input').checked",
+          returnByValue: true,
+        });
+        return result.result?.value;
+      }, 'keyboard study grid toggle');
+      console.log('PASS interactive home composition and guide controls');
     }
     console.log('PASS ' + route + ": React mounted, one main landmark and '" + expected + "' rendered");
   }
