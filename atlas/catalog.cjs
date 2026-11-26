@@ -10,7 +10,7 @@ const {collections} = load('data/collections');
 const {ideas,categories,sourceById,knowledgeReviewBrief} = load('data/knowledge');
 const {plannedPatterns} = load('data/planned-patterns');
 const {plannedTools} = load('data/planned-tools');
-const {statuses}=require('./html.cjs');
+const {statuses}=require('./html.mjs');
 const sections={
   composition:['構図図鑑','Composition'],styles:['デザインスタイル','Design styles'],browse:['UIパターン','UI patterns'],
   tools:['実用ツール','Tools'],collections:['コレクション','Collections'],knowledge:['知識台帳','Knowledge index'],

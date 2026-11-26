@@ -6,5 +6,5 @@ const block = (id,title,body) => '<section class="reading" id="'+id+'"><h2>'+esc
 const statuses = {live:'実演あり',tool:'公開中',draft:'編集下書き',proposal:'企画段階',collection:'コレクション'};
 const mark = (key,visible=true) => '<span class="state"><i class="mark '+key+'" aria-hidden="true"></i><span'+(visible?'':' class="visually-hidden"')+'>'+statuses[key]+'</span></span>';
 const crumbs = pairs => '<nav class="crumbs" aria-label="パンくずリスト">'+pairs.map(([name,url])=>url?link(url,name):'<span aria-current="page">'+escape(name)+'</span>').join('<span aria-hidden="true">/</span>')+'</nav>';
-module.exports={escape,link,para,list,block,statuses,mark,crumbs};
+export {escape,link,para,list,block,statuses,mark,crumbs};
 

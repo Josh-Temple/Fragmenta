@@ -6,14 +6,14 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { DesignStyleSpecimen } from '../components/DesignStyleSpecimen';
 import { getStyleMotion } from '../data/design-style-motion';
 import { designStyleGroups, designStyles, type DesignStyleGroup } from '../data/design-styles';
-import catalog from '../data/content-ideas.json';
 import { createStylePrompt, createBlendedStylePrompt, createStyleCss, type DemoScreen } from '../data/design-style-export';
 
 type Family = 'all' | DesignStyleGroup;
 
-const DesignStyles: React.FC = () => {
+type Props = { styleId?: string; relatedEntries?: { id: string; titleJa: string }[] };
+const DesignStyles: React.FC<Props> = ({ styleId, relatedEntries = [] }) => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const requestedStyle = searchParams.get('style');
+  const requestedStyle = styleId ?? searchParams.get('style');
   const [family, setFamily] = useState<Family>('all');
   const [query, setQuery] = useState('');
   const primary = designStyles.find(style => style.id === requestedStyle)?.id ?? 'swiss';
@@ -25,8 +25,7 @@ const DesignStyles: React.FC = () => {
   const [secondaryWeight, setSecondaryWeight] = useState(30);
   const first = designStyles.find(item => item.id === primary) ?? designStyles[0];
   const selection = getStyleSelection(first);
-  const relatedKnowledge = catalog.ideas.filter(item => item.relatedExisting.some(ref =>
-    ref.kind === 'style' && ref.id === first.id));
+  const relatedKnowledge = relatedEntries;
   const second = compare === 'none' ? null : designStyles.find(item => item.id === compare) ?? null;
   const results = useMemo(() => {
     return designStyles.filter(item =>
@@ -43,6 +42,10 @@ const DesignStyles: React.FC = () => {
     setCopyStatus('');
   }, [primary]);
   const selectPrimary = (id: string) => {
+    if (styleId && styleId !== id) {
+      window.location.assign('/styles/' + encodeURIComponent(id));
+      return;
+    }
     if (requestedStyle !== id) {
       const next = new URLSearchParams(searchParams);
       next.set('style', id);
@@ -76,16 +79,16 @@ const DesignStyles: React.FC = () => {
           ホーム
         </Link>
         <p className="mt-4 text-xs uppercase tracking-[.2em] text-primary font-bold">デザインスタイル図鑑</p>
-        <h1 className="mt-2 text-3xl font-bold text-ink">デザインの名前から探す</h1>
+        <h1 className="mt-2 text-3xl font-bold text-ink">{styleId ? first.ja : 'デザインの名前から探す'}</h1>
         <p className="mt-3 text-sm leading-relaxed text-ink-muted">
-          {designStyles.length}系統の特徴を知り、同じ画面で比較し、AIへの指示文やCSSトークンを持ち帰れます。
+          {styleId ? first.name + '　' + first.summary : designStyles.length + '系統の特徴を見比べられます。'}
         </p>
         <p className="mt-2 text-xs leading-relaxed text-ink-muted">
           プレビューは各様式から着想を得て独自に作った簡易解釈です。歴史的な正解や公式デザインシステムの再現ではありません。
         </p>
       </header>
 
-      <section aria-labelledby="atlas-list-heading" className="px-5 py-6">
+      {!styleId && <section aria-labelledby="atlas-list-heading" className="px-5 py-6">
         <h2 id="atlas-list-heading" className="text-lg font-bold">スタイルを探す</h2>
         <label htmlFor="atlas-search" className="block mt-4 text-sm font-semibold">名前・特徴・使いどころで検索</label>
         <input id="atlas-search" type="search" value={query} onChange={e => setQuery(e.target.value)}
@@ -124,7 +127,7 @@ const DesignStyles: React.FC = () => {
             ))}
           </div>
         ) : <p className="mt-4 p-4 bg-surface rounded-lg text-sm">該当するスタイルがありません。検索語や分類を変えてください。</p>}
-      </section>
+      </section>}
 
       <section aria-labelledby="compare-heading" className="px-5 pt-5 pb-6 border-t border-ink-border">
         <h2 id="compare-heading" className="text-xl font-bold">同じ内容で見比べる</h2>

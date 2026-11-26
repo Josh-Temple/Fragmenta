@@ -5,9 +5,9 @@ import { definitions, getPatternKind, patternKindLabels } from '../data/definiti
 import { patternGuides } from '../data/pattern-guides';
 import PatternUsage from '../components/PatternUsage';
 import { patternRights } from '../data/pattern-rights';
-import { ideas as knowledgeIdeas } from '../data/knowledge';
 
-const PatternDetail: React.FC = () => {
+type Props = { relatedEntries?: { id: string; titleJa: string }[] };
+const PatternDetail: React.FC<Props> = ({ relatedEntries = [] }) => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const [activeTab, setActiveTab] = useState<'code' | 'prompt' | 'parameters'>('parameters');
@@ -46,7 +46,7 @@ const PatternDetail: React.FC = () => {
     );
   }
 
-  const relatedKnowledge = knowledgeIdeas.filter(item => item.relatedExisting.some(ref => ref.kind === 'pattern' && ref.id === def.id));
+  const relatedKnowledge = relatedEntries;
   const kind = getPatternKind(def);
   const kindLabel = patternKindLabels[kind];
 
@@ -69,7 +69,7 @@ const PatternDetail: React.FC = () => {
     if (window.history.length > 1) {
       navigate(-1);
     } else {
-      navigate('/');
+      window.location.assign('/browse');
     }
   };
 
