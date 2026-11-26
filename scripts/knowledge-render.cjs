@@ -35,7 +35,7 @@ function renderExport(catalog) {
     lines.push('## ' + category.label, '');
     for (const item of catalog.ideas.filter(i => i.categoryId === category.id)) {
       lines.push('### ' + item.id, '', `- 名前: ${item.titleJa}${item.titleEn ? ' / ' + item.titleEn : ''}`,
-        '- ID: ' + item.id, '- 状態: ' + item.status, '- 表示: /#/knowledge/' + item.id);
+        '- ID: ' + item.id, '- 状態: ' + item.status, '- 表示: /#/knowledge/' + item.id, '- 正規URL: /knowledge/' + item.id);
       if (item.aliases?.length) lines.push('- 別名: ' + item.aliases.join(' / '));
       if (item.tags?.length) lines.push('- タグ: ' + item.tags.join(' / '));
       const e = item.editorial;

@@ -1,5 +1,4 @@
 const fs=require('node:fs'),path=require('node:path');
-const React=require('react'),{renderToStaticMarkup}=require('react-dom/server');
 const {escape:e,link,statuses,crumbs}=require('./html.mjs');
 const {items,sections,labels,compositionPurposes,indexRow,itemJson,exportPath}=require('./catalog.cjs');
 const {header,footer,home,listing}=require('./views.cjs');

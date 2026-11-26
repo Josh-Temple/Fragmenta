@@ -1,3 +1,4 @@
+import DetailNavigation from '../components/DetailNavigation';
 import CopyReviewBrief from '../components/CopyReviewBrief';
 import { getStyleSelection, styleSelectionBrief, styleSearchFields } from '../data/design-style-guidance';
 import { matchesSearch, styleSearchAliases } from '../data/discovery';
@@ -88,6 +89,7 @@ const DesignStyles: React.FC<Props> = ({ styleId, relatedEntries = [] }) => {
         </p>
       </header>
 
+      {styleId && <DetailNavigation />}
       {!styleId && <section aria-labelledby="atlas-list-heading" className="px-5 py-6">
         <h2 id="atlas-list-heading" className="text-lg font-bold">スタイルを探す</h2>
         <label htmlFor="atlas-search" className="block mt-4 text-sm font-semibold">名前・特徴・使いどころで検索</label>
@@ -129,10 +131,11 @@ const DesignStyles: React.FC<Props> = ({ styleId, relatedEntries = [] }) => {
         ) : <p className="mt-4 p-4 bg-surface rounded-lg text-sm">該当するスタイルがありません。検索語や分類を変えてください。</p>}
       </section>}
 
-      <section aria-labelledby="compare-heading" className="px-5 pt-5 pb-6 border-t border-ink-border">
+      <section id="visual" aria-labelledby="compare-heading" className="px-5 pt-5 pb-6 border-t border-ink-border">
         <h2 id="compare-heading" className="text-xl font-bold">同じ内容で見比べる</h2>
         <p className="mt-2 text-sm text-ink-muted">文字、余白、色、形、素材感の違いを確認します。比較する組合せと画面を選べます。</p>
         <p className="mt-2 text-xs leading-relaxed text-ink-muted">動きの例：{getStyleMotion(first.id).description}。スタイルや画面を切り替えると確認できます。動きを減らす端末設定では再生しません。</p>
+        <details className="compare-settings"><summary>比較するスタイル・画面・配合を選ぶ</summary>
         <div className="mt-4 grid grid-cols-1 gap-3">
           <div>
             <label htmlFor="style-a" className="block mb-1 text-sm font-semibold">スタイルA</label>
@@ -188,7 +191,8 @@ const DesignStyles: React.FC<Props> = ({ styleId, relatedEntries = [] }) => {
             </div>
           )}
         </div>
-        <div className="grid grid-cols-1 gap-4 mt-4">
+        </details>
+        <div className="style-pair grid grid-cols-1 gap-4 mt-4">
           <div className="border border-ink-border rounded-xl overflow-hidden">
             <div className="px-3 py-2 bg-surface text-sm font-bold">{first.name} / {first.ja}</div>
             <DesignStyleSpecimen style={first} screen={screen}/>
@@ -212,7 +216,7 @@ const DesignStyles: React.FC<Props> = ({ styleId, relatedEntries = [] }) => {
         </div>
       </section>
 
-      <section aria-labelledby="recipe-heading" className="px-5 pt-6 pb-5 border-t border-ink-border">
+      <section id="structure" aria-labelledby="recipe-heading" className="px-5 pt-6 pb-5 border-t border-ink-border">
         <h2 id="recipe-heading" className="text-xl font-bold">特徴とAI用の指定文</h2>
         <h3 className="mt-4 text-lg font-bold">{first.name} / {first.ja}</h3>
         <p className="mt-2 text-sm leading-relaxed">{first.summary}。{first.use}に向いています。</p>
@@ -222,7 +226,7 @@ const DesignStyles: React.FC<Props> = ({ styleId, relatedEntries = [] }) => {
           <p><strong>最初に調整すること　</strong>{selection.adjustment}</p>
           <p><strong>完成画面での確認　</strong>{selection.check}</p>
           <h4 className="font-bold">条件を変えて試すスタイル</h4>
-          <ul className="space-y-2">{selection.alternatives.map(a => <li key={a.id}><Link to={'/styles?style=' + a.id} className="font-semibold underline">{a.titleJa}</Link>　{a.reason}</li>)}</ul>
+          <ul className="space-y-2">{selection.alternatives.map(a => <li key={a.id}><Link to={'/styles/' + a.id} className="font-semibold underline">{a.titleJa}</Link>　{a.reason}</li>)}</ul>
           <p className="text-xs text-ink-muted">{selection.sourceScope}</p>
           <CopyReviewBrief text={styleSelectionBrief(first)} />
         </div>
@@ -234,7 +238,7 @@ const DesignStyles: React.FC<Props> = ({ styleId, relatedEntries = [] }) => {
         <ul className="mt-2 list-disc pl-5 text-sm leading-loose">
           {first.avoid.map(value => <li key={value}>{value}</li>)}
         </ul>
-        <div className="flex items-center justify-between gap-2 mt-5">
+        <div id="ai-code" className="flex items-center justify-between gap-2 mt-5">
           <h3 className="text-sm font-bold">{mixing ? 'AI向け配合プロンプト' : 'AI向けプロンプト'}</h3>
           <button type="button" onClick={() => void copyText(prompt, 'プロンプト')}
             className="motion-control rounded-lg border border-ink-border px-3 py-2 text-sm font-semibold hover:border-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">

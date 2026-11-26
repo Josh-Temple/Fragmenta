@@ -1,5 +1,5 @@
 const React=require('react');
-const {renderToString,renderToStaticMarkup}=require('react-dom/server');
+const {renderToString}=require('react-dom/server');
 const {StaticRouter,Routes,Route}=require('react-router-dom');
 const {load}=require('../scripts/load-data.cjs');
 const {escape:e,link,para,list,block,mark,crumbs}=require('./html.mjs');
@@ -67,9 +67,9 @@ function detail(item){
    const intro=crumbs([['展示室','/'],[sections[item.section][0],'/'+item.section],[item.title]]);
    return intro+'<div class="widget-meta">'+mark(item.status)+'　'+link('#sources','出典・利用条件')+'</div>'+island(key,item.path,props)+
      block('sources','出典・権利と検証状況',para(key==='browse'?item.data.selection.split('\n').filter(x=>/出典|再利用条件/.test(x)).join('　'):key==='styles'?item.data.selection.sourceScope:'計算方法・確認範囲はツール内の説明を参照してください。')+
-     (item.data.source?.url?link(item.data.source.url,item.data.source.label):'')+' '+link('/licenses','権利・利用条件')+'　'+link(exportPath(item),'項目のJSON'));
+     (item.data.source?.url?link(item.data.source.url,item.data.source.label):'')+' '+link('/licenses','権利・利用条件')+'　'+link(exportPath(item),'項目のJSON'))+(key==='browse'?'<noscript><details><summary>初期設定のコードとAI指示</summary><pre>'+e(item.data.defaultCode)+'</pre>'+para(item.data.defaultPrompt)+'</details></noscript>':'');
  }
- if(item.section==='collections')return heading(item)+para(item.summary)+block('members','収録したUIパターン','<ul>'+item.record.patternIds.map(id=>itemLink(id)).join('')+'</ul>')+link(exportPath(item),'項目のJSON');
+ if(item.section==='collections')return heading(item)+para(item.summary)+block('members','収録したUIパターン','<ul>'+item.record.patternIds.map(id=>itemLink(id)).join('')+'</ul>')+block('sources','出典・権利と検証状況',para('Fragmentaの実演から編集したコレクションです。検証記録と利用条件は各項目に掲載しています。')+link('/licenses','権利・利用条件')+'　'+link(exportPath(item),'項目のJSON'));
  const p=item.record;
  return heading(item)+para(item.summary)+block('planned','予定している操作と確認項目',Array.isArray(p.acceptance)?list(p.acceptance):para(p.acceptance))+
  block('sources','実装・出典・権利',para('制作前の企画です。実演、生成コード、個別の出典確認は今後の作業です。')+para(item.data.rights)+link('/licenses','権利・利用条件')+'　'+link(exportPath(item),'項目のJSON'));

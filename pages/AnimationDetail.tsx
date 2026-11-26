@@ -1,3 +1,4 @@
+import DetailNavigation from '../components/DetailNavigation';
 import { patternSelectionBrief } from '../data/pattern-selection';
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -25,8 +26,13 @@ const PatternDetail: React.FC<Props> = ({ relatedEntries = [] }) => {
   const [paramValues, setParamValues] = useState<Record<string, number>>({});
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-    titleRef.current?.focus({ preventScroll: true });
+    function selectView() {
+      const id = window.location.hash.slice(1);
+      if (id === 'structure') setActiveTab('parameters');
+      if (id === 'ai-code') setActiveTab('code');
+      if (id) requestAnimationFrame(() => document.getElementById(id)?.scrollIntoView());
+    }
+    selectView();
     if (!def) return;
 
     const defaults: Record<string, number> = {};
@@ -35,6 +41,8 @@ const PatternDetail: React.FC<Props> = ({ relatedEntries = [] }) => {
     });
     setParamValues(defaults);
     setMotionPaused(false);
+    window.addEventListener('hashchange', selectView);
+    return () => window.removeEventListener('hashchange', selectView);
   }, [def, id]);
 
   if (!def) {
@@ -95,8 +103,9 @@ const PatternDetail: React.FC<Props> = ({ relatedEntries = [] }) => {
         <div className="size-10" aria-hidden="true" />
       </div>
 
+      <DetailNavigation />
       <div className="flex-1 flex min-w-0 flex-col">
-        <section className="p-4">
+        <section id="visual" className="p-4">
           <div className={`relative w-full ${kind === 'style' || kind === 'layout' ? 'min-h-[280px] pt-6 pb-16' : 'aspect-[4/3]'} rounded-2xl bg-surface border border-ink-border flex flex-col items-center justify-center overflow-hidden group inset-shadow-sm`}>
             <div className="absolute inset-0 bg-grid-pattern pointer-events-none opacity-50"></div>
             <div className="relative z-10 w-full flex items-center justify-center px-3">
@@ -121,7 +130,7 @@ const PatternDetail: React.FC<Props> = ({ relatedEntries = [] }) => {
           )}
         </section>
 
-        <section className="px-4 pb-5">
+        <section id="structure" className="px-4 pb-5">
           <div className="flex items-center gap-2 mb-2">
             <span className="px-2 py-1 rounded-full bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-wider">
               {kindLabel}
@@ -142,7 +151,7 @@ const PatternDetail: React.FC<Props> = ({ relatedEntries = [] }) => {
           <ul className="mt-2 space-y-1">{relatedKnowledge.map(item => <li key={item.id}><Link to={`/knowledge/${item.id}`} className="inline-flex min-h-11 items-center text-sm font-semibold underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">{item.titleJa}（企画段階）</Link></li>)}</ul>
         </section>}
 
-        <div className="sticky top-[60px] md:static z-40 bg-paper px-4 border-b border-ink-border">
+        <div id="ai-code" className="sticky top-[60px] md:static z-40 bg-paper px-4 border-b border-ink-border">
           <div className="flex justify-between items-end">
             <button
               aria-pressed={activeTab === 'code'} onClick={() => setActiveTab('code')}

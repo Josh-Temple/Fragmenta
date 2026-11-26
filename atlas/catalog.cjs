@@ -2,7 +2,7 @@ const {load} = require('../scripts/load-data.cjs');
 const {compositionGuides,compositionCategories,compositionCatalog,compositionBrief} = load('data/composition');
 const {compositionPurposes,getCompositionDiscovery,getCompositionChoices,getReview} = load('data/composition-discovery');
 const {designStyles,designStyleGroups} = load('data/design-styles');
-const {styleSearchAliases} = load('data/discovery');
+const {styleSearchAliases,patternSearchAliases} = load('data/discovery');
 const {definitions,getPatternKind,patternKindLabels} = load('data/definitions');
 const {patternRights} = load('data/pattern-rights');
 const {liveTools} = load('data/live-tools');
@@ -35,8 +35,8 @@ for(const g of compositionGuides){
     data:{...g,sources,discovery:{...discovery,choices:discovery.choices.map(c=>({...c,href:'/composition/'+g.id+'?purpose='+c.purposeId}))},aiBrief:compositionBrief(g),rights:'図の制作経緯と利用条件は確認中。参考資料の権利は各出典の記載を参照。'}});
 }
 for(const s of designStyles) add('styles',s.id,s.ja,s.summary,'live',s,{category:s.group,keywords:[s.name,s.use,...s.features,styleSearchAliases[s.id]],data:{...s,reviewStatus:'illustrative',rights:'Fragmentaによる様式の解釈。利用条件は /licenses を参照。',selection:load('data/design-style-guidance').getStyleSelection(s),aiBrief:load('data/design-style-guidance').styleSelectionBrief(s)}});
-for(const p of Object.values(definitions)) add('browse',p.id,p.title,p.description,'live',p,{path:'/p/'+p.id,category:getPatternKind(p),keywords:[...p.tags,patternKindLabels[getPatternKind(p)]],
-  data:{source:p.source||null,rights:patternRights[p.id],reviewStatus:'see_item_notes',previewParameters:p.params,accessibilityNotes:p.a11yNotes,performanceNotes:p.performanceNotes,selection:load('data/pattern-selection').patternSelectionBrief(p.id)}});
+for(const p of Object.values(definitions)) add('browse',p.id,p.title,p.description,'live',p,{path:'/p/'+p.id,category:getPatternKind(p),keywords:[patternSearchAliases[p.id],...p.tags,patternKindLabels[getPatternKind(p)]],
+  data:{source:p.source||null,defaultCode:p.generateCode(Object.fromEntries(p.params.map(v=>[v.key,v.default]))),defaultPrompt:p.generatePrompt(Object.fromEntries(p.params.map(v=>[v.key,v.default])))+'\n\n'+load('data/pattern-selection').patternSelectionBrief(p.id),rights:patternRights[p.id],reviewStatus:'see_item_notes',previewParameters:p.params,accessibilityNotes:p.a11yNotes,performanceNotes:p.performanceNotes,selection:load('data/pattern-selection').patternSelectionBrief(p.id)}});
 for(const t of liveTools) add('tools',t.id,t.titleJa,t.description,'tool',t,{path:t.path,keywords:[t.title,...t.tags],data:{...t,rights:'利用条件は /licenses を参照。',reviewStatus:'see_tool_notes'}});
 for(const c of collections) add('collections',c.id,c.title,c.description,'collection',c,{data:{...c,rights:'収録項目ごとの条件を参照。'}});
 for(const k of ideas) add('knowledge',k.id,k.titleJa,k.editorial?.summary||'制作予定の知識項目。','proposal',k,{category:k.categoryId,keywords:[k.titleEn,...(k.aliases||[]),...(k.tags||[]),labels[k.categoryId],...(k.editorial?.appropriateUses||[])],

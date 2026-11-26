@@ -41,7 +41,7 @@ if (require.main === module) {
     const patterns = exportsFor('pattern-guides.json', 18);
     for (const style of designStyles) {
       const guide = getStyleSelection(style), brief = styleSelectionBrief(style);
-      assert.deepEqual(styles.get(style.id), { ...guide, reviewBrief: brief });
+      assert.deepEqual(styles.get(style.id), { ...guide, canonical: '/styles/' + style.id, reviewBrief: brief });
       for (const field of [guide.use, guide.reason, guide.avoid, guide.check, guide.sourceScope]) assert(brief.includes(field));
       for (const a of guide.alternatives) assert(styles.has(a.id) && brief.includes(a.reason));
       for (const screen of ['dashboard', 'article']) assert(createStylePrompt(style, screen).includes(brief));
@@ -50,7 +50,7 @@ if (require.main === module) {
     assert(blended.includes(styleSelectionBrief(designStyles[0])) && blended.includes(styleSelectionBrief(designStyles[1])));
     for (const id of Object.keys(patternChoices)) {
       const guide = getPatternSelection(id), brief = patternSelectionBrief(id);
-      assert.deepEqual(patterns.get(id), { ...guide, reviewBrief: brief });
+      assert.deepEqual(patterns.get(id), { ...guide, canonical: '/p/' + id, reviewBrief: brief });
       for (const field of [guide.use, guide.avoid, guide.check, guide.rights.status]) assert(brief.includes(field));
       for (const a of guide.alternatives) assert(patterns.has(a.id) && brief.includes(a.reason));
     }

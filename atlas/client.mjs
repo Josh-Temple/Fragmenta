@@ -33,7 +33,11 @@ function gallery(){
    try{
      const [rows,meta]=await fetchData();if(version!==revision)return;
      const selected=selectRows(rows,params,meta.purposes);
-     $('#results').innerHTML=results(selected,section,p,params,visual);
+     const links=new URLSearchParams(params);
+     const matched=meta.purposes.find(v=>v.titleJa===params.get('q')?.trim());
+     if(matched&&!links.has('purpose'))links.set('purpose',matched.id);
+     $('#results').innerHTML=results(selected,section,p,links,visual);
+     document.dispatchEvent(new Event('atlas-results'));
      $('#result-count').textContent=selected.length+' 件 / '+rows.length+' 件';
      const tags=['q','category','purpose','section','status'].filter(k=>params.get(k)).map(k=>{const v=params.get(k);return k==='purpose'?(meta.purposes.find(p=>p.id===v)?.titleJa||v):(meta.labels[v]||statuses[v]||v);});
      $('#active-filters').innerHTML=tags.length?'<p>'+tags.map(e).join(' · ')+'　'+link('/'+section,'条件を解除')+'</p>':'';
@@ -56,7 +60,7 @@ function gallery(){
  const xray=$('#xray');xray?.addEventListener('click',()=>{const on=xray.getAttribute('aria-pressed')!=='true';xray.setAttribute('aria-pressed',String(on));root.classList.toggle('show-guides',on);});
 }
 function detail(){
- const tabNav=$('.view-tabs');
+ const tabNav=$('.view-tabs:not(.anchor-views)');
  if(tabNav){
    const tabs=all('[data-view]',tabNav);
    function select(){const id=location.hash.slice(1);if(id==='sources'){document.getElementById('sources').scrollIntoView();}const active=tabs.find(a=>a.dataset.view===id)||tabs[0];for(const tab of tabs){const on=tab===active;tab.setAttribute('aria-current',on?'location':'false');document.getElementById(tab.dataset.view).hidden=!on;}}

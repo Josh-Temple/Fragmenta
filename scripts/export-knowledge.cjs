@@ -20,17 +20,17 @@ const { patternChoices } = load('data/pattern-choices');
 const { getPatternSelection, patternSelectionBrief } = load('data/pattern-selection');
 
 composition.guides = composition.guides.map(g => ({
-  ...g, discovery: getCompositionDiscovery(g), href: '/#/composition?id=' + g.id, reviewBrief: compositionBrief(g),
+  ...g, canonical: '/composition/' + g.id, discovery: getCompositionDiscovery(g), href: '/#/composition?id=' + g.id, reviewBrief: compositionBrief(g),
 }));
 function writeGuides(filename, kind, guides) {
   const data = { schemaVersion: 1, kind, status: 'draft_unreviewed', guides };
   fs.writeFileSync(path.join(out, filename), JSON.stringify(data, null, 2) + '\n');
 }
 writeGuides('style-guides.json', 'design-style-selection', designStyles.map(s => ({
-  ...getStyleSelection(s), reviewBrief: styleSelectionBrief(s),
+  ...getStyleSelection(s), canonical: '/styles/' + s.id, reviewBrief: styleSelectionBrief(s),
 })));
 writeGuides('pattern-guides.json', 'ui-pattern-selection', Object.keys(patternChoices).map(id => ({
-  ...getPatternSelection(id), reviewBrief: patternSelectionBrief(id),
+  ...getPatternSelection(id), canonical: '/p/' + id, reviewBrief: patternSelectionBrief(id),
 })));
 fs.writeFileSync(path.join(out, 'composition-guides.json'), JSON.stringify(composition, null, 2) + '\n');
 fs.writeFileSync(path.join(out, 'ideas.md'), renderExport(catalog));

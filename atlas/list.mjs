@@ -14,14 +14,16 @@ export function card(item,index,params=new URLSearchParams()) {
     (item.xray?'<img class="overlay" alt="" src="/art/guides/'+e(item.id)+'.svg" width="300" height="200" loading="lazy">':'')+'</span><span class="caption"><span>'+e(item.title)+'</span>'+mark(item.status,false)+'</span></a>';
 }
 export function pageUrl(section,p,query) {
-  const path='/'+section+(p>1?'/page/'+p:'');
   const qs=new URLSearchParams(query);qs.delete('page');
+  const filtered=qs.size>0||section==='search';
+  const path='/'+section+(!filtered&&p>1?'/page/'+p:'');
+  if(filtered&&p>1)qs.set('page',String(p));
   return path+(qs.size?'?'+qs:'');
 }
 export function results(rows,section,p,params,visual) {
   const pageCount=Math.max(1,Math.ceil(rows.length/pageSize)), page=Math.min(pageCount,Math.max(1,Number(p)||1));
   const visible=rows.slice((page-1)*pageSize,page*pageSize);
-  let content=visible.length?(visual?'<div class="tiles">'+visible.map((r,i)=>card(r,i,params)).join('')+'</div>':'<ul class="ledger">'+visible.map(r=>'<li><a id="card-'+e(r.id)+'" href="'+e(r.path)+'"><span><strong>'+e(r.title)+'</strong><small>'+e(r.summary)+'</small></span>'+mark(r.status)+'</a></li>').join('')+'</ul>'):'<p class="empty">該当する項目がありません。検索語や分類を変更してください。</p>';
+  let content=visible.length?(visual?'<div class="tiles">'+visible.map((r,i)=>card(r,i,params)).join('')+'</div>':'<ul class="ledger">'+visible.map(r=>'<li><a id="card-'+e(r.id)+'" href="'+e(r.path+(params.get('purpose')&&r.purposes.includes(params.get('purpose'))?'?purpose='+encodeURIComponent(params.get('purpose')):''))+'"><span><strong>'+e(r.title)+'</strong><small>'+e(r.summary)+'</small></span>'+mark(r.status)+'</a></li>').join('')+'</ul>'):'<p class="empty">該当する項目がありません。検索語や分類を変更してください。</p>';
   if(pageCount>1) content+='<nav class="pager" aria-label="ページ送り">'+(page>1?link(pageUrl(section,page-1,params),'← 前のページ'):'<span></span>')+'<span>'+page+' / '+pageCount+'</span>'+(page<pageCount?link(pageUrl(section,page+1,params),'次のページ →'):'<span></span>')+'</nav>';
   return content;
 }

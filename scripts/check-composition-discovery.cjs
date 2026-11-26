@@ -45,7 +45,8 @@ for(const g of src.guides) {
   check(g.relatedLegacyIds.every(x=>old.has(x)),'broken legacy link '+g.id);
   const x=exported.get(g.id);
   check(Boolean(x),'missing exported guide '+g.id);
-  const {discovery, href, reviewBrief, ...canonical}=x;
+  const {discovery, href, canonical: canonicalUrl, reviewBrief, ...canonical}=x;
+  check(canonicalUrl === '/composition/'+g.id,'canonical URL '+g.id);
   check(href === '/#/composition?id='+g.id && reviewBrief === compositionBrief(g), 'detail and brief '+g.id);
   check(JSON.stringify(canonical)===JSON.stringify(g),'canonical field drift '+g.id);
   check(g.reviewStatus==='draft_unreviewed' && g.evidenceStatus==='not_checked','unreviewed status changed '+g.id);
