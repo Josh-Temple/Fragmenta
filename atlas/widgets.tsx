@@ -15,7 +15,9 @@ export async function hydrate() {
   if (inspection) {
     const { default: Diagram } = await import('../components/CompositionDiagram');
     const guide = JSON.parse(document.getElementById('inspection-guide')!.textContent!);
-    hydrateRoot(inspection, <Diagram guide={guide} variant="comparison" />, { identifierPrefix: 'comparison-' });
+    hydrateRoot(inspection, <Diagram guide={guide} variant="comparison" />, {
+      identifierPrefix: 'comparison-',
+    });
     return;
   }
   const root = document.querySelector<HTMLElement>('[data-widget]');
@@ -24,12 +26,32 @@ export async function hydrate() {
   const { default: Page } = await widget.load();
   const props = JSON.parse(document.getElementById('widget-props')!.textContent!);
   // The widget owns its interactive controls. Document links load the destination's own HTML and metadata.
-  root.addEventListener('click', event => {
-    const a = (event.target as Element).closest<HTMLAnchorElement>('a[href]');
-    if (!a || a.origin !== location.origin || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || a.target || a.hasAttribute('download')) return;
-    if (a.pathname === location.pathname && a.search === location.search && a.hash) return;
-    event.stopPropagation();
-  }, true);
-  hydrateRoot(root, <BrowserRouter><Routes><Route path={widget.path} element={<Page {...props} />} /></Routes></BrowserRouter>);
+  root.addEventListener(
+    'click',
+    (event) => {
+      const a = (event.target as Element).closest<HTMLAnchorElement>('a[href]');
+      if (
+        !a ||
+        a.origin !== location.origin ||
+        event.metaKey ||
+        event.ctrlKey ||
+        event.shiftKey ||
+        event.altKey ||
+        a.target ||
+        a.hasAttribute('download')
+      )
+        return;
+      if (a.pathname === location.pathname && a.search === location.search && a.hash) return;
+      event.stopPropagation();
+    },
+    true,
+  );
+  hydrateRoot(
+    root,
+    <BrowserRouter>
+      <Routes>
+        <Route path={widget.path} element={<Page {...props} />} />
+      </Routes>
+    </BrowserRouter>,
+  );
 }
-

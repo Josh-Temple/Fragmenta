@@ -11,7 +11,7 @@
     "typecheck": "node ./node_modules/typescript/bin/tsc --noEmit",
     "lint": "node scripts/lint.cjs",
     "prebuild": "npm run typecheck && npm run lint && npm run design:verify && npm run tools:verify && npm run motion:verify && npm run catalog:export && npm run composition:verify && npm run catalog:verify && npm run catalog:graph && npm run catalog:regression && npm run catalog:exports && npm run catalog:focus && npm run catalog:smoke",
-    "build": "vite build && node atlas/build.cjs",
+    "build": "vite build && node atlas/build.cjs && node scripts/check-atlas.mjs",
     "preview": "vite preview",
     "design:verify": "node scripts/check-design-styles.cjs",
     "tools:verify": "node scripts/check-tools.cjs",
