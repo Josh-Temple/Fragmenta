@@ -5,7 +5,6 @@ import { plannedTools } from '../data/planned-tools';
 
 const Tools: React.FC = () => (
   <div lang="ja" className="min-w-0 px-5 py-7">
-    <p className="text-xs font-mono text-ink-muted">FRAGMENTA / TOOLS</p>
     <h1 className="mt-2 text-3xl font-bold">実用ツール</h1>
     <p className="mt-3 text-sm leading-relaxed text-ink-muted">デザイン図鑑で方向を決めたら、色と文字を自分の画面に合わせて調整できます。</p>
     <section aria-labelledby="live-tools-heading" className="mt-7">

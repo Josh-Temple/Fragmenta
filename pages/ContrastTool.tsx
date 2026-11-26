@@ -12,7 +12,7 @@ const ContrastTool: React.FC = () => {
   const ratio = front && back ? contrastRatio(front, back) : null;
   const css = front && back ? `.fragmenta-colors {\n  color: ${front};\n  background-color: ${back};\n}` : '';
   return (
-    <ToolPage title="配色・コントラスト" english="Color & Contrast Checker" description="色を選ぶか、16進数のカラーコードを入力してください。文字色と背景色の組み合わせを確認できます。">
+    <ToolPage title="配色・コントラスト" description="色を選ぶか、16進数のカラーコードを入力してください。文字色と背景色の組み合わせを確認できます。">
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         {([{ label: '文字色', value: foreground, color: front, set: setForeground, id: 'foreground' }, { label: '背景色', value: background, color: back, set: setBackground, id: 'background' }]).map(field => (
           <div key={field.id}>

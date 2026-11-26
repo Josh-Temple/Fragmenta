@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "kind": "composition-discovery",
   "status": "draft_unreviewed",
-  "note": "用途・媒体・被写体・印象の対応は未レビューの編集候補であり、効果を保証しない。本文・図版の正本はdata/composition-guides.json。",
+  "note": "用途や印象の分類は、構図を選ぶための目安です。受ける印象は被写体や前後の文脈で変わります。各資料が扱う範囲は「出典と検証状況」で確認できます。",
   "purposes": [
     {
       "id": "solitude",

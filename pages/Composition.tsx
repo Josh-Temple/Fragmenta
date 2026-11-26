@@ -1,10 +1,19 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
+import { ideaById } from '../data/knowledge';
 import CompositionDiagram from '../components/CompositionDiagram';
 import { compositionCatalog, compositionGuides, compositionCategories,
   compositionById, compositionCategoryLabel, matchesComposition, compositionBrief } from '../data/composition';
 import { compositionPurposes, getCompositionPurpose, getCompositionChoice,
   getCompositionRelations, getCompositionDiscovery, purposeFromQuery, getReview } from '../data/composition-discovery';
+
+const tagLabels: Record<string, string> = {
+  illustration: 'イラスト', photography: '写真', cinema: '映画', web_ui: 'ウェブ画面',
+  comics: '漫画', graphic_design: 'グラフィックデザイン', ai_image_generation: 'AI画像生成',
+  typography: '文字', people: '人物', shapes: '図形', actions: '動作', scenes: '場面',
+  interface_elements: '画面の部品', products: '製品', landscapes: '風景', architecture: '建築',
+  animals: '動物', objects: '物体', contrast: '対照', similar: '類似', complement: '補完',
+};
 
 const Composition: React.FC = () => {
   const [params, setParams] = useSearchParams();
@@ -66,7 +75,6 @@ const Composition: React.FC = () => {
   return <div lang="ja" className="min-w-0 px-5 pb-12">
     <header className="pt-6 pb-6 border-b border-ink-border">
       <Link to="/knowledge" className="inline-flex min-h-11 items-center text-sm font-semibold underline underline-offset-4">知識ベースに戻る</Link>
-      <p className="mt-4 text-xs font-mono uppercase tracking-wider text-ink">Composition / 構図</p>
       <h1 className="mt-2 text-3xl font-bold">構図を比較して学ぶ</h1>
       <p className="mt-3 text-sm leading-relaxed text-ink-muted">全120件の編集下書きです。図は模式図で、制作経緯と権利を確認中です。厳密な正解・不正解や実証済みの心理効果を示すものではありません。</p>
       <a href="/knowledge/composition-guides.json" className="mt-3 inline-flex min-h-11 items-center text-sm underline underline-offset-4">AI向け構造化JSON</a>
@@ -163,7 +171,7 @@ const Composition: React.FC = () => {
           return <p key={choice.purposeId} className="mt-2 text-sm"><strong>「{choice.titleJa}」の参考箇所：</strong><a href={source.url} className="underline underline-offset-4">{source.publisher} · {section}</a>　{scopeJa}</p>;
         })}
         <p className="mt-2 text-sm"><strong>比較する構図条件：</strong>{discovery.priorityConditions[0]}</p>
-        <p className="mt-2 text-xs text-ink-muted">媒体候補：{discovery.media.join(' / ')} ・ 被写体候補：{discovery.subjects.join(' / ')}（分野単位の未検証タグ）</p>
+        <p className="mt-2 text-xs text-ink-muted">媒体候補：{discovery.media.map(tag => tagLabels[tag] ?? tag).join(' / ')} ・ 被写体候補：{discovery.subjects.map(tag => tagLabels[tag] ?? tag).join(' / ')}（分野ごとの参考例）</p>
       </section>
       <section aria-labelledby="composition-visual" className="mt-6">
         <h3 id="composition-visual" className="text-lg font-bold">構図の模式図</h3>
@@ -196,13 +204,13 @@ const Composition: React.FC = () => {
         <ul className="mt-2 space-y-2">{getCompositionRelations(guide.id).map(r => <li key={r.targetId}>
           <Link to={detailHref(r.targetId)} className="inline-flex min-h-11 items-center text-sm underline underline-offset-4">
             {r.targetId} ・ {compositionById.get(r.targetId)?.titleJa}</Link>
-          <p className="text-xs text-ink-muted">{r.reasonJa}（{r.relationType}）</p>
+          <p className="text-xs text-ink-muted">{r.reasonJa}（{tagLabels[r.relationType] ?? r.relationType}）</p>
         </li>)}</ul>
       </section>}
       {guide.relatedLegacyIds.length > 0 && <section className="mt-6 border-t border-ink-border pt-5">
-        <h3 className="text-sm font-bold">既存Fragmentaの関連案（編集候補）</h3>
+        <h3 className="text-sm font-bold">関連する企画</h3>
         <ul className="mt-2 space-y-2">{guide.relatedLegacyIds.map(id => <li key={id}><Link className="inline-flex min-h-11 items-center text-sm underline underline-offset-4"
-          to={'/knowledge/' + id}>{id}</Link></li>)}</ul>
+          to={'/knowledge/' + id}>{ideaById.get(id)?.titleJa ?? id}</Link></li>)}</ul>
       </section>}
       <section className="mt-6 border-t border-ink-border pt-5">
         <h3 className="text-sm font-bold">出典と検証状況</h3>
@@ -246,10 +254,6 @@ const Composition: React.FC = () => {
         className="mt-5 min-h-11 w-full rounded-lg border border-ink-border px-4 py-3 text-sm font-semibold focus-visible:outline-2 focus-visible:outline-offset-2">さらに表示（残り{filtered.length - visibleCount}件）</button>}
       <p role="status" className="mt-3 text-sm text-ink-muted">{Math.min(filtered.length, visibleCount)}件表示 / {filtered.length}件該当</p>
     </section>}
-    <footer className="border-t border-ink-border pt-5 text-xs text-ink-muted">
-      <a href={compositionCatalog.issueUrl} className="underline underline-offset-4" rel="noopener noreferrer">構図120件の収録候補（GitHub Issue #48）</a>
-      <p className="mt-2">既存180件の知識ベースとは分離し、構図120件を編集・レビュー中です。</p>
-    </footer>
   </div>;
 };
 export default Composition;

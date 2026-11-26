@@ -3,15 +3,15 @@ import { AnimationDefinition } from '../../types';
 
 export const fluidToggle: AnimationDefinition = {
   id: 'fluid-toggle',
-  title: 'Fluid Toggle',
-  description: 'An organic switch animation that morphs into a pill shape when active.',
-  tags: ['Input', 'CSS', 'Interactive', 'Form'],
+  title: '伸び縮みするスイッチ',
+  description: 'オンに切り替えると、丸いつまみが横に伸びながら移動します。',
+  tags: ['入力', 'CSS', '操作', 'フォーム'],
   category: 'input',
   performanceScore: 100,
   a11yScore: 'AA',
   params: [
-    { key: 'duration', cssVar: '--dur', label: 'Duration', type: 'number', min: 0.1, max: 0.8, step: 0.1, default: 0.3, unit: 's' },
-    { key: 'stretch', cssVar: '--stretch', label: 'Stretch Width', type: 'number', min: 20, max: 32, step: 2, default: 28, unit: 'px' },
+    { key: 'duration', cssVar: '--dur', label: '動きの時間', type: 'number', min: 0.1, max: 0.8, step: 0.1, default: 0.3, unit: 's' },
+    { key: 'stretch', cssVar: '--stretch', label: 'つまみの横幅', type: 'number', min: 20, max: 32, step: 2, default: 28, unit: 'px' },
   ],
   Preview: ({ values }) => {
     const [isOn, setIsOn] = useState(false);
@@ -23,7 +23,7 @@ export const fluidToggle: AnimationDefinition = {
     return (
       <>
       <style>{`@media (prefers-reduced-motion: reduce) { .fragmenta-toggle-demo, .fragmenta-toggle-demo > span { transition: none !important; } }`}</style>
-      <button type="button" role="switch" aria-checked={isOn} aria-label="Fluid toggle"
+      <button type="button" role="switch" aria-checked={isOn} aria-label="設定の切り替え"
         onClick={() => setIsOn(value => !value)}
         onPointerDown={() => setIsPressed(true)} onPointerUp={() => setIsPressed(false)}
         onPointerCancel={() => setIsPressed(false)} onPointerLeave={() => setIsPressed(false)}
@@ -56,5 +56,5 @@ export const fluidToggle: AnimationDefinition = {
 @media (prefers-reduced-motion: reduce) { .fluid-toggle__track, .fluid-toggle__thumb { transition: none; } }
 </style>`;
   },
-  generatePrompt: (values) => `Create a toggle switch. The handle is a circle (24px) when off. When on, it stretches to a pill shape (${values['stretch']}px width) and aligns to the right. Transition duration: ${values['duration']}s.`
+  generatePrompt: (values) => `オフでは直径24pxの円、オンでは横幅${values['stretch']}pxの丸みのあるつまみを右端に置くスイッチを作成してください。切り替え時間は${values['duration']}sです。`
 };

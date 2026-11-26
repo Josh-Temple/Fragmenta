@@ -217,11 +217,11 @@ const routes = [
   ['/tools', '実用ツール'],
   ['/tools/contrast', 'コントラスト比'],
   ['/tools/typography', '日本語の文字を調整'],
-  ['/tools/upcoming', '10 tools planned'],
-  ['/browse', 'All patterns'],
-  ['/p/glitch-text', 'Glitch Text'],
-  ['/a/glitch-text', 'Glitch Text'],
-  ['/p/warm-neo-brutalist-editorial', 'Warm Neo-Brutalist'],
+  ['/tools/upcoming', '企画中のツール 10件'],
+  ['/browse', 'すべてのパターン'],
+  ['/p/glitch-text', 'グリッチ文字'],
+  ['/a/glitch-text', 'グリッチ文字'],
+  ['/p/warm-neo-brutalist-editorial', '太い枠と影で見せる記事'],
   ['/search', 'サイト内検索'],
   ['/knowledge', 'デザインを、つながりから探す'],
   ['/composition', '構図を比較して学ぶ'],
@@ -240,27 +240,27 @@ const routes = [
   ['/knowledge?q=__fragmenta_no_results_2026__', '一致する企画案はありません'],
   ['/knowledge/idea-visual-history-01', 'アール・ヌーヴォー'],
   ['/knowledge/nonexistent-item', '項目が見つかりません'],
-  ['/collections', 'Collections'],
-  ['/collections/motion-essentials', 'Motion Essentials'],
-  ['/collections/nonexistent-collection', 'Collection not found'],
-  ['/licenses', 'Licensing information'],
-  ['/p/fluid-toggle', 'Fluid Toggle'],
-  ['/p/morph-fab', 'Morph FAB'],
-  ['/p/editorial-split-layout', 'Editorial Split Layout'],
-  ['/p/smart-skeleton', 'Smart Skeleton'],
-  ['/p/glass-tilt', 'Glass Tilt'],
-  ['/guide', 'Explore and assess a UI pattern'],
-  ['/p/inline-validation', 'Inline Validation'],
-  ['/p/article-table-of-contents', 'Article Table of Contents'],
-  ['/p/readable-article', 'Readable Article'],
-  ['/p/native-faq', 'Native FAQ'],
-  ['/p/pricing-comparison', 'Pricing Comparison'],
-  ['/p/release-timeline', 'Release Timeline'],
-  ['/p/metric-summary', 'Metric Summary'],
-  ['/p/breadcrumb-trail', 'Breadcrumb Trail'],
-  ['/p/empty-state', 'Empty State'],
-  ['/p/responsive-data-table', 'Responsive Data Table'],
-  ['/p/nonexistent-pattern', 'Pattern not found'],
+  ['/collections', 'コレクション'],
+  ['/collections/motion-essentials', '動きの基本'],
+  ['/collections/nonexistent-collection', 'コレクションが見つかりません'],
+  ['/licenses', '権利・利用条件'],
+  ['/p/fluid-toggle', '伸び縮みするスイッチ'],
+  ['/p/morph-fab', '展開式のフローティングボタン'],
+  ['/p/editorial-split-layout', '本文と補足を分ける段組み'],
+  ['/p/smart-skeleton', '読み込み中の仮表示'],
+  ['/p/glass-tilt', '傾くガラスカード'],
+  ['/guide', 'UIパターンの使い方'],
+  ['/p/inline-validation', '入力欄のエラー表示'],
+  ['/p/article-table-of-contents', '記事の目次'],
+  ['/p/readable-article', '読みやすい記事の組版'],
+  ['/p/native-faq', '開閉できるFAQ'],
+  ['/p/pricing-comparison', '料金プランの比較'],
+  ['/p/release-timeline', '更新履歴'],
+  ['/p/metric-summary', '指標の要約'],
+  ['/p/breadcrumb-trail', 'パンくずリスト'],
+  ['/p/empty-state', '検索結果が0件のときの案内'],
+  ['/p/responsive-data-table', '横にスクロールできる比較表'],
+  ['/p/nonexistent-pattern', 'パターンが見つかりません'],
 ];
 
 await poll(async () => (await fetch(baseUrl)).ok, 'built Vite preview server');
@@ -1224,9 +1224,7 @@ try {
           const box = document.querySelector('section[data-pattern-id="${id}"]');
           if (!box) return null;
           return { targets: [...box.querySelectorAll('a')].map(a => a.getAttribute('href')),
-            reasons: [...box.querySelectorAll('li')].map(li => ({
-              ja: li.querySelector('p[lang=ja]')?.textContent.trim(), en: li.querySelector('p[lang=en]')?.textContent.trim(),
-            })),
+            reasons: [...box.querySelectorAll('li p')].map(p => p.textContent.trim()),
             overflowing: box.scrollWidth > box.clientWidth + 1 };
         })()`, returnByValue: true,
       });
@@ -1237,7 +1235,7 @@ try {
         targets.some(target => !patternIds.includes(target) || target === id) ||
         observed.reasons.length !== 2 || observed.reasons.some((reason, i) => {
           const expected = patternsById.get(id).alternatives.find(a => a.id === targets[i]);
-          return !expected || reason.ja !== expected.reason || !reason.en;
+          return !expected || reason !== expected.reason;
         }) || observed.overflowing)
       throw new Error('Invalid pattern selection guide ' + id + ': ' + JSON.stringify(observed));
   }
@@ -1258,7 +1256,7 @@ try {
   await page.send('Input.dispatchKeyEvent', { type: 'keyUp', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13 });
   await poll(async () => {
     const response = await page.send('Runtime.evaluate', {
-      expression: "location.hash === '#/p/fluid-toggle' && document.activeElement?.matches('h1[tabindex=\"-1\"]') && document.activeElement.textContent.trim() === 'Fluid Toggle'",
+      expression: "location.hash === '#/p/fluid-toggle' && document.activeElement?.matches('h1[tabindex=\"-1\"]') && document.activeElement.textContent.trim() === '伸び縮みするスイッチ'",
       returnByValue: true,
     });
     return response.result?.value;
@@ -1321,33 +1319,33 @@ try {
   await page.send('Runtime.evaluate', { expression: "location.hash = '#/p/glitch-text'" });
   await poll(async () => {
     const result = await page.send('Runtime.evaluate', {
-      expression: "Boolean([...document.querySelectorAll('button')].find(x => x.textContent.trim() === 'Code'))",
+      expression: "Boolean([...document.querySelectorAll('button')].find(x => x.textContent.trim() === 'コード'))",
       returnByValue: true,
     });
     return result.result?.value;
   }, 'code tab control');
   const clipboard = await page.send('Runtime.evaluate', {
     expression: `(async () => {
-      const tab = [...document.querySelectorAll('button')].find(x => x.textContent.trim() === 'Code');
+      const tab = [...document.querySelectorAll('button')].find(x => x.textContent.trim() === 'コード');
       tab.click();
       await new Promise(r => setTimeout(r, 100));
-      const copy = document.querySelector('button[title="Copy code"]');
+      const copy = document.querySelector('button[title="コードをコピー"]');
       if (!copy) throw new Error('Copy button missing');
       Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText: async () => { throw new Error('Denied'); } } });
       copy.click();
       await new Promise(r => setTimeout(r, 100));
-      const failed = document.querySelector('[role="status"][aria-label="Copy result"]')?.textContent || '';
+      const failed = document.querySelector('[role="status"][aria-label="コピー結果"]')?.textContent || '';
       Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText: async () => {} } });
       copy.click();
       await new Promise(r => setTimeout(r, 100));
-      const succeeded = document.querySelector('[role="status"][aria-label="Copy result"]')?.textContent || '';
+      const succeeded = document.querySelector('[role="status"][aria-label="コピー結果"]')?.textContent || '';
       return { failed, succeeded };
     })()`,
     awaitPromise: true,
     returnByValue: true,
   });
   const states = clipboard.result?.value;
-  if (!states?.failed.includes('Copy failed') || !states?.succeeded.includes('Copied to clipboard')) {
+  if (!states?.failed.includes('コピーできませんでした') || !states?.succeeded.includes('クリップボードにコピーしました')) {
     throw new Error('Clipboard states not truthful: ' + JSON.stringify(states));
   }
   console.log('PASS clipboard success and failure states');
@@ -1357,7 +1355,7 @@ try {
   await page.send('Runtime.evaluate', { expression: "location.hash = '#/guide'" });
   await poll(async () => {
     const result = await page.send('Runtime.evaluate', {
-      expression: "document.querySelector('h1')?.textContent === 'Explore and assess a UI pattern'",
+      expression: "document.querySelector('h1')?.textContent === 'UIパターンの使い方'",
       returnByValue: true,
     });
     return result.result?.value;
@@ -1394,7 +1392,7 @@ try {
 
   const guideCopy = await page.send('Runtime.evaluate', {
     expression: `(async () => {
-      const button = [...document.querySelectorAll('button')].find(b => b.textContent.includes('Copy reduced-motion example'));
+      const button = [...document.querySelectorAll('button')].find(b => b.textContent.includes('動きを減らすCSS例をコピー'));
       const code = document.querySelector('pre code')?.textContent;
       if (!button || !code) throw new Error('Guide copy action missing');
       let copied;
@@ -1416,8 +1414,8 @@ try {
     returnByValue: true,
   });
   const copy = guideCopy.result?.value;
-  if (!copy?.exact || !copy.success?.includes('Example copied') ||
-      !copy.denied?.includes('Copy failed') || !copy.unavailable?.includes('Copy failed')) {
+  if (!copy?.exact || !copy.success?.includes('CSS例をコピーしました') ||
+      !copy.denied?.includes('コピーできませんでした') || !copy.unavailable?.includes('コピーできませんでした')) {
     throw new Error('Guide clipboard behavior failed: ' + JSON.stringify(copy));
   }
   console.log('PASS reuse guide copied bytes, success, denial, and unavailable clipboard');
@@ -1425,7 +1423,7 @@ try {
   // A link near the end of a long guide must open the destination preview,
   // rather than carry the guide's scroll offset into Details.
   await page.send('Runtime.evaluate', {
-    expression: "[...document.querySelectorAll('summary')].find(s => s.textContent.includes('Warm Neo-Brutalist Editorial')).focus()",
+    expression: "[...document.querySelectorAll('summary')].find(s => s.textContent.includes('太い枠と影で見せる記事')).focus()",
   });
   await page.send('Input.dispatchKeyEvent', { type: 'keyDown', key: ' ', code: 'Space', windowsVirtualKeyCode: 32 });
   await page.send('Input.dispatchKeyEvent', { type: 'keyUp', key: ' ', code: 'Space', windowsVirtualKeyCode: 32 });
@@ -1445,7 +1443,7 @@ try {
   await page.send('Input.dispatchKeyEvent', { type: 'keyUp', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13 });
   await poll(async () => {
     const result = await page.send('Runtime.evaluate', {
-      expression: "location.hash === '#/p/warm-neo-brutalist-editorial' && document.querySelector('h1')?.textContent === 'Warm Neo-Brutalist Editorial' && scrollY <= 1",
+      expression: "location.hash === '#/p/warm-neo-brutalist-editorial' && document.querySelector('h1')?.textContent === '太い枠と影で見せる記事' && scrollY <= 1",
       returnByValue: true,
     });
     return result.result?.value;
@@ -1457,7 +1455,7 @@ try {
   await page.send('Input.dispatchKeyEvent', { type: 'keyUp', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13 });
   await poll(async () => {
     const result = await page.send('Runtime.evaluate', {
-      expression: "location.hash === '#/guide' && document.querySelector('h1')?.textContent === 'Explore and assess a UI pattern' && scrollY <= 1",
+      expression: "location.hash === '#/guide' && document.querySelector('h1')?.textContent === 'UIパターンの使い方' && scrollY <= 1",
       returnByValue: true,
     });
     return result.result?.value;
@@ -1494,16 +1492,16 @@ try {
       let copied;
       Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText: async text => { copied = text; } } });
       const buttons = () => [...document.querySelectorAll('button')];
-      buttons().find(b => b.textContent.trim() === 'Code').click();
+      buttons().find(b => b.textContent.trim() === 'コード').click();
       await new Promise(r => setTimeout(r, 100));
       const code = document.querySelector('pre').textContent;
-      document.querySelector('button[title="Copy code"]').click();
+      document.querySelector('button[title="コードをコピー"]').click();
       await new Promise(r => setTimeout(r, 100));
       const codeMatches = copied === code && code.includes(value + 'px');
-      buttons().find(b => b.textContent.trim() === 'AI prompt').click();
+      buttons().find(b => b.textContent.trim() === 'AIへの指示文').click();
       await new Promise(r => setTimeout(r, 100));
       const prompt = document.querySelector('p.whitespace-pre-wrap').textContent;
-      document.querySelector('button[title="Copy AI prompt"]').click();
+      document.querySelector('button[title="AIへの指示文をコピー"]').click();
       await new Promise(r => setTimeout(r, 100));
       return { value, codeMatches, promptMatches: copied === prompt && prompt.includes(value + 'px') };
     })()`,
@@ -1516,16 +1514,16 @@ try {
   console.log('PASS keyboard parameter change reaches copied code and AI prompt');
 
   for (const id of ['smart-skeleton', 'glitch-text', 'glass-tilt']) {
-    const title = { 'smart-skeleton': 'Smart Skeleton', 'glitch-text': 'Glitch Text', 'glass-tilt': 'Glass Tilt' }[id];
+    const title = { 'smart-skeleton': '読み込み中の仮表示', 'glitch-text': 'グリッチ文字', 'glass-tilt': '傾くガラスカード' }[id];
     await page.send('Runtime.evaluate', { expression: "location.hash = '#/p/" + id + "'" });
     await poll(async () => {
       const r = await page.send('Runtime.evaluate', {
-        expression: "location.hash === '#/p/" + id + "' && document.querySelector('h1')?.textContent.trim() === " + JSON.stringify(title) + " && [...document.querySelectorAll('button')].some(b => b.textContent.trim() === 'Pause preview motion' && b.getAttribute('aria-pressed') === 'false')",
+        expression: "location.hash === '#/p/" + id + "' && document.querySelector('h1')?.textContent.trim() === " + JSON.stringify(title) + " && [...document.querySelectorAll('button')].some(b => b.textContent.trim() === 'プレビューの動きを一時停止' && b.getAttribute('aria-pressed') === 'false')",
         returnByValue: true,
       });
       return r.result?.value;
     }, id + ' motion control');
-    await page.send('Runtime.evaluate', { expression: "[...document.querySelectorAll('button')].find(b => b.textContent.trim() === 'Pause preview motion').focus()" });
+    await page.send('Runtime.evaluate', { expression: "[...document.querySelectorAll('button')].find(b => b.textContent.trim() === 'プレビューの動きを一時停止').focus()" });
     await page.send('Input.dispatchKeyEvent', { type: 'keyDown', key: ' ', code: 'Space', windowsVirtualKeyCode: 32 });
     await page.send('Input.dispatchKeyEvent', { type: 'keyUp', key: ' ', code: 'Space', windowsVirtualKeyCode: 32 });
     const selectors = { 'smart-skeleton': '[style*="--speed"]', 'glitch-text': '[aria-label="GLITCH"] [aria-hidden]', 'glass-tilt': '.fragmenta-glass-preview' };
@@ -1533,7 +1531,7 @@ try {
       const r = await page.send('Runtime.evaluate', {
         expression: `(() => { const nodes = [...document.querySelectorAll(${JSON.stringify(selectors[id])})];
           return nodes.length > 0 && nodes.every(n => ${id === 'glass-tilt' ? "getComputedStyle(n).animationName === 'none'" : "getComputedStyle(n).animationPlayState === 'paused'"}) &&
-            document.querySelector('button[aria-pressed="true"]')?.textContent.trim() === 'Pause preview motion'; })()`,
+            document.querySelector('button[aria-pressed="true"]')?.textContent.trim() === 'プレビューの動きを一時停止'; })()`,
         returnByValue: true,
       });
       return r.result?.value;
@@ -1542,7 +1540,7 @@ try {
     await page.send('Input.dispatchKeyEvent', { type: 'keyUp', key: ' ', code: 'Space', windowsVirtualKeyCode: 32 });
     await poll(async () => {
       const r = await page.send('Runtime.evaluate', {
-        expression: "[...document.querySelectorAll('button')].some(b => b.textContent.trim() === 'Pause preview motion' && b.getAttribute('aria-pressed') === 'false')",
+        expression: "[...document.querySelectorAll('button')].some(b => b.textContent.trim() === 'プレビューの動きを一時停止' && b.getAttribute('aria-pressed') === 'false')",
         returnByValue: true,
       });
       return r.result?.value;
@@ -1676,6 +1674,66 @@ try {
   } else {
     console.log('SKIP standalone CI fixtures on external origin; deployed app checks ran above');
   }
+
+  // The sitemap uses clean URLs. A direct request must render the same page as its legacy hash link.
+  const cleanPages = [
+    ['/', 'つくりたいUIを、図と作例から探す'], ['/browse', 'UIパターン一覧'],
+    ['/styles', 'デザインの名前から探す'], ['/composition', '構図を比較して学ぶ'],
+    ['/tools', '実用ツール'], ['/tools/contrast', '配色・コントラスト'],
+    ['/tools/typography', '日本語の文字を調整'], ['/guide', 'UIパターンの使い方'],
+    ['/licenses', '権利・利用条件'], ['/collections', 'コレクション'],
+    ['/upcoming', '今後のUIパターン案'], ['/p/glitch-text', 'グリッチ文字'],
+  ];
+  for (const width of [390, 767, 768, 1280]) {
+    await page.send('Emulation.setDeviceMetricsOverride', { width, height: 900, deviceScaleFactor: 1, mobile: false });
+    for (const [route, heading] of cleanPages.filter(([path]) => width === 1280 || path === '/guide')) {
+      await page.send('Page.navigate', { url: baseUrl + route });
+      await poll(async () => {
+        const result = await page.send('Runtime.evaluate', { returnByValue: true, expression: `(() => {
+          if (location.pathname !== ${JSON.stringify(route)} || location.hash ||
+              document.querySelector('h1')?.textContent.trim() !== ${JSON.stringify(heading)}) return false;
+          const nav = document.querySelector('nav[aria-label="メインナビゲーション"]');
+          if (!nav) return false;
+          const links = [...nav.querySelectorAll('a')];
+          const labels = links.map(link => link.lastElementChild.textContent).join('/');
+          window.scrollTo(0, 180);
+          const box = nav.getBoundingClientRect();
+          const desktop = innerWidth >= 768;
+          return labels === 'ホーム/パターン/スタイル/ツール/利用条件' &&
+            links.every(link => link.tabIndex === 0) &&
+            nav.parentElement.getBoundingClientRect().width === Math.min(document.documentElement.clientWidth, 768) &&
+            getComputedStyle(nav).position === (desktop ? 'sticky' : 'fixed') &&
+            Math.abs(desktop ? box.top : innerHeight - box.bottom) <= 1 &&
+            nav.contains(document.elementFromPoint(box.x + box.width / 2, box.y + box.height / 2));
+        })()` });
+        return result.result?.value === true;
+      }, 'clean entry and responsive navigation at ' + width + 'px ' + route);
+    }
+  }
+  console.log('PASS clean route entry, Japanese navigation, common width and pinned position at 390/767/768/1280px');
+
+  await page.send('Emulation.setDeviceMetricsOverride', { width: 390, height: 844, deviceScaleFactor: 1, mobile: false });
+  await page.send('Page.navigate', { url: baseUrl + '/' });
+  await poll(async () => {
+    const result = await page.send('Runtime.evaluate', { expression: `(() => {
+      const link = document.querySelector('main details a[href="/upcoming"]');
+      if (!link) return false;
+      link.closest('details').open = true;
+      link.scrollIntoView(); link.focus();
+      return scrollY > 100;
+    })()`, returnByValue: true });
+    return result.result?.value;
+  }, 'roadmap link at the bottom of the home page');
+  await page.send('Input.dispatchKeyEvent', { type: 'keyDown', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13 });
+  await page.send('Input.dispatchKeyEvent', { type: 'keyUp', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13 });
+  await poll(async () => {
+    const result = await page.send('Runtime.evaluate', {
+      expression: "location.pathname === '/upcoming' && document.querySelector('h1')?.textContent === '今後のUIパターン案' && scrollY <= 1",
+      returnByValue: true,
+    });
+    return result.result?.value;
+  }, 'roadmap opens the start of the upcoming patterns page');
+  console.log('PASS mobile roadmap link opens its destination at the top');
 } finally {
   page?.close();
   control?.close();

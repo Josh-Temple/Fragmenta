@@ -17,7 +17,7 @@ export function patternSelectionBrief(id: string) {
   const s = getPatternSelection(id);
   return [s.id + ' ' + s.title, '向く場面　' + s.use, '向きにくい場面　' + s.avoid,
     '実画面での確認　' + s.check, ...s.alternatives.map(a => '代案　' + a.title + '（' + a.id + '） ' + a.reason),
-    s.sourceScope + ' 実装箇所 ' + s.sourcePath, '再利用条件　' + s.rights.status + ' / grantActive=' + s.rights.grantActive,
+    s.sourceScope, '再利用条件　' + s.rights.status + (s.rights.grantActive ? '（許諾条件を要確認）' : '（再利用の許諾なし）'),
     '利用者の操作と画面の状態に照らし、採用できる場面と代案が適する場面を説明してください。判断に必要な情報があれば明記してください。',
   ].join('\n');
 }

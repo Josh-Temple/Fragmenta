@@ -16,29 +16,29 @@ const sample = {
 
 export const warmNeoBrutalistEditorial: PatternDefinition = {
   id: 'warm-neo-brutalist-editorial',
-  title: 'Warm Neo-Brutalist Editorial',
+  title: '太い枠と影で見せる記事',
   description:
-    'A warm editorial interface treatment using heavy dark type, monospace metadata, thick outlines, offset shadows, muted accents, and generous spacing.',
+    '暖色の紙面に太字の見出し、等幅の補足情報、厚い輪郭線、ずらした影を組み合わせます。落ち着いた差し色と広い余白で強弱を付けます。',
   kind: 'style',
   category: 'style',
-  tags: ['Editorial', 'Neo-brutalist', 'Warm', 'Outlined', 'Offset Shadow', 'CSS'],
+  tags: ['記事', 'ネオブルータリズム', '暖色', '輪郭線', 'ずらした影', 'CSS'],
   performanceScore: 100,
   a11yScore: 'AA',
   performanceNotes:
-    'Static CSS treatment with no continuous animation. Keep large offset shadows and decorative borders on a small number of surfaces.',
+    '静的なCSSで表示します。大きくずらした影や装飾の枠は、一部の要素に絞ります。',
   a11yNotes:
-    'Keep body copy contrast high, preserve visible focus states, and do not rely on accent color alone to communicate status.',
+    '本文のコントラストとフォーカス表示を保ち、状態は差し色以外の手掛かりでも伝えます。',
   responsiveNotes:
-    'Reduce border, shadow, and outer spacing slightly on narrow screens while preserving the same hierarchy and reading order.',
+    '狭い画面では枠、影、外側の余白を少し減らし、情報の優先順位と読み順を保ちます。',
   source: {
     label: 'Editorial style study — provenance pending',
     note: 'The project describes this as synthesized from general visual characteristics, but authorship, source materials, sample prose rights, and permission for reuse have not been independently verified.',
   },
   params: [
-    { key: 'radius', cssVar: '--pattern-radius', label: 'Corner Radius', type: 'number', min: 8, max: 32, step: 1, default: defaults.radius, unit: 'px' },
-    { key: 'border', cssVar: '--pattern-border', label: 'Outline Width', type: 'number', min: 1, max: 5, step: 1, default: defaults.border, unit: 'px' },
-    { key: 'shadow', cssVar: '--pattern-shadow', label: 'Shadow Offset', type: 'number', min: 0, max: 14, step: 1, default: defaults.shadow, unit: 'px' },
-    { key: 'spacing', cssVar: '--pattern-spacing', label: 'Inner Spacing', type: 'number', min: 10, max: 28, step: 1, default: defaults.spacing, unit: 'px' },
+    { key: 'radius', cssVar: '--pattern-radius', label: '角の丸み', type: 'number', min: 8, max: 32, step: 1, default: defaults.radius, unit: 'px' },
+    { key: 'border', cssVar: '--pattern-border', label: '枠線の太さ', type: 'number', min: 1, max: 5, step: 1, default: defaults.border, unit: 'px' },
+    { key: 'shadow', cssVar: '--pattern-shadow', label: '影のずれ', type: 'number', min: 0, max: 14, step: 1, default: defaults.shadow, unit: 'px' },
+    { key: 'spacing', cssVar: '--pattern-spacing', label: '内側の余白', type: 'number', min: 10, max: 28, step: 1, default: defaults.spacing, unit: 'px' },
   ],
   Preview: ({ values }) => {
     const radius = values.radius ?? defaults.radius;
@@ -176,6 +176,6 @@ export const warmNeoBrutalistEditorial: PatternDefinition = {
     const shadow = values.shadow ?? defaults.shadow;
     const spacing = values.spacing ?? defaults.spacing;
 
-    return `Design an original warm neo-brutalist editorial section with English and Japanese paragraphs. Use near-black heavy headings, monospace metadata, muted accents, generous whitespace, and strong hierarchy. Use ${border}px outlines, ${radius}px radii, ${shadow}px offset shadows, and ${spacing}px inner spacing. Scope metadata and badge selectors to the section, and put adjustable CSS variables on each instance so different configurations can coexist. A zero shadow must remain zero at narrow widths. Keep body text readable and use appropriate language attributes. Do not copy a brand, page text, logo, or exact third-party composition.`;
+    return `日本語と英語の段落を含む独自の記事セクションを作成してください。黒に近い太字の見出し、等幅の補足情報、控えめな差し色、広い余白で強弱を付けます。枠幅は${border}px、角丸は${radius}px、影のずれは${shadow}px、内側の余白は${spacing}pxです。補足情報やバッジのCSSをこのセクションに限定し、変数は作例ごとに設定します。狭い画面でも影の値0を保ち、本文の読みやすさと言語属性を確認します。第三者のブランド、文章、ロゴ、構図をそのまま流用しないでください。`;
   },
 };

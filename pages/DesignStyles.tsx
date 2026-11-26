@@ -73,9 +73,9 @@ const DesignStyles: React.FC = () => {
       <header className="px-5 pt-6 pb-5 border-b border-ink-border">
         <Link to="/" className="inline-flex py-2 items-center gap-2 text-sm text-ink font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink rounded">
           <span aria-hidden="true" className="material-symbols-outlined">arrow_back</span>
-          Home
+          ホーム
         </Link>
-        <p className="mt-4 text-xs uppercase tracking-[.2em] text-primary font-bold">Design Styles / デザインの図鑑</p>
+        <p className="mt-4 text-xs uppercase tracking-[.2em] text-primary font-bold">デザインスタイル図鑑</p>
         <h1 className="mt-2 text-3xl font-bold text-ink">デザインの名前から探す</h1>
         <p className="mt-3 text-sm leading-relaxed text-ink-muted">
           {designStyles.length}系統の特徴を知り、同じ画面で比較し、AIへの指示文やCSSトークンを持ち帰れます。
@@ -100,7 +100,7 @@ const DesignStyles: React.FC = () => {
             </button>
           ))}
         </div>
-        <p className="mt-3 text-xs text-ink-muted" role="status">{results.length} / {designStyles.length} styles</p>
+        <p className="mt-3 text-xs text-ink-muted" role="status">全{designStyles.length}種類中{results.length}種類を表示</p>
         {results.length ? (
           <div className="grid grid-cols-2 gap-3 mt-4">
             {results.map(item => (

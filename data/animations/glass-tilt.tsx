@@ -3,17 +3,17 @@ import { AnimationDefinition } from '../../types';
 
 export const glassTilt: AnimationDefinition = {
   id: 'glass-tilt',
-  title: 'Glass Tilt',
-  description: 'A 3D holographic tilt effect triggered by mouse movement. Includes idle animation.',
-  tags: ['Card', 'React', '3D', 'Hover'],
+  title: '傾くガラスカード',
+  description: 'ポインターの位置に応じてガラス調のカードが傾きます。操作していないときにも緩やかに動きます。',
+  tags: ['カード', 'React', '3D', 'ホバー'],
   category: 'card',
   continuousMotion: true,
-  a11yNotes: 'Keep information available without hover. Pause stops idle and pointer-driven motion; reduced-motion also disables movement. The copied JSX includes its own pause checkbox.',
+  a11yNotes: 'ホバーしなくても内容を読めるようにします。一時停止や動きを減らす設定で、自動の動きと傾きが止まります。生成するJSXにも一時停止用のチェックボックスが付きます。',
   performanceScore: 90,
   a11yScore: 'A',
   params: [
-    { key: 'intensity', cssVar: '--intensity', label: 'Tilt Intensity', type: 'number', min: 5, max: 45, step: 1, default: 20, unit: 'deg' },
-    { key: 'blur', cssVar: '--blur', label: 'Blur', type: 'number', min: 0, max: 20, step: 1, default: 12, unit: 'px' },
+    { key: 'intensity', cssVar: '--intensity', label: '傾きの強さ', type: 'number', min: 5, max: 45, step: 1, default: 20, unit: 'deg' },
+    { key: 'blur', cssVar: '--blur', label: 'ぼかし', type: 'number', min: 0, max: 20, step: 1, default: 12, unit: 'px' },
   ],
   Preview: ({ values, paused = false }) => {
     const [rotate, setRotate] = useState({ x: 0, y: 0 });
@@ -174,5 +174,5 @@ export default function GlassCard() {
   );
 }`;
   },
-  generatePrompt: (values) => `Create a standalone React glass card with ${values['blur']}px backdrop blur, gentle idle movement, and pointer-driven tilt based on an intensity of ${values['intensity']} degrees. Keep card content readable without hover. Include a labeled Pause motion checkbox that stops idle movement, resets tilt, and disables pointer motion while checked. Ignore touch hover and respect prefers-reduced-motion for idle, tilt, and transitions. Include all component CSS without relying on the host site's styles.`
+  generatePrompt: (values) => `ガラス調のReactカードを作成してください。背景を${values['blur']}pxぼかし、待機中は緩やかに動かし、ポインターに応じて強さ${values['intensity']}度で傾けます。ホバーなしでも読めるようにします。「Pause motion」チェックボックスで待機中の動きを止め、傾きをリセットし、再開までポインターで動かないようにしてください。タッチではホバーを使わず、すべての動きで prefers-reduced-motion を尊重します。必要なCSSはコンポーネントに含めます。`
 };

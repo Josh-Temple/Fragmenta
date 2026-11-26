@@ -30,7 +30,7 @@ function renderExport(catalog) {
   const byId = new Map(catalog.ideas.map(i => [i.id, i]));
   const lines = ['# Fragmenta — デザイン知識ベース（企画台帳）', '',
     '> すべて企画案です。参考メモは未レビューであり、公式仕様や完成した実装ではありません。参考資料の部分確認は内容全体の検証・利用許諾を意味しません。', '',
-    `- スキーマ: ${catalog.schemaVersion}`, '- 正本: data/content-ideas.json', '- JSON: /knowledge/ideas.json', '- 閲覧・検索: /#/knowledge', ''];
+    `- スキーマ: ${catalog.schemaVersion}`, '- JSON: /knowledge/ideas.json', '- 閲覧・検索: /#/knowledge', ''];
   for (const category of catalog.categories) {
     lines.push('## ' + category.label, '');
     for (const item of catalog.ideas.filter(i => i.categoryId === category.id)) {

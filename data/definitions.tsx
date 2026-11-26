@@ -22,6 +22,11 @@ export const definitions: Record<string, PatternDefinition> = {
   'editorial-split-layout': editorialSplitLayout,
 };
 
+export const patternKindLabels: Record<PatternKind, string> = {
+  motion: '動き', interaction: '操作', style: 'スタイル',
+  component: '部品', layout: 'レイアウト', 'text-effect': '文字の演出',
+};
+
 export const getPatternKind = (definition: PatternDefinition): PatternKind => {
   if (definition.kind) return definition.kind;
 
