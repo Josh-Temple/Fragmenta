@@ -47,7 +47,7 @@ export function card(item, index, params = new URLSearchParams()) {
         e(item.id) +
         '.svg" width="300" height="200" loading="lazy">'
       : '') +
-    '</span><span class="caption"><span>' +
+    '</span><span class="caption"><span class="caption-title">' +
     e(item.title) +
     '</span>' +
     mark(item.status, false) +
@@ -82,13 +82,22 @@ export function results(rows, section, p, params, visual) {
                     ? '?purpose=' + encodeURIComponent(params.get('purpose'))
                     : ''),
               ) +
-              '"><span><strong>' +
+              '"><code class="ledger-id">' +
+              e(r.id) +
+              '</code><span class="ledger-main"><span class="ledger-head"><strong>' +
               e(r.title) +
-              '</strong><small>' +
+              '</strong>' +
+              (r.categoryLabel ? '<em class="ledger-cat">' + e(r.categoryLabel) + '</em>' : '') +
+              '</span><small>' +
               e(r.summary) +
-              '</small></span>' +
+              '</small></span><span class="ledger-end">' +
+              (r.linkedCount
+                ? '<span class="linked-pill" title="公開済み標本と接続"><i class="mark verified" aria-hidden="true"></i>関連公開 ' +
+                  r.linkedCount +
+                  '</span>'
+                : '') +
               mark(r.status) +
-              '</a></li>',
+              '</span></a></li>',
           )
           .join('') +
         '</ul>'

@@ -78,17 +78,28 @@ function sources(data) {
       : para('外部出典の登録は未完了です。'))
   );
 }
-function heading(item) {
+function heading(item, withTabs = false) {
+  const catCrumb =
+    item.category && ['composition', 'styles', 'browse', 'knowledge'].includes(item.section)
+      ? [[labels[item.category] || item.category, '/' + item.section + '?category=' + encodeURIComponent(item.category)]]
+      : [];
   return (
-    crumbs([['展示室', '/'], [sections[item.section][0], '/' + item.section], [item.title]]) +
-    '<header class="detail-title"><p class="eyebrow">' +
+    crumbs([
+      ['展示室', '/'],
+      [sections[item.section][0], '/' + item.section],
+      ...catCrumb,
+      [item.title],
+    ]) +
+    '<div class="detail-bar"><header class="detail-title"><p class="eyebrow">' +
     e(item.id) +
-    (item.category ? '　/　' + e(labels[item.category] || item.category) : '') +
-    '</p><h1 tabindex="-1">' +
+    (item.category ? ' · ' + e(labels[item.category] || item.category) : '') +
+    '</p><div class="detail-headline"><h1 tabindex="-1">' +
     e(item.title) +
     '</h1>' +
     mark(item.status) +
-    '</header>'
+    '</div></header>' +
+    (withTabs ? tabs() : '') +
+    '</div>'
   );
 }
 function tabs() {
@@ -96,7 +107,7 @@ function tabs() {
     '<nav class="view-tabs" aria-label="詳細の表示切替">' +
     [
       ['visual', '視覚'],
-      ['structure', '構造'],
+      ['structure', '構造 (X-Ray)'],
       ['ai-code', 'AI・コード'],
     ]
       .map(([id, t]) => link('#' + id, t, 'data-view="' + id + '"'))
@@ -112,14 +123,22 @@ function diagram(g, variant) {
 function composition(item) {
   const g = item.record,
     d = item.data.discovery;
+  const compList = items.filter((x) => x.section === 'composition'),
+    compIdx = compList.indexOf(item);
   const a = g.id === 'C-110' ? '画風A' : g.id === 'C-119' ? '元図' : '配置例',
     b = g.id === 'C-110' ? '画風B' : g.id === 'C-119' ? '検査表示' : '対照例';
+  const toolbar =
+    '<div class="diagram-bar"><span class="diagram-caption">比較模式図（左：' +
+    a +
+    ' ／ 右：' +
+    b +
+    '）</span><button class="action xray-btn" type="button" data-thirds-toggle aria-pressed="false"><span lang="en">X-RAY</span> 構造補助線を強調</button></div>';
   const pair =
     '<div class="pair' +
     (['C-093', 'C-119'].includes(g.id) ? ' stacked' : '') +
-    '" ' +
-    (g.id === 'C-001' ? 'data-thirds' : '') +
-    '>' +
+    '" data-thirds="' +
+    e(g.id) +
+    '">' +
     [
       [a, 'example', g.example],
       [b, 'comparison', g.contrast],
@@ -147,9 +166,9 @@ function composition(item) {
         '"><h3>' +
         link('/composition?purpose=' + c.purposeId, c.titleJa) +
         '</h3>' +
-        para(c.reasonJa) +
-        para(c.cautionJa) +
-        para(r.checkJa) +
+        para('適した理由：' + c.reasonJa) +
+        para('避けたい設計・注意点：' + c.cautionJa) +
+        para('確認ポイント：' + r.checkJa) +
         '<ul>' +
         itemLink(r.alternativeId, r.alternativeReasonJa) +
         '</ul>' +
@@ -159,10 +178,22 @@ function composition(item) {
     })
     .join('');
   const review = d.review;
+  const primaryCaution = d.choices[0]?.cautionJa;
+  const summarySheet =
+    '<div class="detail-sheet"><div class="sheet-col"><section class="sheet-block"><h2>原理と用途</h2>' +
+    para(g.definition) +
+    para(g.comparisonPoint) +
+    (g.diagramNote ? para(g.diagramNote) : '') +
+    '</section><section class="sheet-block"><h2>避けたい設計・確認点</h2>' +
+    (primaryCaution ? para(primaryCaution) : '') +
+    para(review.checkJa) +
+    '</section></div><div class="sheet-col sheet-ai"><div class="sheet-ai-head"><h2>AIへの配置指示</h2><a class="sheet-jump" href="#ai-code" data-jump-view="ai-code">全文・コピーへ →</a></div><pre class="ai-preview" id="ai-visual-preview">' +
+    e(g.aiInstruction) +
+    '</pre><div class="sheet-actions"><a class="action" href="#structure" data-jump-view="structure">構造・用途別条件を見る</a><a class="action" href="#ai-code" data-jump-view="ai-code">AI判断ブリーフを開く</a></div></div></div>';
   const structure =
     block(
       'principle',
-      '配置と見比べ方',
+      '配置原理と見比べ方',
       para(g.definition) +
         para(g.comparisonPoint) +
         para(g.diagramNote) +
@@ -171,7 +202,7 @@ function composition(item) {
         itemLink(review.alternativeId, review.alternativeReasonJa) +
         '</ul>',
     ) +
-    block('use', '用途と適用条件', purpose || para('個別の用途候補は編集中です。')) +
+    block('use', '用途別の適用条件・避けたい設計', '<div class="purpose-grid">' + (purpose || para('個別の用途候補は編集中です。')) + '</div>') +
     (d.relatedComposition.length
       ? block(
           'related',
@@ -182,7 +213,7 @@ function composition(item) {
     (g.relatedLegacyIds.length
       ? block(
           'related-ideas',
-          '関連する企画',
+          '関連する企画（企画段階）',
           '<ul>' + g.relatedLegacyIds.map((id) => itemLink(id)).join('') + '</ul>',
         )
       : '');
@@ -198,29 +229,23 @@ function composition(item) {
       },
     ]),
   );
-  const xray =
-    g.id === 'C-001'
-      ? '<button class="action" data-thirds-toggle aria-pressed="false">三等分の補助線を強調</button>'
-      : '';
-  const visual =
-    pair + xray + block('compare', '見比べるポイント', para(g.comparisonPoint) + para(g.diagramNote));
+  const visual = toolbar + pair + summarySheet;
   return (
-    heading(item) +
-    tabs() +
+    heading(item, true) +
     '<div id="purpose-context"></div>' +
     panel('visual', '視覚', visual) +
-    panel('structure', '構造', structure) +
+    panel('structure', '構造 (X-Ray)', structure) +
     panel(
       'ai-code',
       'AI・コード',
       block(
         'ai',
-        'AIへの指示例',
-        '<p id="ai-instruction">' +
+        'AIへの指示例と判断材料',
+        '<p class="ai-lead" id="ai-instruction">' +
           e(g.aiInstruction) +
           '</p>' +
           copy(item.data.aiBrief) +
-          para('この項目では配置の指示と模式図を提供しています。'),
+          para('この項目では配置の指示と模式図を提供しています。目的・媒体・提示画像に合わせて条件を補ってください。'),
       ),
     ) +
     block(
@@ -229,10 +254,19 @@ function composition(item) {
       para('説明・図・AI指示は編集下書きです。項目全体の根拠は未確認です。') +
         sources(item.data) +
         para(item.data.rights) +
+        '<div class="source-meta-links">' +
         link('/licenses', '権利・利用条件') +
-        '　' +
-        link(exportPath(item), '項目のJSON'),
+        link(exportPath(item), '項目のJSON') +
+        '</div>',
     ) +
+    '<nav class="article-links" aria-label="前後の構図">' +
+    (compList[compIdx - 1]
+      ? link(compList[compIdx - 1].path, '← ' + compList[compIdx - 1].id + ' ' + compList[compIdx - 1].title)
+      : '<span></span>') +
+    (compList[compIdx + 1]
+      ? link(compList[compIdx + 1].path, compList[compIdx + 1].id + ' ' + compList[compIdx + 1].title + ' →')
+      : '<span></span>') +
+    '</nav>' +
     '<script type="application/json" id="purpose-briefs">' +
     json(briefs) +
     '</script>' +
@@ -270,9 +304,10 @@ function knowledge(item) {
       '出典・権利と検証状況',
       sources(data) +
         para(data.rights) +
+        '<div class="source-meta-links">' +
         link('/licenses', '権利・利用条件') +
-        '　' +
-        link(exportPath(item), '項目のJSON'),
+        link(exportPath(item), '項目のJSON') +
+        '</div>',
     ) +
     block(
       'related',
@@ -285,8 +320,8 @@ function knowledge(item) {
         '</ul>',
     ) +
     '<nav class="article-links">' +
-    (siblings[i - 1] ? link(siblings[i - 1].path, '← ' + siblings[i - 1].title) : '') +
-    (siblings[i + 1] ? link(siblings[i + 1].path, siblings[i + 1].title + ' →') : '') +
+    (siblings[i - 1] ? link(siblings[i - 1].path, '← ' + siblings[i - 1].title) : '<span></span>') +
+    (siblings[i + 1] ? link(siblings[i + 1].path, siblings[i + 1].title + ' →') : '<span></span>') +
     '</nav>'
   );
 }

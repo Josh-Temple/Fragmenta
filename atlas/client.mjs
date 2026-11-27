@@ -76,13 +76,34 @@ function gallery() {
   if (section === 'search') $('.filter').open = true;
   for (const control of form.elements) if (control.name) control.value = q.get(control.name) || '';
   const filters = $('.filter'),
-    summary = $('summary', filters);
+    summary = $('summary', filters),
+    catLinks = all('[data-cat]', root),
+    badge = $('#filter-badge');
+  function syncChrome(params) {
+    const activeCat = params.get('category') || '';
+    for (const a of catLinks) {
+      if (a.dataset.cat === activeCat) a.setAttribute('aria-current', 'true');
+      else a.removeAttribute('aria-current');
+    }
+    if (badge) {
+      const extraCount = ['q', 'purpose', 'section', 'status'].filter((k) => params.get(k)).length +
+        (catLinks.length === 0 && activeCat ? 1 : 0);
+      badge.hidden = extraCount === 0;
+      badge.textContent = String(extraCount);
+    }
+  }
+  syncChrome(q);
   filters.addEventListener('keydown', (ev) => {
     if (ev.key === 'Escape') {
       filters.open = false;
       summary.focus();
     }
   });
+  if (section !== 'search') {
+    document.addEventListener('click', (ev) => {
+      if (filters.open && !filters.contains(ev.target)) filters.open = false;
+    });
+  }
   let cache,
     revision = 0;
   function fetchData() {
@@ -99,6 +120,7 @@ function gallery() {
   }
   async function apply(params, p, focus = false) {
     const version = ++revision;
+    syncChrome(params);
     try {
       const [rows, meta] = await fetchData();
       if (version !== revision) return;
@@ -128,21 +150,33 @@ function gallery() {
       $('#result-count').textContent = '索引を読み込めませんでした。もう一度検索してください。';
     }
   }
-  function formSubmit() {
+  function formSubmit(closePopover = true) {
     const params = new URLSearchParams();
     for (const [k, v] of new FormData(form)) if (String(v).trim()) params.set(k, String(v).trim());
     const url = '/' + section + (params.size ? '?' + params : '');
     history.pushState({}, '', url);
     apply(params, 1, true);
-    if (innerWidth < 700 && section !== 'search') filters.open = false;
+    if (closePopover && section !== 'search') filters.open = false;
   }
   form.addEventListener('submit', (ev) => {
     ev.preventDefault();
-    formSubmit();
+    formSubmit(true);
   });
   form.addEventListener('change', (ev) => {
-    if (ev.target.tagName === 'SELECT') formSubmit();
+    if (ev.target.tagName === 'SELECT') formSubmit(innerWidth < 700);
   });
+  catLinks.forEach((a) =>
+    a.addEventListener('click', (ev) => {
+      if (ev.ctrlKey || ev.metaKey || ev.shiftKey || ev.altKey) return;
+      ev.preventDefault();
+      if (form.elements.category) form.elements.category.value = a.dataset.cat || '';
+      const params = new URLSearchParams();
+      for (const [k, v] of new FormData(form)) if (String(v).trim()) params.set(k, String(v).trim());
+      const url = '/' + section + (params.size ? '?' + params : '');
+      history.pushState({}, '', url);
+      apply(params, 1, false);
+    }),
+  );
   const current = () =>
     Number(
       new URLSearchParams(location.search).get('page') ||
@@ -166,10 +200,30 @@ function gallery() {
     apply(u.searchParams, current(), true);
   });
   const xray = $('#xray');
-  xray?.addEventListener('click', () => {
+  function toggleXray() {
+    if (!xray) return;
     const on = xray.getAttribute('aria-pressed') !== 'true';
     xray.setAttribute('aria-pressed', String(on));
     root.classList.toggle('show-guides', on);
+  }
+  xray?.addEventListener('click', toggleXray);
+  document.addEventListener('keydown', (ev) => {
+    if (
+      !xray ||
+      ev.isComposing ||
+      ev.keyCode === 229 ||
+      ev.defaultPrevented ||
+      ev.ctrlKey ||
+      ev.metaKey ||
+      ev.altKey ||
+      $('#search-dialog')?.open ||
+      ev.target.closest('input,textarea,select,[contenteditable="true"]')
+    )
+      return;
+    if (ev.key.toLowerCase() === 'x') {
+      ev.preventDefault();
+      toggleXray();
+    }
   });
 }
 function detail() {
@@ -179,7 +233,7 @@ function detail() {
     function select() {
       const id = location.hash.slice(1);
       if (id === 'sources') {
-        document.getElementById('sources').scrollIntoView();
+        document.getElementById('sources')?.scrollIntoView();
       }
       const active = tabs.find((a) => a.dataset.view === id) || tabs[0];
       for (const tab of tabs) {
@@ -203,11 +257,32 @@ function detail() {
     );
   }
   const toggle = $('[data-thirds-toggle]');
-  toggle?.addEventListener('click', () => {
+  function toggleDetailXray() {
+    if (!toggle) return;
     const on = toggle.getAttribute('aria-pressed') !== 'true';
     toggle.setAttribute('aria-pressed', String(on));
-    $('[data-thirds]').classList.toggle('accent-guides', on);
-  });
+    $('[data-thirds]')?.classList.toggle('accent-guides', on);
+  }
+  toggle?.addEventListener('click', toggleDetailXray);
+  if (toggle) {
+    document.addEventListener('keydown', (ev) => {
+      if (
+        ev.isComposing ||
+        ev.keyCode === 229 ||
+        ev.defaultPrevented ||
+        ev.ctrlKey ||
+        ev.metaKey ||
+        ev.altKey ||
+        $('#search-dialog')?.open ||
+        ev.target.closest('input,textarea,select,[contenteditable="true"]')
+      )
+        return;
+      if (ev.key.toLowerCase() === 'x') {
+        ev.preventDefault();
+        toggleDetailXray();
+      }
+    });
+  }
   const purpose = new URLSearchParams(location.search).get('purpose'),
     choice = data('#purpose-briefs')?.[purpose];
   if (choice) {
@@ -221,6 +296,7 @@ function detail() {
       '</p>';
     $('#brief').textContent = choice.brief;
     $('#ai-instruction').textContent = choice.instruction;
+    if ($('#ai-visual-preview')) $('#ai-visual-preview').textContent = choice.instruction;
   }
   all('[data-copy]').forEach((button) =>
     button.addEventListener('click', async () => {

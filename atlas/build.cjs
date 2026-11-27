@@ -55,16 +55,48 @@ function materialize(template, emit) {
         : '') +
       (url !== '/' && !opt.noindex
         ? '<script type="application/ld+json">' +
-          json({
-            '@context': 'https://schema.org',
-            '@type': 'BreadcrumbList',
-            itemListElement: hierarchy.map(([name, p], i) => ({
-              '@type': 'ListItem',
-              position: i + 1,
-              name,
-              item: origin + p,
-            })),
-          }) +
+          json(
+            opt.item
+              ? {
+                  '@context': 'https://schema.org',
+                  '@graph': [
+                    {
+                      '@type': 'BreadcrumbList',
+                      itemListElement: hierarchy.map(([name, p], i) => ({
+                        '@type': 'ListItem',
+                        position: i + 1,
+                        name,
+                        item: origin + p,
+                      })),
+                    },
+                    {
+                      '@type': 'TechArticle',
+                      headline: opt.item.title,
+                      identifier: opt.item.id,
+                      description,
+                      inLanguage: 'ja',
+                      url: origin + url,
+                      creativeWorkStatus: statuses[opt.item.status],
+                      license: origin + '/licenses',
+                      encoding: {
+                        '@type': 'MediaObject',
+                        contentUrl: origin + exportPath(opt.item),
+                        encodingFormat: 'application/json',
+                      },
+                    },
+                  ],
+                }
+              : {
+                  '@context': 'https://schema.org',
+                  '@type': 'BreadcrumbList',
+                  itemListElement: hierarchy.map(([name, p], i) => ({
+                    '@type': 'ListItem',
+                    position: i + 1,
+                    name,
+                    item: origin + p,
+                  })),
+                },
+          ) +
           '</script>'
         : '');
     const shell =
@@ -119,7 +151,7 @@ function materialize(template, emit) {
         'art/guides/' + item.section + '/' + item.id + '.svg',
         '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200"><path d="' +
           item.guide +
-          '" stroke="#2367df" stroke-width="1.7" fill="none" stroke-dasharray="5 3"/></svg>',
+          '" stroke="#2555FF" stroke-width="1.6" fill="none" stroke-dasharray="4 3"/></svg>',
       );
   }
   for (const [id, svg] of Object.entries(poster)) emit('art/home/' + id + '.svg', svg);
@@ -163,9 +195,39 @@ function materialize(template, emit) {
   emit(
     'llms.txt',
     llms.replaceAll('/#/', '/') +
-      '\n## 正規URLと項目単位の配布\n- 全項目の索引: /catalog/index/search.json\n- サイトマップ: /sitemap.xml\n- 各項目のHTMLにJSONのalternateリンクがあります。publicationStatusは掲載状態、reviewStatus・evidenceStatusは編集上の検証状況です。利用条件は各項目と /licenses を参照してください。\n',
+      '\n## 正規URLと項目単位の配布\n- 全項目の索引: /catalog/index/search.json\n- サイトマップ: /sitemap.xml\n- UIパターン一覧の別名: /ui （正規URL /browse へ転送）\n- 各項目のHTMLにJSONのalternateリンクがあります。publicationStatusは掲載状態、reviewStatus・evidenceStatusは編集上の検証状況です。利用条件は各項目と /licenses を参照してください。\n',
   );
-  emit('_redirects', '/a/:id /p/:id 301\n/saved /collections 301\n/settings / 301\n');
+  const compositionCaseRedirects = items
+    .filter((i) => i.section === 'composition')
+    .map((i) => '/composition/' + i.id.toLowerCase() + ' ' + i.path + ' 301')
+    .join('\n');
+  emit(
+    '_redirects',
+    [
+      '/ui /browse 301',
+      '/ui/:id /p/:id 301',
+      '/a/:id /p/:id 301',
+      '/saved /collections 301',
+      '/settings / 301',
+      compositionCaseRedirects,
+      '',
+    ].join('\n'),
+  );
+  emit(
+    '_headers',
+    [
+      '/*',
+      '  X-Content-Type-Options: nosniff',
+      '  Referrer-Policy: strict-origin-when-cross-origin',
+      '/catalog/*',
+      '  Access-Control-Allow-Origin: *',
+      '  Cache-Control: public, max-age=0, must-revalidate',
+      '/llms.txt',
+      '  Access-Control-Allow-Origin: *',
+      '  Content-Type: text/plain; charset=utf-8',
+      '',
+    ].join('\n'),
+  );
   return paths.length;
 }
 function build(dir) {

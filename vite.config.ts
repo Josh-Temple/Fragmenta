@@ -5,6 +5,18 @@ import { defineConfig, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
 
 const require = createRequire(import.meta.url);
+function resolveRedirect(pathname: string, search: string): string | null {
+  const clean = pathname.replace(/\/+$/, '') || '/';
+  if (clean === '/ui') return '/browse' + search;
+  if (clean.startsWith('/ui/')) return '/p/' + clean.slice(4) + search;
+  if (clean.startsWith('/a/')) return '/p/' + clean.slice(3) + search;
+  if (clean === '/saved') return '/collections' + search;
+  if (clean === '/settings') return '/' + search;
+  const comp = /^\/composition\/c-(\d{3})$/.exec(clean);
+  if (comp) return '/composition/C-' + comp[1] + search;
+  return null;
+}
+
 function atlas(): Plugin {
   return {
     name: 'fragmenta-documents',
@@ -19,7 +31,14 @@ function atlas(): Plugin {
         }
       });
       server.middlewares.use(async (req, res, next) => {
-        const pathname = new URL(req.url || '/', 'http://localhost').pathname;
+        const parsed = new URL(req.url || '/', 'http://localhost');
+        const pathname = parsed.pathname;
+        const redirected = resolveRedirect(pathname, parsed.search);
+        if (redirected) {
+          res.writeHead(301, { Location: redirected });
+          res.end();
+          return;
+        }
         if (
           (/\.[\w]+$/.test(pathname) &&
             !/^\/(art|catalog)\//.test(pathname) &&
@@ -64,8 +83,9 @@ function atlas(): Plugin {
     configurePreviewServer(server) {
       server.middlewares.use((req, res, next) => {
         const u = new URL(req.url || '/', 'http://localhost');
-        if (u.pathname.startsWith('/a/')) {
-          res.writeHead(301, { Location: '/p/' + u.pathname.slice(3) + u.search });
+        const redirected = resolveRedirect(u.pathname, u.search);
+        if (redirected) {
+          res.writeHead(301, { Location: redirected });
           res.end();
           return;
         }
