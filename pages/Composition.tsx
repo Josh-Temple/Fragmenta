@@ -148,6 +148,15 @@ const Composition: React.FC = () => {
       <h2 id="composition-title" ref={detailHeadingRef} tabIndex={-1}
         className="mt-2 text-2xl font-bold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">{guide.titleJa}</h2>
       <p className="mt-3 text-sm leading-relaxed">{guide.definition}</p>
+      {guide.whyItWorks && <p className="mt-2 text-sm leading-relaxed text-ink-muted">{guide.whyItWorks}</p>}
+      {guide.useCases && guide.useCases.length > 0 && <div className="mt-3 text-sm">
+        <p className="font-semibold">使いどころ</p>
+        <ul className="mt-1 list-disc pl-5 space-y-1 text-ink-muted">{guide.useCases.map((u, i) => <li key={i}>{u}</li>)}</ul>
+      </div>}
+      {guide.pitfalls && guide.pitfalls.length > 0 && <div className="mt-3 text-sm">
+        <p className="font-semibold">よくある失敗</p>
+        <ul className="mt-1 list-disc pl-5 space-y-1 text-ink-muted">{guide.pitfalls.map((p, i) => <li key={i}>{p}</li>)}</ul>
+      </div>}
       {selectedChoice && <section className="mt-4 rounded-lg border border-ink-border bg-surface p-4">
         <h3 id="composition-purpose-reason" className="font-bold">「{selectedChoice.titleJa}」から選んだ理由</h3>
         <p className="mt-2 text-sm">{selectedChoice.reasonJa}</p>
@@ -175,6 +184,7 @@ const Composition: React.FC = () => {
       </section>
       <section aria-labelledby="composition-visual" className="mt-6">
         <h3 id="composition-visual" className="text-lg font-bold">構図の模式図</h3>
+        {guide.changed && <p className="mt-1 text-xs text-ink-muted">変えた1要素：{guide.changed}</p>}
         <div className={guide.id === 'C-093' || guide.id === 'C-119' ? 'mt-3 grid gap-4' : 'mt-3 grid gap-4 sm:grid-cols-2'}>
           <div><p className="mb-2 text-sm font-semibold">{guide.id === 'C-110' ? '画風A' : guide.id === 'C-119' ? '元図' : '配置例'}</p><CompositionDiagram guide={guide} variant="example" />
             <p className="mt-2 text-sm leading-relaxed">{guide.example}</p></div>

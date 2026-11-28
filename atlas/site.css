@@ -848,21 +848,37 @@ dialog input {
   width: 100%;
   height: auto;
   max-height: 58vh;
-  background: #f1e9de;
+  background: #eceae2;
+}
+.drawing svg .composition-guides {
+  opacity: 0.16;
+  transition: opacity 0.18s ease;
 }
 .pair.accent-guides .drawing svg {
   border-color: var(--cobalt);
 }
-.pair:not([data-thirds='C-001']).accent-guides .drawing::after {
-  content: '';
-  position: absolute;
-  inset: 1px;
-  pointer-events: none;
-  background-image:
-    linear-gradient(90deg, transparent calc(33.333% - 0.5px), rgb(37 85 255 / 0.58) 33.333%, transparent calc(33.333% + 0.5px), transparent calc(66.666% - 0.5px), rgb(37 85 255 / 0.58) 66.666%, transparent calc(66.666% + 0.5px)),
-    linear-gradient(transparent calc(33.333% - 0.5px), rgb(37 85 255 / 0.58) 33.333%, transparent calc(33.333% + 0.5px), transparent calc(66.666% - 0.5px), rgb(37 85 255 / 0.58) 66.666%, transparent calc(66.666% + 0.5px)),
-    linear-gradient(90deg, transparent calc(50% - 0.5px), rgb(37 85 255 / 0.25) 50%, transparent calc(50% + 0.5px)),
-    linear-gradient(transparent calc(50% - 0.5px), rgb(37 85 255 / 0.25) 50%, transparent calc(50% + 0.5px));
+.pair.accent-guides .drawing svg .composition-guides {
+  opacity: 0.96;
+}
+.changed-chip {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 8px;
+  border: 1px solid var(--rule);
+  background: var(--surface);
+  color: var(--fg);
+  font-size: 0.78rem;
+  font-weight: 500;
+}
+.sheet-list {
+  margin: 6px 0 0;
+  padding-left: 1.15em;
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.7;
+}
+.sheet-list li + li {
+  margin-top: 4px;
 }
 .pair figure {
   margin: 0;
@@ -880,10 +896,6 @@ dialog input {
   display: block;
   font-weight: 600;
   margin-bottom: 2px;
-}
-.accent-guides svg > line:nth-of-type(-n + 4) {
-  stroke: #2555FF;
-  stroke-width: 1.8;
 }
 .detail-sheet {
   display: grid;

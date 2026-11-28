@@ -4,8 +4,9 @@ import raw from './composition-guides.json';
 export type Shape = (string | number)[];
 export type CompositionGuide = {
   id: string; titleJa: string; categoryId: string; definition: string;
+  whyItWorks?: string; useCases?: string[]; pitfalls?: string[]; changed?: string;
   example: string; contrast: string; aiInstruction: string;
-  diagram: { example: Shape[]; comparison: Shape[] };
+  diagram: { example: Shape[]; comparison: Shape[]; guides?: { example: Shape[]; comparison: Shape[] }; cover?: Shape[] };
   relatedLegacyIds: string[]; sourceIds: string[]; sourceNote?: string; comparisonPoint?: string; diagramNote?: string;
   reviewStatus: 'draft_unreviewed'; evidenceStatus: 'not_checked';
 };
@@ -25,7 +26,8 @@ export function matchesComposition(item: CompositionGuide, query: string): boole
   const purpose = purposeFromQuery(query);
   if (purpose) return Boolean(getCompositionChoice(purpose.id, item.id));
   const review = getReview(item.id);
-  const haystack = [item.id, item.titleJa, item.definition, item.example, item.contrast,
+  const haystack = [item.id, item.titleJa, item.definition, item.whyItWorks ?? '', item.changed ?? '',
+    ...(item.useCases ?? []), ...(item.pitfalls ?? []), item.example, item.contrast,
     item.aiInstruction, compositionCategoryLabel(item.categoryId), review.checkJa, review.alternativeReasonJa,
     ...getCompositionChoices(item.id).flatMap(c => [c.titleJa, c.reasonJa, c.cautionJa, c.review?.checkJa ?? '', c.review?.alternativeReasonJa ?? ''])].join(' ').normalize('NFKC').toLowerCase();
   return query.trim().normalize('NFKC').toLowerCase().split(/\s+/).filter(Boolean).every(term => haystack.includes(term));
@@ -36,6 +38,11 @@ export function compositionBrief(guide: CompositionGuide, purposeId?: string): s
   const choices = choice ? [choice] : getCompositionChoices(guide.id);
   return [
     guide.id + ' ' + guide.titleJa,
+    '定義　' + guide.definition,
+    ...(guide.whyItWorks ? ['効く理由　' + guide.whyItWorks] : []),
+    ...(guide.changed ? ['比較で変えた1要素　' + guide.changed] : []),
+    ...(guide.useCases?.length ? ['使いどころ　' + guide.useCases.join(' ／ ')] : []),
+    ...(guide.pitfalls?.length ? ['よくある失敗　' + guide.pitfalls.join(' ／ ')] : []),
     ...choices.flatMap(c => {
       const r = getReview(guide.id, c);
       return ['用途「' + c.titleJa + '」 ' + c.reasonJa, '注意点　' + c.cautionJa,

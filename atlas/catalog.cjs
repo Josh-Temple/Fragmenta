@@ -55,6 +55,7 @@ function add(section, id, title, summary, status, record, opts = {}) {
   items.push({ ...row, record, data: opts.data || {}, index: row });
 }
 const art = require('./art.cjs');
+const { guidesToPath } = require('../scripts/composition/render.cjs');
 const { styleGuide } = require('./style-art.cjs');
 const { guides: patternGuides } = require('./pattern-art.cjs');
 const english = {
@@ -71,14 +72,20 @@ for (const g of compositionGuides) {
   const choices = getCompositionChoices(g.id),
     discovery = getCompositionDiscovery(g);
   const sources = g.sourceIds.map((id) => ({ id, ...compositionCatalog.sources[id] }));
+  const guidePath = g.diagram.guides?.example?.length
+    ? guidesToPath(g.diagram.guides.example, 300, 200)
+    : art.guides[g.id];
   add('composition', g.id, g.titleJa, g.definition, 'draft', g, {
     category: g.categoryId,
     purposes: choices.map((c) => c.purposeId),
-    guide: art.guides[g.id],
+    guide: guidePath || undefined,
     keywords: [
       english[g.id],
       labels[g.categoryId],
       ...choices.map((c) => c.titleJa),
+      g.whyItWorks,
+      g.changed,
+      ...(g.useCases || []),
       g.example,
       g.contrast,
     ],

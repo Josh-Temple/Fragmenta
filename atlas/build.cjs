@@ -12,7 +12,8 @@ const {
 } = require('./catalog.cjs');
 const { header, footer, home, listing } = require('./views.cjs');
 const { detail, diagram, island, json } = require('./details.cjs');
-const { covers, poster } = require('./art.cjs');
+const { poster } = require('./art.cjs');
+const { toSvg } = require('../scripts/composition/render.cjs');
 const { styleArt } = require('./style-art.cjs');
 const { patternArt } = require('./pattern-art.cjs');
 const origin = 'https://fragmenta-6ke.pages.dev';
@@ -139,9 +140,10 @@ function materialize(template, emit) {
     if (item.artwork) {
       let svg;
       if (item.section === 'composition')
-        svg =
-          covers[item.id] ||
-          diagram(item.record, 'example').replace(/<svg /, '<svg width="300" height="200" ');
+        svg = toSvg(item.record.diagram.cover || item.record.diagram.example, {
+          width: 300,
+          height: 200,
+        });
       if (item.section === 'styles') svg = styleArt(item.record);
       if (item.section === 'browse') svg = patternArt(item.id);
       emit(item.artwork.slice(1), svg);

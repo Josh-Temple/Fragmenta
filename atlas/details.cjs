@@ -132,7 +132,9 @@ function composition(item) {
     a +
     ' ／ 右：' +
     b +
-    '）</span><button class="action xray-btn" type="button" data-thirds-toggle aria-pressed="false"><span lang="en">X-RAY</span> 構造補助線を強調</button></div>';
+    '）' +
+    (g.changed ? '　<span class="changed-chip">変えた1要素：' + e(g.changed) + '</span>' : '') +
+    '</span><button class="action xray-btn" type="button" data-thirds-toggle aria-pressed="false"><span lang="en">X-RAY</span> 構造補助線を強調</button></div>';
   const pair =
     '<div class="pair' +
     (['C-093', 'C-119'].includes(g.id) ? ' stacked' : '') +
@@ -179,13 +181,18 @@ function composition(item) {
     .join('');
   const review = d.review;
   const primaryCaution = d.choices[0]?.cautionJa;
+  const bulletList = (rows) =>
+    rows && rows.length ? '<ul class="sheet-list">' + rows.map((x) => '<li>' + e(x) + '</li>').join('') + '</ul>' : '';
   const summarySheet =
-    '<div class="detail-sheet"><div class="sheet-col"><section class="sheet-block"><h2>原理と用途</h2>' +
+    '<div class="detail-sheet"><div class="sheet-col"><section class="sheet-block"><h2>原理と効く理由</h2>' +
     para(g.definition) +
+    (g.whyItWorks ? para(g.whyItWorks) : '') +
     para(g.comparisonPoint) +
     (g.diagramNote ? para(g.diagramNote) : '') +
-    '</section><section class="sheet-block"><h2>避けたい設計・確認点</h2>' +
-    (primaryCaution ? para(primaryCaution) : '') +
+    '</section>' +
+    (g.useCases?.length ? '<section class="sheet-block"><h2>使いどころ</h2>' + bulletList(g.useCases) + '</section>' : '') +
+    '<section class="sheet-block"><h2>よくある失敗・確認点</h2>' +
+    (g.pitfalls?.length ? bulletList(g.pitfalls) : primaryCaution ? para(primaryCaution) : '') +
     para(review.checkJa) +
     '</section></div><div class="sheet-col sheet-ai"><div class="sheet-ai-head"><h2>AIへの配置指示</h2><a class="sheet-jump" href="#ai-code" data-jump-view="ai-code">全文・コピーへ →</a></div><pre class="ai-preview" id="ai-visual-preview">' +
     e(g.aiInstruction) +
@@ -195,8 +202,12 @@ function composition(item) {
       'principle',
       '配置原理と見比べ方',
       para(g.definition) +
+        (g.whyItWorks ? para(g.whyItWorks) : '') +
+        (g.changed ? para('比較で変えた1要素：' + g.changed) : '') +
         para(g.comparisonPoint) +
         para(g.diagramNote) +
+        (g.useCases?.length ? '<h3>使いどころ</h3>' + bulletList(g.useCases) : '') +
+        (g.pitfalls?.length ? '<h3>よくある失敗</h3>' + bulletList(g.pitfalls) : '') +
         para(review.checkJa) +
         '<ul>' +
         itemLink(review.alternativeId, review.alternativeReasonJa) +
