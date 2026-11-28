@@ -30,12 +30,15 @@ const KnowledgeBase: React.FC = () => {
   return <div lang="ja" className="min-w-0 px-5 pb-12">
     <header className="border-b border-ink-border pt-6 pb-6">
       <Link to="/" className="inline-flex min-h-11 items-center text-sm font-semibold underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">ホームに戻る</Link>
-      <p className="mt-4 text-xs font-mono uppercase tracking-wider text-primary">Knowledge base / デザインの企画と参考メモ</p>
+      <p className="mt-4 text-xs font-mono uppercase tracking-wider text-primary">デザインの企画と参考メモ</p>
       <h1 className="mt-2 text-3xl font-bold leading-tight">デザインを、つながりから探す</h1>
       <p className="mt-3 text-sm leading-relaxed text-ink-muted">{ideas.length}件の企画案を分野や関連項目から探せます。うち{draftCount}件の参考メモは未レビューです。公式の仕様や、完成した実装として扱わないでください。</p>
       <div className="mt-4 flex flex-wrap gap-3 text-sm">
         <a href="/knowledge/ideas.json" className="inline-flex min-h-11 items-center underline underline-offset-4">AI向けJSON</a>
         <a href="/knowledge/ideas.md" className="inline-flex min-h-11 items-center underline underline-offset-4">Markdown一覧</a>
+        <a href="/knowledge/style-guides.json" className="inline-flex min-h-11 items-center underline underline-offset-4">デザインスタイルの用途 JSON</a>
+        <a href="/knowledge/pattern-guides.json" className="inline-flex min-h-11 items-center underline underline-offset-4">UIパターンの用途 JSON</a>
+        <Link to="/composition" className="inline-flex min-h-11 items-center underline underline-offset-4 font-semibold">構図ガイド（120件・模式図）</Link>
       </div>
     </header>
     <section aria-labelledby="knowledge-search-heading" className="border-b border-ink-border py-6">

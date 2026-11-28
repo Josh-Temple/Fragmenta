@@ -1,6 +1,7 @@
+import CopyReviewBrief from '../components/CopyReviewBrief';
 import React, { useEffect } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
-import { catalog, categoryLabel, ideaById, ideas, sourceById, relationDisplayLabel, isSafeKnowledgeSourceUrl } from '../data/knowledge';
+import { catalog, knowledgeReviewBrief, categoryLabel, ideaById, ideas, sourceById, relationDisplayLabel, isSafeKnowledgeSourceUrl } from '../data/knowledge';
 
 const KnowledgeDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -36,7 +37,7 @@ const KnowledgeDetail: React.FC = () => {
       <span aria-hidden="true" className="mx-2">/</span><span>{categoryLabel(entry.categoryId)}</span>
     </nav>
     <header className="mt-4 border-b border-ink-border pb-6">
-      <p className="text-xs font-semibold tracking-wider text-primary">PLANNED / 企画段階</p>
+      <p className="text-xs font-semibold tracking-wider text-primary">企画段階</p>
       <h1 ref={headingRef} tabIndex={-1} className="mt-2 text-3xl font-bold leading-tight focus-visible:outline-2 focus-visible:outline-offset-2">{entry.titleJa}</h1>
       {entry.titleEn && <p lang="en" className="mt-2 text-sm text-ink-muted">{entry.titleEn}</p>}
       <p className="mt-3 text-sm text-ink-muted">分類：{categoryLabel(entry.categoryId)}</p>
@@ -92,6 +93,7 @@ const KnowledgeDetail: React.FC = () => {
     <section aria-labelledby="knowledge-data-title" className="border-t border-ink-border py-6">
       <h2 id="knowledge-data-title" className="text-xl font-bold">AIによる参照</h2>
       <p className="mt-2 text-sm leading-relaxed text-ink-muted">JSONでIDを検索すると分類や関連IDを取得できます。企画中・未レビューの状態も保持してください。</p>
+      <CopyReviewBrief text={knowledgeReviewBrief(entry)} />
       <a href="/knowledge/ideas.json" className="mt-3 inline-flex min-h-11 items-center text-sm font-semibold underline underline-offset-4">構造化JSONを開く</a>
     </section>
     <nav aria-label="同じ分野の項目" className="mt-2 border-t border-ink-border pt-5">

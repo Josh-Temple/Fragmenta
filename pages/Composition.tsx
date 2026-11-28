@@ -1,0 +1,269 @@
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
+import { ideaById } from '../data/knowledge';
+import CompositionDiagram from '../components/CompositionDiagram';
+import { compositionCatalog, compositionGuides, compositionCategories,
+  compositionById, compositionCategoryLabel, matchesComposition, compositionBrief } from '../data/composition';
+import { compositionPurposes, getCompositionPurpose, getCompositionChoice,
+  getCompositionRelations, getCompositionDiscovery, purposeFromQuery, getReview } from '../data/composition-discovery';
+
+const tagLabels: Record<string, string> = {
+  illustration: 'イラスト', photography: '写真', cinema: '映画', web_ui: 'ウェブ画面',
+  comics: '漫画', graphic_design: 'グラフィックデザイン', ai_image_generation: 'AI画像生成',
+  typography: '文字', people: '人物', shapes: '図形', actions: '動作', scenes: '場面',
+  interface_elements: '画面の部品', products: '製品', landscapes: '風景', architecture: '建築',
+  animals: '動物', objects: '物体', contrast: '対照', similar: '類似', complement: '補完',
+};
+
+const Composition: React.FC = () => {
+  const [params, setParams] = useSearchParams();
+  const [input, setInput] = useState(params.get('q') ?? '');
+  const [copyStatus, setCopyStatus] = useState('');
+  const [visibleCount, setVisibleCount] = useState(24);
+  const detailHeadingRef = useRef<HTMLHeadingElement>(null);
+  const previousDetailIdRef = useRef<string | null>(null);
+  const query = params.get('q') ?? '';
+  const atlas = params.get('view') === 'atlas';
+  const previousAtlasRef = useRef(atlas);
+  const category = compositionCategories.some(x => x.id === params.get('category'))
+    ? params.get('category') ?? 'all' : 'all';
+  const purpose = getCompositionPurpose(params.get('purpose') ?? '');
+  const chosen = params.get('id') ?? '';
+  const missingGuide = Boolean(chosen && !compositionById.has(chosen));
+  const guide = compositionById.get(chosen) ?? compositionGuides[0];
+  const purposeIds = useMemo(() => new Set(purpose?.choices.map(c => c.guideId) ?? []), [purpose]);
+  const filtered = useMemo(() => compositionGuides.filter(item =>
+    (category === 'all' || item.categoryId === category) && matchesComposition(item, query) &&
+    (!purpose || purposeIds.has(item.id))), [category, query, purpose, purposeIds]);
+  const quickLinks = filtered.slice(0, 12);
+  if (filtered.some(item => item.id === guide.id) && !quickLinks.some(item => item.id === guide.id)) quickLinks.push(guide);
+  const preferredGuideId = filtered.some(item => item.id === guide.id) ? guide.id : (filtered[0]?.id ?? guide.id);
+  const discovery = getCompositionDiscovery(guide);
+  const activePurpose = purpose ?? purposeFromQuery(query);
+  const selectedChoice = activePurpose && getCompositionChoice(activePurpose.id, guide.id);
+  const review = getReview(guide.id, selectedChoice);
+  const brief = compositionBrief(guide, selectedChoice?.purposeId);
+  const displayedChoices = selectedChoice ? [selectedChoice] : discovery.choices;
+  const detailHref = (id: string) => {
+    const next = new URLSearchParams(params);
+    next.delete('view');
+    next.set('id', id);
+    return '/composition?' + next.toString();
+  };
+  const atlasHref = () => {
+    const next = new URLSearchParams(params);
+    next.set('view', 'atlas');
+    return '/composition?' + next.toString();
+  };
+  useEffect(() => setInput(query), [query]);
+  useEffect(() => setVisibleCount(24), [query, category, purpose?.id]);
+  useEffect(() => setCopyStatus(''), [brief]);
+  useEffect(() => {
+    if (!atlas && (previousDetailIdRef.current !== guide.id || previousAtlasRef.current)) {
+      previousDetailIdRef.current = guide.id;
+      detailHeadingRef.current?.focus();
+    }
+    previousAtlasRef.current = atlas;
+  }, [atlas, guide.id]);
+  const setParam = (key: string, value: string) => {
+    const next = new URLSearchParams(params);
+    if (!value || value === 'all') next.delete(key);
+    else next.set(key, value);
+    if (key === 'q') { next.set('view', 'atlas'); next.delete('id'); }
+    setParams(next);
+  };
+  return <div lang="ja" className="min-w-0 px-5 pb-12">
+    <header className="pt-6 pb-6 border-b border-ink-border">
+      <Link to="/knowledge" className="inline-flex min-h-11 items-center text-sm font-semibold underline underline-offset-4">知識ベースに戻る</Link>
+      <h1 className="mt-2 text-3xl font-bold">構図を比較して学ぶ</h1>
+      <p className="mt-3 text-sm leading-relaxed text-ink-muted">全120件の編集下書きです。図は模式図で、制作経緯と権利を確認中です。厳密な正解・不正解や実証済みの心理効果を示すものではありません。</p>
+      <a href="/knowledge/composition-guides.json" className="mt-3 inline-flex min-h-11 items-center text-sm underline underline-offset-4">AI向け構造化JSON</a>
+    </header>
+    <section aria-labelledby="composition-find" className="py-5 border-b border-ink-border">
+      <h2 id="composition-find" className="text-lg font-bold">項目を探す</h2>
+      <div className="mt-4" aria-labelledby="composition-purpose-heading">
+        <h3 id="composition-purpose-heading" className="font-bold">表現したい目的から探す</h3>
+        <p className="mt-1 text-sm text-ink-muted">選択候補であり、特定の印象やAI生成結果を保証しません。</p>
+        <div id="composition-purpose-choices" className="mt-3 flex flex-wrap gap-2">
+          {compositionPurposes.map(item => <button key={item.id} type="button"
+            aria-pressed={purpose?.id === item.id}
+            onClick={() => {
+              const next = new URLSearchParams(params);
+              if (purpose?.id === item.id) next.delete('purpose');
+              else { next.set('purpose', item.id); next.set('view', 'atlas'); next.delete('id'); }
+              setParams(next);
+            }}
+            className={'min-h-12 rounded-lg border px-3 text-sm font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 ' +
+              (purpose?.id === item.id ? 'border-ink bg-ink text-paper' : 'border-ink-border bg-surface')}>{item.titleJa}</button>)}
+        </div>
+        {purpose && <div className="mt-3 rounded-lg border border-ink-border bg-surface p-3">
+          <p className="text-sm"><strong>{purpose.titleJa}：</strong>{purpose.description}</p>
+          <button type="button" onClick={() => setParam('purpose', '')}
+            className="mt-2 min-h-11 text-sm font-semibold underline underline-offset-4">目的の絞り込みを解除</button>
+        </div>}
+      </div>
+      <form role="search" className="mt-3 flex gap-2" onSubmit={event => { event.preventDefault(); setParam('q', input); }}>
+        <label htmlFor="composition-query" className="sr-only">キーワード</label>
+        <input id="composition-query" value={input} onChange={event => setInput(event.target.value)} type="search"
+          placeholder="例：余白、孤独、黒い面" className="min-w-0 min-h-11 flex-1 rounded-lg border border-ink/40 bg-paper p-3 text-base focus-visible:outline-2 focus-visible:outline-offset-2" />
+        <button className="min-h-11 rounded-lg bg-ink px-4 text-sm font-bold text-paper" type="submit">検索</button>
+      </form>
+      <label htmlFor="composition-category" className="mt-4 block text-sm font-semibold">分野</label>
+      <select id="composition-category" value={category} onChange={event => setParam('category', event.target.value)}
+        className="mt-2 min-h-11 w-full rounded-lg border border-ink/40 bg-paper p-3 text-base focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+        <option value="all">すべての分野</option>
+        {compositionCategories.map(item => <option key={item.id} value={item.id}>{item.label}</option>)}
+      </select>
+      <p className="mt-3 text-sm text-ink-muted" role="status">{filtered.length}件 / 全{compositionGuides.length}件</p>
+      <nav aria-label="表示方法" className="mt-4 flex flex-wrap gap-3 text-sm">
+        <Link to={atlasHref()}
+          aria-current={atlas ? 'page' : undefined} className={'inline-flex min-h-11 items-center rounded-lg border px-4 font-semibold ' + (atlas ? 'border-ink bg-ink text-paper' : 'border-ink-border')}>図解一覧で見る</Link>
+        <Link to={detailHref(preferredGuideId)} aria-current={!atlas ? 'page' : undefined}
+          className={'inline-flex min-h-11 items-center rounded-lg border px-4 font-semibold ' + (!atlas ? 'border-ink bg-ink text-paper' : 'border-ink-border')}>選んで詳しく見る</Link>
+      </nav>
+      {missingGuide && <p role="alert" className="mt-3 text-sm text-ink-muted">指定された構図IDは見つかりません。先頭の項目を仮表示しています。上の検索・一覧から構図を選び直してください。</p>}
+      {filtered.length > 0 && !filtered.some(item => item.id === guide.id) &&
+        <p className="mt-2 text-sm text-ink-muted">現在表示中の項目は検索結果の対象外です。結果一覧から別の項目を選んでください。</p>}
+      <label htmlFor="composition-item" className="mt-3 block text-sm font-semibold">表示する構図を選択</label>
+      <select id="composition-item" value={guide.id} onChange={event => setParam('id', event.target.value)}
+        className="mt-2 min-h-11 w-full rounded-lg border border-ink/40 bg-paper p-3 text-base">
+        {compositionGuides.map(item => <option key={item.id} value={item.id}>{item.id} ・ {item.titleJa}</option>)}
+      </select>
+      {!atlas && <nav className="mt-3 flex gap-2 overflow-x-auto pb-2" aria-label="検索結果から構図を選択">
+        {quickLinks.map(item => <Link key={item.id} to={detailHref(item.id)}
+          aria-current={guide.id === item.id ? 'page' : undefined}
+          className={'flex min-h-11 shrink-0 items-center rounded-lg border px-3 text-sm font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 ' +
+            (guide.id === item.id ? 'border-ink bg-ink text-paper' : 'border-ink-border bg-surface')}>{item.titleJa}</Link>)}
+        {filtered.length > quickLinks.length && <Link to={atlasHref()}
+          className="inline-flex min-h-11 shrink-0 items-center rounded-lg border border-ink-border px-3 text-sm font-semibold underline">残りは一覧で見る</Link>}
+      </nav>}
+      {!filtered.length && <div role="status" className="mt-2">
+        <p className="text-sm">該当する項目がありません。キーワード・分野・目的を変更してください。</p>
+        <button className="mt-2 min-h-11 text-sm font-semibold underline" type="button"
+          onClick={() => setParams(new URLSearchParams())}>条件をすべて解除</button>
+      </div>}
+    </section>
+    {!atlas ? <article className="py-6" aria-labelledby="composition-title" key={guide.id}>
+      <p className="text-xs font-mono text-ink">{guide.id} ・ {compositionCategoryLabel(guide.categoryId)}</p>
+      <h2 id="composition-title" ref={detailHeadingRef} tabIndex={-1}
+        className="mt-2 text-2xl font-bold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">{guide.titleJa}</h2>
+      <p className="mt-3 text-sm leading-relaxed">{guide.definition}</p>
+      {guide.whyItWorks && <p className="mt-2 text-sm leading-relaxed text-ink-muted">{guide.whyItWorks}</p>}
+      {guide.useCases && guide.useCases.length > 0 && <div className="mt-3 text-sm">
+        <p className="font-semibold">使いどころ</p>
+        <ul className="mt-1 list-disc pl-5 space-y-1 text-ink-muted">{guide.useCases.map((u, i) => <li key={i}>{u}</li>)}</ul>
+      </div>}
+      {guide.pitfalls && guide.pitfalls.length > 0 && <div className="mt-3 text-sm">
+        <p className="font-semibold">よくある失敗</p>
+        <ul className="mt-1 list-disc pl-5 space-y-1 text-ink-muted">{guide.pitfalls.map((p, i) => <li key={i}>{p}</li>)}</ul>
+      </div>}
+      {selectedChoice && <section className="mt-4 rounded-lg border border-ink-border bg-surface p-4">
+        <h3 id="composition-purpose-reason" className="font-bold">「{selectedChoice.titleJa}」から選んだ理由</h3>
+        <p className="mt-2 text-sm">{selectedChoice.reasonJa}</p>
+        <p className="mt-2 text-sm"><strong>注意点・適用条件：</strong>{selectedChoice.cautionJa}</p>
+      </section>}
+      <section aria-labelledby="composition-discovery-details" className="mt-5">
+        <h3 id="composition-discovery-details" className="font-bold">用途と制約（編集下書き）</h3>
+        {!selectedChoice && discovery.choices.map(choice => <div key={choice.purposeId} className="mt-3 text-sm">
+          <p><strong>{discovery.choices.length > 1
+            ? <Link to={'/composition?id=' + guide.id + '&purpose=' + choice.purposeId} className="underline underline-offset-4">{choice.titleJa}</Link>
+            : choice.titleJa}</strong>　{choice.reasonJa}</p>
+          <p className="mt-1"><strong>注意点・適用条件：</strong>{choice.cautionJa}</p>
+        </div>)}
+        <p className="mt-3 text-sm"><strong>完成案で確かめること：</strong>{review.checkJa}</p>
+        <p className="mt-2 text-sm"><strong>代案：</strong><Link to={'/composition?id=' + review.alternativeId} className="font-semibold underline underline-offset-4">{review.alternativeId} ・ {compositionById.get(review.alternativeId)?.titleJa}</Link>　{review.alternativeReasonJa}</p>
+        <p className="mt-2 text-xs text-ink-muted">{discovery.scopeNote}</p>
+        {displayedChoices.map(choice => {
+          if (!choice.sourceSupport) return null;
+          const { sourceId, section, scopeJa } = choice.sourceSupport;
+          const source = compositionCatalog.sources[sourceId];
+          return <p key={choice.purposeId} className="mt-2 text-sm"><strong>「{choice.titleJa}」の参考箇所：</strong><a href={source.url} className="underline underline-offset-4">{source.publisher} · {section}</a>　{scopeJa}</p>;
+        })}
+        <p className="mt-2 text-sm"><strong>比較する構図条件：</strong>{discovery.priorityConditions[0]}</p>
+        <p className="mt-2 text-xs text-ink-muted">媒体候補：{discovery.media.map(tag => tagLabels[tag] ?? tag).join(' / ')} ・ 被写体候補：{discovery.subjects.map(tag => tagLabels[tag] ?? tag).join(' / ')}（分野ごとの参考例）</p>
+      </section>
+      <section aria-labelledby="composition-visual" className="mt-6">
+        <h3 id="composition-visual" className="text-lg font-bold">構図の模式図</h3>
+        {guide.changed && <p className="mt-1 text-xs text-ink-muted">変えた1要素：{guide.changed}</p>}
+        <div className={guide.id === 'C-093' || guide.id === 'C-119' ? 'mt-3 grid gap-4' : 'mt-3 grid gap-4 sm:grid-cols-2'}>
+          <div><p className="mb-2 text-sm font-semibold">{guide.id === 'C-110' ? '画風A' : guide.id === 'C-119' ? '元図' : '配置例'}</p><CompositionDiagram guide={guide} variant="example" />
+            <p className="mt-2 text-sm leading-relaxed">{guide.example}</p></div>
+          <div><p className="mb-2 text-sm font-semibold">{guide.id === 'C-110' ? '画風B' : guide.id === 'C-119' ? '検査表示' : '対照例'}</p><CompositionDiagram guide={guide} variant="comparison" />
+            <p className="mt-2 text-sm leading-relaxed">{guide.contrast}</p></div>
+        </div>
+        {guide.comparisonPoint && <p className="mt-4 rounded-lg border border-ink-border bg-surface p-3 text-sm leading-relaxed"><strong>見比べるポイント：</strong>{guide.comparisonPoint}</p>}
+        {guide.diagramNote && <p className="mt-3 text-sm leading-relaxed text-ink-muted"><strong>模式図の限界：</strong>{guide.diagramNote}</p>}
+        <p className="mt-3 text-xs leading-relaxed text-ink-muted">模式図は位置・大きさ・明暗の違いを簡略化したものです。対照例も、目的によっては適切な構図になります。</p>
+      </section>
+      <section aria-labelledby="composition-ai" className="mt-7 border-t border-ink-border pt-5">
+        <h3 id="composition-ai" className="text-lg font-bold">AIへの指示例</h3>
+        <p className="mt-3 rounded-lg bg-surface p-4 text-sm leading-relaxed">{selectedChoice?.aiInstruction ?? guide.aiInstruction}</p>
+        <details className="mt-3"><summary className="cursor-pointer text-sm font-semibold">AIに渡す判断材料の全文</summary>
+          <p data-composition-ai-text="true" className="mt-2 whitespace-pre-line break-words text-sm leading-relaxed">{brief}</p>
+        </details>
+        <button data-composition-ai-copy="true" type="button" onClick={async () => { try {
+          if (!navigator.clipboard?.writeText) throw new Error('Clipboard unavailable');
+          await navigator.clipboard.writeText(brief);
+          setCopyStatus('指示文をコピーしました。');
+        } catch { setCopyStatus('コピーできませんでした。文章を選択してコピーしてください。'); } }}
+          className="mt-3 min-h-11 rounded-lg border border-ink-border px-4 text-sm font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">指示文をコピー</button>
+        <p role="status" aria-live="polite" className="mt-2 text-sm text-ink-muted">{copyStatus}</p>
+      </section>
+      {getCompositionRelations(guide.id).length > 0 && <section className="mt-6 border-t border-ink-border pt-5">
+        <h3 className="text-sm font-bold">関連する構図（編集候補）</h3>
+        <ul className="mt-2 space-y-2">{getCompositionRelations(guide.id).map(r => <li key={r.targetId}>
+          <Link to={detailHref(r.targetId)} className="inline-flex min-h-11 items-center text-sm underline underline-offset-4">
+            {r.targetId} ・ {compositionById.get(r.targetId)?.titleJa}</Link>
+          <p className="text-xs text-ink-muted">{r.reasonJa}（{tagLabels[r.relationType] ?? r.relationType}）</p>
+        </li>)}</ul>
+      </section>}
+      {guide.relatedLegacyIds.length > 0 && <section className="mt-6 border-t border-ink-border pt-5">
+        <h3 className="text-sm font-bold">関連する企画</h3>
+        <ul className="mt-2 space-y-2">{guide.relatedLegacyIds.map(id => <li key={id}><Link className="inline-flex min-h-11 items-center text-sm underline underline-offset-4"
+          to={'/knowledge/' + id}>{ideaById.get(id)?.titleJa ?? id}</Link></li>)}</ul>
+      </section>}
+      <section className="mt-6 border-t border-ink-border pt-5">
+        <h3 className="text-sm font-bold">出典と検証状況</h3>
+        <p className="mt-2 text-sm leading-relaxed text-ink-muted">説明・図解・AI指示は未レビューの編集案です。参考資料の一部を参照していても、項目全体を検証したことにはなりません。</p>
+        {guide.sourceNote && <p className="mt-2 text-sm leading-relaxed">{guide.sourceNote}</p>}
+        {guide.sourceIds.length ? <ul className="mt-2 space-y-3">{guide.sourceIds.map(id => <li key={id}><a className="text-sm underline underline-offset-4" rel="noopener noreferrer"
+          href={compositionCatalog.sources[id].url}>{compositionCatalog.sources[id].publisher}：{compositionCatalog.sources[id].title}</a>
+          <p className="mt-1 text-sm text-ink-muted">{compositionCatalog.sources[id].scope}</p>
+          <p className="mt-1 text-xs text-ink-muted">{compositionCatalog.sources[id].rights}</p></li>)}</ul>
+          : <p className="mt-2 text-sm text-ink-muted">参考資料の登録：未完了</p>}
+      </section>
+    </article> : <section className="py-6" aria-labelledby="composition-atlas-title">
+      <h2 id="composition-atlas-title" className="text-xl font-bold">構図の一覧</h2>
+      <p className="mt-2 text-sm text-ink-muted">図を見ながら選択できます。図解と説明はいずれも未レビューの編集案です。</p>
+      {filtered.length > 0 ? <div className="mt-5 grid grid-cols-1 gap-4">
+        {filtered.slice(0, visibleCount).map(item => <article key={item.id} className="min-w-0 rounded-xl border border-ink-border bg-surface p-4">
+          <p className="text-xs text-ink">{item.id} ・ {compositionCategoryLabel(item.categoryId)}</p>
+          <h3 className="mt-2 text-base font-bold">{item.titleJa}</h3>
+          <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <div className="min-w-0">
+              <p className="mb-2 text-xs font-semibold">{item.id === 'C-110' ? '画風A' : item.id === 'C-119' ? '元図' : '配置例'}</p>
+              <CompositionDiagram guide={item} variant="example" />
+            </div>
+            <div className="min-w-0">
+              <p className="mb-2 text-xs font-semibold">{item.id === 'C-110' ? '画風B' : item.id === 'C-119' ? '検査表示' : '対照例'}</p>
+              <CompositionDiagram guide={item} variant="comparison" />
+            </div>
+          </div>
+          <p className="mt-3 text-sm leading-relaxed text-ink-muted">{item.definition}</p>
+          {activePurpose && getCompositionChoice(activePurpose.id, item.id) && <div className="mt-3 border-t border-ink-border pt-3">
+            <p className="text-sm"><strong>選択理由：</strong>{getCompositionChoice(activePurpose.id, item.id)?.reasonJa}</p>
+            <p className="mt-2 text-sm"><strong>注意点・適用条件：</strong>{getCompositionChoice(activePurpose.id, item.id)?.cautionJa}</p>
+          </div>}
+          <p className="mt-2 text-sm leading-relaxed"><strong>見比べるポイント：</strong>{item.comparisonPoint}</p>
+          {item.diagramNote && <p className="mt-2 text-xs leading-relaxed text-ink-muted"><strong>模式図の限界：</strong>{item.diagramNote}</p>}
+          <Link data-composition-card="true" aria-label={`${item.titleJa}の比較図とAI指示例を見る`} to={detailHref(item.id)}
+            className="mt-3 inline-flex min-h-11 items-center text-sm font-semibold underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2">比較図とAI指示例を見る</Link>
+        </article>)}
+      </div> : <p role="status" className="mt-4 text-sm">検索条件に一致する構図はありません。 <Link to="/composition?view=atlas" className="inline-flex min-h-11 items-center font-semibold underline underline-offset-4">条件を解除して一覧に戻る</Link></p>}
+      {visibleCount < filtered.length && <button type="button" onClick={() => setVisibleCount(count => count + 24)}
+        className="mt-5 min-h-11 w-full rounded-lg border border-ink-border px-4 py-3 text-sm font-semibold focus-visible:outline-2 focus-visible:outline-offset-2">さらに表示（残り{filtered.length - visibleCount}件）</button>}
+      <p role="status" className="mt-3 text-sm text-ink-muted">{Math.min(filtered.length, visibleCount)}件表示 / {filtered.length}件該当</p>
+    </section>}
+  </div>;
+};
+export default Composition;

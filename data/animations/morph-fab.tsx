@@ -3,24 +3,24 @@ import { AnimationDefinition } from '../../types';
 
 export const morphFab: AnimationDefinition = {
   id: 'morph-fab',
-  title: 'Morph FAB',
-  description: 'Expandable demo button revealing example action labels; labels are illustrative, not wired actions.',
-  tags: ['Button', 'CSS', 'Morph', 'Disclosure'],
+  title: '展開式のフローティングボタン',
+  description: '丸いボタンを押すと広がり、操作名の見本を表示します。各操作を実行する処理は含まれません。',
+  tags: ['ボタン', 'CSS', '変形', '開閉'],
   category: 'button',
   performanceScore: 92,
   a11yScore: 'AA',
   params: [
-     { key: 'radius', cssVar: '--radius', label: 'Expanded Radius', type: 'number', min: 0, max: 24, step: 4, default: 12, unit: 'px' }
+     { key: 'radius', cssVar: '--radius', label: '展開時の角の丸み', type: 'number', min: 0, max: 24, step: 4, default: 12, unit: 'px' }
   ],
   Preview: ({ values }) => {
     const [open, setOpen] = useState(false);
     const radius = Number.isFinite(values['radius']) ? values['radius'] : 12;
     return (
-      <button type="button" aria-expanded={open} aria-label={open ? 'Hide example actions' : 'Show example actions'}
+      <button type="button" aria-expanded={open} aria-label={open ? '操作例を閉じる' : '操作例を開く'}
         onClick={() => setOpen(value => !value)}
         className={`flex items-center justify-center shadow-lg shadow-primary/20 transition-all duration-300 motion-reduce:transition-none overflow-hidden bg-primary text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink ${open ? 'w-48 h-14' : 'w-14 h-14'}`}
         style={{ borderRadius: open ? `${radius}px` : '9999px' }}>
-        {open ? <span className="text-xs font-bold">Edit · Delete · Share</span> : <span aria-hidden="true" className="material-symbols-outlined">add</span>}
+        {open ? <span className="text-xs font-bold">編集・削除・共有</span> : <span aria-hidden="true" className="material-symbols-outlined">add</span>}
       </button>
     );
   },
@@ -52,5 +52,5 @@ document.querySelectorAll('.morph-fab').forEach(button => {
 });
 </script>`;
   },
-  generatePrompt: (values) => `Create a Morphing Floating Action Button. When toggled, it should expand from a circle to a rectangle (radius ${values['radius']}px) revealing menu items.`
+  generatePrompt: (values) => `押すと円形から角丸${values['radius']}pxの長方形に広がるフローティングボタンを作成してください。開いた状態で操作名の見本を表示します。`
 };

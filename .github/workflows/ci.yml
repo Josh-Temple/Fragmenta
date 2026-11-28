@@ -6,12 +6,18 @@ on:
     branches:
       - main
 
+# Coalesce superseded updates to the same PR or branch.
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: Check out repository
         uses: actions/checkout@v7
@@ -36,7 +42,11 @@ jobs:
       - name: Verify all 18 IDs and emit a 36-output machine-readable manifest
         run: node scripts/pattern-manifest.cjs
 
-      - name: Browser startup smoke test
+      # Routine PR checks exercise the real built React UI without capturing
+      # or uploading PNG files. Full visual evidence is an on-demand,
+      # offline release-candidate activity (see PR #49 acceptance notes).
+      - name: Browser startup smoke test (no image capture)
+        timeout-minutes: 7
         run: |
           chrome="$(command -v google-chrome || command -v chromium || true)"
           if [ -z "$chrome" ]; then
@@ -46,15 +56,7 @@ jobs:
           npm run preview -- --host 127.0.0.1 --port 4173 --strictPort &
           preview_pid=$!
           trap 'kill "$preview_pid" 2>/dev/null || true' EXIT
-          for attempt in 1 2 3; do
-            echo "Built-artifact browser smoke attempt $attempt/3"
-            if CHROME_BIN="$chrome" node scripts/browser-smoke.mjs; then
-              exit 0
-            fi
-            if [ "$attempt" -lt 3 ]; then sleep 5; fi
-          done
-          echo "Built-artifact browser smoke did not pass" >&2
-          exit 1
+          CHROME_BIN="$chrome" node scripts/browser-smoke.mjs
 
       # Production deployments are explicitly approved and manually triggered.
       # Do not verify an unrelated, older production SHA on each main push.

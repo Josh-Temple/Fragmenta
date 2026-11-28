@@ -9,99 +9,137 @@
 
 /* Preserve v3 defaults used by existing markup during the major migration. */
 @theme {
-  --default-ring-width: 3px;
-  --default-ring-color: #3b82f6;
+  --default-ring-width: 2px;
+  --default-ring-color: #2555FF;
 }
 @layer base {
-  *, ::after, ::before, ::backdrop, ::file-selector-button { border-color: #e5e7eb; }
-  input::placeholder, textarea::placeholder { color: #9ca3af; }
+  html { scroll-padding-bottom: calc(6rem + env(safe-area-inset-bottom)); }
+  @media (min-width: 48rem) {
+    html { scroll-padding-top: 4rem; scroll-padding-bottom: 0; }
+  }
+  *, ::after, ::before, ::backdrop, ::file-selector-button { border-color: var(--rule, rgba(18, 19, 22, 0.12)); }
+  input::placeholder, textarea::placeholder { color: var(--muted, #6B6F79); opacity: 0.8; }
   button:not(:disabled), [role="button"]:not(:disabled) { cursor: pointer; }
 }
 
-/* The working typography tool needs visible controls in both engine families. */
+/* Precision drafting-table range sliders for both engine families. */
+input[type=range],
+input[type=range].tool-range {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+}
+input[type=range]::-webkit-slider-runnable-track,
 input[type=range].tool-range::-webkit-slider-runnable-track {
-  height: 4px;
-  background: #6a5940;
+  width: 100%;
+  height: 2px;
+  cursor: pointer;
+  background: var(--rule-strong, rgba(18, 19, 22, 0.26));
 }
+input[type=range]::-webkit-slider-thumb,
 input[type=range].tool-range::-webkit-slider-thumb {
-  width: 20px;
-  height: 20px;
-  margin-top: -8px;
-  background: #332200;
-  border: 2px solid #faf0e6;
-  box-shadow: 0 0 0 1px #332200;
-}
-input[type=range].tool-range::-moz-range-track {
-  height: 4px;
-  border-radius: 2px;
-  background: #6a5940;
-}
-input[type=range].tool-range::-moz-range-thumb {
-  width: 16px;
-  height: 16px;
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
-  background: #332200;
-  border: 2px solid #faf0e6;
-  box-shadow: 0 0 0 1px #332200;
+  margin-top: -6px;
+  background: var(--fg, #121316);
+  border: 2px solid var(--canvas, #F6F5F0);
+  box-shadow: 0 0 0 1px var(--fg, #121316);
+  cursor: pointer;
+}
+input[type=range]::-moz-range-track,
+input[type=range].tool-range::-moz-range-track {
+  height: 2px;
+  border-radius: 0;
+  background: var(--rule-strong, rgba(18, 19, 22, 0.26));
+}
+input[type=range]::-moz-range-thumb,
+input[type=range].tool-range::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--fg, #121316);
+  border: 2px solid var(--canvas, #F6F5F0);
+  box-shadow: 0 0 0 1px var(--fg, #121316);
+  cursor: pointer;
 }
 
-/* Local CSS retained from the previous index.html. */
 .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-        .bg-grid-pattern {
-            background-image: radial-gradient(rgba(51, 34, 0, 0.1) 1px, transparent 1px);
-            background-size: 16px 16px;
-        }
-        body {
-            min-height: max(884px, 100dvh);
-            background-color: rgb(250, 240, 230); /* paper */
-            color: rgb(51, 34, 0); /* ink */
-        }
-        .material-symbols-outlined {
-            font-family: 'Material Symbols Outlined', sans-serif;
-            font-style: normal;
-            font-weight: normal;
-            line-height: 1;
-            display: inline-block;
-            width: 1em;
-            height: 1em;
-            flex-shrink: 0;
-            overflow: hidden;
-            white-space: nowrap;
-            letter-spacing: normal;
-            text-transform: none;
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        .material-symbols-outlined.filled {
-            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        
-        /* Custom Range Slider Styling */
-        input[type=range] {
-            -webkit-appearance: none; 
-            background: transparent; 
-        }
-        input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            height: 16px;
-            width: 16px;
-            border-radius: 50%;
-            background: rgb(250, 240, 230);
-            border: 2px solid rgb(205, 133, 63);
-            cursor: pointer;
-            margin-top: -6px; 
-            box-shadow: 0 1px 3px rgba(51, 34, 0, 0.2);
-        }
-        input[type=range]::-webkit-slider-runnable-track {
-            width: 100%;
-            height: 4px;
-            cursor: pointer;
-            background: rgba(51, 34, 0, 0.1);
-            border-radius: 2px;
-        }
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.bg-grid-pattern {
+  background-image:
+    linear-gradient(to right, var(--rule, rgba(18, 19, 22, 0.08)) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--rule, rgba(18, 19, 22, 0.08)) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+body {
+  min-height: 100dvh;
+  background-color: var(--canvas, #F6F5F0);
+  color: var(--fg, #121316);
+}
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined', sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  letter-spacing: normal;
+  text-transform: none;
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+.material-symbols-outlined.filled {
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
 
+
+
+/* UI feedback and short, one-shot entrances; never run continuous decorative motion. */
+@keyframes fragmenta-page-enter {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes fragmenta-specimen-enter {
+  from {
+    opacity: 0;
+    transform: translate3d(var(--specimen-enter-x, 0px), var(--specimen-enter-y, 5px), 0)
+      scale(var(--specimen-enter-scale, 1));
+  }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .page-enter { animation: fragmenta-page-enter 280ms cubic-bezier(.2,.75,.2,1) both; }
+  .style-motion-enter {
+    animation: fragmenta-specimen-enter var(--specimen-enter-duration, 400ms)
+      var(--specimen-enter-ease, ease-out) both;
+  }
+  .motion-control { transition: transform 150ms ease; }
+  .motion-card { transition: transform 210ms ease, box-shadow 210ms ease; }
+  .motion-control:not(:disabled):active { transform: scale(.985); }
+  .motion-card:active { transform: scale(.99); }
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .motion-control:not(:disabled):hover { transform: translateY(-1px); }
+  .motion-card:hover { transform: translateY(-3px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .page-enter, .style-motion-enter, .motion-control, .motion-card {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+  .motion-card *, .motion-card *::before, .motion-card *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

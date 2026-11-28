@@ -82,15 +82,15 @@ const definitions = Object.values(mod.exports.practicalPatterns);
       }
       for (const def of definitions) {
         await page.goto(`${process.env.APP_URL}/#/p/${def.id}`);
-        const frame = page.frameLocator(`iframe[title="${def.title} example"]`);
+        const frame = page.frameLocator(`iframe[title="${def.title}の作例"]`);
         await frame.locator(`.fp-${def.id}`).waitFor();
-        await page.getByRole('button', { name:'Details', exact:true }).click();
-        await page.getByLabel('Content Spacing', {exact:true}).fill('28');
+        await page.getByRole('button', { name:'詳細', exact:true }).click();
+        await page.getByLabel('要素の間隔', {exact:true}).fill('28');
         assert.equal(await frame.locator(`.fp-${def.id}`).evaluate(el => getComputedStyle(el).getPropertyValue('--space')), '28px');
-        await page.getByRole('button', {name:'Code',exact:true}).click();
+        await page.getByRole('button', {name:'コード',exact:true}).click();
         const code = await page.locator('pre').innerText();
         assert(code.includes('--space:28px'));
-        await page.getByRole('button',{name:'Copy code',exact:true}).click();
+        await page.getByTitle('コードをコピー', {exact:true}).click();
         assert.equal(await page.evaluate(() => navigator.clipboard.readText()), code);
       }
       assert.deepEqual(failures, []);

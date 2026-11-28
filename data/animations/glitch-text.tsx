@@ -3,16 +3,16 @@ import { AnimationDefinition } from '../../types';
 
 export const glitchText: AnimationDefinition = {
   id: 'glitch-text',
-  title: 'Glitch Text',
-  description: 'Cyberpunk-style text distortion effect using CSS clip-path animations.',
-  tags: ['Text', 'CSS', 'Distortion', 'Effect'],
+  title: 'グリッチ文字',
+  description: 'CSSの clip-path で文字の一部を切り出し、横にずらして映像の乱れを表現します。',
+  tags: ['文字', 'CSS', 'ゆがみ', '視覚効果'],
   category: 'text',
   continuousMotion: true,
-  a11yNotes: 'The effect is decorative. Use the pause control or a static title; reduced-motion disables animation. This is not a photosensitivity assessment.',
+  a11yNotes: '文字のずれは装飾です。一時停止するか、静止した題字を使えます。動きを減らす設定ではアニメーションが止まります。光刺激に対する安全性は評価していません。',
   performanceScore: 85,
   a11yScore: 'Fail',
   params: [
-     { key: 'intensity', cssVar: '--intensity', label: 'Shake Amount', type: 'number', min: 1, max: 10, step: 1, default: 2, unit: 'px' }
+     { key: 'intensity', cssVar: '--intensity', label: '文字のずれ', type: 'number', min: 1, max: 10, step: 1, default: 2, unit: 'px' }
   ],
   Preview: ({ values, paused = false }) => (
     <div role="img" aria-label="GLITCH" className="relative font-mono font-bold text-4xl text-ink tracking-tighter group hover:text-primary transition-colors cursor-default">
@@ -52,5 +52,5 @@ export const glitchText: AnimationDefinition = {
 @media (prefers-reduced-motion: reduce) { .glitch-text::before, .glitch-text::after { animation: none; transform: none; } }
 </style>`;
   },
-  generatePrompt: (values) => `Create a CSS-only decorative glitch text effect with an offset of ${values['intensity']}px. Use clipped pseudo-elements and keep the visible text, data-text, and accessible name consistent. Include a keyboard-operable native checkbox labeled Pause animation that pauses both animations independently for each instance. Disable animation with prefers-reduced-motion. Keep explanatory text static and do not claim photosensitivity safety.`
+  generatePrompt: (values) => `CSSの疑似要素を切り抜いて${values['intensity']}pxずらす装飾用の題字を作成してください。表示文字、data-text、読み上げ名を一致させます。「Pause animation」という標準のチェックボックスを付け、キーボードで各作例の両方の動きを止められるようにします。prefers-reduced-motion に対応し、説明文は静止させます。光刺激への安全性は保証しないでください。`
 };

@@ -1,3 +1,4 @@
+import { styleSelectionBrief } from './design-style-guidance';
 import type { DesignStyle } from './design-styles';
 
 export type DemoScreen = 'dashboard' | 'article';
@@ -12,6 +13,7 @@ export const designFont = (style: DesignStyle): string => fontValues[style.token
 
 export const createStylePrompt = (style: DesignStyle, screen: DemoScreen): string => [
   '日本語の' + (screen === 'dashboard' ? 'Webダッシュボード' : '記事サイト') + 'を「' + style.name + '（' + style.ja + '）」の方向性でデザインしてください。',
+  styleSelectionBrief(style),
   'デザインの意図: ' + style.summary + '。',
   '重視する特徴: ' + style.features.join('、') + '。',
   '参考色・形: 背景 ' + style.tokens.background + '、面 ' + style.tokens.surface +
@@ -73,6 +75,8 @@ export function createBlendedStylePrompt(primary: DesignStyle, secondary: Design
     '補助' + detailName + 'から取り入れる要素: ' + detail.features.join('、') + '。',
     '優先規則: 本文・見出しの階層、情報の順序、操作の明快さは比率の高い' + mainName + 'を基本に保ち、' + detailName + 'はアクセント色、質感、輪郭、装飾などへ選択的に取り入れます。',
     '避ける表現: Aでは ' + primary.avoid.join('、') + '。Bでは ' + secondary.avoid.join('、') + '。',
+    styleSelectionBrief(primary),
+    styleSelectionBrief(secondary),
     'Aの参考トークン: 背景 ' + primary.tokens.background + '、文字 ' + primary.tokens.text + '、線幅 ' + primary.tokens.borderWidth + 'px。',
     'Bの参考トークン: アクセント ' + secondary.tokens.accent + '、角丸 ' + secondary.tokens.radius + 'px、影 ' + secondary.tokens.shadow + '。',
     '上記の比率はデザイン要素の採用優先度の目安です。CSS値を機械的に補間する指示ではありません。調和しない要素は無理に混ぜず、可読性を優先してください。',

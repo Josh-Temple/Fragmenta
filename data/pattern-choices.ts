@@ -1,0 +1,156 @@
+export interface PatternChoice {
+  useJa: string;
+  avoidJa: string;
+  checkJa: string;
+  avoidWhen: string;
+  startWith: string;
+  related: readonly { id: string; reason: string; reasonJa: string }[];
+}
+
+// Selection advice describes the existing examples; it does not grant reuse rights.
+export const patternChoices: Readonly<Record<string, PatternChoice>> = {
+  'elastic-button': {
+    useJa: "短い決定ボタンを押した手応えとして、控えめな反応を返したいとき。",
+    avoidJa: "密集したツールバーでは移動で押す位置を見失いやすい。",
+    checkJa: "動きを弱めた設定でもラベル、フォーカス、タップ範囲が保たれるか試す。",
+    avoidWhen: '部品が密集したツールバーや押す位置の安定が重要な操作では、余分な移動を避けます。',
+    startWith: '浮き上がる距離を小さくし、ラベル、フォーカスの枠、押せる範囲を確かめてから時間を変えます。',
+    related: [{ id: 'fluid-toggle', reason: 'Use a switch for a persistent on/off setting.', reasonJa: "設定を保持するならスイッチを使う。" }, { id: 'smart-skeleton', reason: 'Use a loading placeholder while an action is pending.', reasonJa: "実行待ちを示すなら読み込み中の表示を使う。" }],
+  },
+  'smart-skeleton': {
+    useJa: "取得中の一覧で、これから表示するカードや行の場所を仮に示したいとき。",
+    avoidJa: "取得失敗や検索結果が0件の状態で表示し続けると、待てば結果が出るように見える。",
+    checkJa: "低速の読み込み、0件、エラーを試し、読み込みが終われば仮の表示が消えるか見る。",
+    avoidWhen: '0件、エラー、進捗を正確に測れる処理はそれぞれに合った状態表示にします。',
+    startWith: '実際に届く内容に輪郭を合わせ、光の不透明度を下げて一時停止した状態と比べます。',
+    related: [{ id: 'empty-state', reason: 'Explain a successful search with no results.', reasonJa: "検索が成功して0件なら次の操作を案内する。" }, { id: 'metric-summary', reason: 'Show the real values when loading finishes.', reasonJa: "数値が届いたら実値と集計期間を示す。" }],
+  },
+  'glass-tilt': {
+    useJa: "作品の短い紹介カードに、ポインターに応じた傾きを添えたいとき。",
+    avoidJa: "長文や密な表、タッチ操作だけの環境で動きを唯一の手掛かりにする用途には向かない。",
+    checkJa: "傾きなし、キーボード、タッチでも同じ情報が読めるかを確認する。",
+    avoidWhen: '長文や密な表には不向きです。内容を読むためにポインターを動かす必要がないようにします。',
+    startWith: '傾きとぼかしを弱くし、静止したまま読めることを確かめてから値を上げます。',
+    related: [{ id: 'warm-neo-brutalist-editorial', reason: 'Compare a static card with a clear outline.', reasonJa: "静止した強い枠で注目を集める。" }, { id: 'readable-article', reason: 'Use restrained typography for longer text.', reasonJa: "長文なら読むための一段組みにする。" }],
+  },
+  'fluid-toggle': {
+    useJa: "通知など、二状態の設定をその場で変更するとき。",
+    avoidJa: "一度だけ実行する操作や三択以上の項目では状態の意味が曖昧になる。",
+    checkJa: "ラベルを変えずにオン・オフ両方をキーボードで切り替え、保存される状態を確認する。",
+    avoidWhen: '一度きりの操作、画面移動、三つ以上の選択肢には別の部品を選びます。',
+    startWith: '設定名を固定して選択状態を実際の設定につなぎ、オンとオフの両方が動いてから時間を調整します。',
+    related: [{ id: 'elastic-button', reason: 'Use a button for a one-time action.', reasonJa: "一度きりの操作ならボタンにする。" }, { id: 'inline-validation', reason: 'Give form fields persistent labels and feedback.', reasonJa: "設定の入力条件は欄に沿って説明する。" }],
+  },
+  'glitch-text': {
+    useJa: "ライブの告知など、短い題字に一時的なずれの動きを添えたいとき。",
+    avoidJa: "重要な指示やエラー本文が揺れると読み飛ばしやすい。",
+    checkJa: "一時停止と動きを減らす設定で元の文字が正しく読めるか確かめる。",
+    avoidWhen: '重要な指示、長い段落、すぐに読み取る必要がある状態表示への使用は避けます。',
+    startWith: '短い題字を入れ、一時停止した状態から目的に足りる範囲でずれを加えます。',
+    related: [{ id: 'readable-article', reason: 'Keep the main explanation in readable text.', reasonJa: "詳しい説明は読みやすい本文にする。" }, { id: 'warm-neo-brutalist-editorial', reason: 'Compare strong typography without text distortion.', reasonJa: "文字を揺らさず強調するなら太い枠と見出しを使う。" }],
+  },
+  'morph-fab': {
+    useJa: "一つの入口から少数の補助操作を展開する画面を試作するとき。",
+    avoidJa: "実行先やフォーカス移動が未接続の見本をそのままメニューとして使うと操作が途切れる。",
+    checkJa: "開く、展開先へ移る、閉じる、元のボタンへ戻る順をキーボードで試す。",
+    avoidWhen: '操作名は見本です。実際のメニューとして使うには操作ごとの実装が必要です。',
+    startWith: '角の丸みを変える前に、開閉と aria-expanded を確かめます。追加する操作は個別にフォーカスできるようにします。',
+    related: [{ id: 'elastic-button', reason: 'Use a simpler button when expansion is unnecessary.', reasonJa: "操作が一つなら展開せずボタンにする。" }, { id: 'native-faq', reason: 'Use native disclosure for question-and-answer content.', reasonJa: "質問と回答を開く場面なら標準の開閉を使う。" }],
+  },
+  'warm-neo-brutalist-editorial': {
+    useJa: "企画記事の扉や短い告知で、太い枠とずらした影を目印にしたいとき。",
+    avoidJa: "全段落や全行を囲うと見出しと本文の強弱をつけにくい。",
+    checkJa: "最長の見出しを入れ、狭い画面で枠・文字・影が重ならないか確認する。",
+    avoidWhen: 'すべての段落や細かなデータ行に太い枠と影を繰り返す使い方は避けます。',
+    startWith: '最長の見出しに合わせて内側の余白を決め、使える幅に応じて枠と影を調整します。',
+    related: [{ id: 'readable-article', reason: 'Compare a quieter treatment for long articles.', reasonJa: "長文は静かな読み物の組版にする。" }, { id: 'editorial-split-layout', reason: 'Give source notes their own metadata column.', reasonJa: "出典を目立たせるなら別の列を用意する。" }],
+  },
+  'editorial-split-layout': {
+    useJa: "報告書や特集本文のそばに、出典・日付・著者情報を続けて表示したいとき。",
+    avoidJa: "補足が短い場合や本文の幅が不足する場合には脇の列が負担になる。",
+    checkJa: "最長の資料名を入れ、狭い画面では本文と注の順に読めるか確認する。",
+    avoidWhen: '補足が短い場合や、本文が狭くなりすぎる場合は一段組みが適します。',
+    startWith: '最長の出典名で補足の列幅を決め、列間を広げる前に640px以下の縦並びを確認します。',
+    related: [{ id: 'article-table-of-contents', reason: 'Use real heading links when readers need section navigation.', reasonJa: "章間移動が目的なら見出しへ移動する目次を使う。" }, { id: 'readable-article', reason: 'Use a single reading column when metadata is brief.', reasonJa: "注が短いなら一段の本文に組み込む。" }],
+  },
+  'inline-validation': {
+    useJa: "入力条件を入力欄の近くに置き、修正する場所と理由を伝えたいとき。",
+    avoidJa: "形式の検査だけでは受信可能なメールアドレスかどうかは確かめられない。",
+    checkJa: "空欄、形式不正、形式が合う入力で、指示の位置と内容を見比べる。",
+    avoidWhen: '形式検査だけではメールの到達、アカウントの所有、サーバー側での受理は確認できません。',
+    startWith: 'ラベルと常に見える説明を用意してから、空欄、不正な形式、正しい形式を実際のフォームで試します。',
+    related: [{ id: 'fluid-toggle', reason: 'Represent a separate on/off preference.', reasonJa: "独立した二状態の設定にはスイッチを使う。" }, { id: 'empty-state', reason: 'Explain an empty result after a successful query.', reasonJa: "入力が正しく検索結果が空なら0件を説明する。" }],
+  },
+  'article-table-of-contents': {
+    useJa: "長い記事で、読者が目当ての節を選んで移動したいとき。",
+    avoidJa: "短い文章では目次の方が長くなり、読み始めまでの距離が延びる。",
+    checkJa: "すべてのリンクをキーボードでたどり、固定ヘッダーの下に見出しが隠れないか見る。",
+    avoidWhen: '見出しが少ない短い記事には目次が不要な場合があります。現在の節の自動追跡は含みません。',
+    startWith: '見出しと対応するリンク先IDを一緒に更新し、移動先が固定ヘッダーに隠れないかを試します。',
+    related: [{ id: 'editorial-split-layout', reason: 'Use a metadata rail without section navigation.', reasonJa: "章間移動を伴わない補足は脇の列に置く。" }, { id: 'breadcrumb-trail', reason: 'Show the page location within the site hierarchy.', reasonJa: "サイト全体の位置を示すなら階層のリンクを使う。" }],
+  },
+  'readable-article': {
+    useJa: "インタビューや手順解説など、まとまった日本語本文を続けて読むとき。",
+    avoidJa: "多数の数値や複数の列を対応づける作業は文章だけでは難しい。",
+    checkJa: "実際の日本語本文で行長、行間、見出し前後の間隔をスマホでも確認する。",
+    avoidWhen: '密な表、対話型のダッシュボード、出版システム全体には別の設計が必要です。',
+    startWith: '実際の文章とフォントで本文の幅を決め、文字サイズと行間を比較します。',
+    related: [{ id: 'article-table-of-contents', reason: 'Add navigation for a longer article.', reasonJa: "長くて節が多ければ目次を添える。" }, { id: 'warm-neo-brutalist-editorial', reason: 'Compare a more emphatic editorial treatment.', reasonJa: "記事の扉には強調した組版を比較する。" }],
+  },
+  'native-faq': {
+    useJa: "個別の質問に該当する人が、必要な回答だけを開いて読むとき。",
+    avoidJa: "全員に必要な注意や締切を閉じた回答に入れると見落としやすい。",
+    checkJa: "複数項目を同時に開き、長い回答からでも次の質問を特定できるか見る。",
+    avoidWhen: '全員に必要な説明は開かなくても読める位置に置きます。複数の回答を同時に開けます。',
+    startWith: '質問だけで内容が伝わるように書き、長い回答や複数の回答を開いた状態で試します。',
+    related: [{ id: 'article-table-of-contents', reason: 'Use heading links for content that should stay visible.', reasonJa: "全員が読む本文は見出しと目次で示す。" }, { id: 'inline-validation', reason: 'Put field-specific instructions beside the input.', reasonJa: "入力欄固有の注意はその場に置く。" }],
+  },
+  'pricing-comparison': {
+    useJa: "少数の料金プランを同じ期間と単位で並べ、違いを選んでもらうとき。",
+    avoidJa: "比較期間や対象機能が揃わないと、表示価格だけでは判断できない。",
+    checkJa: "実料金、請求周期、機能の範囲、選択先が各列で対応しているか確かめる。",
+    avoidWhen: '料金は架空の例です。請求、決済、契約の切り替えには対応していません。',
+    startWith: '料金と機能を一緒に実データへ置き換え、各リンク先と請求条件を確認します。',
+    related: [{ id: 'responsive-data-table', reason: 'Compare many features in rows and columns.', reasonJa: "比較軸が多ければ行と列で見比べる表にする。" }, { id: 'native-faq', reason: 'Explain separate plan questions in disclosures.', reasonJa: "個別の契約条件は質問と回答に補足する。" }],
+  },
+  'release-timeline': {
+    useJa: "公開済みの変更を、日付と内容の順に振り返るとき。",
+    avoidJa: "未確定の将来予定に同じ表示を使うと実績と取り違える。",
+    checkJa: "表示日と機械可読の日付を照合し、時系列の順を確かめる。",
+    avoidWhen: '静的な更新履歴から将来の提供日やプロジェクトの進捗率を判断することはできません。',
+    startWith: '確認済みの日付と変更内容を使い、datetime の値を保ち、表示順を明確にします。',
+    related: [{ id: 'metric-summary', reason: 'Show measured totals with a reporting period.', reasonJa: "件数など期間の集計を示すなら指標をまとめる。" }, { id: 'readable-article', reason: 'Explain a release in a longer article.', reasonJa: "単独の更新を詳しく紹介するなら記事にする。" }],
+  },
+  'metric-summary': {
+    useJa: "主要な実績値を、単位と集計期間を添えて短く伝えたいとき。",
+    avoidJa: "集計範囲や分母の違う数値を並べると単純比較に見える。",
+    checkJa: "値・単位・対象期間・更新時点を各指標と対にして読めるか見る。",
+    avoidWhen: '見本の値を実データとして扱わず、分母や集計方法が決まる前に傾向を示さないでください。',
+    startWith: '余白を調整する前に、値ごとの単位、集計期間、タイムゾーン、更新時点を示します。',
+    related: [{ id: 'responsive-data-table', reason: 'Show the detailed rows behind a summary.', reasonJa: "元の明細を比べるなら表を使う。" }, { id: 'smart-skeleton', reason: 'Reserve space while real metrics are loading.', reasonJa: "集計値が未到着の間は読み込み中と示す。" }],
+  },
+  'breadcrumb-trail': {
+    useJa: "サイトの現在位置を親カテゴリからたどり直せるようにするとき。",
+    avoidJa: "直前に閲覧した履歴を固定の階層として並べると実際の構造と食い違う。",
+    checkJa: "長い日本語の階層名を入れ、各親リンクと現在地を狭い画面で識別できるか見る。",
+    avoidWhen: '意味のある親子階層がないサイトや、単なる閲覧履歴を示す用途には向きません。',
+    startWith: '親階層のリンクを差し替え、現在地はテキストにします。最長のラベルを狭い画面で試します。',
+    related: [{ id: 'article-table-of-contents', reason: 'Navigate between sections of the current article.', reasonJa: "同じ記事内の移動には目次を使う。" }, { id: 'editorial-split-layout', reason: 'Present source context beside the main content.', reasonJa: "出典などページの補足は本文横に置く。" }],
+  },
+  'empty-state': {
+    useJa: "検索が正常に終わって0件だったとき、条件解除など次の操作を案内したいとき。",
+    avoidJa: "権限不足や通信エラーを0件扱いすると、実際には存在する結果まで見落とす。",
+    checkJa: "読み込み中、正常な0件、取得失敗を別々に再現し、回復操作が機能するか試す。",
+    avoidWhen: '読み込み中、権限不足、通信エラーを0件として表示しないでください。',
+    startWith: '検索した対象と、実行できる次の操作を一つ示します。エラーと読み込み中には別の表示を用意します。',
+    related: [{ id: 'smart-skeleton', reason: 'Show a pending request before its result is known.', reasonJa: "結果を待っている間は読み込み中の表示にする。" }, { id: 'inline-validation', reason: 'Explain invalid input before a query is submitted.', reasonJa: "検索前に直せる値には入力欄で理由を伝える。" }],
+  },
+  'responsive-data-table': {
+    useJa: "複数の項目を同じ列の値で比較し、小さい画面でも見出しと値の対応を保ちたいとき。",
+    avoidJa: "独立した数値が数個だけなら、横スクロールを求める表は読みづらい。",
+    checkJa: "狭い画面で最も遠い列まで移動し、行と列を取り違えず値を読めるか試す。",
+    avoidWhen: '並べ替え、ページ分割、列の固定は含みません。独立した値が数個だけなら要約が適します。',
+    startWith: '表題と scope を保ってデータを替え、長いセルと領域内のキーボードスクロールを確かめます。',
+    related: [{ id: 'metric-summary', reason: 'Use a compact summary for a few independent values.', reasonJa: "代表値だけなら指標の要約にする。" }, { id: 'pricing-comparison', reason: 'Use plan cards for a small number of offers.', reasonJa: "料金と契約条件の選択が目的ならプランごとにまとめる。" }],
+  },
+};

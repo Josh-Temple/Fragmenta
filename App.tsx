@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Layout from './components/Layout';
 import Home from './pages/Home';
 import Browse from './pages/Browse';
@@ -10,6 +10,7 @@ import ContrastTool from './pages/ContrastTool';
 import TypographyTool from './pages/TypographyTool';
 const DesignStyles = React.lazy(() => import('./pages/DesignStyles'));
 const KnowledgeBase = React.lazy(() => import('./pages/KnowledgeBase'));
+const Composition = React.lazy(() => import('./pages/Composition'));
 const KnowledgeDetail = React.lazy(() => import('./pages/KnowledgeDetail'));
 const PatternDetail = React.lazy(() => import('./pages/AnimationDetail'));
 import Collections from './pages/Collections';
@@ -18,9 +19,17 @@ import Licenses from './pages/Licenses';
 const SearchResults = React.lazy(() => import('./pages/SearchResults'));
 import BestPractices from './pages/BestPractices';
 
+// Published /#/ links and clean sitemap URLs both have direct entry points.
+const isHashRoute = () => window.location.hash.startsWith('#/');
+const subscribeToHash = (update: () => void) => {
+  window.addEventListener('hashchange', update);
+  return () => window.removeEventListener('hashchange', update);
+};
+
 const App: React.FC = () => {
+  const Router = React.useSyncExternalStore(subscribeToHash, isHashRoute) ? HashRouter : BrowserRouter;
   return (
-    <HashRouter>
+    <Router>
       <React.Suspense fallback={<p role="status" className="p-5 text-sm">ページを読み込んでいます…</p>}>
       <Routes>
         <Route path="/" element={<Layout><Home /></Layout>} />
@@ -32,20 +41,21 @@ const App: React.FC = () => {
         <Route path="/tools/typography" element={<Layout><TypographyTool /></Layout>} />
         <Route path="/styles" element={<Layout><DesignStyles /></Layout>} />
         <Route path="/knowledge" element={<Layout><KnowledgeBase /></Layout>} />
+        <Route path="/composition" element={<Layout><Composition /></Layout>} />
         <Route path="/knowledge/:id" element={<Layout><KnowledgeDetail /></Layout>} />
         <Route path="/search" element={<Layout><SearchResults /></Layout>} />
-        <Route path="/p/:id" element={<Layout showNav={false}><PatternDetail /></Layout>} />
-        <Route path="/a/:id" element={<Layout showNav={false}><PatternDetail /></Layout>} />
+        <Route path="/p/:id" element={<Layout><PatternDetail /></Layout>} />
+        <Route path="/a/:id" element={<Layout><PatternDetail /></Layout>} />
         <Route path="/collections" element={<Layout><Collections /></Layout>} />
-        <Route path="/collections/:id" element={<Layout showNav={false}><CollectionDetail /></Layout>} />
+        <Route path="/collections/:id" element={<Layout><CollectionDetail /></Layout>} />
         <Route path="/saved" element={<Navigate to="/collections" replace />} />
         <Route path="/licenses" element={<Layout><Licenses /></Layout>} />
-        <Route path="/guide" element={<Layout showNav={false}><BestPractices /></Layout>} />
+        <Route path="/guide" element={<Layout><BestPractices /></Layout>} />
         <Route path="/settings" element={<Navigate to="/" replace />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
       </React.Suspense>
-    </HashRouter>
+    </Router>
   );
 };
 

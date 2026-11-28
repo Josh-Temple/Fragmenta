@@ -3,20 +3,20 @@ import { AnimationDefinition } from '../../types';
 
 export const smartSkeleton: AnimationDefinition = {
   id: 'smart-skeleton',
-  title: 'Smart Skeleton',
-  description: 'A reusable shimmer placeholder for loading content, built with CSS gradients.',
-  tags: ['Loader', 'CSS', 'Shimmer', 'Loading'],
+  title: '読み込み中の仮表示',
+  description: 'CSSグラデーションの光が、これから表示する内容の輪郭を横切ります。',
+  tags: ['読み込み表示', 'CSS', '光の反射', '読み込み'],
   category: 'loader',
   continuousMotion: true,
-  a11yNotes: 'Announce loading once, hide the placeholder shapes, and replace the region with the actual result or error. The generated example includes a pause checkbox and reduced-motion handling.',
+  a11yNotes: '読み込み開始の通知は一度にし、装飾図形を読み上げから除きます。取得後は結果やエラーに切り替えます。生成コードは一時停止と動きを減らす設定に対応します。',
   performanceScore: 95,
   a11yScore: 'AAA',
   params: [
-    { key: 'speed', cssVar: '--speed', label: 'Speed', type: 'number', min: 0.5, max: 3.0, step: 0.1, default: 1.5, unit: 's' },
-    { key: 'opacity', cssVar: '--opacity', label: 'Shimmer Opacity', type: 'number', min: 0.1, max: 1.0, step: 0.1, default: 0.5 },
+    { key: 'speed', cssVar: '--speed', label: '光が横切る時間', type: 'number', min: 0.5, max: 3.0, step: 0.1, default: 1.5, unit: 's' },
+    { key: 'opacity', cssVar: '--opacity', label: '光の不透明度', type: 'number', min: 0.1, max: 1.0, step: 0.1, default: 0.5 },
   ],
   Preview: ({ values, paused = false }) => (
-    <div role="status" aria-label="Loading content" className="w-64 flex flex-col gap-3 p-4 bg-white rounded-xl shadow-xs border border-black/5">
+    <div role="status" aria-label="読み込み中" className="w-64 flex flex-col gap-3 p-4 bg-white rounded-xl shadow-xs border border-black/5">
       <div className="flex items-center gap-3">
           <div className="relative w-12 h-12 rounded-full bg-gray-200 overflow-hidden">
               <div 
@@ -86,5 +86,5 @@ export const smartSkeleton: AnimationDefinition = {
 }
 </style>`;
   },
-  generatePrompt: (values) => `Create an HTML/CSS skeleton placeholder with a left-to-right shimmer every ${values['speed']}s at opacity ${values['opacity']}. Use one loading status and hide decorative shapes from assistive technology. Include a native Pause shimmer checkbox that pauses all shimmer animations in its own instance, plus prefers-reduced-motion handling. The host application must replace it with content, an empty result, or an error; do not invent a progress percentage.`
+  generatePrompt: (values) => `HTMLとCSSで、左から右へ${values['speed']}s周期、不透明度${values['opacity']}で光が横切る読み込み表示を作成してください。通知は一つにし、装飾図形は読み上げから除きます。「Pause shimmer」という標準のチェックボックスで作例ごとの光をすべて止められるようにし、prefers-reduced-motion に対応します。取得後はアプリ側で内容、0件の案内、またはエラーに切り替えます。架空の進捗率は表示しないでください。`
 };

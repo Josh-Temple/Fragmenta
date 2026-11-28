@@ -16,28 +16,28 @@ const sample = {
 
 export const editorialSplitLayout: PatternDefinition = {
   id: 'editorial-split-layout',
-  title: 'Editorial Split Layout',
+  title: '本文と補足を分ける段組み',
   description:
-    'A compact editorial layout with a narrow metadata rail and a wider reading column, designed to collapse cleanly on small screens.',
+    '細い列に日付や出典を置き、広い列に本文を載せます。狭い画面では一段に切り替わります。',
   kind: 'layout',
   category: 'layout',
-  tags: ['Editorial', 'Layout', 'Grid', 'Responsive', 'Reading', 'CSS'],
+  tags: ['記事', 'レイアウト', 'グリッド', '画面幅への対応', '読書', 'CSS'],
   performanceScore: 100,
   a11yScore: 'AA',
   performanceNotes:
-    'Uses native CSS Grid with no JavaScript layout work. Keep decorative rules and background effects lightweight.',
+    'CSS Gridで配置し、JavaScriptでの再配置は行いません。飾り罫や背景効果の負荷を抑えます。',
   a11yNotes:
-    'Keep DOM order aligned with reading order. Do not use CSS visual reordering to place essential content before its heading or metadata.',
+    'DOMの順序を読み順に合わせ、重要な内容をCSSで見出しや補足情報より先に並べ替えないでください。',
   responsiveNotes:
-    'Collapse to a single column on narrow screens; keep metadata above the main text rather than shrinking the rail until it becomes unreadable.',
+    '狭い画面では補足情報を本文の上に置く一段組みにして、補足の列が細くなりすぎるのを防ぎます。',
   source: {
     label: 'Editorial layout study — provenance pending',
     note: 'The project describes this as a general editorial layout, but authorship, source materials, bilingual sample prose rights, and permission for reuse have not been independently verified.',
   },
   params: [
-    { key: 'rail', cssVar: '--rail-width', label: 'Rail Width', type: 'number', min: 24, max: 44, step: 1, default: defaults.rail, unit: '%' },
-    { key: 'gap', cssVar: '--column-gap', label: 'Column Gap', type: 'number', min: 8, max: 28, step: 1, default: defaults.gap, unit: 'px' },
-    { key: 'rule', cssVar: '--rule-width', label: 'Rule Width', type: 'number', min: 1, max: 4, step: 1, default: defaults.rule, unit: 'px' },
+    { key: 'rail', cssVar: '--rail-width', label: '補足の列幅', type: 'number', min: 24, max: 44, step: 1, default: defaults.rail, unit: '%' },
+    { key: 'gap', cssVar: '--column-gap', label: '列の間隔', type: 'number', min: 8, max: 28, step: 1, default: defaults.gap, unit: 'px' },
+    { key: 'rule', cssVar: '--rule-width', label: '区切り線の太さ', type: 'number', min: 1, max: 4, step: 1, default: defaults.rule, unit: 'px' },
   ],
   Preview: ({ values }) => {
     const rail = values.rail ?? defaults.rail;
@@ -146,6 +146,6 @@ export const editorialSplitLayout: PatternDefinition = {
     const gap = values.gap ?? defaults.gap;
     const rule = values.rule ?? defaults.rule;
 
-    return `Create a responsive editorial split layout with real English and Japanese paragraphs, not placeholder bars. Use a ${rail}% metadata rail, ${rule}px separator, and ${gap}px gap on wider screens. Set parameters as CSS variables on each instance. Keep metadata before the article in the DOM. At viewport widths of 640px or less, use one column and a horizontal separator. Scope styles to the component, set language attributes, and check long headings and line wrapping. This is a metadata layout, not a working table of contents.`;
+    return `英語と日本語の段落を入れた記事の段組みを作成してください。広い画面では補足列を${rail}%、区切り線を${rule}px、列間を${gap}pxにします。各作例にCSS変数を設定し、DOMでは補足を本文の前に置きます。画面幅640px以下では一段と横罫に切り替えます。CSSの適用範囲を限定し、言語属性、長い見出し、折り返しを確認します。補足情報の表示に用い、目次機能は含めません。`;
   },
 };
