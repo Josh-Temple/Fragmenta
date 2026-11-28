@@ -11,19 +11,24 @@ const list = (values) =>
 const block = (id, title, body) =>
   '<section class="reading" id="' + id + '"><h2>' + escape(title) + '</h2>' + body + '</section>';
 const statuses = {
-  live: '実演あり',
-  tool: '公開中',
+  verified: '検証済',
+  live: '検証済・実演',
+  tool: '検証済・公開中',
   draft: '編集下書き',
   proposal: '企画段階',
   collection: 'コレクション',
 };
 const mark = (key, visible = true) =>
-  '<span class="state"><i class="mark ' +
-  key +
+  '<span class="state" data-status="' +
+  escape(key) +
+  '"' +
+  (visible ? '' : ' title="状態: ' + escape(statuses[key]) + '"') +
+  '><i class="mark ' +
+  escape(key) +
   '" aria-hidden="true"></i><span' +
   (visible ? '' : ' class="visually-hidden"') +
   '>' +
-  statuses[key] +
+  escape(statuses[key]) +
   '</span></span>';
 const crumbs = (pairs) =>
   '<nav class="crumbs" aria-label="パンくずリスト">' +

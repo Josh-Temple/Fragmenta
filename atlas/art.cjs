@@ -1,7 +1,7 @@
 // Editorial covers are navigation artwork. The detail page uses the unmodified teaching diagrams.
-const ink = '#1c201f',
-  paper = '#e9e5d9',
-  red = '#dc4835';
+const ink = '#121316',
+  paper = '#ECEAE2',
+  red = '#FF3B1D';
 const paths = {
   'C-001':
     '<path fill="' +

@@ -173,7 +173,13 @@ for (const p of plannedTools)
 const byPath = new Map(items.map((item) => [item.path, item]));
 const byId = new Map(items.map((item) => [item.id, item]));
 const exportPath = (item) => '/catalog/items' + item.path + '.json';
-const indexRow = (item) => ({ ...item.index, guide: undefined, xray: Boolean(item.guide) });
+const indexRow = (item) => ({
+  ...item.index,
+  guide: undefined,
+  xray: Boolean(item.guide),
+  categoryLabel: item.category ? labels[item.category] || item.category : '',
+  linkedCount: item.section === 'knowledge' ? (item.record.relatedExisting?.length || 0) : 0,
+});
 function itemJson(item) {
   return {
     ...item.data,

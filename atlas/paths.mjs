@@ -6,17 +6,22 @@ export function canonicalLocation(input) {
   let path = route.pathname.replace(/\/+$/, '') || '/';
   const q = new URLSearchParams(route.search);
   if (path === '/composition') {
-    const id = q.get('id'),
+    const rawId = q.get('id'),
+      id = rawId ? rawId.replace(/^c-(\d{3})$/i, 'C-$1') : null,
       atlas = q.get('view') === 'atlas';
     if (id && !atlas) path += '/' + encodeURIComponent(id);
     q.delete('id');
     q.delete('view');
   }
+  const compMatch = /^\/composition\/c-(\d{3})$/.exec(path);
+  if (compMatch) path = '/composition/C-' + compMatch[1];
   if (path === '/styles' && q.has('style')) {
     const id = q.get('style');
     q.delete('style');
     if (id) path += '/' + encodeURIComponent(id);
   }
+  if (path === '/ui') path = '/browse';
+  if (path.startsWith('/ui/')) path = '/p/' + path.slice(4);
   if (path.startsWith('/a/')) path = '/p/' + path.slice(3);
   if (path === '/saved') path = '/collections';
   if (path === '/settings') path = '/';

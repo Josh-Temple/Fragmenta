@@ -82,11 +82,19 @@ for (const p of compositionPurposes)
 assert(selectRows(rows, new URLSearchParams({ q: 'Swiss' })).some((r) => r.path === '/styles/swiss'));
 for (const [from, to] of [
   ['/#/composition?id=C-001&purpose=placement', '/composition/C-001?purpose=placement'],
+  ['/#/composition?id=c-001', '/composition/C-001'],
+  ['/composition/c-001', '/composition/C-001'],
   ['/styles?style=swiss', '/styles/swiss'],
   ['/composition?view=atlas&id=C-001', '/composition'],
+  ['/ui', '/browse'],
+  ['/ui/elastic-button', '/p/elastic-button'],
   ['/a/elastic-button', '/p/elastic-button'],
 ])
   assert.equal(canonicalLocation(origin + from), to);
+const redirects = read('_redirects');
+assert(redirects.includes('/ui /browse 301') && redirects.includes('/composition/c-001 /composition/C-001 301'));
+assert(read('_headers').includes('X-Content-Type-Options: nosniff'));
+assert(read('composition/C-001.html').includes('"@type":"TechArticle"'));
 assert.equal(pageUrl('search', 2, new URLSearchParams({ q: 'UI' })), '/search?q=UI&page=2');
 console.log(
   'PASS atlas: ' +
